@@ -1,0 +1,319 @@
+{
+  "provenance": {
+    "draws": 4000,
+    "seed": 20261010,
+    "sha256": {
+      "aimodel/core/economy.py": "f4cdb71a402b7e0194e12f1cd369d73c01e9920fa5646f427b35ffbb98c16fba",
+      "aimodel/core/employment.py": "3db6a1256f42cf811ff36926a28559955dfe8f0d59acea70c178375b12a972a9",
+      "aimodel/core/coupled.py": "8d0ce8d7e64309f181f36c261475cc9be2906c01c8a12fab970d875fae99a21f",
+      "aimodel/calibration/data.py": "54052f5c9af26f6f1e35bcc89fe6bf7bbd27fdeff8545f9e15f66ddff6f7dce9",
+      "run_book_experiments.py": "ad8dacd56c3c29850a99f43f6fc8d30c600e9cee9fbcbeb58236e17042a0f55e",
+      "config/employment_eu_proxy.json": "e07a2cf05e1d0a1ec0f2efa81d8c4a26af13ded063caee179da97723df0faa6b"
+    },
+    "note": "Paired differences AI minus no-AI unless stated. Percentiles of assumed draws, not confidence intervals.",
+    "note_copula": "Spearman-type dependence via Gaussian copula on mid_adv, lag_new and psi; other priors independent. rho>0: early adoption paired with short lags and high reinstatement ('prepared'); rho<0 the opposite. rho=0 uses the same normal draws for a like-for-like comparison."
+  },
+  "results": {
+    "baseline": {
+      "gdp_2036": {
+        "p5": 0.3151,
+        "median": 1.3093,
+        "p95": 3.5061,
+        "share_negative": 0.0
+      },
+      "b50_2036": {
+        "p5": -4.8831,
+        "median": -1.0323,
+        "p95": 0.129,
+        "share_negative": 0.9203
+      },
+      "b50_2046": {
+        "p5": -10.8104,
+        "median": -3.2932,
+        "p95": 0.9883,
+        "share_negative": 0.8918
+      },
+      "unemp_adv_2036": {
+        "p5": 1.3896,
+        "median": 4.3304,
+        "p95": 10.7339,
+        "share_negative": 0.0
+      },
+      "unemp_adv_2046": {
+        "p5": -0.0,
+        "median": 1.3771,
+        "p95": 8.948,
+        "share_negative": 0.1698
+      },
+      "labshare_2046": {
+        "p5": -12.3386,
+        "median": -5.8826,
+        "p95": -2.2375,
+        "share_negative": 0.9978
+      },
+      "debt_adv_2046": {
+        "p5": 3.3805,
+        "median": 11.1929,
+        "p95": 25.9902,
+        "share_negative": 0.003
+      },
+      "t10_2036": {
+        "p5": 0.7374,
+        "median": 3.0592,
+        "p95": 7.8033,
+        "share_negative": 0.0
+      }
+    },
+    "psi_0.25_1.20": {
+      "gdp_2036": {
+        "p5": 0.3159,
+        "median": 1.3215,
+        "p95": 3.5523,
+        "share_negative": 0.0
+      },
+      "b50_2036": {
+        "p5": -4.7589,
+        "median": -0.9733,
+        "p95": 0.2129,
+        "share_negative": 0.9065
+      },
+      "b50_2046": {
+        "p5": -9.6028,
+        "median": -2.1529,
+        "p95": 5.2472,
+        "share_negative": 0.7245
+      },
+      "unemp_adv_2036": {
+        "p5": 1.2243,
+        "median": 4.0978,
+        "p95": 10.4577,
+        "share_negative": 0.0018
+      },
+      "unemp_adv_2046": {
+        "p5": -0.0,
+        "median": 0.1503,
+        "p95": 7.9148,
+        "share_negative": 0.276
+      },
+      "labshare_2046": {
+        "p5": -11.4424,
+        "median": -4.8074,
+        "p95": 0.641,
+        "share_negative": 0.928
+      },
+      "debt_adv_2046": {
+        "p5": 0.9961,
+        "median": 9.4324,
+        "p95": 23.8309,
+        "share_negative": 0.0315
+      },
+      "t10_2036": {
+        "p5": 0.7327,
+        "median": 3.0306,
+        "p95": 7.7313,
+        "share_negative": 0.0
+      }
+    },
+    "psi_at_least_1_subset": {
+      "share_of_draws": 0.2142,
+      "gdp_2036": {
+        "p5": 0.322,
+        "median": 1.3472,
+        "p95": 3.751,
+        "share_negative": 0.0
+      },
+      "b50_2036": {
+        "p5": -4.7731,
+        "median": -0.8021,
+        "p95": 0.3574,
+        "share_negative": 0.8763
+      },
+      "b50_2046": {
+        "p5": -5.8213,
+        "median": 1.6683,
+        "p95": 9.4547,
+        "share_negative": 0.3559
+      },
+      "unemp_adv_2036": {
+        "p5": 0.9379,
+        "median": 3.7299,
+        "p95": 10.4016,
+        "share_negative": 0.0047
+      },
+      "unemp_adv_2046": {
+        "p5": -0.0,
+        "median": 0.0,
+        "p95": 3.3223,
+        "share_negative": 0.4959
+      },
+      "labshare_2046": {
+        "p5": -8.1906,
+        "median": -1.8589,
+        "p95": 3.45,
+        "share_negative": 0.7141
+      },
+      "debt_adv_2046": {
+        "p5": -1.6169,
+        "median": 5.7718,
+        "p95": 18.691,
+        "share_negative": 0.1039
+      },
+      "t10_2036": {
+        "p5": 0.7626,
+        "median": 2.9262,
+        "p95": 7.7562,
+        "share_negative": 0.0
+      }
+    },
+    "copula_rho_+0.5_prepared": {
+      "gdp_2036": {
+        "p5": 0.319,
+        "median": 1.318,
+        "p95": 3.5907,
+        "share_negative": 0.0
+      },
+      "b50_2036": {
+        "p5": -4.3315,
+        "median": -0.9831,
+        "p95": 0.2345,
+        "share_negative": 0.9133
+      },
+      "b50_2046": {
+        "p5": -10.4074,
+        "median": -3.1375,
+        "p95": 1.8606,
+        "share_negative": 0.8498
+      },
+      "unemp_adv_2036": {
+        "p5": 1.3299,
+        "median": 4.0194,
+        "p95": 9.932,
+        "share_negative": 0.0013
+      },
+      "unemp_adv_2046": {
+        "p5": -0.0,
+        "median": 1.2844,
+        "p95": 9.7581,
+        "share_negative": 0.1925
+      },
+      "labshare_2046": {
+        "p5": -12.1541,
+        "median": -5.7016,
+        "p95": -1.7314,
+        "share_negative": 0.9955
+      },
+      "debt_adv_2046": {
+        "p5": 3.4353,
+        "median": 10.6669,
+        "p95": 23.9207,
+        "share_negative": 0.0047
+      },
+      "t10_2036": {
+        "p5": 0.7437,
+        "median": 3.1081,
+        "p95": 7.3773,
+        "share_negative": 0.0
+      }
+    },
+    "copula_rho_-0.5_unprepared": {
+      "gdp_2036": {
+        "p5": 0.3259,
+        "median": 1.3038,
+        "p95": 3.4305,
+        "share_negative": 0.0
+      },
+      "b50_2036": {
+        "p5": -5.0344,
+        "median": -1.0787,
+        "p95": 0.1137,
+        "share_negative": 0.924
+      },
+      "b50_2046": {
+        "p5": -11.4461,
+        "median": -3.5023,
+        "p95": 0.6422,
+        "share_negative": 0.9125
+      },
+      "unemp_adv_2036": {
+        "p5": 1.4482,
+        "median": 4.5076,
+        "p95": 11.0445,
+        "share_negative": 0.0
+      },
+      "unemp_adv_2046": {
+        "p5": -0.0,
+        "median": 1.2557,
+        "p95": 7.6267,
+        "share_negative": 0.1573
+      },
+      "labshare_2046": {
+        "p5": -12.6831,
+        "median": -5.9821,
+        "p95": -2.4922,
+        "share_negative": 1.0
+      },
+      "debt_adv_2046": {
+        "p5": 2.8444,
+        "median": 11.501,
+        "p95": 28.249,
+        "share_negative": 0.0047
+      },
+      "t10_2036": {
+        "p5": 0.7306,
+        "median": 3.1333,
+        "p95": 7.8041,
+        "share_negative": 0.0
+      }
+    },
+    "copula_rho_0_same_draws": {
+      "gdp_2036": {
+        "p5": 0.3223,
+        "median": 1.3077,
+        "p95": 3.505,
+        "share_negative": 0.0
+      },
+      "b50_2036": {
+        "p5": -4.7413,
+        "median": -1.0327,
+        "p95": 0.1479,
+        "share_negative": 0.92
+      },
+      "b50_2046": {
+        "p5": -10.6789,
+        "median": -3.3431,
+        "p95": 1.0789,
+        "share_negative": 0.8938
+      },
+      "unemp_adv_2036": {
+        "p5": 1.432,
+        "median": 4.2975,
+        "p95": 10.5257,
+        "share_negative": 0.0003
+      },
+      "unemp_adv_2046": {
+        "p5": -0.0,
+        "median": 1.3745,
+        "p95": 8.7156,
+        "share_negative": 0.172
+      },
+      "labshare_2046": {
+        "p5": -12.2529,
+        "median": -5.9117,
+        "p95": -2.2857,
+        "share_negative": 0.9988
+      },
+      "debt_adv_2046": {
+        "p5": 3.4788,
+        "median": 11.2077,
+        "p95": 25.9199,
+        "share_negative": 0.0025
+      },
+      "t10_2036": {
+        "p5": 0.7418,
+        "median": 3.1247,
+        "p95": 7.5871,
+        "share_negative": 0.0
+      }
+    }
+  }
+}

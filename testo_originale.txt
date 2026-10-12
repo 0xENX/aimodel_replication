@@ -1,0 +1,3262 @@
+PAGINA FILE 1
+
+
+PAGINA FILE 2
+AI Assistance Disclosure
+Prepared with the assistance of Claude (Anthropic) in the development
+of the analytical model, code, and manuscript. See the Disclosure
+section of the Technical Annex for details.
+
+PAGINA FILE 3
+AI, Robotics and the GlobalEconomy 2026-
+2046: An Independent Critical Review
+Executive summary
+Verdict: the paper asks the right questions but points at the wrong main risk. The
+evidence through 2026 shows no aggregate employment collapse; it shows a falling labour
+share, a sharp drop in hiring of young workers in AI-exposed jobs, and public finances
+already near 100% debt-to-GDP before anyAI shock. Distribution and fiscal capacity are
+the dominant mechanisms. Unemployment is not a collapse, but once labour demand is
+derived from technology rather than tied to labour supply, it becomes a serious and
+persistent risk: in most simulations it is still higher in 2046 than without AI.
+What the evidence supports:
+Exposure is broad, impact is narrow so far. About 40% of global employment is
+exposed to AI (IMF), but only 3.3% sits in the ILO's highest-exposure tier. Exposure
+measures technical feasibility, not job loss.
+The first measurable effect is on entry-level hiring. Employment of 22-25 year olds in
+AI-exposed occupations is 19% below the trend of less-exposed peers, mostly through
+fewer hires, not layoffs (Stanford, Aug 2026).
+Macro productivity gains are uncertain by an order of magnitude. Credible estimates
+range from under 0.7% total-factor-productivity over ten years (Acemoglu) to far
+larger figures; the paper rightly refuses to pick one.
+The fiscal exposure is specific. In the OECD, social contributions (25.5%) and
+personal income tax (23.7%) are the two largest revenue sources, and both lean on
+wages.
+Where I disagree with the paper:
+1. It omits demographics as a counterforce. Labour supply is slowing and populations
+are ageing; in many economies automation will fill gaps rather than create surplus
+labour. This changes the sign of the problem by country.
+2. Its "profits eventually constrained by weak demand" loop is not supported. In the
+calibrated model of the technical annex, demand falls short of supply by more than
+0.1% of output in only 31% of 4,000 simulations, the largest shortfall is 2.5% of output,
+and the two demand parameters explain at most 1.5% of the variance of any outcome.
+Concentration of gains, not a profit collapse, is the robust outcome.
+3. It underweights the timing channel. Displacement arrives faster than new tasks:
+unemployment in advanced economies rises by a median 4.3 points by 2036, and half
+of the simulations peak between 2036 and 2041. In 2046 it is still 1.4 points higher in the
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 1 of 31
+
+PAGINA FILE 4
+median simulation, and more than half a point higher in six simulations out of ten. In the
+disruption scenario the bottom half is still 3.8% worse off than without AI in 2046, so
+the damage cannot be assumed to be temporary.
+4. The policing section is framed as fiscal substitution. The binding constraints are legal
+(the EU now bans most real-time remote biometric identification in public spaces) and
+technical (error rates that differ across demographic groups), not budgets.
+Bottom line: concerns about income distribution and the tax base are understated in
+specifics; concerns about economic collapse are overstated for aggregate output and
+demand, though not for the bottom half or for jobs in the disruption scenario; the
+policing concern is misframed. Under current policies the calibrated model places 74% of
+its simulations in structural disruption (scenario C), 23% in polarisation (B) and 8% in
+inclusive growth (A).
+A no-AI counterfactual sharpens the point. In 2036 world output is 1.3% higher than
+without AI, but the bottom 50% of the world's population has 1.0% less purchasing power,
+and is worse off in 92% of simulations. About 84% of the world's population lives in
+income groups that are worse off than without AI in 2036, almost all of them by less than
+1% at the median; the losses are much larger for workers displaced before new work
+appears. By 2046 the bottom half is still worse off in 89% of simulations, by a median
+3.3%. Distribution policy decides whetherAI ends up making the majority better off or
+worse off: a package built around an AI dividend turns the bottom half's 2036 outcome
+into a 3.0% gain.
+All quantitative results in this report come from the calibrated model documented in the
+Technical Annex at the end (4,000 paired simulations with and without AI, calibrated to
+IMF, ILO, OECD, UN and World Inequality Database data and validated against historical
+trends). They are conditional simulations, not forecasts. An earlier version of this report
+used a simpler illustrative model whose effects were roughly ten times larger; section 14
+of the annex explains why the numbers changed. This edition widens the range of wage
+rigidity to match recent evidence, corrects the wage equation and derives labour demand
+from production and technology instead of letting it follow labour supply; section 14.4 of
+the annex documents what that changed: a larger and much more persistent rise in
+unemployment and a larger loss for the bottom half.
+Critique ofthe original paper
+The paper is careful about causality but leaves its key mechanisms untested and omits
+three variables that change the conclusions: demographics, timing, and the geography of
+where profits are booked.
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 2 of 31
+
+PAGINA FILE 5
+Missing variables:
+Demographics. Working-age growth slows; by the late 2070s people over 65 will
+outnumber children. In ageing economies AI may offset labour shortages rather than
+create surplus.
+Paper's claim Status Assessment
+Task automation is not
+occupation elimination
+Evidence-backed Confirmed by ILO 2025: most
+occupations mix tasks,
+transformation is likelier than
+replacement
+AI extends automation to
+cognitive work
+Evidence-backed Exposure is highest in clerical,
+software, media and finance
+roles, unlike past routine-manual
+automation
+Job creation may not match
+displacement
+Plausible hypothesis No aggregate shortfall yet; the
+youth hiring gap is the first
+warning sign
+Gains flowing to low￾consumption recipients weaken
+demand
+Plausible, magnitude
+unknown
+Global labour share fell 1.6 pp
+since 2004; whether this
+depresses demand depends on
+investment and transfers
+Weak demand will eventually
+constrain profits
+Not supported In the calibrated model the
+demand shortfall never exceeds
+1.9% of output; concentration of
+profits is the robust outcome
+(see simulation)
+Labour-based tax bases erode
+as welfare demand rises
+Plausible, well
+framed
+Correct structurally; the paper
+misses that debt is already near
+100% of GDP, so fiscal room is
+smaller than implied
+Robotics extends automation to
+physical work
+Partly supported Industrial robot stock reached
+4.66 million in 2024, but service
+and humanoid robotics remain
+early and costly
+Insecurity may change state￾citizen relations via surveillance
+Speculative Plausible in weak institutions;
+strongly constrained by law in
+the EU
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 3 of 31
+
+PAGINA FILE 6
+Timing and adjustment speed. Harm comes from the gap between displacement and
+new task creation, not from the end state. The paper treats outcomes as levels, not
+paths.
+Where profits are booked. AI gains concentrate in a few firms and jurisdictions. A
+country can host the users ofAI while the taxable rents are booked elsewhere. This
+matters more for most governments than the global total.
+Prices. Cheaper services raise real incomes even with flat nominal wages. The paper
+names this channel but does not weigh it.
+Investment as demand. AI capital spending is itself a demand source; the IMF
+estimates AI-related investment added about 0.5 pp to US GDP growth in 2025.
+Methodological problems:
+The six "primary indicators" mix levels (GDP), ratios (profitability) and composites
+(instability) without saying how they interact. Drawing them on one normalised chart
+invites the reader to compare incomparable scales.
+"Violence and Social Instability" as one indicator merges protest, crime and political
+violence, which the paper itself says are distinct.
+The paper has no country dimension. Exposure in low-income countries is about a third
+of advanced-economy levels; a global average hides opposite stories.
+Current evidence
+The evidence shows wide potential exposure, modest measured macro effects, a
+concentrated hit to young workers, and a long-running shift of income from labour to
+capital that predates generative AI.
+Measure Value Source
+Global employment exposed
+to AI
+about 40% (about 60% in
+advanced economies, 26% in
+low-income)
+IMF, Gen-AI and the
+Future of Work, 2024
+Workers in occupations with
+some GenAI exposure
+1 in 4; 3.3% in highest￾exposure tier
+ILO Working Paper 140,
+2025
+Employment gap, ages 22-25,
+AI-exposed jobs
+19% below less-exposed
+peers; experienced workers
+show no gap
+Brynjolfsson, Chandar,
+Chen, Aug 2026
+Firm-level productivity,
+customer support
++14% average, +34% for
+novices
+Brynjolfsson, Li,
+Raymond, NBER 31161
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 4 of 31
+
+PAGINA FILE 7
+How to read this evidence:
+Exposure figures are ceilings. Both the IMF and ILO stress that exposure means a task
+could be done byAI, not that it will be, or that the job disappears.
+The youth effect is descriptive, not causal. The Stanford authors say so explicitly, and
+total employment in their sample still grew. It is the most important early signal
+because it works through hiring, which aggregate unemployment data catch late.
+Micro gains exceed macro gains. A 14% gain in one function becomes a fraction of a
+percent of GDP once weighted by the share of the economy affected. This gap
+between task-level and economy-level effects is the main reason forecasts diverge.
+The labour share was falling before ChatGPT. Automation, market concentration and
+the pandemic all contributed. AI amplifies a trend; it does not start one.
+WEF figures are employer surveys, useful for direction, weak as forecasts.
+Reconstructed model
+The outcome turns on one variable the paper treats as a consequence: household real
+income after transfers. Automation affects it through three channels with opposite
+signs: lower labour demand, new tasks that reinstate work, and lower prices. Public
+finance feeds back into it through transfers.
+Measure Value Source
+Macro TFP gain from AI, next
+10 years
+no more than 0.66% total Acemoglu, Economic
+Policy 2025
+AI investment contribution to
+US growth
+about 0.5 pp of GDP growth in
+2025
+IMF Annual Report 2026
+Global labour income share 52.4% in 2024, down from
+53.0% in 2014
+ILO WESO, May 2025
+Industrial robots in operation 4.66 million (2024), +9% a
+year
+IFR World Robotics 2025
+Employer-expected job churn
+to 2030
+170 million created, 92 million
+displaced
+WEF Future of Jobs 2025
+Global public debt just under 94% of GDP
+(2025), 100% by 2029
+IMF Fiscal Monitor, Apr
+2026
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 5 of 31
+
+PAGINA FILE 8
+Read clockwise from the household box: income drives consumption, consumption drives
+output and profits, output feeds tax revenue, and revenue funds transfers back to
+households. Two inputs sit outside the loop and decide its sign: how fast new tasks
+appear relative to automation, and how fast labour supply shrinks with ageing. Not drawn,
+to keep the picture legible: labour income also feeds tax revenue directly, and AI
+investment raises output independently of consumption.
+The simulations in this report implement this loop in a calibrated model of the world
+economy, documented in full in the Technical Annex (section 4 and Appendix A). In brief:
+Three regions and three income groups. Advanced, emerging and low-income
+economies, each with a bottom 50%, a middle 40% and a top 10%, calibrated to 2025-
+2026 data.
+Tasks, not jobs. AI automates a share of tasks and new human tasks appear with a lag,
+following Acemoglu and Restrepo. Productivity gains followAcemoglu's (2025)
+method.
+Complete accounting. Every flow of income between households, firms, governments
+and regions is tracked, and the accounts balance in every year of every simulation.
+Uncertainty made explicit. Twenty-one uncertain parameters are drawn from ranges
+in the literature. Each of 4,000 draws is simulated twice, with and without AI, so the
+difference isolates AI's effect.
+Labour market. Employment cannot exceed the available labour force; when
+employers want more workers than exist, wages rise instead. When there is slack,
+wages fall only slowly, at rates taken from recent wage Phillips-curve estimates, so
+displacement shows up as unemployment for years. Labour demand is derived from
+reconstructed causal model · 12 nodes, one demand-and-fiscal loop
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 6 of 31
+
+PAGINA FILE 9
+output and the tasks left to workers, so lower wages bring back only part of the jobs
+automation removes. Labour supply follows UN demographic projections and is the
+same with and without AI.
+Scenarios are now outcomes, not assumptions. In the earlier version of this report each
+scenario was a hand-picked set of parameters. Here the scenarios are defined by what
+happens to households in 2036, and the model says how often each occurs under current
+policies:
+Conditional simulation: six indicators, 2026-2046
+AI raises output and profits in every scenario; what diverges is how much of it reaches
+workers and households. By 2036 corporate profitability is 2.5% higher than without AI in
+polarisation and 7.6% higher in disruption, while the bottom half's purchasing power is
+0.5% lower in B and 1.5% lower in C, and keeps falling after 2036 in both. Only in the
+inclusive scenario A does the bottom half gain. Unemployment rises in all three.
+Scenario Definition (2036, vs no-AI
+world)
+Share of
+simulations
+What drives it
+A. Inclusive
+growth
+Bottom 50% not worse off 8% Larger productivity gains
+(38% cost saving on
+automated tasks against
+30% in B) and more profit￾sharing; unemployment
+still rises by about 4 points
+B. Polarisation Bottom 50% loses less
+than 2% and advanced￾economy unemployment
+rises less than 3 points
+23% Later adoption (fastest
+around 2038) and
+narrower automation
+(38% of exposed tasks)
+C. Structural
+disruption
+Bottom 50% loses 2% or
+more, or advanced￾economy unemployment
+rises 3 points or more
+74% Broader automation (51%
+of exposed tasks), earlier
+adoption (fastest around
+2034) and slower new
+tasks (about 7 years' lag)
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 7 of 31
+
+PAGINA FILE 10
+Each panel shows the difference from the same world without AI, so the zero line is the
+no-AI world. The changes are a few percent, not tens of percent: AI shifts the path of the
+world economy slightly and redistributes income along it. The levels of all six indicators
+appear in the aggregate view near the end of the report.
+calibrated model (Technical Annex) · 4,000 paired simulations, median of each scenario, 2026-2046
+Indicator Definition used Why the curves look as they do
+Global real GDP World output at constant prices Productivity gains on
+automated and AI-assisted
+tasks; scenario C automates
+most, so it produces most
+Corporate
+profitability
+Capital share of income times
+capacity utilisation (not total
+profit)
+Rises as the labour share falls;
+highest in C, where
+displacement outruns new
+tasks
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 8 of 31
+
+PAGINA FILE 11
+Sensitivity test on the paper's key claim. The paper argues that weak demand may
+eventually constrain profits. A global sensitivity analysis over 23,552 model runs (annex,
+section 9) shows that the response of investment to profits and the pass-through of weak
+demand to output each explain at most 1.5% of the variance of any outcome. What
+matters is the timing of adoption, how fast new human tasks appear and, for
+unemployment, how rigid wages are. A profit squeeze is not impossible in principle, but
+nothing within the calibrated parameter ranges produces one.
+Gap between labour supply and labour demand. The gap shows up as unemployment,
+and it is much larger and longer than the earlier edition of this report found, because
+labour demand now follows technology and output and wages may be as rigid as recent
+evidence suggests. In advanced economies the median increase is 4.3 points in 2036 (5th￾95th percentile 1.4 to 10.7), roughly 26 million people, and 1.9 points in emerging
+economies, roughly 47 million. The median path peaks at about 4.9 points in 2039 and is
+still 1.4 points higher in 2046. In the fifth of simulations where wages respond least,
+unemployment is still about 4 points higher in 2046. In reality part of this would appear as
+lower participation, shorter hours and underemployment rather than open
+unemployment.
+Indicator Definition used Why the curves look as they do
+Human labour
+demand
+Workers firms want to employ at
+the current wage, compared
+with the labour force
+Falls below the no-AI path while
+displacement outruns new
+tasks, then recovers slowly as
+new tasks appear; at world level
+it is still below the no-AI path in
+2046
+Human labour supply Labour force, from UN
+demographic projections
+Identical with and without AI
+Purchasing power,
+bottom 50%
+Real consumption per person of
+the poorer half of each region
+Falls with the labour share
+unless gains are shared;
+recovers as new tasks appear
+Social stress World unemployment rate, in
+points
+A measurable input to social
+risk, not a forecast of unrest.
+The earlier composite instability
+index was dropped because it
+could not be calibrated (annex,
+section 11)
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 9 of 31
+
+PAGINA FILE 12
+Labour demand recovers only partly, and income shares do not. In advanced economies
+labour demand is furthest below the no-AI path in 2039, 4.7 points below it and 9.6 points
+below labour supply. By 2046 it has regained most of that gap but is still 1.3 points below,
+and in six simulations out of ten unemployment is still more than half a point higher. In
+emerging and low-income economies, where adoption arrives later, the gap is barely
+closing in 2046 (+2.3 and +2.2 points). Lower wages bring back only part of the jobs: by
+2046 wages in advanced economies are 9% below the no-AI path in the median simulation
+and 25% below in the worst 5%. Because the wage bill falls with employment,
+unemployment lowers labour income instead of only spreading it differently.
+Why labour demand still partly returns, and what the model leaves out. Demand
+recovers because new tasks appear with a lag and lower wages make some human work
+worth doing again; it does not track labour supply. Labour supply still follows
+demographics and does not react to AI, and there is no mismatch between the skills of
+displaced workers and the new tasks. In reality young people can stay longer in education,
+leave the labour force or emigrate, and displaced workers may not fit the new tasks. With
+mismatch the gap would close more slowly; with falling participation part of the
+unemployment would become hidden. The model does not include either (annex, section
+15).
+calibrated model (Technical Annex) · advanced economies, 4,000 paired simulations, median and 5th-95th
+percentile, 2026-2046
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 10 of 31
+
+PAGINA FILE 13
+Fiscal sustainability
+The gap is fundable on paper but not funded under current tax systems: keeping public
+finances whole would require taxing the extra capital income at an effective rate of
+about 41%, roughly double the 19% at which capital income is taxed in advanced
+economies today. Capital is taxed more lightly than labour, it is mobile, and AI rents
+concentrate in a few firms and jurisdictions.
+The table shows advanced economies, where the fiscal effect is largest, for the median
+simulation of each scenario. It is a conditional result of the calibrated model, not a
+forecast.
+Assumptions: tax rates calibrated to IMF and OECD revenue data, with labour income
+taxed at an effective 28% and capital income at about 19% in advanced economies.
+Pensions rise with ageing in both worlds, so even without AI advanced-economy debt
+rises from 108% to about 132% of GDP by 2046 (annex, section 10). In 2036 AI lowers
+labour-tax revenue by 1.26% of GDP and raises capital-tax revenue by 0.84%; higher
+unemployment benefits and smaller items make up the rest.
+What the numbers say:
+The tax base shifts more than it shrinks. GDP keeps growing in all three scenarios;
+income moves from wages to profits. A tax system that follows the income can stay
+whole.
+Current systems do not follow it. OECD revenue leans on wages, and the share of
+personal income tax coming from employed labour already fell in two thirds of OECD
+countries between 2011 and 2023. The IMF notes that capital income is taxed more
+lightly than labour and recommends strengthening general capital income taxes rather
+than a special tax on AI or robots.
+Scenario Labour share,
+2036 (%
+GDP)
+Change vs
+no-AI world,
+2036
+Primary balance
+vs no-AI, 2036 (%
+of GDP)
+Public debt vs no￾AI, 2046 (points
+of GDP)
+A. Inclusive
+growth
+51.2 −2.9 points −0.7 +5.4
+B. Polarisation 52.2 −1.9 points −0.4 +6.5
+C. Structural
+disruption
+48.7 −5.5 points −1.2 +13.3
+All simulations
+(median)
+49.7 −4.5 points −1.0 +11.2 (5th-95th:
++3.4 to +26.0)
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 11 of 31
+
+PAGINA FILE 14
+The cost is moderate but persistent, and the tail matters. In polarisation the primary
+balance worsens by about 0.4% of GDP and debt is 6.5 points higher by 2046; in
+disruption the figures are 1.2% of GDP and 13 points, about half the effect of ageing. It
+arrives when fiscal space is already thin, and in the worst 5% of simulations debt is 26
+points higher.
+Distribution across countries is the hardest problem. A country that uses AI services
+but does not host the firms earning the rents loses the wage base without gaining the
+profit base. The global minimum corporate tax helps at the margin but does not
+reallocate rents to user countries.
+Compensating mechanisms that could plausibly fund obligations:
+1. Broader capital income taxation (dividends, capital gains at realisation or death,
+closing preferential regimes): matches the shift in the base directly; limited by mobility
+and political resistance.
+2. Consumption taxes: robust to the labour/capital split, but regressive unless paired
+with transfers.
+3. Rent and land taxation: captures gains capitalised into property and scarce assets;
+slow to implement.
+4. Public or broad-based ownership stakes (sovereign funds, employee ownership):
+turns capital income into household income without relying on tax rates; requires
+upfront capital.
+5. Reconsidering accelerated depreciation for labour-replacing investment: the IMF
+suggests incentives that speed displacement should be reviewed.
+A "robot tax" is the weakest option: it is hard to define the base, it slows adoption of
+productivity gains, and it raises little revenue.
+Social stability and automated policing
+Economic stress raises the odds of unrest, but institutions decide whether it turns into
+instability; and automated policing is limited far more by law and error rates than by
+budgets. The paper's chain from job loss to unrest to surveillance is possible, but each link
+is conditional.
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 12 of 31
+
+PAGINA FILE 15
+Assessment:
+Feasibility. AI-assisted analysis (pattern search, triage, patrol planning) is already
+deployed and cheap. Robotic patrol and autonomous coercion are not: they are costly,
+fragile and face liability gaps.
+Fiscal incentives. Real but secondary. Police costs are mostly wages; replacing officers
+with machines saves money only if oversight and error costs are ignored.
+Link What evidence shows What is speculation
+Economic stress to
+unrest
+IMF unrest index: socio￾economic protests cause
+sharper GDP contractions than
+political ones; strong
+institutions and policy space
+reduce the damage
+That AI-driven job loss
+specifically triggers unrest; no
+event so far is attributable to it
+Unrest to economy One standard-deviation rise in
+the unrest index leaves GDP
+about 0.2 pp below baseline
+after six quarters; a major
+event about 1 pp
+Long-run effects are not
+studied
+Fiscal incentive to
+automate policing
+Plausible: security budgets
+face the same wage-cost
+pressures
+That savings exceed
+equipment, maintenance,
+cybersecurity and oversight
+costs; no robust cost evidence
+exists
+Legal room forAI
+surveillance
+EU AI Act bans real-time
+remote biometric
+identification in public spaces
+for law enforcement since
+February 2025, with narrow
+authorised exceptions; it also
+bans social scoring by public
+authorities
+That other jurisdictions follow;
+many do not
+Accuracy of facial
+recognition
+NIST found false-positive rates
+differing by factors of 10 to
+over 100 across demographic
+groups in many algorithms,
+though the best algorithms
+showed no detectable
+differential
+Whether deployed systems use
+the best algorithms and
+thresholds
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 13 of 31
+
+PAGINA FILE 16
+The real risk is asymmetric drift. If welfare provision weakens while surveillance
+capacity grows, the relationship between citizen and state changes without any single
+decision. This is a governance risk, highest where courts, press and data-protection
+authorities are weak.
+Accountability is the binding constraint. Automated assistance with a named human
+decision-maker is manageable. Autonomous coercive decisions break existing liability
+and due-process rules and should be treated as a bright line, not a budget question.
+Measurement. The paper's single "violence and social instability" indicator should be
+split: peaceful protest, civil unrest, crime and political violence have different causes
+and opposite policy implications. Protest is often a sign of a working democracy, not of
+breakdown.
+Scenarios and plausibility
+Under current policies, structural disruption (C) occurs in 74% of simulations,
+polarisation (B) in 23% and inclusive growth (A) in 8%. I keep the paper's three
+scenarios and add two it omits, demographic substitution (D) and stalled adoption (E).
+The model treats these two as conditions within the main scenarios rather than as
+separate outcomes.
+The shares come from the model, not from judgement: each of the 4,000 simulations is
+classified by what happens to households in 2036 (definitions in the reconstructed-model
+section). They are probabilities conditional on the model and its parameter ranges, not
+forecasts of the world. If the ranges are wrong, so are the shares; the technical annex
+shows which parameters matter most. They replace the 0-100 plausibility scores of the
+earlier version, which were a judgement.
+Scenario Core mechanism Share of
+simulations
+Bottom
+50% vs
+no-AI,
+2036
+Top 10%
+vs no-AI,
+2036
+Unemployment,
+advanced
+economies, 2036
+C. Structural
+disruption
+Automation outruns
+new tasks for a
+decade, lower wages
+bring back only part
+of the jobs;
+unemployment and
+fiscal stress follow
+74% −1.5% +3.8% +5.3 points
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 14 of 31
+
+PAGINA FILE 17
+Why C is now the most likely outcome. With labour demand tied to technology rather
+than to labour supply, unemployment alone pushes 46% of all simulations past the 3-point
+threshold, even where the bottom half loses less than 2%; with the income criterion,
+three simulations in four fall in C. The share is sensitive to the threshold: with a 4-point
+unemployment threshold C would be 60%, with 5 points 50%. Its likelihood would rise
+further ifAI capabilities grew faster than the model's exposure ranges allow, a case the
+model excludes (annex, section 15).
+WhyA is rare under current policies. A needs larger productivity gains than the centre of
+the evidence and a larger share ofAI rents reaching workers, and even then
+unemployment rises. Markets do not guarantee either; policy can help with both. Under
+the policy package in the interventions section the bottom half gains in all but 0.2% of
+simulations, which in effect makes A the outcome for incomes, though not for jobs.
+Signals that would change these scores:
+Scenario Core mechanism Share of
+simulations
+Bottom
+50% vs
+no-AI,
+2036
+Top 10%
+vs no-AI,
+2036
+Unemployment,
+advanced
+economies, 2036
+B. Polarisation Later and narrower
+automation; output
+and profits rise,
+labour share falls,
+entry-level hiring
+weakens
+23% −0.5% +1.2% +2.1 points
+A. Inclusive
+growth
+Productivity gains
+are larger and more
+of the rents reach
+workers, so the
+bottom half gains
+despite higher
+unemployment
+8% +0.2% +2.6% +4.0 points
+D. Demographic
+substitution
+In ageing economies
+automation fills
+labour shortages
+Present in all
+scenarios: labour
+supply in
+advanced
+economies
+shrinks by 0.2-
+0.4% a year
+– – –
+E. Stalled
+adoption
+Reliability, energy
+and integration costs
+keep macro effects
+small
+12% of
+simulations have a
+GDP gain below
+0.5% in 2036; the
+bottom half still
+loses 0.4%
+– – –
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 15 of 31
+
+PAGINA FILE 18
+Toward C: the youth hiring gap spreading to workers over 30; aggregate unemployment
+rising in high-exposure economies while GDP grows; labour share falling faster than 0.5
+pp a year.
+Toward A: new occupation categories appearing in labour statistics at scale; wage
+growth in AI-complemented roles; capital income tax reforms in major economies.
+Toward E: enterprise AI spending plateauing; productivity statistics flat through 2030.
+Independent conclusions
+The paper is right that the central question is distribution, not production; it is wrong to
+frame the risk mainly as a demand collapse. The more robust danger is a slow, politically
+corrosive shift of income and tax base toward capital and toward a few jurisdictions,
+hitting young workers first.
+Paper's concern My assessment Why
+Mass displacement of
+human labour
+Overstated as a collapse,
+understated as a transition
+Exposure is broad, measured
+impact narrow so far; but with
+rigid wages the model puts
+advanced-economy
+unemployment 4.3 points
+higher in 2036 and still 1.4
+points higher in 2046
+Demand shortfall
+constraining profits
+Overstated Demand parameters explain at
+most 1.5% of the variance of
+any outcome; concentration of
+profit is likelier than its
+collapse
+Erosion of labour-based
+tax bases
+Understated Debt already near 100% of
+GDP; capital is undertaxed and
+mobile; country-level mismatch
+between AI users and AI rent￾earners
+Welfare systems tied to
+employment
+Correctly framed Contribution-funded pensions
+and insurance are the most
+exposed institutions
+Youth and entry-level
+work
+Missing from the paper The clearest current signal; it
+threatens how skills are
+formed, not only current jobs
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 16 of 31
+
+PAGINA FILE 19
+Mechanisms that may dominate the paper's own:
+1. The apprenticeship break. If firms stop hiring juniors because AI does junior tasks, the
+pipeline that produces experienced workers thins out. The cost appears 10-15 years
+later as a shortage of senior skills. This is underrated everywhere.
+2. Demographic substitution. In ageing economies, AI and robotics may be the main way
+to maintain output and care services with fewer workers. Here the policy risk is
+adopting too slowly, not too fast.
+3. Price deflation in services. IfAI makes legal, medical, educational and administrative
+services much cheaper, real purchasing power can rise even with flat wages. This is a
+potentially large positive pathway, but it is unmeasured; unmeasured negative
+pathways (worse job quality, workplace surveillance, market concentration, energy
+costs) deserve the same weight.
+4. Geographic concentration of rents. Who owns frontier models and compute will
+shape national tax bases more than global GDP does.
+What would improve outcomes most, in order of expected impact: (1) tax systems that
+follow income from wages to capital, coordinated internationally; (2) income support
+decoupled from employment history, with active retraining; (3) protecting entry-level
+hiring and training pathways; (4) wider ownership of productive capital; (5) bright-line
+legal limits on autonomous coercive AI.
+Aggregate view: all six indicators
+In the polarisation scenario output grows 78% by 2046, while labour demand reaches
+only 106 on the labour-supply scale, against 115 for labour supply. The bottom half's
+purchasing power grows 48% and profitability 17%; the unemployment-based stress
+index keeps rising until about 2044.
+Paper's concern My assessment Why
+Social instability Correctly cautious Institutions mediate; protest is
+not breakdown
+Automated policing Misframed A legal and accountability
+question more than a fiscal one
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 17 of 31
+
+PAGINA FILE 20
+The lines show scenario B; the shaded bands show the range between scenarios A and C.
+The bands are widest for social stress and the bottom half's purchasing power, where
+outcomes depend most on how fast new work appears, how rigid wages are and how gains
+are shared. They are zero for labour supply, which follows demographics in every scenario.
+All of the rise in the stress index is due to AI: without it, unemployment stays at its
+structural level (next chart).
+Counterfactual:the same world without AI
+Without AI the world grows almost as fast: by 2046 output reaches 173 instead of 178,
+and the bottom half's purchasing power ends slightly higher than with AI (152.0 against
+148.1). For the world as a whole the difference is small; it lies in who receives the gains.
+Profitability reaches 107 without AI against 117 with it.
+calibrated model (Technical Annex) · scenario B with A-C range, index 2026 = 100
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 18 of 31
+
+PAGINA FILE 21
+This counterfactual takes each of the same 4,000 simulations and switches the AI wave
+off, keeping every other parameter unchanged. Its baseline growth already includes
+ordinary, non-AI technical progress, so it is a world without the AI wave, not a world
+without technology.
+What it shows:
+AI adds output, mostly as profit. In polarisation output is 2.5% higher by 2046 and
+profitability about 9% higher, while the bottom half's purchasing power is 2.7% lower.
+Labour demand does not return to the no-AI path. By 2046 labour demand is still 1.3
+points below the no-AI path in advanced economies at the median, and 2.2% lower
+worldwide in polarisation, because adoption reaches emerging and low-income
+economies later. The cost falls in the 2030s and early 2040s, while the adjustment
+happens.
+The labour share falls in both worlds, faster with AI. Without AI it keeps eroding
+slowly, as it has since the 2000s; AI adds about 5.9 points of decline by 2046.
+No labour shortage rescues the bottom half. The earlier version of this report found
+that without AI the world would run short of workers, so the median household with AI
+caught up by 2046. With labour supply and demand calibrated to data, that shortage
+does not appear and the catch-up does not happen: in polarisation the bottom half is
+still behind the no-AI world in 2046.
+calibrated model (Technical Annex) · same 4,000 simulations with the AI wave switched off, median
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 19 of 31
+
+PAGINA FILE 22
+Stress rises only with AI. Without AI the unemployment rate stays at its structural
+level of about 5.5%; with AI it rises by up to 2.3 points worldwide in polarisation, and by
+about 4.9 points in advanced economies at the median.
+Final considerations: a snapshot ofthe world in 2036
+In 2036 the world with AI is richer and more capable, but most people are slightly worse
+off than they would have been without AI, and more of them are out of work. Across all
+simulations the world produces about 1.3% more than without AI, yet the bottom half has
+1.0% less purchasing power and labour demand is 2.1% lower for the same labour supply.
+2036 is in the middle of the transition, and the bottom half's loss keeps growing until 2046;
+with better policy the bottom half is ahead already in 2036 (interventions section).
+The spread between the dots is the real message. The same technology leaves the bottom
+half slightly better off (A, +0.2%) or clearly worse off (C, −1.5%), depending on how fast
+automation outruns new work, how quickly wages adjust and how much of the gain is
+shared. In every scenario output and profits are higher than without AI, and so is
+unemployment; what differs is who bears the cost.
+Two worlds side by side in 2036
+The model covers income, work and public finance. The other rows are a judgement based
+on current evidence and trends, not model output, and are less certain.
+calibrated model (Technical Annex) · 2036, scenarios A, B, C and all simulations against the no-AI world
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 20 of 31
+
+PAGINA FILE 23
+Dimension World without AI,
+2036
+World with AI (median
+of all simulations),
+2036
+Net for people
+Income of the
+typical
+household
+Slow, steady real
+growth; labour share
+erodes slowly
+About 1% more
+output, but a labour
+share about 3 points
+lower; the bottom
+half's real income 1.0%
+lower than without AI,
+the middle 40% 0.3%
+lower
+Slightly worse for
+most
+Work Ageing slows labour￾force growth in rich
+countries and China
+Labour demand about
+2.1% lower worldwide
+for the same labour
+supply;
+unemployment 4.3
+points higher in
+advanced economies
+(about 26 million
+people) and 1.9 points
+in emerging
+economies (about 47
+million); clerical, junior
+professional and
+customer-service
+work shrinks
+Worse, unevenly
+spread
+Young people
+starting careers
+Entry-level jobs exist;
+slow career ladders
+Fewer junior hires in
+office professions; the
+first rung is harder to
+reach
+Clearly worse
+Cost and access
+of services
+Health, legal,
+education and
+administrative help
+remain expensive and
+scarce
+Routine advice,
+translation, tutoring,
+triage and paperwork
+are far cheaper and
+available in more
+languages
+Better; size not
+measured, may
+roughly offset the
+average income loss
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 21 of 31
+
+PAGINA FILE 24
+Dimension World without AI,
+2036
+World with AI (median
+of all simulations),
+2036
+Net for people
+Health Steady progress;
+shortages of doctors
+and nurses worsen
+with ageing
+Faster diagnostics and
+drug discovery likely,
+but most gains reach
+patients only slowly
+through regulation
+and health systems
+Moderately better,
+uncertain size
+Older people and
+care
+Care gaps widen as
+the over-80
+population grows
+Monitoring, assistance
+and some robotics
+ease pressure on
+carers; personal care
+still mostly human
+Somewhat better
+Public finances
+and welfare
+Debt rising with
+ageing, in advanced
+economies from 108%
+toward 132% of GDP
+by 2046
+Same pressure plus a
+primary deficit about
+1% of GDP larger in
+advanced economies,
+from the shift of
+income from wages to
+profits
+Slightly worse
+unless taxes follow
+capital income
+Inequality and
+power
+Slowly rising The top 10% has 3.1%
+more purchasing
+power (5.7% in
+advanced economies);
+income, market power
+and tax base
+concentrate in a few
+firms and countries
+Worse
+Low- and middle￾income countries
+Growth driven by
+young workforces and
+manufacturing
+Part of the AI profits
+made locally is booked
+abroad; the bottom
+half is 1.1% worse off
+in emerging and 0.4%
+in low-income
+economies; business￾process outsourcing
+jobs at risk; cheap AI
+services help farmers,
+clinics and schools
+Mixed: better
+access, weaker job
+ladder
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 22 of 31
+
+PAGINA FILE 25
+Whatlife looks like for different people in 2036
+These are illustrative portraits consistent with the median simulation, not predictions
+about individuals.
+A 24-year-old graduate in Europe or North America finds fewer junior posts in law,
+accounting, software and marketing. Those who get in are productive quickly with AI
+tools; those who don't drift into lower-paid service work. This group is the clearest
+loser of the transition.
+A mid-career office worker mostly keeps the job, but the job changes: less drafting
+and checking, more supervision ofAI output and client contact. Pay is flat in real terms;
+hours are slightly fewer.
+A nurse, electrician or care worker is in demand. Physical and caring work is little
+affected byAI and scarce because of ageing. Real wages rise modestly.
+A retiree in Japan, Italy or Germany benefits from AI-assisted care and cheaper
+services, but pensions face pressure because contributions come from wages, and
+wages are a smaller share of the economy.
+A call-centre or back-office worker in the Philippines or India faces the largest direct
+risk: this is exactly the work AI automates first, and these jobs were a main ladder into
+the middle class.
+A smallholder farmer or clinic worker in sub-Saharan Africa sees little change in
+employment but gains access to advice, diagnosis and information in local languages
+that did not exist before, if connectivity and power are available.
+Dimension World without AI,
+2036
+World with AI (median
+of all simulations),
+2036
+Net for people
+Information and
+trust
+Familiar problems of
+misinformation
+More synthetic
+content, more
+surveillance capacity;
+stronger tools against
+fraud as well
+Somewhat worse,
+governance￾dependent
+Energy and
+environment
+Steady demand
+growth
+Data-centre
+electricity demand
+rises fast (the IEA
+expects it to roughly
+double by 2030); AI
+also improves grid and
+materials efficiency
+Mixed
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 23 of 31
+
+PAGINA FILE 26
+Owners of capital and AI-intensive firms gain the most: the top 10% in advanced
+economies has about 6% more purchasing power than in the no-AI world, and
+corporate profitability is 2.5-7.5% higher.
+Overall verdictfor 2036
+On balance, across all simulations most of the world's population is slightly worse off in
+2036 than it would be without AI, and unemployment is markedly higher. About 84% of
+people live in income groups whose purchasing power is lower than without AI, almost all
+by less than 1% at the median; labour demand is about 2.1% lower worldwide for the same
+labour supply, and unemployment in advanced economies is 4.3 points higher. These are
+group averages: the loss is concentrated on workers displaced before new work appears
+and on young people entering exposed occupations, for whom it is much larger. The gains
+go mainly to owners of capital, especially in advanced economies, and to workers in
+scarce physical and care occupations. Cheaper services and better access to knowledge
+are real benefits; if they are worth what the model's plausible range assumes, the bottom
+half is still slightly worse off on average (−0.1%) and worse off in 55% of simulations.
+The data do not support the claim that AI makes everyone worse off, nor that it causes a
+general crisis by 2036. Capital owners and some occupations gain, and in scenario A the
+bottom half is better off. Nor do they support the claim that the damage is temporary:
+unemployment stays above the no-AI path for most of the horizon, and in 89% of
+simulations the bottom half is still behind the no-AI world in 2046. The objective summary
+is: slightly worse for the majority during the transition, much worse for a displaced
+minority, better for owners of capital, and not worse by necessity.
+The decisive point is that this outcome is not fixed by the technology. The gap between
+scenarios A and C in 2036, 1.7 points of purchasing power for the bottom half, is larger
+than the average effect ofAI itself (1.0), and the gap in unemployment between flexible
+and rigid wages is larger still. Whether 2036 feels like progress or like a lost decade will
+depend less on what AI can do than on whether tax systems follow income from wages to
+capital, whether entry-level careers are protected, and whether income support is
+decoupled from employment before the transition peaks, not after.
+Source for the energy figure: IEA, Energy and AI (2025). Exposure figure: IMF (see
+Sources).
+Corrective interventions: avoiding a 2036 crisis
+A package of four policies, started before 2030, turns AI's effect on the bottom half
+from a 1.1% loss in 2036 into a 3.0% gain, and a 3.3% gain by 2046, in all but 0.2% of
+simulations. The four are an AI dividend fund, income support decoupled from
+employment, retraining with faster creation of new tasks, and profit-sharing. Financed by
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 24 of 31
+
+PAGINA FILE 27
+a 5-point increase in capital income taxation and by taxing AI rents where they are used,
+the package adds about 1.3 points to world public debt by 2046. The AI dividend is the
+strongest single measure, protecting the bottom half in 90% of simulations in 2036, but its
+effect fades to +0.6% by 2046 because it brings back no jobs. No measure tested brings
+unemployment back to the no-AI path: the package cuts its 2036 rise by only a quarter.
+I tested nine interventions in the calibrated model, each on the same 2,000 simulations as
+the status quo. The chart measures AI's effect under each policy against a no-AI world
+with the same policy, so it does not credit a policy with redistribution that would happen
+anyway (annex, section 12). Three results stand out:
+Sharing ownership ofAI profits is the strongest single lever. An AI dividend fund,
+paying half of the AI-induced increase in profits as an equal dividend per person,
+makes AI's effect on the bottom half positive (+1.0% in 2036, +0.6% in 2046) at almost
+no cost to the budget, but it fails in one simulation in ten and fades as unemployment
+persists.
+Jobs need their own levers, and none is enough alone. Only retraining with faster
+new-task creation reduces unemployment, by about a quarter (to +3.3 points instead
+of +4.4 in 2036); profit-sharing now raises pay but creates no jobs. Income support
+calibrated model (Technical Annex) · 9 interventions and status quo, 2,000 paired simulations each
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 25 of 31
+
+PAGINA FILE 28
+decoupled from employment protects the bottom half in two thirds of simulations in
+2036, because it pays out when unemployment is high, but it does not create work, and
+by 2046 the bottom half still loses 2.0% under it.
+Slowing deployment barely helps. A two-year delay lowers unemployment slightly,
+costs a third of the 2036 output gain and still leaves the bottom half worse off in 92%
+of simulations. It buys time; it is not a solution.
+Recommended interventions
+Intervention What it does Model lever Who must act Start by
+Tax capital
+income where AI
+rents arise
+Strengthen taxes
+on dividends,
+capital gains and
+excess profits;
+extend the global
+minimum
+corporate tax and
+give taxing rights
+to countries
+where AI services
+are used, not only
+where firms are
+based
+Funds transfers;
+closes the fiscal
+gap of about 1%
+of GDP in
+advanced
+economies (1.2%
+in disruption)
+G20, OECD,
+national
+treasuries
+2028
+Citizens' AI
+dividend funds
+Public or
+sovereign funds
+holding stakes in
+AI and compute
+infrastructure
+(especially where
+built with public
+money), paying a
+dividend to every
+resident.
+Precedents:
+Alaska Permanent
+Fund, Norway's
+sovereign fund
+AI dividend: the
+strongest single
+lever, without
+relying on tax
+rates
+National
+governments, EU
+2030
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 26 of 31
+
+PAGINA FILE 29
+Intervention What it does Model lever Who must act Start by
+Income support
+decoupled from
+employment
+Wage insurance
+for displaced
+workers, short￾time work
+schemes (as in
+Germany's
+Kurzarbeit), a
+negative income
+tax floor, benefits
+portable across
+jobs and self￾employment
+Income support;
+cushions the
+unemployment
+peak
+National
+governments
+2030,
+before
+the
+peak
+Protect the first
+job
+Tax credits or
+social￾contribution relief
+for hiring juniors
+in AI-exposed
+occupations;
+apprenticeship
+requirements for
+large firms using
+AI at scale; public￾sector graduate
+programmes
+New-task
+creation; protects
+the skills pipeline
+Governments,
+large employers
+2027,
+already
+urgent
+Sector-based
+retraining paid
+byAI adopters
+Training levies on
+large AI users
+funding sector￾based
+programmes,
+which raised
+earnings 14-38%
+in US evaluations
+(IMF)
+New-task
+creation
+Governments,
+employers,
+unions
+2028
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 27 of 31
+
+PAGINA FILE 30
+Intervention What it does Model lever Who must act Start by
+Invest in labour￾intensive
+sectors with
+rising demand
+Care for the
+elderly, health,
+education, energy
+transition: sectors
+where ageing
+guarantees
+demand and AI
+complements
+rather than
+replaces people
+New-task
+creation; absorbs
+displaced workers
+Governments 2028
+Bargaining over
+AI deployment
+Rights to
+consultation on AI
+adoption, profit￾sharing tied to
+productivity
+gains, collective
+agreements on AI
+use (as in the
+2023 US
+screenwriters'
+contract)
+Profit-sharing Unions,
+employers,
+legislators
+2029
+Remove
+incentives that
+speed
+displacement
+End accelerated
+depreciation and
+tax breaks that
+favour labour￾replacing
+investment over
+hiring; require
+impact
+assessments
+before
+automating public
+services
+Slower, better￾sequenced rollout
+Treasuries,
+public
+administrations
+2028
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 28 of 31
+
+PAGINA FILE 31
+Early-warning triggers
+The measures above should not wait for a crisis to be visible in unemployment data, which
+lag by years. Governments should monitor three indicators and expand support
+automatically when two of them are crossed:
+1. The youth hiring gap spreads beyond age 30, or exceeds 25% in AI-exposed
+occupations.
+2. The labour share falls faster than 0.5 percentage points a year for two consecutive
+years.
+3. Labour demand (vacancies and hires) in high-exposure occupations falls for two
+consecutive years while GDP grows.
+Timeline
+2026-2028: prepare. Agree international rules on taxing AI rents; launch first-job and
+retraining programmes; set up the monitoring triggers.
+2029-2032: build capacity. Make income support independent of employment;
+capitalise AI dividend funds; scale investment in care, health and education.
+2033-2036: absorb the peak. Let automatic triggers expand support as displacement
+peaks; protect pensions; keep the pipeline of junior workers open.
+Intervention What it does Model lever Who must act Start by
+Support for
+outsourcing￾dependent
+economies
+Retraining funds
+and digital
+infrastructure for
+countries reliant
+on call-centre and
+back-office work
+(Philippines, India,
+others), financed
+from a share of
+global AI tax
+revenue
+Protects the most
+exposed
+emerging
+economies
+Multilateral
+development
+banks, G20
+2029
+Pensions not
+tied only to
+wages
+Shift part of
+pension financing
+from payroll
+contributions to
+general revenue
+and capital
+income
+Protects welfare
+as the labour
+share falls
+National
+governments
+2030
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 29 of 31
+
+PAGINA FILE 32
+Honestlimits
+These results come from a calibrated but simplified model. They show the direction
+and relative strength of each lever, not precise outcomes; section 15 of the technical
+annex lists the model's limitations.
+The cost is real. Unfinanced, the four-measure package worsens the world primary
+balance by about 0.6% of GDP a year and adds about 7 points to world public debt by
+2046. Financing it means taxing or sharing income that is concentrated among firms
+and countries with strong bargaining power.
+The hardest obstacle is political, not technical. Without international coordination,
+countries that act alone risk losing investment to those that do not.
+Timing decides everything. The same package introduced after the unemployment
+peak, which in half of the simulations falls between 2036 and 2041, arrives when the
+damage is already done. The window for prevention is roughly the next ten years.
+Sources and limits of evidence
+Limits: most labour evidence is from the US; exposure indices measure feasibility, not
+impact; the youth employment gap is descriptive; no study yet measures AI's effect on tax
+receipts directly; social unrest data come from press coverage. Figures were checked
+against source pages or their official summaries as of October 2026.
+Sources:
+Acemoglu, D. (2025), The Simple Macroeconomics ofAI, Economic Policy 40(121); NBER
+WP 32487
+Brynjolfsson, Chandar, Chen (Aug 2026), Canaries in the Coal Mine? Six Facts about
+the Recent Employment Effects ofAI
+Brynjolfsson, Li, Raymond, Generative AI at Work, NBER WP 31161
+IMF (2024), Gen-AI: Artificial Intelligence and the Future of Work, SDN/2024/001
+IMF (2024), Broadening the Gains from Generative AI: The Role of Fiscal Policies,
+SDN/2024/002
+IMF Annual Report 2026, AI: Deployment and Disruption
+IMF Fiscal Monitor, October 2025 (media summary) and April 2026 coverage
+IMF WP 2021/135, The Macroeconomic Impact of Social Unrest
+ILO Working Paper 140 (2025), Generative AI and Jobs: A Refined Global Index of
+Occupational Exposure
+ILO World Employment and Social Outlook, September 2024 update, labour income
+share
+ILO WESO May 2025 update (coverage)
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 30 of 31
+
+PAGINA FILE 33
+OECD (2025), Revenue Statistics 2025
+IFR (2025), World Robotics 2025, Industrial Robots
+WEF (2025), Future of Jobs Report 2025
+UN DESA (2024), World Population Prospects 2024, Key Messages
+NIST IR 8280 (2019), Face Recognition Vendor Test Part 3: Demographic Effects
+European Commission (Feb 2025), Guidelines on prohibited AI practices under the AI
+Act (summary)
+AI, Robotics and the Global Economy 2026-2046: An Independent Critical Review
+Page 31 of 31
+
+PAGINA FILE 34
+PART II
+Technical Annex
+Scientific analysis, model and validation
+Automation, Distribution and Public Finance
+in the Age of AI, 2026-2046
+This annex documents the calibrated model behind every number and chart in Part I:
+literature review, model equations, calibration, validation against historical data,
+Monte Carlo and global sensitivity analysis, policy evaluation and limitations.
+All results can be reproduced with the accompanying replication package (Appendix C).
+
+PAGINA FILE 35
+Automation, Distribution and Public Finance
+in the Age of AI, 2026-2046
+Technical Annex to the report “AI, Robotics and the Global Economy 2026-2046: An
+Independent Critical Review”. A calibrated task-based model with stock-flow consistent
+closure, presented as a working paper.
+Abstract
+Under current policies, AI raises world output and profits between 2026 and 2046 but
+leaves the bottom half of the income distribution slightly worse off than it would be
+without AI, with high probability. We build a three-region model of the world economy
+that combines the task-based framework ofAcemoglu and Restrepo with stock-flow
+consistent accounting of households (three income groups per region), firms and
+governments. We calibrate it to IMF, ILO, OECD, UN and World Inequality Database data,
+validate it against historical labour-share trends and IMF fiscal projections, and propagate
+parameter uncertainty through 4,000 paired Monte Carlo simulations with and without
+the AI wave.
+In 2036 world GDP is a median 1.3% higher than without AI (5th-95th percentile: 0.3% to
+3.5%). The labour share is 3.0 percentage points lower (0.75 to 7.6). Real consumption per
+head of the bottom 50% is 1.0% lower (−4.9% to +0.1%), and lower in 92% of simulations;
+by 2046 the loss reaches 3.3%. The top 10% gains 3.1% (0.7% to 7.8%) in every simulation.
+Unemployment in advanced economies is a median 4.3 points above the no-AI path in
+2036 (1.4 to 10.7); the median of each simulation's own peak is 6.3 points (2.6 to 12.8), and
+in six simulations out of ten unemployment is still more than half a point higher in 2046.
+The paper's hypothesised demand collapse does not emerge in any plausible part of the
+parameter space; the dominant mechanisms are a redistribution from labour to capital
+and from AI-using to AI-owning countries, and a long period of higher unemployment,
+because lower wages bring back only part of the work that automation removes.
+Global sensitivity analysis shows that outcomes depend mainly on the timing and extent
+of automation, on how rigid wages are, on how fast new human tasks appear and on how
+far lower wages restore labour demand; demand behaviour matters little. Among nine
+costed interventions, none protects the bottom half by itself in virtually every simulation:
+an AI dividend comes closest (90% of simulations in 2036) but fades by 2046 because it
+brings back no jobs. A package of an AI dividend, income support decoupled from
+employment, retraining and profit-sharing turns AI's effect on the bottom 50% into a
+median gain of 3.0% in all but 0.2% of simulations (measured against a no-AI world with
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 1 of 45
+
+PAGINA FILE 36
+the same policies), cuts the 2036 rise in advanced-economy unemployment by about a
+quarter, and is close to fiscally neutral when combined with a 5-point increase in capital
+income taxation.
+The effects are smaller than in much public debate and than in the illustrative model of an
+earlier version of this work. They are also persistent, regressive and concentrated in time,
+which is what makes them politically consequential.
+Keywords: artificial intelligence, automation, task-based model, labour share, stock-flow
+consistent model, income distribution, fiscal sustainability, Monte Carlo, Sobol sensitivity
+analysis
+JEL codes: E24, E25, E62, H20, J23, O33
+Disclosure
+This paper was produced with Claude, an AI system developed byAnthropic, a company
+that sells AI products. Readers should weigh that conflict of interest. The research
+questions, the demand for objectivity and several corrections came from the human
+author. The model, its code, the literature search and the drafting were carried out with
+the AI system and reviewed by the author.
+Two safeguards respond to the conflict of interest. First, an earlier draft was audited for
+pro-AI bias; six problems were found and corrected, and section 14 documents them.
+Second, every quantitative result can be reproduced from the replication package
+(Appendix C), so the results do not depend on trusting the author or the tool.
+This is a working paper. It has not been peer reviewed. Its quantitative results are
+conditional on the model and the stated parameter ranges, and are not forecasts.
+1.Introduction
+The question is not whetherAI raises output, which almost every estimate agrees it
+does, but whether the income it creates reaches households and governments in time
+to sustain demand, public services and political legitimacy. This paper answers that
+question quantitatively for 2026-2046, with explicit uncertainty.
+The starting point is a hypothesis paper that proposed a causal chain: automation
+displaces labour, displaced workers consume less, weak demand eventually constrains
+profits, labour-based tax bases erode while welfare needs rise, and social stability and the
+relation between citizens and the state deteriorate. The paper deliberately stopped short
+of quantifying any link and asked for an independent reconstruction. This paper provides
+it.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 2 of 45
+
+PAGINA FILE 37
+We make four contributions.
+1. A model that connects the links. We combine the task-based framework of
+automation (Acemoglu and Restrepo 2018, 2019), which is standard in the labour
+literature, with stock-flow consistent accounting (Godley and Lavoie 2007), which
+tracks every flow of income between households, firms, governments and regions. The
+combination lets the demand and fiscal feedbacks that the hypothesis paper
+describes either appear or fail to appear, rather than being assumed.
+2. Calibration from data, with uncertainty propagated. Every parameter is either taken
+from a cited source or given a range; 4,000 Monte Carlo draws, each run with and
+without the AI wave, produce probability statements conditional on those ranges.
+3. A test of which assumptions matter. Variance-based global sensitivity analysis (Sobol
+2001; Saltelli et al. 2008) ranks the parameters by how much of the uncertainty in each
+outcome they explain.
+4. Costed policy evaluation. Nine interventions are simulated on the same draws, with
+their fiscal cost and their effect on the bottom half of the income distribution.
+The main findings are these. AI raises output modestly in the first decade, by a median
+1.3% by 2036, consistent with conservative published estimates. It lowers the labour
+share by about 3 points by 2036 and 6 points by 2046, and the losses fall on the bottom
+half while gains accrue to the top tenth. Unemployment in advanced economies rises by a
+median 4.3 points by 2036, peaks around 2039 and is still 1.4 points higher in 2046,
+because labour demand follows technology and lower wages restore only part of it. The
+demand collapse proposed by the hypothesis paper does not appear, because the shift in
+income is gradual and investment absorbs part of the higher profits. The fiscal gap is real
+and grows with unemployment; it is manageable only if tax systems follow income from
+wages to capital. The outcome is decided mainly by timing, by the extent of automation
+and by how the labour market absorbs displacement, all of which policy can influence.
+Section 2 reviews the literature. Section 3 summarises and critiques the hypothesis paper.
+Sections 4 to 6 present the model, its calibration and its validation. Sections 7 to 10 report
+results, sensitivity and public finance. Sections 11 to 13 cover social stability, policy and a
+snapshot of 2036. Section 14 documents how this paper differs from its earlier illustrative
+version, and section 15 sets out limitations and a proposed empirical study.
+2. Literature review
+The literature agrees on the mechanisms, disagrees by an order of magnitude on their
+size, and has almost no evidence yet on the fiscal and demand channels that matter
+most for this paper. The review is organised by mechanism. Searches covered NBER, IMF,
+ILO, OECD, BIS and peer-reviewed journals through October 2026; values cited were
+checked against the source or its official working-paper version.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 3 of 45
+
+PAGINA FILE 38
+2.1Task-based models of automation
+Acemoglu and Restrepo (2018, 2019) model production as a set of tasks performed by
+labour or capital. Automation moves tasks from labour to capital (the displacement
+effect), while new tasks in which labour has a comparative advantage reinstate it (the
+reinstatement effect). Their decomposition of US data finds that in 1947-1987
+displacement (0.48% a year) and reinstatement (0.47% a year) roughly offset each other,
+while in 1987-2017 displacement accelerated to 0.70% a year and reinstatement slowed to
+0.35%, lowering the task content of labour by about 10%. In manufacturing displacement
+reached about 1.1% a year. Acemoglu and Restrepo (2022) attribute 50-70% of the
+changes in the US wage structure over four decades to task displacement.
+Acemoglu (2025) applies this framework to AI: the total-factor-productivity gain equals
+the share of GDP in tasks affected multiplied by the average cost saving. With existing
+exposure and productivity estimates he obtains no more than a 0.66% TFP gain over ten
+years, and finds that AI is likely to widen the gap between capital and labour income.
+Korinek and Suh (2024) show that the outcome is a race between automation and capital
+accumulation: slow automation can raise wages indefinitely, while fast automation can
+lower them before full automation is reached.
+2.2 Diffusion and the productivity lag
+General-purpose technologies take decades to show up in productivity. Factory
+electrification reached about half of mechanical drive only four decades after the first
+central power stations (David 1990). Brynjolfsson, Rock and Syverson (2021) explain the
+lag as a "productivity J-curve": intangible investments are not measured early, so
+measured productivity first understates and later overstates the true gain. Comin and
+Hobijn (2010) find an average adoption lag of 45 years across 166 countries, shorter for
+newer technologies.
+2.3Evidence on AI and labour markets
+Exposure is broad. About 40% of global employment is exposed to AI, 60% in advanced
+economies and 26% in low-income countries; in advanced economies 33 of those 60
+points are in jobs with low complementarity (Cazzaniga et al. 2024). The ILO's refined
+index finds one worker in four in an occupation with some generative-AI exposure and
+3.3% in the highest tier (Gmyrek et al. 2025). Eloundou et al. (2024) estimate that about
+1.8% of US jobs have more than half of their tasks exposed to large language models alone,
+rising to about 46% once complementary software is considered.
+Measured effects are narrower so far. A generative-AI assistant raised customer-support
+productivity by 14% on average and 34% for novices (Brynjolfsson, Li and Raymond
+2025). Employment of 22-25 year olds in the most exposed occupations stands 19% below
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 4 of 45
+
+PAGINA FILE 39
+that of less-exposed peers, mainly through reduced hiring, while experienced workers
+show no comparable gap (Brynjolfsson, Chandar and Chen 2026); the authors present
+this as descriptive, not causal.
+2.4 Robots
+One more industrial robot per thousand workers reduced the US employment-to￾population ratio by 0.2 points and wages by 0.42% in affected local labour markets
+(Acemoglu and Restrepo 2020). In Germany, manufacturing job losses from robots were
+fully offset by new service jobs, but the burden fell on young entrants rather than
+incumbents (Dauth et al. 2021). The global stock of industrial robots reached 4.66 million
+in 2024, growing 9% a year (IFR 2025).
+2.5The labour share
+The global corporate labour share fell about 5 points between 1975 and the early 2010s,
+half of it explained by cheaper investment goods (Karabarbounis and Neiman 2014). The
+ILO estimates that the global labour income share fell from 53.0% in 2014 to 52.4% in
+2024, a 1.6-point fall since 2004. Estimates of the capital-labour elasticity of substitution
+diverge: 1.25 for Karabarbounis and Neiman, 0.5-0.7 for US manufacturing in Oberfield and
+Raval (2021). Polarisation of employment and wages in 1980-2005 is linked to the falling
+cost of automating routine tasks (Autor and Dorn 2013). About 60% of US employment in
+2018 was in job titles that did not exist in 1940 (Autor et al. 2024), which is the strongest
+evidence that reinstatement is real but slow.
+2.6 Distribution and aggregate demand
+Whether a shift from wages to profits reduces demand depends on how much different
+households spend. Micro estimates of the annual marginal propensity to consume lie
+between 0.2 and 0.6, far above the values in representative-agent models; in simulated
+wealth distributions it ranges from 0.48 in the bottom fifth to 0.06 in the top tenth (Carroll
+et al. 2017). Average propensities to consume in the US fall from about 0.97 in the bottom
+income quintile to about 0.48 in the top (Fisher et al. 2020). Globally, the top 10% receives
+53% of pre-tax income and owns about 75% of wealth, while the bottom 50% receives 8%
+and owns 2% (World Inequality Report 2026). Stock-flow consistent models (Godley and
+Lavoie 2007) are the standard tool for tracing such distributional shifts through demand,
+saving and debt.
+2.7 Public finance
+Global public debt was just under 94% of GDP in 2025 and is projected to exceed 100% by
+2029 (IMF Fiscal MonitorApril 2026), before anyAI shock. In the OECD, social
+contributions (25.5%) and personal income taxes (23.7%) are the two largest sources of
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 5 of 45
+
+PAGINA FILE 40
+revenue, and the share of income tax coming from employed labour fell in most countries
+between 2011 and 2023 (OECD Revenue Statistics 2025). The IMF recommends
+strengthening general taxes on capital income rather than a special tax on AI, and
+reviewing tax incentives that speed labour displacement (Brollo et al. 2024). The global
+minimum corporate tax of 15% is in force but was weakened in January 2026 by a safe
+harbour for US-parented groups; the reallocation of taxing rights to market countries
+(Pillar One, Amount A) has stalled.
+2.8 Historical analogues
+The closest precedent for a long transition gap is "Engels' pause" (Allen 2009). In Britain in
+1800-1830 output per worker grew 0.63% a year while real wages did not grow at all; wages
+caught up only after 1830 and grew faster than output only after 1860. A pause of three
+decades is the historical benchmark against which a 2026-2046 transition should be
+judged.
+2.9Evidence on policy instruments
+Unconditional transfers do not reduce work at the scale studied. Finland's 2017-2018
+basic income experiment had small employment effects and clear improvements in
+wellbeing, trust and economic security (Kela 2020). The Alaska Permanent Fund
+Dividend had no effect on overall employment and raised part-time work (Jones and
+Marinescu 2022). A universal basic income in Kenya increased enterprise formation
+and did not reduce total hours worked (Banerjee et al. 2023).
+Short-time work stabilises employment but does not reallocate it. Giupponi and
+Landais (2023) find large effects on headcount and negative spillovers on employment
+growth at other firms; German short-time work covered almost 6 million workers in
+April 2020.
+Sector-based training raises earnings substantially. Earnings gains of 11-40% persist
+after training ends, mainly through placement in higher-wage sectors (Katz et al. 2022).
+Collective agreements can govern AI use. The 2023 agreement of the Writers Guild of
+America established that AI output is not literary material, that its use cannot be
+imposed on writers, and that companies must disclose it.
+2.10What remains open
+No study yet measures AI's effect on tax receipts, on aggregate demand, or on social
+stability. The size of the productivity gain is uncertain by an order of magnitude. Evidence
+on reinstatement, the variable that matters most in this paper's results, comes almost
+entirely from the twentieth century.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 6 of 45
+
+PAGINA FILE 41
+3.The original hypothesis paper and its critique
+The hypothesis paper identifies the right mechanisms but leaves them unconnected
+and unquantified, and omits three variables that change its conclusions: demographics,
+timing, and where AI profits are booked. It asks to be tested rather than confirmed, and
+this paper treats it that way.
+The paper proposes a chain from automation to lower labour demand, weaker household
+income and consumption, eventually lower profits, eroding labour-based tax bases, higher
+welfare needs, and finally social instability and a shift toward automated security. It offers
+three scenarios (inclusive growth, polarisation, structural disruption) and six indicators,
+and explicitly asks for independent modelling, uncertainty and evidence.
+What the paper omits:
+Claim in the hypothesis
+paper
+Status after review Basis
+Task automation is not
+occupation elimination
+Supported ILO 2025; Acemoglu and
+Restrepo 2019
+AI extends automation to
+cognitive work
+Supported Exposure highest in
+clerical, software, media,
+finance (ILO 2025; IMF
+2024)
+Job creation may not match
+displacement
+Supported as a risk;
+reinstatement fell from 1.0 to
+0.5 per unit of displacement
+after 1987
+Acemoglu and Restrepo
+2019
+Gains to low spenders
+weaken demand
+Mechanism real, effect small
+in this model
+Section 7: demand shortfall
+appears in few simulations
+and is small
+Weak demand eventually
+constrains profits
+Not supported in the
+plausible parameter space
+Sections 7 and 9
+Labour-based tax bases
+erode while welfare needs
+rise
+Supported, but manageable
+if taxes follow capital income
+Section 10
+Insecurity changes state￾citizen relations through
+surveillance
+Plausible, not quantifiable Section 11
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 7 of 45
+
+PAGINA FILE 42
+Demographics. Labour supply is shrinking in advanced economies and growing fast in
+low-income countries. AI interacts with a labour shortage in the first case and with a
+youth bulge in the second.
+Timing. The harm comes from the gap between displacement and the creation of new
+tasks. Outcomes must be judged as paths, not end points.
+Geography of profits. AI rents concentrate in a few firms and countries. A country can
+use AI without collecting tax on the profits it generates.
+Investment. Capital spending on AI is itself a source of demand that offsets part of
+any consumption shortfall.
+Methodological problems: the six indicators mix levels, ratios and composites on one
+normalised scale; "violence and social instability" merges protest, crime and political
+violence, which the paper itself says are distinct; and there is no country dimension, so
+opposite regional stories are averaged away. This paper addresses each point: indicators
+are reported in natural units relative to a no-AI counterfactual, social stability is treated
+qualitatively (section 11), and the model has three regions.
+4.The model
+The model is built so that the hypothesis paper's feedback loops can appear or fail to
+appear, rather than being assumed. It has three regions (advanced, emerging and middle￾income, low-income), each with firms, a government and households in three income
+groups (bottom 50%, middle 40%, top 10%). It runs annually from 2026 to 2046. Full
+equations are in Appendix A.
+model structure · 4 sectors, 3 income groups, 3 regions
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 8 of 45
+
+PAGINA FILE 43
+4.1 Production and tasks
+Following Acemoglu and Restrepo (2018, 2019), production combines a continuum of tasks
+performed either by labour or by capital, here including AI. With a unit elasticity of
+substitution across tasks, the labour share of income equals the labour task content of
+production. AI adoption follows a logistic diffusion curve whose ceiling, timing and speed
+are uncertain. Each yearAI displaces labour from a share of tasks equal to the exposed
+share of employment, times the substitutable fraction of that exposure, times the
+increase in adoption. After a lag, new tasks reinstate labour in proportion to past
+displacement. Labour task content also erodes slowly for non-AI reasons, at a rate
+calibrated to the historical decline of the labour share.
+\Gamma_{L,t} = \Gamma_{L,t-1}\,\bigl(1 - d_0 - \delta^{AI}_t +
+\rho^{AI}_t\bigr), \qquad \delta^{AI}_t = \phi\,\Delta(E_t a_t), \qquad
+\rho^{AI}_t = \psi\,\phi\,\Delta(E_{t-\ell} a_{t-\ell})
+Productivity follows Acemoglu's (2025) rule: the gain equals the share of GDP in the tasks
+automated times the cost saving on them. Augmented tasks, those where AI
+complements rather than replaces workers, add a further gain.
+g^{AI}_t = \Gamma_{L,t-1}\,\delta^{AI}_t\,\pi + \mu\,(1-\phi)\,\Delta(E_t
+a_t)\,\Gamma_{L,t-1} + \tfrac{1}{2}\,\pi\,\Gamma_{L,t-1}\,\rho^{AI}_t
+4.2 Labour market
+The wage bill equals the labour share times output. Wages per worker follow trend
+productivity net of the slow non-AI erosion of the labour share, pass through part of any
+extra productivity growth, and respond to unemployment through a wage Phillips-curve
+term whose slope is calibrated to post-1990 estimates (0.05 to 0.5). Labour demand is the
+number of workers firms want at the current wage. Labour supply is the labour force from
+UN projections. Unemployment is the gap between them, never below the structural rate;
+when demand for labour exceeds supply, wages rise until the market clears. Displacement
+therefore shows up first as unemployment and later as slower wage growth, as wages
+adjust. Labour demand is derived from technology and output: the tasks left to labour
+times output, valued at the wage of the no-AI world, adjusted for the wage gap with a
+constant-output elasticity drawn between 0.15 and 0.75 (Hamermesh 1993). Lower wages
+therefore restore only part of the jobs automation removes, and the wage bill falls with
+employment.
+Workers can also recover part of the AI-induced fall in the labour share through bargaining
+or profit-sharing. This share is small under the status quo and is a policy lever.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 9 of 45
+
+PAGINA FILE 44
+4.3 Households
+Each income group receives a fixed share of labour income, capital income in proportion
+to its wealth, pensions, unemployment benefits, interest on public debt, and any policy
+transfers. It consumes a group-specific share of disposable income and saves the rest.
+Savings and retained corporate profits accumulate as wealth, so the distribution of capital
+income evolves: if profits rise and the rich save more, wealth concentrates further.
+4.4 Firms, investment and demand
+Firms retain a share of after-tax profits. Investment responds to the profit share with an
+uncertain elasticity, so higherAI profits can be recycled into capital spending (profit-led
+demand) or not (wage-led demand). Output is the lower of supply and effective demand.
+The no-AI world is assumed to run at potential, because monetary policy closes ordinary
+demand gaps. A demand shortfall caused byAI, measured relative to that baseline,
+reduces output with an uncertain pass-through that reflects how far monetary and fiscal
+policy can offset it.
+4.5 Government
+Governments tax labour income, capital income and consumption, with rates calibrated to
+each region's revenue and tax mix. They spend on purchases, pensions (rising with
+ageing), unemployment benefits and interest. Debt evolves with the primary balance and
+the gap between interest rates and growth.
+4.6 Regions
+A share of the AI-induced capital income generated in emerging and low-income
+economies is booked in advanced economies and paid to their top 10%. This captures the
+concentration of frontierAI firms and the stalled reallocation of taxing rights under OECD
+Pillar One.
+4.7 Accounting closure
+In every region and year, the sectoral balances (household saving, firm saving net of
+investment, government saving and net payments abroad) must sum to output minus
+aggregate demand. The model checks this identity in every period of every simulation.
+Across 4,000 paired runs the largest violation is 5 × 10⁻¹⁶ of GDP, machine precision: no
+income leaks or appears from nowhere.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 10 of 45
+
+PAGINA FILE 45
+5. Calibration
+Fixed values come from IMF, ILO, OECD, UN and World Inequality Database sources;
+twenty-one uncertain parameters are given ranges from the literature and sampled
+uniformly. Uniform priors are deliberately uninformative: they express which values are
+plausible without claiming to know which are likely. Appendix B lists every prior with its
+justification.
+5.1 Regions and initial conditions (2025-2026)
+Variable Advanced Emerging and
+middle-income
+Low￾income
+Source
+Share of world
+GDP (market
+rates)
+57% 40% 3% Approximate, IMF WEO
+aggregates
+(assumption)
+Share of world
+adult population
+14% 70% 16% Approximate, UN WPP
+2024 (assumption)
+Labour income
+share
+55.4% 50.0% 38.5% ILO; emerging value set
+consistent with the
+52.4% global average
+Employment
+exposed to AI
+60% 40% 26% Cazzaniga et al. 2024
+Baseline real GDP
+growth
+1.6% 4.0% 4.5% Approximate IMF
+medium-term
+projections
+(assumption)
+Labour supply
+growth, 2026 to
+2046
+−0.2% to
+−0.4%
++0.6% to
++0.2%
++2.6% to
++2.3%
+Derived from UN WPP
+changes in ages 20-64
+Government
+revenue, % GDP
+36.3% 26% 15% IMF DataMapper
+(advanced); Fiscal
+Monitor proxies
+Gross public debt,
+% GDP (2025)
+108.0% 75.3% 48.2% IMF Fiscal MonitorApril
+2026
+Primary balance, %
+GDP
+−1.6% −3.5% −0.8% Overall balance (Fiscal
+Monitor) less assumed
+interest
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 11 of 45
+
+PAGINA FILE 46
+5.2 Income groups
+The shares of labour income by group are derived so that labour income plus capital
+income (wealth share times the capital share) reproduces each group's total income
+share.
+5.3 Uncertain parameters
+Variable Advanced Emerging and
+middle-income
+Low￾income
+Source
+Public pensions, %
+GDP
+8.1% 4.0% 1.2% OECD Pensions at a
+Glance 2025; others
+assumed
+Group shares Bottom
+50%
+Middle
+40%
+Top
+10%
+Source
+Income, advanced 17% 43% 40% Blend of WIR 2022 Europe (top
+10% 36%) and North America
+Income, emerging 12% 40% 48% WIR 2022: East Asia 43%, Latin
+America 55%
+Income, low-income 9% 36% 55% WIR 2022: bottom 50% below
+10% in Sub-Saharan Africa
+Wealth, advanced 4% 34% 62% WIR 2022: Europe 4/38/58; top
+10% 60-80% everywhere
+Wealth, emerging 3% 27% 70% Within WIR ranges
+(assumption)
+Wealth, low-income 2% 23% 75% Within WIR ranges
+(assumption)
+Propensity to
+consume, advanced
+0.85 0.58 0.40 Fisher et al. 2020, US quintiles
+mapped to groups
+Parameter Range Anchor in the literature
+Substitutable exposed tasks
+automated by 2046
+25-70% Eloundou et al. 2024: 1.8% to 46%
+of jobs, depending on
+complementary software
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 12 of 45
+
+PAGINA FILE 47
+Parameter Range Anchor in the literature
+Substitution share of exposed
+jobs
+40-70% IMF: 33 of 60 points in advanced
+economies (55%)
+Year of fastest adoption
+(advanced)
+2030-2040 Diffusion literature
+Adoption lag, emerging / low￾income
+1-5 / 3-10 years Comin and Hobijn 2010
+Growth of exposed share by
+2046
+1.0-1.6× Robot stock +9% a year (IFR 2025);
+widening capabilities
+Reinstatement per unit of
+displacement
+0.25-0.85 Acemoglu and Restrepo 2019: 1.0
+(1947-87), 0.5 (1987-2017)
+Lag before new tasks appear 4-10 years Productivity J-curve
+Non-AI erosion of labour task
+content
+0.10-0.35% a year ILO 2004-24; Acemoglu and
+Restrepo 1987-2017
+Cost saving on automated tasks 15-45% Acemoglu 2025: 27%
+Gain on augmented tasks 0-30% Brynjolfsson, Li and Raymond: 14%
+average
+Wage pass-through; Phillips
+slope
+0.3-1.0; 0.05-0.5 Assumption (pass-through);
+FRBSF 2017: 0.45 in 1991-2008, 0.14
+in 2009-15 (slope)
+Workers' share ofAI rents
+(status quo)
+0-30% Assumption
+Investment response to profit
+share
+0-1 Profit-led vs wage-led demand
+debate
+Net pass-through of demand
+shortfall
+0.3-1.0 Assumption, after monetary and
+fiscal offsets
+AI rents in emerging/low-income
+booked abroad
+20-60% Assumption
+Real interest rate shift ±1 point Assumption
+Unmeasured welfare from AI
+services
+0-5% of
+consumption
+Assumption, used only in welfare￾adjusted results
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 13 of 45
+
+PAGINA FILE 48
+A twenty-first parameter, the wage elasticity of labour demand, is drawn from 0.15 to 0.75,
+the range of Hamermesh (1993); the meta-analysis of Lichter, Peichl and Siegloch (2015)
+finds a mean of about 0.25. Where the evidence is thin, the ranges are wide on purpose.
+Several values are assumptions; they are labelled as such, and section 9 shows which of
+them actually matter for the results.
+6. Validation
+The model passes four external checks: it reproduces observed labour-share declines,
+tracks the IMF's debt projections to within about 3 points, can generate an Engels'-
+pause episode, and sits at the conservative end of published estimates ofAI's effect on
+GDP. None of these checks was used to set the parameters they test, except where
+stated.
+6.1 Labour-share erosion
+The non-AI erosion parameter must reproduce the labour-share declines observed before
+generative AI.
+The observed declines fall inside the model's range and toward its lower half. US-derived
+rates would over-predict the global decline, which is why the prior extends below them.
+6.2 Fiscal path
+Without AI and at central parameters, the model's debt ratios in 2031 are compared with
+the IMF Fiscal Monitor's April 2026 projections, which the model was not calibrated to.
+Benchmark Observed
+change
+Model
+range
+Implied
+annual
+erosion
+Inside
+prior range
+ILO global labour income
+share, 2004-2024
+−1.6 points −1.1 to −3.7
+points
+0.15% Yes
+Global corporate labour share,
+1975-2012 (Karabarbounis and
+Neiman 2014)
+−5.0 points −2.3 to
+−7.8 points
+0.22% Yes
+US task content, 1987-2017
+(Acemoglu and Restrepo 2019)
+about −10% – 0.35% Yes, upper
+bound
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 14 of 45
+
+PAGINA FILE 49
+6.3Engels' pause
+In Britain in 1800-1830 output per worker grew 0.63% a year while real wages stagnated
+(Allen 2009). In the task framework this requires net displacement of about 0.6% a year
+with negligible reinstatement, which would lower the labour share by 17% over 30 years.
+This is within the range the model can generate: the lowest reinstatement values in the
+prior, combined with fast adoption, produce net displacement of this size in advanced
+economies. Modern US manufacturing displacement, about 1.1% a year in 1987-2017, was
+larger still.
+6.4 Macro magnitude
+The model's median GDP gain after ten years (2036) is 1.3%, with a 5th-95th percentile
+range of 0.3% to 3.5%. Acemoglu's (2025) upper bound of a 0.66% TFP gain over ten years
+corresponds to roughly 0.9% of GDP, below the model's median of 1.3%. Considerably
+larger estimates exist, but they assume broader and faster adoption than the evidence
+through 2026 supports. The model therefore sits at the conservative end of the literature.
+Larger productivity gains would soften the distributional result but not remove it. In the
+fifth of simulations with the largest cost savings, the bottom half is still worse off in 2036
+in 82% of runs (median −0.6%). When cost savings and gains on augmented tasks are
+both in their top fifth, the bottom half's median loss shrinks to 0.3% and it is worse off in
+64% of runs, while the top 10% gains 3.8%. By 2046 high-saving runs still leave the bottom
+half worse off (median −2.1%). With larger gains, the bottom half's loss in 2036 becomes
+small; the direction of inequality does not change.
+6.5What validation cannot show
+None of these checks tests the model's behaviour underAI itself, because there is no
+historical AI wave to compare it with. They show that the model's building blocks behave
+plausibly on the data that exist. The forward-looking results remain conditional.
+Gross debt, % GDP, 2031 Model (no AI) IMF projection Difference
+Advanced economies 113.6 114.8 −1.2
+Emerging and middle-income 85.8 88.9 −3.1
+Low-income developing 46.9 44.0 +2.9
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 15 of 45
+
+PAGINA FILE 50
+7. Results: aggregate paths
+AI raises world output in every simulation and lowers the labour share in every
+simulation; the median effect on output reaches 1.3% by 2036 and 3.2% by 2046, while
+the labour share falls by 3.0 points by 2036 and 5.9 points by 2046. All results are
+differences between paired runs of the same parameter draw with and without the AI
+wave, so they isolate the effect ofAI from everything else in the baseline.
+Three patterns stand out.
+Output gains are modest and back-loaded. Diffusion takes time, and the productivity
+gain is the cost saving on automated tasks, which is a fraction of their value. Even at
+the 95th percentile, world GDP is 3.5% higher in 2036.
+The fall in the labour share is persistent. It deepens into the 2040s and recovers only
+slightly as new tasks appear. In virtually no simulation (0.2%) does it return to the no￾AI path by 2046.
+Unemployment is a persistent problem. In advanced economies the median path rises
+to about 4.9 points above the no-AI world in 2039, stays above 4 points from 2036 to
+2041 and is still 1.4 points higher in 2046: new tasks and lower wages close only part of
+model simulations · 4,000 paired draws (with and without AI), 2026-2046
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 16 of 45
+
+PAGINA FILE 51
+the gap. Individual simulations peak higher: the median of each simulation's own peak
+is 6.3 points (5th-95th percentile 2.6 to 12.8), and half of them peak between 2036 and
+2041. In six simulations out of ten unemployment is still more than half a point higher in
+2046; in the fifth with the most rigid wages it is a median 4.0 points higher. In emerging
+economies the increase is 1.9 points in 2036 and peaks at about 3.3 points around 2041;
+it is still 2.3 points in 2046.
+The demand collapse does not materialise. In 69% of simulations demand never falls
+short of supply by more than 0.1% of output in any region or year; the largest shortfall in
+any simulation is 2.5% of output. The shift of income toward high-saving households is too
+gradual, and higher profits are partly recycled into investment. This holds across the
+whole range of demand parameters, including the case where investment does not
+respond to profits at all (section 9).
+The bottom 50%, shown in the last panel, is worse off than in a world without AI in 92% of
+simulations in 2036, by a median 1.0%. The gap keeps widening throughout the horizon,
+flattening only after 2044; by 2046 the bottom half is worse off in 89% of simulations, by a
+median 3.3%. Section 8 shows who is behind these averages.
+8. Results: who gains and who loses
+In 2036 the bottom 50% is worse off than without AI in every region, while the gains
+concentrate in the top 10% of advanced economies, whose consumption is a median
+5.7% higher. The middle 40% roughly breaks even in advanced economies and loses
+slightly elsewhere.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 17 of 45
+
+PAGINA FILE 52
+The pattern follows directly from the model's structure, but its size and regional shape are
+results, not assumptions.
+Advanced economies. The bottom half loses a median 1.0% in 2036 and 3.0% in 2046.
+The middle 40% roughly breaks even (+0.1% in 2036, +0.5% in 2046) because it owns
+some capital and benefits from higher output. The top 10% gains 5.7% in 2036 and
+13.1% in 2046, with a 95th percentile above 14% in 2036.
+Emerging economies. All groups below the top lose in 2036, and even the top 10%
+gains only 0.3%. A share of the AI profits generated in these economies is booked in
+advanced economies, so the local owners of capital capture less of the gain while local
+workers bear the displacement.
+Low-income economies. Effects are small in 2036 because adoption arrives late, but
+they grow: by 2046 the bottom half is 3.8% worse off than without AI. In every region
+the bottom half's position deteriorates between 2036 and 2046.
+Unmeasured benefits could offset most of the bottom half's loss in 2036, but not the
+direction of inequality. IfAI services deliver welfare not captured in measured
+consumption (cheaper advice, translation, tutoring), worth between 0% and 5% of
+consumption at full adoption, the world's bottom 50% is a median 0.1% worse off in 2036
+model simulations · 4,000 paired draws, income groups within each region, 2036 and 2046
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 18 of 45
+
+PAGINA FILE 53
+rather than 1.0%, and worse off in 55% of simulations instead of 92%. The size of these
+benefits is not known, so this result is reported separately and not used in the main
+estimates. Even with them, the top 10% gains many times more than the bottom half.
+9. Global sensitivity analysis
+What happens to households depends on when AI spreads and how fast new human
+tasks appear; what happens to jobs depends mostly on how early and how broadlyAI
+automates; neither depends much on how demand behaves. Total-order Sobol indices
+measure the share of each outcome's variance that a parameter explains, alone or
+through interactions. They were estimated from 23,552 paired runs using Saltelli sampling.
+Four results matter for the argument.
+1. Timing dominates the medium term. The year of fastest adoption explains 48% of the
+variance of the bottom half's outcome in 2036, 60% of the GDP effect and 43% of
+advanced-economy unemployment in 2036.
+2. The long term depends on how the labour market absorbs displacement. By 2046
+wage flexibility (25%), the number of new tasks per task displaced (19%) and the wage
+elasticity of labour demand (19%) explain most of the variance of the bottom half's
+Sobol analysis · 23,552 paired model runs (Saltelli sampling, N = 1,024), 21 parameters
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 19 of 45
+
+PAGINA FILE 54
+outcome. Reinstatement is the parameter on which the historical evidence is weakest
+(section 2.10). For debt in 2046 the extent of automation matters most (25%).
+3. Unemployment depends mainly on how early and how broadlyAI automates. The
+timing of adoption (43%), the extent of automation (27%) and the substitutable share
+of exposure (13%) explain most of the variance of advanced-economy unemployment
+in 2036; wage flexibility explains 11%.
+4. The demand channel is not where the risk lies. The two demand parameters, the
+response of investment to profits and the pass-through of demand shortfalls to
+output, each explain at most 1.5% of the variance of any outcome. The hypothesis
+paper's central feedback loop exists in the model but is quantitatively minor.
+The policy implication follows directly. The levers that matter most are the ones that
+affect timing, reinstatement and how the labour market absorbs displacement: how fast
+AI is deployed, how fast displaced workers are retrained and new tasks created, and how
+income is protected while wages and jobs adjust. Section 12 tests them.
+10. Public finance and debt sustainability
+AI weakens public finances modestly under current tax systems, mainly in advanced
+economies: the primary balance worsens by a median 1.0% of GDP in 2036 and debt is
+11.2 points higher by 2046. Ageing, not AI, remains the dominant fiscal pressure. In the
+no-AI baseline, advanced-economy debt already rises from 108% to about 132% of GDP by
+2046 because of pensions and interest.
+Effect ofAI vs no-AI world (median,
+5th-95th percentile)
+Advanced Emerging Low-income
+Labour-tax revenue, 2036, % GDP −1.26 (−2.98 to
+−0.35)
+−0.19 (−0.65 to
+−0.02)
+−0.01
+Capital-tax revenue, 2036, % GDP +0.84 (0.23 to
+1.98)
++0.19 (0.02 to
+0.65)
++0.01
+Primary balance, 2036, % GDP −0.99 (−2.27 to
+−0.28)
+−0.22 (−0.76 to
+−0.02)
+−0.02
+Gross debt, 2046, % GDP +11.2 (+3.4 to
++26.0)
++3.3 (+0.7 to
++8.9)
++1.0 (+0.1 to
++2.9)
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 20 of 45
+
+PAGINA FILE 55
+10.1The mechanism:the base shifts,the rates do not
+GDP rises with AI, but income moves from wages, taxed at an effective 28% in advanced
+economies, to capital income, taxed at about 19%. Revenue falls even though the tax base
+as a whole grows. Unemployment benefits during the transition add to the gap. The
+shortfall is a matter of tax design, not of insufficient income.
+10.2What would close the gap
+In advanced economies AI shifts about 4.5 points of GDP from labour to capital income by
+2036. Taxing that shift at an effective rate of about 41%, rather than the current 19%,
+would keep the primary balance unchanged. That is somewhat above the rate at which
+labour income is already taxed when social contributions are included (28%), because the
+shift also raises unemployment benefits. Section 12 shows that a broader 5-point increase
+in capital income taxation, recycled as transfers, improves the primary balance slightly
+and lowers debt by 2046.
+10.3Three caveats
+Collection is the binding constraint. Capital is mobile and AI profits are concentrated
+in a few firms and jurisdictions. The weakening of the global minimum tax in January
+2026 and the stalled Pillar One make higher effective rates harder to achieve
+unilaterally.
+The fiscal effect is regressive across countries. Emerging and low-income economies
+lose labour-tax revenue but collect less of the profit gain, because part of it is booked
+abroad.
+Tail risks are larger than medians. In the 5% worst simulations advanced-economy
+debt is about 26 points higher by 2046, on top of a baseline already above 130%. In a
+world where interest rates exceed growth, that matters more than its size suggests.
+The hypothesis paper's concern about fiscal sustainability is therefore correct in
+direction but mis-sized. AI is an aggravating factor on top of an ageing-driven debt
+problem, not its main cause.
+11. Social stability and automated policing
+The model does not forecast unrest, and this paper does not attempt to: the evidence
+links economic stress to unrest only through institutions, and no defensible
+quantitative model of that link exists for 2026-2046. What the model does provide are
+the inputs that the unrest literature associates with risk: a concentrated income loss for
+the bottom half, a long unemployment peak in the late 2030s, and widening gaps between
+regions.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 21 of 45
+
+PAGINA FILE 56
+11.1Whatthe model implies for social risk
+The stress is concentrated, not general. Average output rises, so aggregate indicators
+will look benign. The loss falls on the bottom half, on young entrants (section 2.3) and
+on emerging economies. Unrest risk depends on concentrated, visible losses, which is
+the pattern the model produces.
+Link in the hypothesis
+paper
+What the evidence shows What remains speculation
+Economic stress raises
+unrest
+Socio-economic protests are
+followed by sharper GDP
+contractions than political
+ones; strong institutions and
+fiscal space reduce the
+damage (Hadzi-Vaskov,
+Pienknagura and Ricci 2021)
+That AI-related job loss
+triggers unrest; no event so far
+is attributable to it
+Unrest damages the
+economy
+A one-standard-deviation rise
+in the IMF unrest index leaves
+GDP 0.2 points below baseline
+after six quarters; a major
+event about 1 point
+Long-run effects
+Budgets push policing
+toward automation
+Plausible: security budgets
+face the same wage pressures
+as other services
+That savings exceed
+equipment, maintenance,
+cybersecurity and oversight
+costs
+Law permits AI
+surveillance
+The EU AI Act bans real-time
+remote biometric
+identification in public spaces
+for law enforcement since
+February 2025, with narrow
+authorised exceptions, and
+bans social scoring by public
+authorities
+That other jurisdictions follow
+Facial recognition is
+reliable enough
+False-positive rates differ by
+factors of 10 to over 100
+across demographic groups in
+many algorithms; the best
+show no detectable
+differential (NIST IR 8280)
+Whether deployed systems
+use the best algorithms and
+thresholds
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 22 of 45
+
+PAGINA FILE 57
+The timing coincides with fiscal pressure. The unemployment peak of the late 2030s
+arrives when ageing has already raised debt and pension spending. Fiscal space, which
+the IMF evidence identifies as the main buffer, will be thinnest when it is most needed.
+The regional dimension may matter more than the national one. A world in which AI
+profits flow from emerging to advanced economies, while displacement occurs in both,
+creates a new axis of international grievance.
+11.2 Automated policing
+AI-assisted analysis (pattern search, triage, patrol planning) is already deployed and
+cheap. Robotic patrol and autonomous coercion are costly, fragile and face liability gaps.
+Police budgets are mostly wages, so automation saves money only if oversight and error
+costs are ignored. The main risk is not a budget-driven substitution but an asymmetric
+drift: surveillance capacity growing while social provision weakens, without any single
+decision. That risk is highest where courts, the press and data-protection authorities are
+weak.
+Automated assistance with a named human decision-maker is governable. Autonomous
+coercive decisions break existing rules on liability and due process and should be treated
+as a legal bright line, not a fiscal option. The hypothesis paper's single "violence and social
+instability" indicator should be split into peaceful protest, civil unrest, crime and political
+violence, which have different causes and opposite policy implications.
+12. Policy evaluation
+No single measure protects the bottom half in virtually every simulation: an AI dividend
+comes closest (90% of simulations in 2036) but fades by 2046. A package that adds
+income support, retraining and profit-sharing turns AI's effect on the bottom half from
+−1.1% to +3.0% in 2036 in all but 0.2% of simulations, but cuts the 2036 rise in
+advanced-economy unemployment by only a quarter. Each intervention starts in 2027
+and is simulated on the same 2,000 parameter draws as the status quo.
+The chart measures the effect ofAI under each policy regime: the AI world with the policy
+compared with a no-AI world with the same policy. This isolates whether a policy
+neutralises AI's distributional harm, rather than crediting it with redistribution that would
+happen without AI.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 23 of 45
+
+PAGINA FILE 58
+model simulations · 9 interventions and status quo, 2,000 paired draws each
+Intervention Unemployment, adv.,
+2036 (points vs no￾AI)
+World
+GDP, 2036
+(% vs no￾AI)
+Primary
+balance, 2030-
+40 avg (% GDP
+vs status quo)
+World debt,
+2046 (points
+vs status
+quo)
+Bottom 50%,
+2036, vs no-AI
+world without
+policy
+Status quo +4.44 +1.31 0 0 −1.1%
+Capital income tax
++5 points, recycled
+per head
++4.42 +1.34 +0.35 −6.0 +8.2%
+AI dividend fund
+(50% ofAI-induced
+profits)
++4.43 +1.33 +0.05 −1.0 +1.0%
+Income support
+decoupled from
+work
++4.42 +1.34 −0.71 +11.1 +3.3%
+Retraining and
+faster new-task
+creation
++3.30 +1.38 −0.01 −1.4 −0.7%
+Bargaining and
+profit-sharing
++4.43 +1.32 +0.07 −1.4 −0.4%
+Slower rollout (+2
+years)
++3.49 +0.88 +0.14 −1.2 −0.6%
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 24 of 45
+
+PAGINA FILE 59
+Medians across 2,000 simulations. The last column includes redistribution that the policy
+would produce even without AI, so it is not a measure ofAI's impact.
+12.1What each instrument does
+AI dividend fund. Assigning half of the AI-induced increase in capital income to a fund
+that pays an equal dividend per head is the strongest single measure for incomes:
++1.0% for the bottom half in 2036, positive in 90% of simulations. It costs the budget
+almost nothing because it reallocates ownership rather than spending. But it does not
+change unemployment, and as labour income keeps falling its effect shrinks to +0.6%
+by 2046. Precedents exist: Alaska's dividend had no effect on overall employment
+(Jones and Marinescu 2022).
+Retraining and faster new-task creation. It is the only measure that reduces
+unemployment substantially, by about a quarter in 2036 (+3.30 points instead of
++4.44), and it raises GDP slightly. The bottom half still loses in 81% of simulations in
+2036 and 1.0% by 2046, because new tasks arrive after most of the displacement.
+Sector-based programmes have raised earnings by 11-40% in evaluations (Katz et al.
+2022).
+Income support decoupled from work. It protects households from the
+unemployment shock: it turns the bottom half's 2036 outcome slightly positive (+0.3%,
+worse off in a third of simulations), but by 2046, with unemployment still high, the
+bottom half loses 2.0%. It costs 0.7% of GDP a year and adds 11 points to world debt by
+2046 if not financed. Finnish, Alaskan and Kenyan evidence suggests unconditional
+support does not reduce work at the scale studied.
+Bargaining and profit-sharing. It raises the pay of those in work and slightly improves
+public finances, but it creates no jobs and shifts little income to the bottom half, whose
+labour income share is small.
+Intervention Unemployment, adv.,
+2036 (points vs no￾AI)
+World
+GDP, 2036
+(% vs no￾AI)
+Primary
+balance, 2030-
+40 avg (% GDP
+vs status quo)
+World debt,
+2046 (points
+vs status
+quo)
+Bottom 50%,
+2036, vs no-AI
+world without
+policy
+AI rents taxed
+where used
++4.44 +1.32 0.00 −0.1 −1.1%
+Package: dividend,
+support, retraining,
+bargaining
++3.30 +1.39 −0.58 +7.0 +6.1%
+Package plus
+capital tax and
+rents taxed where
+used
++3.30 +1.39 −0.24 +1.3 +15.1%
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 25 of 45
+
+PAGINA FILE 60
+Capital income taxation. A broad 5-point increase recycled per head is powerful
+redistribution and improves public finances, but most of its effect on the bottom half
+would occur even without AI. As an answer to AI specifically, it is less targeted than a
+dividend.
+Slower rollout. It reduces unemployment (+3.49 points) by delaying displacement, and
+costs a third of the 2036 GDP gain. It does not protect the bottom half. It buys time; it is
+not a solution.
+Taxing AI rents where they are used. It barely changes the bottom half's outcome in
+the aggregate, but it shifts revenue from advanced to emerging and low-income
+economies, where section 10 found the fiscal effect most regressive.
+12.2The package
+The four complementary measures together (dividend, income support, retraining, profit￾sharing) raise the bottom half's outcome to +3.0% in 2036 and +3.3% in 2046 relative to a
+no-AI world with the same policies, cut the unemployment increase from 4.44 to 3.30
+points, and protect the bottom half in all but 0.2% of simulations. Unfinanced, they add
+7.0 points to world debt by 2046. Combined with a 5-point increase in capital income
+taxation and the taxing ofAI rents where they are used, the debt effect falls to 1.3 points:
+close to fiscally neutral. Even the package leaves unemployment well above the no-AI
+path: none of the instruments tested acts directly on hiring, and measures that do (hiring
+subsidies, public employment, working-time reduction) are the obvious next ones to test.
+The central policy result is that the instruments that work best are those that act on
+ownership and on the creation of new work, not those that slow the technology. The
+window for building them is before the unemployment peak, which in half of the
+simulations falls between 2036 and 2041.
+13.The world in 2036: with and without AI
+Under current policies, the world of 2036 with AI is not in crisis in this model: it is about
+1% richer and measurably more unequal than it would be without AI, with markedly
+higher unemployment in advanced economies, and the cost falls on the bottom half,
+which loses a little on average, and far more heavily on the displaced workers within it,
+whom the model does not separate. For the median person in the bottom half the
+measured loss is small, about 1% of consumption in 2036, comparable to several months
+of normal growth, and it more than triples by 2046. For displaced workers and young
+entrants in exposed occupations it is large.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 26 of 45
+
+PAGINA FILE 61
+13.1Two worlds side by side
+The world population in 2036 is projected at 8.95 billion (UN WPP 2024). Applied to labour
+forces of roughly 0.6 billion in advanced and 2.5 billion in emerging economies, the median
+unemployment effects correspond to approximately 26 million and 47 million additional
+unemployed people. These head-counts are approximate conversions, not model outputs.
+13.2What changes in daily life
+The model measures income, work and public finance. The other rows below are
+judgements based on the evidence reviewed in section 2, with lower confidence.
+Indicator, 2036 Median difference,
+AI vs no-AI world
+5th-95th
+percentile
+Share of
+simulations worse
+with AI
+World GDP +1.3% +0.3% to
++3.5%
+0%
+Labour share of world
+income
+−3.0 points −7.6 to −0.75 100%
+Bottom 50%, real
+consumption per head
+−1.0% −4.9% to
++0.1%
+92%
+Bottom 50%, including
+unmeasured AI service
+benefits
+−0.1% −3.5% to
++1.9%
+55%
+Middle 40%, real
+consumption per head
+−0.3% −2.4% to
++0.6%
+70%
+Top 10%, real consumption
+per head
++3.1% +0.7% to
++7.8%
+0%
+Unemployment, advanced
+economies
++4.3 points +1.4 to +10.7 100%
+Unemployment, emerging
+economies
++1.9 points +0.3 to +6.0 100%
+Public debt, advanced
+economies
++1.5 points of GDP −0.3 to +7.2 88%
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 27 of 45
+
+PAGINA FILE 62
+Dimension Without AI With AI, current
+policies
+Net for people Basis
+Income of
+the bottom
+half
+Slow real
+growth
+About 1.0% lower,
+3.3% by 2046;
+losses
+concentrated
+among displaced
+workers
+Slightly worse
+on average,
+much worse for
+a minority
+Model
+Income of
+the top 10%
+Slow real
+growth
+3.1% higher, 5.7% in
+advanced
+economies
+Better Model
+Work Labour
+shortages in
+ageing
+economies
+4.3 points more
+unemployment in
+advanced
+economies in 2036,
+still 1.4 points more
+in 2046; clerical,
+junior professional
+and customer￾service roles shrink
+Worse, long￾lasting
+Model;
+Brynjolfsson
+et al. 2026
+Young people
+starting
+careers
+Entry jobs
+exist
+Fewer junior hires in
+exposed
+occupations
+Clearly worse Evidence, not
+modelled
+Cost of
+routine
+services
+Expensive,
+scarce
+Advice, translation,
+tutoring, triage
+much cheaper
+Better, size
+unknown
+Judgement
+Health care Staff
+shortages
+worsen
+Faster diagnostics;
+slow diffusion
+through health
+systems
+Somewhat
+better,
+uncertain
+Judgement
+Public
+finances
+Debt rising
+with ageing
+Slightly higher
+deficits unless
+taxes follow capital
+income
+Slightly worse Model
+Emerging
+economies
+Growth from
+young
+workforces
+Displacement
+without capturing
+the profits
+Worse Model
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 28 of 45
+
+PAGINA FILE 63
+13.3 Verdictfor 2036
+On the evidence and assumptions of this paper, AI does not produce a general crisis by
+2036. It produces a redistribution and a long labour-market adjustment: a small gain for
+the world as a whole, a large gain for owners of capital in advanced economies, a small
+average loss for the bottom half, unemployment in advanced economies more than 4
+points higher for several years and still higher in 2046, and a large loss for those whose
+jobs are displaced before new work appears. Whether the bottom half feels better or
+worse off depends on unmeasured benefits, such as cheaper services, which could offset
+most of its measured loss in 2036 but not the larger loss of the 2040s. The concentration
+of gains at the top holds in every simulation and the regional asymmetry in nearly all of
+them; the size of the losses is uncertain.
+This is a less dramatic picture than that of the illustrative model in the earlier version of
+this work, which found a 6% loss for the median household in 2036. Section 14 explains
+why.
+14. Comparison with the earlier illustrative model
+An earlier version of this work used a simple illustrative model that overstated both the
+output gains and the household losses from AI by a factor of five to ten; its text, in turn,
+initially understated the harm its own numbers showed. Both problems were found
+during review and are documented here, because they illustrate how easily such analyses
+mislead in either direction.
+14.1Why the results changed
+Dimension Without AI With AI, current
+policies
+Net for people Basis
+Energy Steady
+demand
+growth
+Data-centre
+electricity from 415
+TWh (2024) to
+about 945 TWh by
+2030 in the IEA
+base case
+Higher demand,
+mixed
+IEA 2025
+Feature Illustrative model This paper
+Median household or bottom
+50%, 2036, vs no AI (central
+case)
+−6% (median household) −1.0% (bottom 50%; 92% of
+simulations negative)
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 29 of 45
+
+PAGINA FILE 64
+The largest single difference is the productivity rule. The illustrative model credited
+automation with a large output gain that then had to be distributed; the task-based rule
+ties the gain to the cost saving on the tasks actually automated, which is a fraction of
+their value. With smaller gains to share and smaller losses to absorb, the distributional
+effects shrink. The direction, gains at the top and losses at the bottom, did not change.
+14.2Bias audit ofthe earlier report
+Because this work was produced with an AI system made by an AI company, the earlier
+report was audited for pro-AI bias at the author's request. Six problems were found and
+corrected:
+1. A catch-up result driven by an assumption. The claim that households would catch up
+with the no-AI world by 2046 depended on assuming that labour demand outgrows
+labour supply. With neutral demand growth, the catch-up disappeared.
+2. A claim that the damage is temporary. In the disruption scenario households were still
+worse off in 2046.
+3. A circular dismissal. The hypothesis paper's demand-profit loop was called weak on
+the basis of a parameter chosen by the author. This paper replaces that argument with
+Sobol indices over a literature-based range (section 9).
+Feature Illustrative model This paper
+World GDP, 2036, vs no AI +9% +1.3% (0.3% to 3.5%)
+Productivity gain Arbitrary GDP gain per
+unit of automation
+Cost saving on automated
+tasks (Acemoglu 2025)
+Automation Up to 38% of task-hours
+removed directly
+Exposure × substitutable
+share × adoption, calibrated
+to IMF exposure
+Household capital income Ad hoc concentration
+factor
+Wealth shares from WID,
+evolving with saving
+Investment None Responds to the profit share
+Parameters Chosen by the author Calibrated or given literature￾based ranges; 4,000 draws
+Accounting Not checked Sectoral balances close to
+machine precision
+Labour market Uncapped employment
+(later corrected)
+Employment capped at labour
+supply, wages clear shortages
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 30 of 45
+
+PAGINA FILE 65
+4. Biased scenario scores. Inclusive growth was rated more plausible than disruption
+although it required policies not yet enacted; they were rescored as equally plausible.
+5. Asymmetric treatment of unmeasured effects. Unmeasured benefits were
+emphasised and unmeasured harms omitted. This paper reports welfare-adjusted
+results separately and lists both.
+6. Softened wording. Phrases such as "a large minority" and "slightly worse" understated
+what the model's own numbers showed.
+Two further problems were found while building this paper and corrected before any
+result was reported: the initial priors held AI exposure fixed at today's level, ruling out
+capability growth by construction (a widening-exposure parameter was added), and a
+calibration error hid the cost of income-support policies (policies now start in 2027 on an
+unchanged 2026 calibration).
+14.3 Lesson
+The earlier illustrative model was more alarming than this one; parts of the earlier text
+were more reassuring than its own model. Neither error was visible until the assumptions
+were made explicit and tested. That is the main argument for the method used here.
+14.4 Revision of October 2026: wage rigidity and labour demand
+A review of the first edition of this paper found that its unemployment results rested on a
+wage-response range that excluded the values found in recent evidence, and on a labour
+demand that by construction followed labour supply. The range has been widened, a
+related error corrected and labour demand rebuilt. Both changes are in replication
+package version 2 ( aimodel_replication_v2.zip ).
+1. Wage Phillips slope. The first edition drew the response of wages to unemployment
+from 0.2 to 0.8, labelled as an assumption. US estimates fall from about 0.45 in 1991-
+2008 to 0.14, not significantly different from zero, in 2009-2015 (Federal Reserve Bank
+of San Francisco 2017), and the slope flattened after 2008 across ten advanced
+economies (Bank of Canada 2019). The range is now 0.05 to 0.5.
+2. Wage-trend error. In the first edition wages grew with productivity while the labour
+share kept eroding for non-AI reasons, so even without AI the wage outgrew the wage
+bill and unemployment drifted up (to about 6% worldwide by 2046, and to 7.8% in
+advanced economies with very rigid wages). The wage trend now follows the non-AI
+erosion, so the no-AI world stays at structural unemployment for any wage response,
+as the historical decline of the labour share did. With the first edition's ranges this
+correction moves no median by more than 0.2 points; it removes the small negative
+unemployment effects after 2040 reported there, which came from comparing with a
+drifting baseline.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 31 of 45
+
+PAGINA FILE 66
+3. Other ranges. The lag before new tasks appear is now 4 to 10 years instead of 2 to 8
+(near-immediate reinstatement has no historical support), new tasks per task
+displaced 0.25 to 0.85 instead of 0.25 to 1.0 (centred on the 1987-2017 value), and the
+extent of automation 0.25 to 0.7 instead of 0.15 to 0.7.
+Labour demand. In the first edition labour demand was the wage bill divided by the wage,
+so every fall in wages brought back an equal share of jobs, even in tasks AI now performs
+more cheaply, and labour demand returned to labour supply by construction. Labour
+demand is now derived from technology and output (the tasks left to labour times output,
+at the no-AI wage), and wages affect it with a constant-output elasticity of 0.15 to 0.75
+(Hamermesh 1993), so lower wages restore only part of it, and the wage bill falls with
+employment. With an elasticity of 1 and no profit-sharing the new model reproduces the
+old one to machine precision; profit-sharing now raises pay but no longer creates jobs.
+Most of the change in unemployment comes from rebuilding labour demand; the wider
+wage range adds to it. The first edition's statements that unemployment is a temporary
+problem resolved in the early 2040s and that labour demand catches up with supply do
+not survive: with labour demand tied to technology, AI-induced unemployment lasts the
+whole horizon in most simulations. The direction of every distributional result is
+unchanged; their size is larger, and the loss of the bottom half grows over time instead of
+narrowing.
+Result First edition This edition
+Unemployment, advanced economies, 2036
+(median; 5th-95th)
++1.2 points (−0.1 to
++3.8)
++4.3 points (+1.4 to
++10.7)
+Unemployment, advanced economies, 2046
+(median; 95th)
+−0.2 points (+0.7) +1.4 points (+9.0)
+Median of each simulation's peak +1.8 points +6.3 points
+Scenario shares A / B / C 10% / 70% / 19% 8% / 23% / 74%
+Bottom 50%, 2036 (share of simulations
+worse off)
+−0.6% (90%) −1.0% (92%)
+Bottom 50%, 2046 (share worse off) −0.4% (59%) −3.3% (89%)
+World labour share, 2046 −2.6 points −5.9 points
+Advanced-economy debt, 2046 +2.6 points +11.2 points
+Package of four measures, bottom 50%,
+2036
++1.8% +3.0%
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 32 of 45
+
+PAGINA FILE 67
+15. Limitations and research agenda
+The results are conditional on a model that simplifies in ways that mostly understate
+inequality within groups and exclude extreme capability scenarios. Readers should
+treat the magnitudes as indicative and the directions as more robust.
+15.1 Limitations
+1. Unit elasticity across tasks. The labour share equals labour task content when wages
+follow their no-AI path. With an elasticity above one, as Karabarbounis and Neiman
+estimate, automation would lower the labour share more; below one, as Oberfield and
+Raval find for manufacturing, less. Labour supply is exogenous (UN demographic
+projections) and does not respond to AI through longer education, lower participation
+or migration, and there is no skill, age or geographic mismatch between displaced
+workers and new tasks. Without mismatch the model may understate how long
+unemployment lasts; without a participation response, part of what it shows as
+unemployment would in reality be hidden as inactivity.
+2. No distribution within groups. Displaced workers and young entrants lose much more
+than their group's average. The model reports group averages, so it understates
+individual hardship.
+3. No explicit age structure. The strongest current signal, the fall in hiring of young
+workers, enters only through the evidence, not the model.
+4. Exogenous adoption. AI spreads along an assumed curve; it does not respond to
+wages, profits or regulation.
+5. No inflation, exchange rates or trade. Interest rates are exogenous; demand shortfalls
+are partly offset by an assumed policy response; regions are linked only through AI
+profits.
+6. Coarse regions. Three regions average very different countries, for example China and
+India within the emerging group.
+7. No extreme scenarios. The priors exclude transformative AI that automates most
+cognitive and physical tasks within the horizon (Korinek and Suh 2024). Exposure is
+allowed to grow by at most 60%. Results do not apply to such a world.
+8. Uniform priors. They express plausible ranges, not likelihoods. Probability statements
+are conditional on them.
+9. Unmeasured effects. Welfare from cheaper services, health gains, energy costs and
+changes in job quality are outside the model or reported separately.
+10. Calibration gaps. Several regional values, listed in Appendix B, are assumptions within
+published ranges rather than data.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 33 of 45
+
+PAGINA FILE 68
+15.2 Research agenda
+Reinstatement. The rate at which new human tasks appear is the single most
+important unknown for 2046 outcomes and the least measured. New occupational
+classifications and job-title data (Autor et al. 2024) should be extended to the AI
+period.
+Tax receipts. No study yet measures AI's effect on the composition of tax revenue.
+Administrative tax data by income type and sector would allow it.
+Within-group distribution. Coupling the model with household microdata would show
+how losses are distributed among displaced and non-displaced workers.
+15.3 Proposed empirical study: young workers inEurope and Italy
+The most valuable original contribution that could be added is a European replication of
+the evidence on young workers, which currently comes almost entirely from US payroll
+data.
+Element Design
+Question Has employment of workers aged 22-25 in AI￾exposed occupations fallen relative to less￾exposed peers in Europe and Italy since late 2022?
+Data EU Labour Force Survey microdata (Eurostat, by
+research proposal); ISTAT Labour Force Survey
+(RCFL) microdata; Italian social-security
+administrative records (INPS, through its
+researcher access programme) for hires and firm￾level controls
+Exposure measure ILO 2025 occupational exposure gradients at ISCO￾08 4-digit level
+Method Event study by age group and exposure quintile,
+2019-2026; difference-in-differences relative to
+less-exposed occupations; firm-by-time fixed
+effects where administrative data allow
+Outcomes Employment, new hires, separations, wages
+Pre-specified hypotheses (1) Relative employment decline for young workers
+in high-exposure, low-complementarity
+occupations; (2) no comparable decline for
+workers over 30; (3) adjustment through hiring
+rather than separations
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 34 of 45
+
+PAGINA FILE 69
+The data require registration and approved research projects, which only an affiliated
+researcher or institution can obtain. The analysis code can be written in advance from
+public documentation, so the study can run as soon as access is granted.
+16. Conclusions
+AI, as currently understood, is more likely to produce a gradual and regressive
+redistribution than an economic collapse; the redistribution is robust, its size is
+uncertain, and policy can reverse its sign for the bottom half at modest fiscal cost.
+The hypothesis paper asked whether value created with less human labour would
+circulate back to households and governments. Our answer is: only partly, unequally and
+slowly. Output rises in every simulation. The labour share falls in every simulation. The top
+10% gains in every simulation, mostly in advanced economies. The bottom half loses in
+92% of simulations by 2036, by a median 1.0% of consumption, and by 3.3% in 2046.
+Unemployment in advanced economies rises by a median 4.3 points by 2036 and is still 1.4
+points higher in 2046. Emerging economies bear displacement without capturing the
+profits, and low-income economies face their largest losses after 2036, as adoption
+reaches them.
+The hypothesis paper's most dramatic mechanism, a demand shortfall that eventually
+undermines profits, does not appear in any plausible part of the parameter space. Its
+fiscal concern is correct in direction but secondary to ageing. Its concern for social
+stability is legitimate but cannot be quantified responsibly; what the model shows is a
+concentrated, visible loss arriving when fiscal buffers are thinnest.
+Three findings should guide policy:
+1. Ownership matters more than speed, but it is not enough alone. Sharing AI-generated
+capital income broadly, through an AI dividend fund, is the strongest single measure
+for incomes and costs the budget almost nothing, but it protects the bottom half in
+90% of simulations and fades as unemployment persists. Only a package that adds
+income support, retraining and profit-sharing protects it in virtually every simulation.
+2. Timing, the extent of automation and the labour market decide the outcome. When
+and how broadlyAI spreads explains most of the variance in unemployment; how rigid
+wages are, how fast new tasks appear and how far lower wages restore labour demand
+Element Design
+What it adds First evidence on whether the US pattern holds in
+labour markets with stronger employment
+protection; direct calibration of the youth channel
+for the model
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 35 of 45
+
+PAGINA FILE 70
+explain most of the long-run outcome for households. No instrument tested brings
+unemployment back to the no-AI path; retraining and new-task creation come closest,
+and slowing the technology is among the least effective.
+3. The window is before the mid-2030s. In half of the simulations the unemployment
+peak falls between 2036 and 2041, and the median path peaks in 2039. Instruments
+built after it arrive too late for the people most affected.
+A package of an AI dividend, income support decoupled from employment, retraining and
+profit-sharing, financed by a moderate increase in capital income taxation and by taxing
+AI profits where they are generated, would turn AI's effect on the bottom half positive in
+virtually every simulation and add little to public debt, but would reduce the
+unemployment increase by only a quarter: policies that act directly on hiring are needed
+on top. The technology does not decide whetherAI is a broadly shared gain or a regressive
+one. Institutions do, and they can be built in time.
+References
+Acemoglu, D. (2025). The simple macroeconomics ofAI. Economic Policy, 40(121), 13-58.
+NBER WP 32487
+Acemoglu, D., and Restrepo, P. (2018). The race between man and machine: Implications
+of technology for growth, factor shares, and employment. American Economic Review,
+108(6), 1488-1542.
+Acemoglu, D., and Restrepo, P. (2019). Automation and new tasks: How technology
+displaces and reinstates labor. Journal of Economic Perspectives, 33(2), 3-30.
+doi:10.1257/jep.33.2.3
+Acemoglu, D., and Restrepo, P. (2020). Robots and jobs: Evidence from US labor
+markets. Journal of Political Economy, 128(6), 2188-2244. doi:10.1086/705716
+Acemoglu, D., and Restrepo, P. (2022). Tasks, automation, and the rise in US wage
+inequality. Econometrica, 90(5), 1973-2016. doi:10.3982/ECTA19815
+Allen, R. C. (2009). Engels' pause: Technical change, capital accumulation, and
+inequality in the British industrial revolution. Explorations in Economic History, 46(4),
+418-435. Preprint
+Autor, D., Chin, C., Salomons, A., and Seegmiller, B. (2024). New frontiers: The origins
+and content of new work, 1940-2018. Quarterly Journal of Economics, 139(3), 1399-1465.
+doi:10.1093/qje/qjae008
+Autor, D., and Dorn, D. (2013). The growth of low-skill service jobs and the polarization
+of the US labor market. American Economic Review, 103(5), 1553-1597.
+doi:10.1257/aer.103.5.1553
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 36 of 45
+
+PAGINA FILE 71
+Banerjee, A., Faye, M., Krueger, A., Niehaus, P., and Suri, T. (2023). Universal basic
+income: Short-term results from a long-term experiment in Kenya. NBER conference
+paper. Link
+Brollo, F., Dabla-Norris, E., de Mooij, R., Garcia-Macia, D., Hanappi, T., Liu, L., and Nguyen,
+A. D. M. (2024). Broadening the gains from generative AI: The role of fiscal policies. IMF
+Staff Discussion Note SDN/2024/002. Link
+Brynjolfsson, E., Chandar, B., and Chen, R. (2026). Canaries in the coal mine? Six facts
+about the recent employment effects of artificial intelligence. Stanford Digital
+Economy Lab, revised August 2026. Link
+Brynjolfsson, E., Li, D., and Raymond, L. (2025). Generative AI at work. Quarterly
+Journal of Economics. NBER WP 31161
+Brynjolfsson, E., Rock, D., and Syverson, C. (2021). The productivity J-curve: How
+intangibles complement general purpose technologies. American Economic Journal:
+Macroeconomics, 13(1), 333-372. doi:10.1257/mac.20180386
+Carroll, C., Slacalek, J., Tokuoka, K., and White, M. N. (2017). The distribution of wealth
+and the marginal propensity to consume. Quantitative Economics, 8(3), 977-1020.
+Cazzaniga, M., Jaumotte, F., Li, L., Melina, G., Panton, A. J., Pizzinelli, C., Rockall, E., and
+Tavares, M. M. (2024). Gen-AI: Artificial intelligence and the future of work. IMF Staff
+Discussion Note SDN/2024/001. Link
+Comin, D., and Hobijn, B. (2010). An exploration of technology diffusion. American
+Economic Review, 100(5), 2031-2059. doi:10.1257/aer.100.5.2031
+Dauth, W., Findeisen, S., Suedekum, J., and Woessner, N. (2021). The adjustment of
+labor markets to robots. Journal of the European Economic Association, 19(6), 3104-
+3153. doi:10.1093/jeea/jvab012
+David, P. A. (1990). The dynamo and the computer: An historical perspective on the
+modern productivity paradox. American Economic Review, 80(2), 355-361.
+Eloundou, T., Manning, S., Mishkin, P., and Rock, D. (2024). GPTs are GPTs: Labor market
+impact potential of LLMs. Science, 384(6702), 1306-1308. doi:10.1126/science.adj0998
+European Union (2024). Regulation (EU) 2024/1689 (Artificial Intelligence Act);
+European Commission (2025), Guidelines on prohibited AI practices. Summary
+Fisher, J. D., Johnson, D. S., Smeeding, T. M., and Thompson, J. P. (2020). Estimating the
+marginal propensity to consume using the distributions of income, consumption, and
+wealth. Journal of Macroeconomics, 65. Working paper
+Giupponi, G., and Landais, C. (2023). Subsidizing labour hoarding in recessions: The
+employment and welfare effects of short-time work. Review of Economic Studies,
+90(4), 1963-2005.
+Gmyrek, P., Berg, J., et al. (2025). Generative AI and jobs: A refined global index of
+occupational exposure. ILO Working Paper 140. Link
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 37 of 45
+
+PAGINA FILE 72
+Godley, W., and Lavoie, M. (2007). Monetary Economics: An Integrated Approach to
+Credit, Money, Income, Production and Wealth. Palgrave Macmillan.
+doi:10.1057/9780230626546
+Grother, P., Ngan, M., and Hanaoka, K. (2019). Face Recognition Vendor Test (FRVT) Part
+3: Demographic effects. NIST IR 8280. Link
+Hadzi-Vaskov, M., Pienknagura, S., and Ricci, L. A. (2021). The macroeconomic impact of
+social unrest. IMF Working Paper 2021/135. Link
+International EnergyAgency (2025). Energy and AI. Link
+International Federation of Robotics (2025). World Robotics 2025: Industrial Robots.
+Press release
+International Labour Organization (2024, 2025). World Employment and Social Outlook,
+September 2024 update and May 2025 update. Link
+International Monetary Fund (2026). Fiscal Monitor, April 2026. Link
+Jones, D., and Marinescu, I. (2022). The labor market impacts of universal and
+permanent cash transfers: Evidence from the Alaska Permanent Fund. American
+Economic Journal: Economic Policy, 14(2), 315-340. NBER WP 24312
+Karabarbounis, L., and Neiman, B. (2014). The global decline of the labor share.
+Quarterly Journal of Economics, 129(1), 61-103. doi:10.1093/qje/qjt032
+Katz, L. F., Roth, J., Hendra, R., and Schaberg, K. (2022). Why do sectoral employment
+programs work? Lessons from WorkAdvance. Journal of Labor Economics, 40(S1),
+S249-S291. NBER WP 28248
+Kela and Ministry of Social Affairs and Health, Finland (2020). Results of the basic
+income experiment. Link
+Korinek, A., and Suh, D. (2024). Scenarios for the transition to AGI. NBER Working
+Paper 32255. Link
+Oberfield, E., and Raval, D. (2021). Micro data and macro technology. Econometrica,
+89(2), 703-732. doi:10.3982/ECTA12807
+OECD (2025). Revenue Statistics 2025. Link; OECD (2025). Pensions at a Glance 2025.
+Saltelli, A., Ratto, M., Andres, T., Campolongo, F., Cariboni, J., Gatelli, D., Saisana, M., and
+Tarantola, S. (2008). Global SensitivityAnalysis: The Primer. Wiley.
+Sobol', I. M. (2001). Global sensitivity indices for nonlinear mathematical models and
+their Monte Carlo estimates. Mathematics and Computers in Simulation, 55(1-3), 271-
+280.
+United Nations, Department of Economic and Social Affairs (2024). World Population
+Prospects 2024. Key messages
+World Inequality Lab (2022, 2026). World Inequality Report 2022; World Inequality
+Report 2026. WIR 2022 summary; WIR 2026
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 38 of 45
+
+PAGINA FILE 73
+Writers Guild ofAmerica (2023). Minimum Basic Agreement: provisions on artificial
+intelligence. Link
+Bank of Canada (2019). Exploring wage Phillips curves in advanced economies. Staff
+Discussion Paper 2019-8.
+Federal Reserve Bank of San Francisco (2017). Has the wage Phillips curve gone
+dormant? Economic Letter 2017-30.
+Hamermesh, D. S. (1993). Labor Demand. Princeton University Press.
+Lichter, A., Peichl, A., and Siegloch, S. (2015). The own-wage elasticity of labor demand:
+A meta-regression analysis. European Economic Review, 80, 94-119.
+Appendix A: Model equations
+Indices: region r (advanced, emerging, low-income), income group g (bottom 50%, middle
+40%, top 10%), year t = 2026, ..., 2046. All equations hold for each region and each
+parameter draw; region subscripts are dropped where unambiguous.
+A.1 Adoption and exposure. Adoption ofAI in substitutable exposed tasks follows a
+logistic curve normalised to zero in 2026, with ceiling θ, midpoint m (later in emerging and
+low-income regions by their lags) and slope k. Exposure widens linearly to a multiple x of
+its initial value by 2046.
+a_t = \theta\,\frac{F(t)-F(2026)}{1-F(2026)}, \quad F(t) = \frac{1}{1+e^{-
+k(t-m)}}, \quad E_t = \min\Bigl(0.95,\; E_0\bigl[1+(x-1)\tfrac{t-2026}
+{20}\bigr]\Bigr)
+A.2 Task content and the labour share. Displacement and reinstatement change labour
+task content; d₀ is non-AI erosion, φ the substitutable share, ψ new tasks per task
+displaced, ℓ the reinstatement lag. Workers recover a share s of the AI-induced fall in task
+content through bargaining.
+\delta_t = \phi\,\max\bigl(0,\, E_t a_t - E_{t-1}a_{t-1}\bigr), \qquad \rho_t
+= \psi\,\phi\,\max\bigl(0,\, E_{t-\ell}a_{t-\ell} - E_{t-1-\ell}a_{t-1-
+\ell}\bigr)
+\Gamma_t = \Gamma_{t-1}\,(1 - d_0 - \delta_t + \rho_t), \qquad \Gamma^{n}_t =
+\Gamma^{n}_{t-1}(1-d_0), \qquad s^L_t = \Gamma_t + s\,\max(0,\, \Gamma^{n}_t
+- \Gamma_t)
+A.3 Potential output. Baseline growth ḡ plus the AI productivity gain (π cost saving, μ gain
+on augmented tasks).
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 39 of 45
+
+PAGINA FILE 74
+Y^s_t = Y^s_{t-1}\Bigl(1 + \bar g + \Gamma_{t-1}\delta_t\pi + \mu(1-
+\phi)\max(0, E_t a_t - E_{t-1}a_{t-1})\,\Gamma_{t-1} +
+\tfrac12\pi\,\Gamma_{t-1}\rho_t\Bigr)
+A.4 Labour market. Lˢ is labour supply, u* structural unemployment, β pass-through of
+excess productivity growth, κ the wage Phillips slope, gʸ trend growth of output per
+worker without AI and gʷ the wage trend, which follows it net of the non-AI erosion d₀; w̄
+is the wage path of the paired no-AI run and ε the constant-output wage elasticity of
+labour demand (in the no-AI run w = w̄, so labour demand is ΓY/w as in the first edition).
+w_t = w_{t-1}\Bigl(1 + g^{w}_t + \beta\,(g^{pot}_t - g^{y}_t) - \kappa\,
+(u_{t-1}-u^*)\Bigr), \quad 1+g^{w}_t = (1+g^{y}_t)(1-d_0), \quad N^d_t =
+\frac{\Gamma_t Y_t}{\bar w_t}\Bigl(\frac{w_t}{\bar w_t}\Bigr)^{-\varepsilon},
+\quad N_t = \min\bigl(N^d_t,\; L^s_t(1-u^*)\bigr), \quad s^L_t =
+\Gamma_t\Bigl(\frac{w_t}{\bar w_t}\Bigr)^{1-\varepsilon} + s\,\max(0,
+\Gamma^n_t - \Gamma_t), \quad u_t = 1 - \frac{N_t}{L^s_t}
+If labour demand exceeds supply, the wage rises to clear the market: w = sᴸY / (Lˢ(1-u*)).
+A.5 Households. λ_g is the group's share of labour income, ω_g its share of wealth, τ tax
+rates, ι the retained share of profits, Tr transfers (pensions, benefits, interest, policy), c_g
+the propensity to consume.
+Y^d_{g,t} = \lambda_g (1-\tau_L) s^L_t Y_t + \omega_{g,t}\,(1-\tau_K)(1-
+\iota)(1-s^L_t)Y_t + Tr_{g,t}, \qquad C_{g,t} = c_g\,Y^d_{g,t}
+W_{g,t+1} = W_{g,t} + (Y^d_{g,t} - C_{g,t}) + \omega_{g,t}\,(1-
+\tau_K)\,\iota\,(1-s^L_t)Y_t, \qquad \omega_{g,t} = W_{g,t} /
+\textstyle\sum_h W_{h,t}
+A.6 Demand closure. Investment responds to the profit share with elasticity η; G is
+government purchases; τ_C the consumption tax. Effective demand solves the linear
+fixed point; output follows it with pass-through ν relative to the no-AI ratio (the no-AI
+world is at potential).
+I_t = i\,Y^s_t\Bigl(\frac{1-s^L_t}{1-s^L_{2026}}\Bigr)^{\eta}, \qquad Y^d_t =
+\frac{(1-\tau_C)\,c^{tr}_t + I_t + G_t}{1 - (1-\tau_C)\,c^{y}_t}, \qquad Y_t
+= Y^s_t \min\Bigl(1, \bigl(\tfrac{Y^d_t/Y^s_t}
+{(Y^d/Y^s)^{noAI}_t}\bigr)^{\nu}\Bigr)
+A.7 Government. P is pension spending, UB unemployment benefits, r the real interest
+rate.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 40 of 45
+
+PAGINA FILE 75
+PB_t = \tau_L s^L_t Y_t + \tau_K (1-s^L_t)Y_t + \tau_C \textstyle\sum_g
+C_{g,t} - G_t - P_t - UB_t - X_t, \qquad D_t = (1+r)\,D_{t-1} - PB_t
+X collects policy spending (recycled transfers, training).
+A.8 Regions. A share ζ of the after-tax distributed AI-induced capital income of emerging
+and low-income regions is paid to the top 10% of advanced economies.
+A.9 Accounting identity (checked every period).
+S^{h}_t + (\Pi^{ret}_t - I_t) + (PB_t - rD_{t-1}) + (\text{paid abroad}_t -
+\text{received}_t) = Y_t - (C_t + I_t + G_t + X^{G}_t)
+Maximum absolute violation across all runs: 5 × 10⁻¹⁶ of GDP.
+AppendixB: Parameter priors
+All twenty-one uncertain parameters are drawn independently from uniform distributions
+over the ranges below. This table is generated from the model code
+( calibration/data.py ), so it matches what was simulated.
+Parameter Code name Range Justification
+Extent of automation
+(θ)
+theta 0.25 to 0.7 Share of substitutable
+exposed tasks automated by
+2046. Eloundou et al. (Science
+2024): 1.8% of jobs have more
+than 50% of tasks exposed
+with simple interfaces, up to
+46% with complementary
+software; McKinsey Global
+Institute (2023): about half of
+all work activities automated
+by 2045 in its midpoint
+scenario (upper end).
+Substitutable share
+(φ)
+phi_s 0.4 to 0.7 IMF SDN/2024/001: in
+advanced economies 33 of 60
+points are high exposure with
+low complementarity (0.55).
+Adoption midpoint,
+advanced (m)
+mid_adv 2030 to 2040 Assumption; Comin and Hobijn
+(2010) show faster adoption
+for newer technologies.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 41 of 45
+
+PAGINA FILE 76
+Parameter Code name Range Justification
+Adoption slope (k) k_slope 0.25 to 0.6 Assumption.
+Adoption lag,
+emerging
+lag_eme 1 to 5 years Assumption, informed by
+Comin and Hobijn (2010).
+Adoption lag, low￾income
+lag_lic 3 to 10 years Assumption, informed by
+Comin and Hobijn (2010).
+Reinstatement (ψ) psi 0.25 to 0.85 Acemoglu and Restrepo
+(2019): 0.47/0.48 = 1.0 in 1947-
+87, 0.35/0.70 = 0.5 in 1987-2017.
+Centred on the recent period;
+full offset excluded.
+Reinstatement lag (ℓ) lag_new 4 to 10 years Assumption; productivity J￾curve (Brynjolfsson, Rock and
+Syverson 2021) and the slow
+emergence of new work titles
+(Autor et al. 2024).
+Non-AI erosion (d₀) d0 0.10% to 0.35% a
+year
+ILO global labour share
+−0.15%/yr (2004-24);
+Acemoglu and Restrepo net
+−0.35%/yr (US 1987-2017).
+Cost saving (π) pi_save 0.15 to 0.45 Acemoglu (2025): 27% average
+labour cost saving.
+Gain on augmented
+tasks (μ)
+mu 0 to 0.3 Brynjolfsson, Li and Raymond:
+14% average, 34% for novices.
+Wage pass-through
+(β)
+beta_w 0.3 to 1 Assumption.
+Phillips slope (κ) kappa 0.05 to 0.5 US wage Phillips slope about
+0.45 in 1991-2008 and 0.14 in
+2009-2015 (Federal Reserve
+Bank of San Francisco,
+Economic Letter 2017-30);
+flattening after 2008 across
+ten advanced economies
+(Bank of Canada SDP 2019-8).
+Workers' share ofAI
+rents (s)
+rent_share 0 to 0.3 Assumption; status quo
+bargaining and profit-sharing.
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 42 of 45
+
+PAGINA FILE 77
+Added in this edition: wage elasticity of labour demand (ε), code name eps , 0.15 to 0.75.
+Constant-output own-wage elasticity: Hamermesh (1993) gives a best estimate of about
+0.30 within 0.15-0.75; the meta-analysis of Lichter, Peichl and Siegloch (2015) finds a mean
+of about 0.25.
+Calibrated constants (regional shares, labour shares, exposure, tax mix, debt, pensions,
+income and wealth shares, propensities to consume) are listed with their sources in
+section 5 and in the code.
+Appendix C: Replication package
+Every number, table and chart in this paper can be regenerated in about six seconds on
+an ordinary laptop with one command. The package accompanies this paper as a zip file
+( aimodel_replication_v2.zip ). It needs Python 3.10 or later, NumPy and SALib, and
+nothing else.
+C.1 Structure
+The code is organised by function, so that data, model and analysis can be checked
+separately.
+Parameter Code name Range Justification
+Investment elasticity
+(η)
+eta 0 to 1 Assumption; spans wage-led
+to profit-led demand regimes.
+Demand pass-through
+(ν)
+nu 0.3 to 1 Assumption; net of monetary
+and fiscal offsets.
+AI rents booked
+abroad (ζ)
+zeta 0.2 to 0.6 Assumption; concentration of
+frontierAI firms.
+Exposure multiple by
+2046 (x)
+exp_mult 1 to 1.6 Assumption; industrial robot
+stock +9%/yr (IFR 2025) and
+widening capabilities.
+Unmeasured welfare omega 0 to 5% of
+consumption
+Assumption; welfare-adjusted
+results only.
+Real interest rate shift dr −1 to +1 point Assumption.
+Folder or file Contents
+aimodel/calibration/data.py All calibration targets with their sources (section
+5) and the 20 parameter priors (Appendix B)
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 43 of 45
+
+PAGINA FILE 78
+C.2 How to run it
+pip install numpy SALib
+python run_all.py # full run, about 6 seconds
+python run_all.py --fast # skips Sobol, 500 draws for policies
+The script writes four files: headline.json (sections 7, 8 and 10), backtest.json
+(section 6), policy.json (section 12) and sobol.json (section 9). It also prints the main
+results, so a reader can compare them with the abstract directly.
+C.3 Reproducibility settings
+Folder or file Contents
+aimodel/core/economy.py The model: tasks, labour market, households, firms,
+government, regions and the accounting check
+(Appendix A)
+aimodel/core/run.py Paired runs: the same parameter draw with and
+without the AI wave
+aimodel/analysis/metrics.py Outcome measures: GDP, labour share,
+consumption by income group and region,
+unemployment, debt
+aimodel/analysis/montecarlo.py Monte Carlo sampling and Sobol sensitivity
+analysis
+aimodel/analysis/backtest.py The validation tests of section 6
+aimodel/analysis/policy.py The nine interventions of section 12 and their
+evaluation
+run_all.py Runs everything and writes the results to
+outputs/
+Setting Value
+Monte Carlo draws 4,000 paired runs, seed 20261010, independent
+uniform priors
+Policy evaluation 2,000 paired runs per intervention, same seed and
+draws as the status quo
+Sobol analysis Saltelli sampling, N = 1,024, 23,552 paired runs,
+seed 7, first and total-order indices
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 44 of 45
+
+PAGINA FILE 79
+The results reported in this paper were regenerated from the package immediately before
+publication, and every figure in the abstract and in sections 6 to 12 matched.
+C.4What a reader can change
+The most useful experiments require editing a single line. Narrowing or widening a prior in
+data.py shows how much a result depends on that assumption. Adding an entry to the
+policy list in policy.py evaluates a new intervention against the same draws. Setting the
+AI parameter to zero reproduces the no-AI world on its own. Readers who disagree with a
+calibration choice are encouraged to change it and report the result.
+Setting Value
+Horizon 2026-2046, annual
+Accounting check Sectoral balances must sum to zero in every year of
+every run; largest violation 5 × 10⁻¹⁶ of GDP
+Automation, Distribution and Public Finance in the Age of AI, 2026-2046
+Page 45 of 45

@@ -1,0 +1,53 @@
+{
+ "labour_share": [
+  {
+   "test": "ILO global 2004-2024",
+   "observed_pp": -1.6,
+   "model_range_pp": [
+    -3.66,
+    -1.07
+   ],
+   "implied_d0": 0.0015,
+   "inside_prior": true
+  },
+  {
+   "test": "Karabarbounis-Neiman global corporate 1975-2012",
+   "observed_pp": -5.0,
+   "model_range_pp": [
+    -7.79,
+    -2.33
+   ],
+   "implied_d0": 0.0022,
+   "inside_prior": true
+  },
+  {
+   "test": "Acemoglu-Restrepo US task content 1987-2017",
+   "observed_pp": null,
+   "model_range_pp": null,
+   "implied_d0": 0.0035,
+   "inside_prior": true
+  }
+ ],
+ "fiscal": {
+  "model_2031": [
+   113.6,
+   85.8,
+   46.9
+  ],
+  "imf_2031": [
+   114.8,
+   88.9,
+   44.0
+  ],
+  "diff_pp": [
+   -1.2,
+   -3.1,
+   2.9
+  ]
+ },
+ "engels": {
+  "required_net_displacement": 0.0063,
+  "comparable_modern_value": "US manufacturing displacement about 1.1%/yr (AR 2019)",
+  "share_fall_over_30y_pct": -17.3
+ }
+}

@@ -1,0 +1,49 @@
+{
+  "status": "EXPLORATORY_NOT_EMPIRICALLY_CALIBRATED",
+  "regions": ["ADV", "EME", "LIC"],
+  "bands": [[15, 24], [25, 34], [35, 49], [50, 64]],
+  "population_shares": [[0.18, 0.20, 0.30, 0.32], [0.23, 0.24, 0.30, 0.23], [0.32, 0.27, 0.25, 0.16]],
+  "participation": [[0.42, 0.82, 0.86, 0.67], [0.48, 0.76, 0.79, 0.65], [0.55, 0.72, 0.76, 0.67]],
+  "unemployment_relative": [2.0, 1.1, 0.75, 0.8],
+  "first_search_share": [0.85, 0.25, 0.05, 0.02],
+  "turnover": [0.16, 0.11, 0.07, 0.06],
+  "first_hire_probability": [0.55, 0.60, 0.55, 0.40],
+  "rehire_probability": [0.65, 0.70, 0.60, 0.40],
+  "return_probability": [0.12, 0.15, 0.12, 0.08],
+  "discouragement_probability": [0.03, 0.02, 0.015, 0.025],
+  "age_exposure_relative": [1.35, 1.15, 0.95, 0.75],
+  "cohort_entry_growth": [-0.005, 0.002, 0.015],
+  "matching_draw_range": [0.8, 1.2],
+  "sources": {
+    "all_age_numbers": "ASSUMPTION: configurable illustrative values, not observed or fitted estimates. Uniform within-band population at initialization. Regional totals follow the original v2 labour-supply path through a disclosed rescaling.",
+    "definitions": "https://ec.europa.eu/eurostat/cache/metadata/en/employ_simslfs2_rs.htm",
+    "exposure_method": "https://www.ilo.org/publications/generative-ai-and-jobs-2025-update",
+    "calibration_data_portal": "https://ilostat.ilo.org/data/",
+    "youth_evidence": "https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine/"
+  },
+  "scenarios": {
+    "reference": {
+      "label": "Ipotesi originali + flussi per eta",
+      "priors": {}, "matching_scale": 1.0,
+      "entry_barrier": 0.35, "mismatch": 0.25, "discouragement_add": 0.02
+    },
+    "effective": {
+      "label": "Compensazione efficace",
+      "priors": {"psi": [0.85, 1.2], "lag_new": [2.0, 6.0]},
+      "matching_scale": 1.2, "entry_barrier": 0.10,
+      "mismatch": 0.10, "discouragement_add": 0.005
+    },
+    "slow": {
+      "label": "Riconversione lenta",
+      "priors": {"psi": [0.25, 0.65], "lag_new": [6.0, 12.0], "eps": [0.05, 0.35]},
+      "matching_scale": 0.8, "entry_barrier": 0.65,
+      "mismatch": 0.50, "discouragement_add": 0.04
+    },
+    "persistent": {
+      "label": "Sostituzione persistente",
+      "priors": {"psi": [0.0, 0.35], "lag_new": [8.0, 16.0], "eps": [0.01, 0.15], "theta": [0.50, 0.85], "exp_mult": [1.3, 1.9]},
+      "matching_scale": 0.65, "entry_barrier": 0.85,
+      "mismatch": 0.70, "discouragement_add": 0.06
+    }
+  }
+}

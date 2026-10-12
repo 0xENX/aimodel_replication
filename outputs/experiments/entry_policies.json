@@ -1,0 +1,633 @@
+{
+  "provenance": {
+    "draws": 4000,
+    "seed": 20261010,
+    "sha256": {
+      "aimodel/core/economy.py": "f4cdb71a402b7e0194e12f1cd369d73c01e9920fa5646f427b35ffbb98c16fba",
+      "aimodel/core/employment.py": "3db6a1256f42cf811ff36926a28559955dfe8f0d59acea70c178375b12a972a9",
+      "aimodel/core/coupled.py": "8d0ce8d7e64309f181f36c261475cc9be2906c01c8a12fab970d875fae99a21f",
+      "aimodel/calibration/data.py": "54052f5c9af26f6f1e35bcc89fe6bf7bbd27fdeff8545f9e15f66ddff6f7dce9",
+      "run_book_experiments.py": "ad8dacd56c3c29850a99f43f6fc8d30c600e9cee9fbcbeb58236e17042a0f55e",
+      "config/employment_eu_proxy.json": "e07a2cf05e1d0a1ec0f2efa81d8c4a26af13ded063caee179da97723df0faa6b"
+    },
+    "note": "Paired differences AI minus no-AI unless stated. Percentiles of assumed draws, not confidence intervals.",
+    "budget_share_of_gdp": 0.007,
+    "hiring_subsidy_share_of_wage": 0.5,
+    "deadweight_range": [
+      0.4,
+      0.8
+    ],
+    "short_time_work_replacement": 0.6,
+    "design": "All three policies cost the same share of GDP in every region from 2027 and apply in both worlds. One-way: costs are not fed back into the macro model."
+  },
+  "scenarios": {
+    "reference": {
+      "status_quo": {
+        "nonemployment_adv_2036_pp": {
+          "p5": 1.3021,
+          "median": 4.0747,
+          "p95": 10.2102,
+          "share_negative": 0.0
+        },
+        "nonemployment_adv_2046_pp": {
+          "p5": 0.8513,
+          "median": 2.6498,
+          "p95": 8.6552,
+          "share_negative": 0.0
+        },
+        "employment_rate_25_34_2036_pp": {
+          "p5": -11.2302,
+          "median": -5.0286,
+          "p95": -1.6642,
+          "share_negative": 1.0
+        },
+        "employment_rate_25_34_2046_pp": {
+          "p5": -10.2299,
+          "median": -3.7435,
+          "p95": -1.577,
+          "share_negative": 1.0
+        },
+        "first_hire_rate_15_24_2036_pp": {
+          "p5": -23.846,
+          "median": -12.3332,
+          "p95": -3.9843,
+          "share_negative": 1.0
+        },
+        "noai_nonemployment_adv_2036_pct": {
+          "p5": 5.007,
+          "median": 5.465,
+          "p95": 6.346,
+          "share_negative": 0.0
+        }
+      },
+      "public_jobs": {
+        "ai_impact_under_policy": {
+          "nonemployment_adv_2036_pp": {
+            "p5": 1.1292,
+            "median": 3.7712,
+            "p95": 9.7103,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": 0.9809,
+            "median": 2.6487,
+            "p95": 8.0807,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -11.1076,
+            "median": -4.9465,
+            "p95": -1.6304,
+            "share_negative": 1.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -9.9748,
+            "median": -3.5875,
+            "p95": -1.5091,
+            "share_negative": 1.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -23.9423,
+            "median": -12.2163,
+            "p95": -3.8915,
+            "share_negative": 1.0
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 4.0553,
+            "median": 4.5773,
+            "p95": 5.9428,
+            "share_negative": 0.0
+          }
+        },
+        "policy_effect_in_ai_world": {
+          "employment_rate_15_24_2036_pp": {
+            "p5": 0.3898,
+            "median": 0.4463,
+            "p95": 0.5403,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": 0.988,
+            "median": 1.0888,
+            "p95": 1.2215,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": 0.9808,
+            "median": 1.1886,
+            "p95": 1.4575,
+            "share_negative": 0.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": 0.9313,
+            "median": 1.2781,
+            "p95": 2.1988,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2036_pp": {
+            "p5": -1.3748,
+            "median": -1.1568,
+            "p95": -0.9015,
+            "share_negative": 1.0
+          },
+          "unfilled_policy_capacity_share_2036": {
+            "p5": 0.0,
+            "median": 0.0016,
+            "p95": 0.004,
+            "share_negative": 0.0182
+          }
+        },
+        "extra_capacity_adv_2036_pct_labour_force": {
+          "p5": 1.2343,
+          "median": 1.2863,
+          "p95": 1.44,
+          "share_negative": 0.0
+        }
+      },
+      "youth_hiring_subsidy": {
+        "ai_impact_under_policy": {
+          "nonemployment_adv_2036_pp": {
+            "p5": 1.2136,
+            "median": 3.9663,
+            "p95": 9.996,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": 0.7861,
+            "median": 2.5018,
+            "p95": 8.4073,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -10.6028,
+            "median": -4.6379,
+            "p95": -1.3773,
+            "share_negative": 1.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -9.3909,
+            "median": -3.3626,
+            "p95": -1.4201,
+            "share_negative": 1.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -23.7959,
+            "median": -11.8828,
+            "p95": -3.6821,
+            "share_negative": 1.0
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 3.7804,
+            "median": 4.5882,
+            "p95": 5.7872,
+            "share_negative": 0.0
+          }
+        },
+        "policy_effect_in_ai_world": {
+          "employment_rate_15_24_2036_pp": {
+            "p5": 0.6556,
+            "median": 1.2016,
+            "p95": 1.8301,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": 1.6168,
+            "median": 2.9323,
+            "p95": 4.281,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": 1.5357,
+            "median": 2.9209,
+            "p95": 4.6516,
+            "share_negative": 0.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": 1.7484,
+            "median": 3.5395,
+            "p95": 6.8019,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2036_pp": {
+            "p5": -1.4296,
+            "median": -0.9714,
+            "p95": -0.5365,
+            "share_negative": 1.0
+          },
+          "unfilled_policy_capacity_share_2036": {
+            "p5": 0.0001,
+            "median": 0.0007,
+            "p95": 0.002,
+            "share_negative": 0.0063
+          }
+        },
+        "extra_capacity_adv_2036_pct_labour_force": {
+          "p5": 0.5749,
+          "median": 1.0558,
+          "p95": 1.5202,
+          "share_negative": 0.0
+        }
+      },
+      "shorter_hours": {
+        "ai_impact_under_policy": {
+          "nonemployment_adv_2036_pp": {
+            "p5": 0.9981,
+            "median": 3.4934,
+            "p95": 9.296,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": 1.155,
+            "median": 2.6636,
+            "p95": 7.6455,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -11.0713,
+            "median": -4.9319,
+            "p95": -1.5876,
+            "share_negative": 1.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -9.9286,
+            "median": -3.5916,
+            "p95": -1.5096,
+            "share_negative": 1.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -24.1851,
+            "median": -12.2362,
+            "p95": -3.8578,
+            "share_negative": 1.0
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 3.4746,
+            "median": 4.035,
+            "p95": 5.766,
+            "share_negative": 0.0
+          }
+        },
+        "policy_effect_in_ai_world": {
+          "employment_rate_15_24_2036_pp": {
+            "p5": 0.5583,
+            "median": 0.6605,
+            "p95": 0.7992,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": 1.6361,
+            "median": 1.7882,
+            "p95": 1.9524,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": 1.4704,
+            "median": 1.9078,
+            "p95": 2.3055,
+            "share_negative": 0.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": 1.2542,
+            "median": 1.9262,
+            "p95": 3.3098,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2036_pp": {
+            "p5": -2.271,
+            "median": -1.823,
+            "p95": -1.441,
+            "share_negative": 1.0
+          },
+          "unfilled_policy_capacity_share_2036": {
+            "p5": 0.0,
+            "median": 0.004,
+            "p95": 0.0075,
+            "share_negative": 0.0118
+          }
+        },
+        "extra_capacity_adv_2036_pct_labour_force": {
+          "p5": 0.0,
+          "median": 0.0,
+          "p95": 0.0,
+          "share_negative": 0.0
+        },
+        "hours_cut_adv_2036_pct": {
+          "p5": 2.2009,
+          "median": 2.3494,
+          "p95": 2.6855,
+          "share_negative": 0.0
+        },
+        "workers_income_loss_adv_2036_pct_of_labour_income": {
+          "p5": 0.8804,
+          "median": 0.9398,
+          "p95": 1.0742,
+          "share_negative": 0.0
+        }
+      }
+    },
+    "slow": {
+      "status_quo": {
+        "nonemployment_adv_2036_pp": {
+          "p5": 1.1837,
+          "median": 4.9182,
+          "p95": 11.6163,
+          "share_negative": 0.0
+        },
+        "nonemployment_adv_2046_pp": {
+          "p5": 3.31,
+          "median": 6.7274,
+          "p95": 12.7267,
+          "share_negative": 0.0
+        },
+        "employment_rate_25_34_2036_pp": {
+          "p5": -14.8235,
+          "median": -6.8329,
+          "p95": -1.833,
+          "share_negative": 1.0
+        },
+        "employment_rate_25_34_2046_pp": {
+          "p5": -16.1123,
+          "median": -9.0613,
+          "p95": -4.491,
+          "share_negative": 1.0
+        },
+        "first_hire_rate_15_24_2036_pp": {
+          "p5": -26.9184,
+          "median": -14.3325,
+          "p95": -4.4247,
+          "share_negative": 1.0
+        },
+        "noai_nonemployment_adv_2036_pct": {
+          "p5": 5.68,
+          "median": 6.5077,
+          "p95": 9.0694,
+          "share_negative": 0.0
+        }
+      },
+      "public_jobs": {
+        "ai_impact_under_policy": {
+          "nonemployment_adv_2036_pp": {
+            "p5": 0.8998,
+            "median": 4.4063,
+            "p95": 10.8337,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": 3.213,
+            "median": 6.3992,
+            "p95": 11.8363,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -14.3359,
+            "median": -6.4566,
+            "p95": -1.489,
+            "share_negative": 1.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -15.3594,
+            "median": -8.6223,
+            "p95": -4.2297,
+            "share_negative": 1.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -26.807,
+            "median": -14.0709,
+            "p95": -4.2342,
+            "share_negative": 1.0
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 4.8354,
+            "median": 6.1923,
+            "p95": 9.0676,
+            "share_negative": 0.0
+          }
+        },
+        "policy_effect_in_ai_world": {
+          "employment_rate_15_24_2036_pp": {
+            "p5": 0.208,
+            "median": 0.3626,
+            "p95": 0.462,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": 0.8356,
+            "median": 1.0255,
+            "p95": 1.188,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": 0.1105,
+            "median": 1.1409,
+            "p95": 1.579,
+            "share_negative": 0.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": 0.3246,
+            "median": 0.7107,
+            "p95": 1.2379,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2036_pp": {
+            "p5": -1.2862,
+            "median": -0.9313,
+            "p95": -0.3739,
+            "share_negative": 1.0
+          },
+          "unfilled_policy_capacity_share_2036": {
+            "p5": 0.0005,
+            "median": 0.004,
+            "p95": 0.0092,
+            "share_negative": 0.0
+          }
+        },
+        "extra_capacity_adv_2036_pct_labour_force": {
+          "p5": 1.2347,
+          "median": 1.2914,
+          "p95": 1.4825,
+          "share_negative": 0.0
+        }
+      },
+      "youth_hiring_subsidy": {
+        "ai_impact_under_policy": {
+          "nonemployment_adv_2036_pp": {
+            "p5": 0.9109,
+            "median": 4.5112,
+            "p95": 11.1771,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": 3.0888,
+            "median": 6.3266,
+            "p95": 12.0646,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -13.2898,
+            "median": -5.4529,
+            "p95": -0.8842,
+            "share_negative": 1.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -14.1418,
+            "median": -7.7655,
+            "p95": -3.8046,
+            "share_negative": 1.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -26.4296,
+            "median": -13.541,
+            "p95": -4.0152,
+            "share_negative": 1.0
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 4.7423,
+            "median": 5.9949,
+            "p95": 9.0676,
+            "share_negative": 0.0
+          }
+        },
+        "policy_effect_in_ai_world": {
+          "employment_rate_15_24_2036_pp": {
+            "p5": 0.3226,
+            "median": 0.8797,
+            "p95": 1.5298,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": 1.3295,
+            "median": 2.5935,
+            "p95": 4.0461,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": 0.1532,
+            "median": 2.4609,
+            "p95": 4.6104,
+            "share_negative": 0.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": 0.4979,
+            "median": 1.8224,
+            "p95": 3.9092,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2036_pp": {
+            "p5": -1.3025,
+            "median": -0.8221,
+            "p95": -0.4186,
+            "share_negative": 1.0
+          },
+          "unfilled_policy_capacity_share_2036": {
+            "p5": 0.0007,
+            "median": 0.0018,
+            "p95": 0.0064,
+            "share_negative": 0.0
+          }
+        },
+        "extra_capacity_adv_2036_pct_labour_force": {
+          "p5": 0.5772,
+          "median": 1.0626,
+          "p95": 1.5384,
+          "share_negative": 0.0
+        }
+      },
+      "shorter_hours": {
+        "ai_impact_under_policy": {
+          "nonemployment_adv_2036_pp": {
+            "p5": 0.7936,
+            "median": 4.0126,
+            "p95": 10.2872,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": 3.1284,
+            "median": 6.1488,
+            "p95": 11.1788,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -14.1601,
+            "median": -6.2022,
+            "p95": -1.2131,
+            "share_negative": 1.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -15.12,
+            "median": -8.418,
+            "p95": -4.1016,
+            "share_negative": 1.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -26.881,
+            "median": -14.0164,
+            "p95": -4.1852,
+            "share_negative": 1.0
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 4.4598,
+            "median": 6.0457,
+            "p95": 9.0676,
+            "share_negative": 0.0
+          }
+        },
+        "policy_effect_in_ai_world": {
+          "employment_rate_15_24_2036_pp": {
+            "p5": 0.2797,
+            "median": 0.5088,
+            "p95": 0.6524,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": 1.2567,
+            "median": 1.6442,
+            "p95": 1.8426,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": 0.1274,
+            "median": 1.7457,
+            "p95": 2.3748,
+            "share_negative": 0.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": 0.4308,
+            "median": 1.0062,
+            "p95": 1.8329,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2036_pp": {
+            "p5": -2.0859,
+            "median": -1.4998,
+            "p95": -0.5093,
+            "share_negative": 1.0
+          },
+          "unfilled_policy_capacity_share_2036": {
+            "p5": 0.0016,
+            "median": 0.0073,
+            "p95": 0.0168,
+            "share_negative": 0.0
+          }
+        },
+        "extra_capacity_adv_2036_pct_labour_force": {
+          "p5": 0.0,
+          "median": 0.0,
+          "p95": 0.0,
+          "share_negative": 0.0
+        },
+        "hours_cut_adv_2036_pct": {
+          "p5": 2.2056,
+          "median": 2.3877,
+          "p95": 2.8385,
+          "share_negative": 0.0
+        },
+        "workers_income_loss_adv_2036_pct_of_labour_income": {
+          "p5": 0.8822,
+          "median": 0.9551,
+          "p95": 1.1354,
+          "share_negative": 0.0
+        }
+      }
+    }
+  }
+}

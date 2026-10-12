@@ -1,0 +1,5 @@
+reference two-way converged True True unemp ADV 2036 one-way 4.3304 two-way 4.0175
+effective two-way converged True True unemp ADV 2036 one-way 1.8723 two-way 1.7984
+slow two-way converged True True unemp ADV 2036 one-way 5.6213 two-way 4.7208
+persistent two-way converged True True unemp ADV 2036 one-way 10.6035 two-way 7.9744
+written C:\BOOKS\aimodel_employment_v3\outputs\experiments\feedback.json
