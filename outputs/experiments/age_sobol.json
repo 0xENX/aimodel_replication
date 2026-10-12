@@ -1,0 +1,125 @@
+{
+  "provenance": {
+    "draws": 4096,
+    "seed": 20261010,
+    "sha256": {
+      "aimodel/core/economy.py": "f4cdb71a402b7e0194e12f1cd369d73c01e9920fa5646f427b35ffbb98c16fba",
+      "aimodel/core/employment.py": "3db6a1256f42cf811ff36926a28559955dfe8f0d59acea70c178375b12a972a9",
+      "aimodel/core/coupled.py": "8d0ce8d7e64309f181f36c261475cc9be2906c01c8a12fab970d875fae99a21f",
+      "aimodel/calibration/data.py": "54052f5c9af26f6f1e35bcc89fe6bf7bbd27fdeff8545f9e15f66ddff6f7dce9",
+      "run_book_experiments.py": "ad8dacd56c3c29850a99f43f6fc8d30c600e9cee9fbcbeb58236e17042a0f55e",
+      "config/employment_eu_proxy.json": "e07a2cf05e1d0a1ec0f2efa81d8c4a26af13ded063caee179da97723df0faa6b"
+    },
+    "note": "Paired differences AI minus no-AI unless stated. Percentiles of assumed draws, not confidence intervals.",
+    "design": "Saltelli, N=4096, 24576 paired age runs; macro path fixed at central parameters",
+    "factors": {
+      "matching_scale": [
+        0.5,
+        1.5
+      ],
+      "entry_barrier": [
+        0.0,
+        0.9
+      ],
+      "mismatch": [
+        0.0,
+        0.8
+      ],
+      "discouragement_add": [
+        0.0,
+        0.07
+      ]
+    },
+    "estimators": "first order: Saltelli (2010); total: Jansen (1999)"
+  },
+  "outputs": {
+    "employment_rate_25_34_2036": {
+      "indices": {
+        "matching_scale": {
+          "first_order": 0.4891,
+          "total": 0.617
+        },
+        "entry_barrier": {
+          "first_order": 0.3476,
+          "total": 0.4154
+        },
+        "mismatch": {
+          "first_order": 0.0109,
+          "total": 0.0282
+        },
+        "discouragement_add": {
+          "first_order": 0.0018,
+          "total": 0.0002
+        }
+      },
+      "median": -6.4689,
+      "variance": 2.6065
+    },
+    "employment_rate_25_34_2046": {
+      "indices": {
+        "matching_scale": {
+          "first_order": 0.3014,
+          "total": 0.4088
+        },
+        "entry_barrier": {
+          "first_order": 0.432,
+          "total": 0.5219
+        },
+        "mismatch": {
+          "first_order": 0.1246,
+          "total": 0.2828
+        },
+        "discouragement_add": {
+          "first_order": 0.017,
+          "total": 0.0161
+        }
+      },
+      "median": -4.4991,
+      "variance": 5.1524
+    },
+    "first_hire_rate_15_24_2036": {
+      "indices": {
+        "matching_scale": {
+          "first_order": 0.3086,
+          "total": 0.4187
+        },
+        "entry_barrier": {
+          "first_order": 0.5562,
+          "total": 0.61
+        },
+        "mismatch": {
+          "first_order": 0.0216,
+          "total": 0.0205
+        },
+        "discouragement_add": {
+          "first_order": 0.0008,
+          "total": 0.0004
+        }
+      },
+      "median": -14.3538,
+      "variance": 56.1603
+    },
+    "broad_nonemployment_15_24_2036": {
+      "indices": {
+        "matching_scale": {
+          "first_order": 0.1781,
+          "total": 0.2467
+        },
+        "entry_barrier": {
+          "first_order": 0.6833,
+          "total": 0.7634
+        },
+        "mismatch": {
+          "first_order": 0.0118,
+          "total": 0.0245
+        },
+        "discouragement_add": {
+          "first_order": 0.0031,
+          "total": 0.0005
+        }
+      },
+      "median": 8.8653,
+      "variance": 7.806
+    }
+  }
+}

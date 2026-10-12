@@ -1,0 +1,3 @@
+numpy>=1.24
+reportlab>=4.0
+# SALib is required only for the unchanged v2 run_all.py, not run_employment.py.

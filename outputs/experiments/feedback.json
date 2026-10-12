@@ -1,0 +1,947 @@
+{
+  "provenance": {
+    "draws": 4000,
+    "seed": 20261010,
+    "sha256": {
+      "aimodel/core/economy.py": "f4cdb71a402b7e0194e12f1cd369d73c01e9920fa5646f427b35ffbb98c16fba",
+      "aimodel/core/employment.py": "3db6a1256f42cf811ff36926a28559955dfe8f0d59acea70c178375b12a972a9",
+      "aimodel/core/coupled.py": "8d0ce8d7e64309f181f36c261475cc9be2906c01c8a12fab970d875fae99a21f",
+      "aimodel/calibration/data.py": "54052f5c9af26f6f1e35bcc89fe6bf7bbd27fdeff8545f9e15f66ddff6f7dce9",
+      "run_book_experiments.py": "ad8dacd56c3c29850a99f43f6fc8d30c600e9cee9fbcbeb58236e17042a0f55e",
+      "config/employment_eu_proxy.json": "e07a2cf05e1d0a1ec0f2efa81d8c4a26af13ded063caee179da97723df0faa6b"
+    },
+    "note": "Paired differences AI minus no-AI unless stated. Percentiles of assumed draws, not confidence intervals.",
+    "rate_fed_back": "1 - employed / potential labour force from the age module (discouraged count as slack)",
+    "channels": "wage Phillips term and unemployment benefits"
+  },
+  "scenarios": {
+    "reference": {
+      "label": "Ipotesi originali + flussi per eta",
+      "one_way": {
+        "macro": {
+          "gdp_world_2036_pct": {
+            "p5": 0.3151,
+            "median": 1.3093,
+            "p95": 3.5061,
+            "share_negative": 0.0
+          },
+          "gdp_world_2046_pct": {
+            "p5": 1.4428,
+            "median": 3.2312,
+            "p95": 6.25,
+            "share_negative": 0.0
+          },
+          "unemployment_adv_2036_pp": {
+            "p5": 1.3896,
+            "median": 4.3304,
+            "p95": 10.7339,
+            "share_negative": 0.0
+          },
+          "unemployment_adv_2046_pp": {
+            "p5": -0.0,
+            "median": 1.3771,
+            "p95": 8.948,
+            "share_negative": 0.1698
+          },
+          "wage_adv_2036_pct": {
+            "p5": -11.5166,
+            "median": -2.3962,
+            "p95": 0.1654,
+            "share_negative": 0.9225
+          },
+          "wage_adv_2046_pct": {
+            "p5": -24.5362,
+            "median": -9.3703,
+            "p95": -0.689,
+            "share_negative": 0.9645
+          },
+          "bottom50_world_2036_pct": {
+            "p5": -4.8831,
+            "median": -1.0323,
+            "p95": 0.129,
+            "share_negative": 0.9203
+          },
+          "bottom50_world_2046_pct": {
+            "p5": -10.8104,
+            "median": -3.2932,
+            "p95": 0.9883,
+            "share_negative": 0.8918
+          },
+          "labour_share_world_2046_pp": {
+            "p5": -12.3386,
+            "median": -5.8826,
+            "p95": -2.2375,
+            "share_negative": 0.9978
+          },
+          "primary_balance_adv_2036_pp_gdp": {
+            "p5": -2.2691,
+            "median": -0.9894,
+            "p95": -0.2788,
+            "share_negative": 1.0
+          },
+          "debt_adv_2046_pp_gdp": {
+            "p5": 3.3805,
+            "median": 11.1929,
+            "p95": 25.9902,
+            "share_negative": 0.003
+          }
+        },
+        "age": {
+          "nonemployment_adv_2036_pp": {
+            "p5": 1.3021,
+            "median": 4.0747,
+            "p95": 10.2102,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": 0.8513,
+            "median": 2.6498,
+            "p95": 8.6552,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -11.2302,
+            "median": -5.0286,
+            "p95": -1.6642,
+            "share_negative": 1.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -10.2299,
+            "median": -3.7435,
+            "p95": -1.577,
+            "share_negative": 1.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -23.846,
+            "median": -12.3332,
+            "p95": -3.9843,
+            "share_negative": 1.0
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 5.007,
+            "median": 5.465,
+            "p95": 6.346,
+            "share_negative": 0.0
+          }
+        }
+      },
+      "two_way": {
+        "macro": {
+          "gdp_world_2036_pct": {
+            "p5": 0.3121,
+            "median": 1.3088,
+            "p95": 3.5062,
+            "share_negative": 0.0
+          },
+          "gdp_world_2046_pct": {
+            "p5": 1.4341,
+            "median": 3.2286,
+            "p95": 6.2503,
+            "share_negative": 0.0
+          },
+          "unemployment_adv_2036_pp": {
+            "p5": 1.1182,
+            "median": 4.0175,
+            "p95": 10.2133,
+            "share_negative": 0.0
+          },
+          "unemployment_adv_2046_pp": {
+            "p5": 0.7632,
+            "median": 2.4718,
+            "p95": 8.5904,
+            "share_negative": 0.0
+          },
+          "wage_adv_2036_pct": {
+            "p5": -11.8819,
+            "median": -2.9535,
+            "p95": -0.0145,
+            "share_negative": 0.9515
+          },
+          "wage_adv_2046_pct": {
+            "p5": -25.8087,
+            "median": -9.8739,
+            "p95": -0.7923,
+            "share_negative": 0.9655
+          },
+          "bottom50_world_2036_pct": {
+            "p5": -5.2994,
+            "median": -1.3879,
+            "p95": -0.0364,
+            "share_negative": 0.9547
+          },
+          "bottom50_world_2046_pct": {
+            "p5": -11.4004,
+            "median": -3.5394,
+            "p95": 1.0837,
+            "share_negative": 0.89
+          },
+          "labour_share_world_2046_pp": {
+            "p5": -12.7214,
+            "median": -6.1721,
+            "p95": -2.3564,
+            "share_negative": 0.9982
+          },
+          "primary_balance_adv_2036_pp_gdp": {
+            "p5": -2.2446,
+            "median": -0.975,
+            "p95": -0.2812,
+            "share_negative": 1.0
+          },
+          "debt_adv_2046_pp_gdp": {
+            "p5": 3.676,
+            "median": 11.3936,
+            "p95": 26.1029,
+            "share_negative": 0.002
+          }
+        },
+        "age": {
+          "nonemployment_adv_2036_pp": {
+            "p5": 1.1182,
+            "median": 4.0175,
+            "p95": 10.2133,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": 0.7632,
+            "median": 2.4718,
+            "p95": 8.5904,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -11.2541,
+            "median": -4.9867,
+            "p95": -1.4919,
+            "share_negative": 1.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -10.2074,
+            "median": -3.407,
+            "p95": -1.4371,
+            "share_negative": 1.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -23.9095,
+            "median": -12.2661,
+            "p95": -3.8098,
+            "share_negative": 1.0
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 5.0056,
+            "median": 5.393,
+            "p95": 6.2027,
+            "share_negative": 0.0
+          }
+        },
+        "convergence": {
+          "no_ai": {
+            "iterations": 17,
+            "max_change": 8.686601438157027e-10,
+            "converged": true
+          },
+          "ai": {
+            "iterations": 17,
+            "max_change": 1.7305024080371822e-10,
+            "converged": true
+          }
+        },
+        "max_accounting_residual": 4.918360316907382e-16
+      }
+    },
+    "effective": {
+      "label": "Compensazione efficace",
+      "one_way": {
+        "macro": {
+          "gdp_world_2036_pct": {
+            "p5": 0.3327,
+            "median": 1.4552,
+            "p95": 4.071,
+            "share_negative": 0.0
+          },
+          "gdp_world_2046_pct": {
+            "p5": 1.5437,
+            "median": 3.5869,
+            "p95": 7.1652,
+            "share_negative": 0.0005
+          },
+          "unemployment_adv_2036_pp": {
+            "p5": -0.0,
+            "median": 1.8723,
+            "p95": 6.0663,
+            "share_negative": 0.056
+          },
+          "unemployment_adv_2046_pp": {
+            "p5": -0.0,
+            "median": -0.0,
+            "p95": 0.0504,
+            "share_negative": 0.5645
+          },
+          "wage_adv_2036_pct": {
+            "p5": -6.8885,
+            "median": -0.8684,
+            "p95": 2.2394,
+            "share_negative": 0.7595
+          },
+          "wage_adv_2046_pct": {
+            "p5": -2.7029,
+            "median": 7.0329,
+            "p95": 25.6583,
+            "share_negative": 0.1172
+          },
+          "bottom50_world_2036_pct": {
+            "p5": -2.4399,
+            "median": -0.1467,
+            "p95": 2.0532,
+            "share_negative": 0.594
+          },
+          "bottom50_world_2046_pct": {
+            "p5": -0.9144,
+            "median": 4.0249,
+            "p95": 12.6885,
+            "share_negative": 0.0897
+          },
+          "labour_share_world_2046_pp": {
+            "p5": -3.8504,
+            "median": 0.0963,
+            "p95": 5.7175,
+            "share_negative": 0.481
+          },
+          "primary_balance_adv_2036_pp_gdp": {
+            "p5": -1.4287,
+            "median": -0.523,
+            "p95": -0.122,
+            "share_negative": 0.9818
+          },
+          "debt_adv_2046_pp_gdp": {
+            "p5": -6.9346,
+            "median": 0.5676,
+            "p95": 8.5456,
+            "share_negative": 0.434
+          }
+        },
+        "age": {
+          "nonemployment_adv_2036_pp": {
+            "p5": -0.3211,
+            "median": 1.8044,
+            "p95": 5.9671,
+            "share_negative": 0.0945
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": -0.6917,
+            "median": -0.0061,
+            "p95": 0.4831,
+            "share_negative": 0.5082
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -5.7184,
+            "median": -1.9305,
+            "p95": 0.057,
+            "share_negative": 0.943
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -0.9639,
+            "median": -0.4421,
+            "p95": 0.3851,
+            "share_negative": 0.854
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -12.4987,
+            "median": -4.9036,
+            "p95": -1.7341,
+            "share_negative": 0.9992
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 5.0,
+            "median": 5.0,
+            "p95": 5.5232,
+            "share_negative": 0.0
+          }
+        }
+      },
+      "two_way": {
+        "macro": {
+          "gdp_world_2036_pct": {
+            "p5": 0.3327,
+            "median": 1.4541,
+            "p95": 4.071,
+            "share_negative": 0.0
+          },
+          "gdp_world_2046_pct": {
+            "p5": 1.5488,
+            "median": 3.5842,
+            "p95": 7.1631,
+            "share_negative": 0.0005
+          },
+          "unemployment_adv_2036_pp": {
+            "p5": -0.297,
+            "median": 1.7984,
+            "p95": 5.9675,
+            "share_negative": 0.0955
+          },
+          "unemployment_adv_2046_pp": {
+            "p5": -0.6301,
+            "median": 0.005,
+            "p95": 0.4878,
+            "share_negative": 0.492
+          },
+          "wage_adv_2036_pct": {
+            "p5": -6.8906,
+            "median": -0.9687,
+            "p95": 2.2394,
+            "share_negative": 0.7732
+          },
+          "wage_adv_2046_pct": {
+            "p5": -2.7106,
+            "median": 7.0377,
+            "p95": 25.6503,
+            "share_negative": 0.1172
+          },
+          "bottom50_world_2036_pct": {
+            "p5": -2.5043,
+            "median": -0.2136,
+            "p95": 1.9965,
+            "share_negative": 0.62
+          },
+          "bottom50_world_2046_pct": {
+            "p5": -1.0367,
+            "median": 3.9711,
+            "p95": 12.6733,
+            "share_negative": 0.094
+          },
+          "labour_share_world_2046_pp": {
+            "p5": -3.889,
+            "median": 0.0891,
+            "p95": 5.6916,
+            "share_negative": 0.4838
+          },
+          "primary_balance_adv_2036_pp_gdp": {
+            "p5": -1.4192,
+            "median": -0.5233,
+            "p95": -0.1191,
+            "share_negative": 0.9802
+          },
+          "debt_adv_2046_pp_gdp": {
+            "p5": -7.0646,
+            "median": 0.5043,
+            "p95": 8.4747,
+            "share_negative": 0.446
+          }
+        },
+        "age": {
+          "nonemployment_adv_2036_pp": {
+            "p5": -0.297,
+            "median": 1.7984,
+            "p95": 5.9675,
+            "share_negative": 0.0955
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": -0.6301,
+            "median": 0.005,
+            "p95": 0.4878,
+            "share_negative": 0.492
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -5.7214,
+            "median": -1.9326,
+            "p95": 0.0386,
+            "share_negative": 0.945
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -0.9638,
+            "median": -0.4547,
+            "p95": 0.304,
+            "share_negative": 0.872
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -12.5198,
+            "median": -4.9033,
+            "p95": -1.7191,
+            "share_negative": 0.9992
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 5.0,
+            "median": 5.0,
+            "p95": 5.4401,
+            "share_negative": 0.0
+          }
+        },
+        "convergence": {
+          "no_ai": {
+            "iterations": 18,
+            "max_change": 3.8803049662305966e-10,
+            "converged": true
+          },
+          "ai": {
+            "iterations": 17,
+            "max_change": 3.479879717716017e-10,
+            "converged": true
+          }
+        },
+        "max_accounting_residual": 5.270159394231138e-16
+      }
+    },
+    "slow": {
+      "label": "Riconversione lenta",
+      "one_way": {
+        "macro": {
+          "gdp_world_2036_pct": {
+            "p5": 0.309,
+            "median": 1.2854,
+            "p95": 3.408,
+            "share_negative": 0.0003
+          },
+          "gdp_world_2046_pct": {
+            "p5": 1.3255,
+            "median": 3.049,
+            "p95": 5.8996,
+            "share_negative": 0.0015
+          },
+          "unemployment_adv_2036_pp": {
+            "p5": 1.6888,
+            "median": 5.6213,
+            "p95": 12.6773,
+            "share_negative": 0.0
+          },
+          "unemployment_adv_2046_pp": {
+            "p5": 0.1958,
+            "median": 5.0781,
+            "p95": 13.3225,
+            "share_negative": 0.0232
+          },
+          "wage_adv_2036_pct": {
+            "p5": -14.0518,
+            "median": -2.7995,
+            "p95": 0.1427,
+            "share_negative": 0.9277
+          },
+          "wage_adv_2046_pct": {
+            "p5": -37.7463,
+            "median": -16.8498,
+            "p95": -3.8293,
+            "share_negative": 0.998
+          },
+          "bottom50_world_2036_pct": {
+            "p5": -6.6777,
+            "median": -1.4306,
+            "p95": 0.0256,
+            "share_negative": 0.9457
+          },
+          "bottom50_world_2046_pct": {
+            "p5": -17.3878,
+            "median": -7.114,
+            "p95": -1.1135,
+            "share_negative": 0.9828
+          },
+          "labour_share_world_2046_pp": {
+            "p5": -17.7492,
+            "median": -9.3779,
+            "p95": -4.2791,
+            "share_negative": 1.0
+          },
+          "primary_balance_adv_2036_pp_gdp": {
+            "p5": -2.713,
+            "median": -1.19,
+            "p95": -0.3001,
+            "share_negative": 1.0
+          },
+          "debt_adv_2046_pp_gdp": {
+            "p5": 7.2717,
+            "median": 17.5902,
+            "p95": 36.6633,
+            "share_negative": 0.0
+          }
+        },
+        "age": {
+          "nonemployment_adv_2036_pp": {
+            "p5": 1.1837,
+            "median": 4.9182,
+            "p95": 11.6163,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": 3.31,
+            "median": 6.7274,
+            "p95": 12.7267,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -14.8235,
+            "median": -6.8329,
+            "p95": -1.833,
+            "share_negative": 1.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -16.1123,
+            "median": -9.0613,
+            "p95": -4.491,
+            "share_negative": 1.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -26.9184,
+            "median": -14.3325,
+            "p95": -4.4247,
+            "share_negative": 1.0
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 5.68,
+            "median": 6.5077,
+            "p95": 9.0694,
+            "share_negative": 0.0
+          }
+        }
+      },
+      "two_way": {
+        "macro": {
+          "gdp_world_2036_pct": {
+            "p5": 0.283,
+            "median": 1.2648,
+            "p95": 3.4068,
+            "share_negative": 0.0032
+          },
+          "gdp_world_2046_pct": {
+            "p5": 1.2629,
+            "median": 3.0303,
+            "p95": 5.8951,
+            "share_negative": 0.0027
+          },
+          "unemployment_adv_2036_pp": {
+            "p5": 1.0023,
+            "median": 4.7208,
+            "p95": 11.5628,
+            "share_negative": 0.0
+          },
+          "unemployment_adv_2046_pp": {
+            "p5": 3.1171,
+            "median": 6.4553,
+            "p95": 12.652,
+            "share_negative": 0.0
+          },
+          "wage_adv_2036_pct": {
+            "p5": -16.8355,
+            "median": -5.5681,
+            "p95": -0.714,
+            "share_negative": 0.985
+          },
+          "wage_adv_2046_pct": {
+            "p5": -43.3335,
+            "median": -21.1101,
+            "p95": -5.6331,
+            "share_negative": 0.9998
+          },
+          "bottom50_world_2036_pct": {
+            "p5": -9.0979,
+            "median": -3.1512,
+            "p95": -0.6578,
+            "share_negative": 0.9908
+          },
+          "bottom50_world_2046_pct": {
+            "p5": -21.3458,
+            "median": -9.7804,
+            "p95": -2.2472,
+            "share_negative": 0.9932
+          },
+          "labour_share_world_2046_pp": {
+            "p5": -20.679,
+            "median": -11.4902,
+            "p95": -5.5592,
+            "share_negative": 1.0
+          },
+          "primary_balance_adv_2036_pp_gdp": {
+            "p5": -2.6997,
+            "median": -1.2561,
+            "p95": -0.4144,
+            "share_negative": 1.0
+          },
+          "debt_adv_2046_pp_gdp": {
+            "p5": 8.7273,
+            "median": 19.4139,
+            "p95": 37.9752,
+            "share_negative": 0.0
+          }
+        },
+        "age": {
+          "nonemployment_adv_2036_pp": {
+            "p5": 1.0023,
+            "median": 4.7208,
+            "p95": 11.5628,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": 3.1171,
+            "median": 6.4553,
+            "p95": 12.652,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -14.7983,
+            "median": -6.6764,
+            "p95": -1.5812,
+            "share_negative": 1.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -16.0694,
+            "median": -8.6205,
+            "p95": -4.0294,
+            "share_negative": 1.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -26.9956,
+            "median": -14.2447,
+            "p95": -4.3063,
+            "share_negative": 1.0
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 5.5709,
+            "median": 6.4101,
+            "p95": 9.069,
+            "share_negative": 0.0
+          }
+        },
+        "convergence": {
+          "no_ai": {
+            "iterations": 16,
+            "max_change": 4.2437153791041737e-10,
+            "converged": true
+          },
+          "ai": {
+            "iterations": 12,
+            "max_change": 2.667955856239246e-10,
+            "converged": true
+          }
+        },
+        "max_accounting_residual": 5.030454286944247e-16
+      }
+    },
+    "persistent": {
+      "label": "Sostituzione persistente",
+      "one_way": {
+        "macro": {
+          "gdp_world_2036_pct": {
+            "p5": 0.5429,
+            "median": 2.0814,
+            "p95": 4.981,
+            "share_negative": 0.0005
+          },
+          "gdp_world_2046_pct": {
+            "p5": 2.3203,
+            "median": 4.8513,
+            "p95": 8.0529,
+            "share_negative": 0.0037
+          },
+          "unemployment_adv_2036_pp": {
+            "p5": 3.2416,
+            "median": 10.6035,
+            "p95": 20.311,
+            "share_negative": 0.0
+          },
+          "unemployment_adv_2046_pp": {
+            "p5": 9.94,
+            "median": 17.3781,
+            "p95": 27.0647,
+            "share_negative": 0.0
+          },
+          "wage_adv_2036_pct": {
+            "p5": -22.0022,
+            "median": -4.725,
+            "p95": 0.2441,
+            "share_negative": 0.9263
+          },
+          "wage_adv_2046_pct": {
+            "p5": -65.1959,
+            "median": -35.9555,
+            "p95": -8.7699,
+            "share_negative": 0.9995
+          },
+          "bottom50_world_2036_pct": {
+            "p5": -11.0457,
+            "median": -2.6438,
+            "p95": -0.0345,
+            "share_negative": 0.9535
+          },
+          "bottom50_world_2046_pct": {
+            "p5": -32.0456,
+            "median": -16.2498,
+            "p95": -4.1374,
+            "share_negative": 0.997
+          },
+          "labour_share_world_2046_pp": {
+            "p5": -30.0678,
+            "median": -19.1393,
+            "p95": -10.3721,
+            "share_negative": 1.0
+          },
+          "primary_balance_adv_2036_pp_gdp": {
+            "p5": -4.1202,
+            "median": -2.0464,
+            "p95": -0.5452,
+            "share_negative": 1.0
+          },
+          "debt_adv_2046_pp_gdp": {
+            "p5": 16.3805,
+            "median": 34.8018,
+            "p95": 60.9686,
+            "share_negative": 0.0
+          }
+        },
+        "age": {
+          "nonemployment_adv_2036_pp": {
+            "p5": 1.5894,
+            "median": 8.2115,
+            "p95": 17.3209,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": 10.8641,
+            "median": 16.2703,
+            "p95": 24.1411,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -22.0563,
+            "median": -11.4134,
+            "p95": -2.3061,
+            "share_negative": 1.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -28.2046,
+            "median": -20.5394,
+            "p95": -14.2032,
+            "share_negative": 1.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -30.3941,
+            "median": -18.5946,
+            "p95": -6.1708,
+            "share_negative": 1.0
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 6.96,
+            "median": 9.2105,
+            "p95": 12.7152,
+            "share_negative": 0.0
+          }
+        }
+      },
+      "two_way": {
+        "macro": {
+          "gdp_world_2036_pct": {
+            "p5": 0.4631,
+            "median": 2.0415,
+            "p95": 4.9721,
+            "share_negative": 0.008
+          },
+          "gdp_world_2046_pct": {
+            "p5": 2.1026,
+            "median": 4.8079,
+            "p95": 8.024,
+            "share_negative": 0.006
+          },
+          "unemployment_adv_2036_pp": {
+            "p5": 1.5045,
+            "median": 7.9744,
+            "p95": 17.2587,
+            "share_negative": 0.0
+          },
+          "unemployment_adv_2046_pp": {
+            "p5": 10.4623,
+            "median": 15.9795,
+            "p95": 24.0868,
+            "share_negative": 0.0
+          },
+          "wage_adv_2036_pct": {
+            "p5": -27.6431,
+            "median": -11.2339,
+            "p95": -1.6729,
+            "share_negative": 0.99
+          },
+          "wage_adv_2046_pct": {
+            "p5": -71.1167,
+            "median": -44.0071,
+            "p95": -12.157,
+            "share_negative": 1.0
+          },
+          "bottom50_world_2036_pct": {
+            "p5": -16.5775,
+            "median": -7.2385,
+            "p95": -1.9521,
+            "share_negative": 0.9978
+          },
+          "bottom50_world_2046_pct": {
+            "p5": -38.5408,
+            "median": -22.8413,
+            "p95": -7.3254,
+            "share_negative": 1.0
+          },
+          "labour_share_world_2046_pp": {
+            "p5": -34.0635,
+            "median": -23.3398,
+            "p95": -12.5489,
+            "share_negative": 1.0
+          },
+          "primary_balance_adv_2036_pp_gdp": {
+            "p5": -4.0166,
+            "median": -2.1604,
+            "p95": -0.8203,
+            "share_negative": 1.0
+          },
+          "debt_adv_2046_pp_gdp": {
+            "p5": 18.1847,
+            "median": 36.1652,
+            "p95": 59.9222,
+            "share_negative": 0.0
+          }
+        },
+        "age": {
+          "nonemployment_adv_2036_pp": {
+            "p5": 1.5045,
+            "median": 7.9744,
+            "p95": 17.2587,
+            "share_negative": 0.0
+          },
+          "nonemployment_adv_2046_pp": {
+            "p5": 10.4623,
+            "median": 15.9795,
+            "p95": 24.0868,
+            "share_negative": 0.0
+          },
+          "employment_rate_25_34_2036_pp": {
+            "p5": -22.0035,
+            "median": -11.198,
+            "p95": -2.1606,
+            "share_negative": 1.0
+          },
+          "employment_rate_25_34_2046_pp": {
+            "p5": -28.1612,
+            "median": -20.2995,
+            "p95": -13.7727,
+            "share_negative": 1.0
+          },
+          "first_hire_rate_15_24_2036_pp": {
+            "p5": -30.4341,
+            "median": -18.5456,
+            "p95": -6.1178,
+            "share_negative": 1.0
+          },
+          "noai_nonemployment_adv_2036_pct": {
+            "p5": 6.8471,
+            "median": 9.2093,
+            "p95": 12.7152,
+            "share_negative": 0.0
+          }
+        },
+        "convergence": {
+          "no_ai": {
+            "iterations": 8,
+            "max_change": 5.253055768150716e-10,
+            "converged": true
+          },
+          "ai": {
+            "iterations": 9,
+            "max_change": 3.1548397227965097e-10,
+            "converged": true
+          }
+        },
+        "max_accounting_residual": 4.820012746872971e-16
+      }
+    }
+  }
+}

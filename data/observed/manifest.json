@@ -1,0 +1,79 @@
+[
+  {
+    "file": "eurostat_IT.json",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/lfsa_pganws?lang=EN&geo=IT&sex=T&citizen=TOTAL&sinceTimePeriod=2019&untilTimePeriod=2025",
+    "retrieved_utc": "2026-10-10T18:33:52.763272+00:00",
+    "sha256": "5431685e0dc686209c17dd9ecf1407be6742c711c8377551b8b72accbb6bbfae",
+    "bytes": 22739
+  },
+  {
+    "file": "eurostat_EU27_2020.json",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/lfsa_pganws?lang=EN&geo=EU27_2020&sex=T&citizen=TOTAL&sinceTimePeriod=2019&untilTimePeriod=2025",
+    "retrieved_utc": "2026-10-10T18:33:53.464648+00:00",
+    "sha256": "04c62917907a5a46e59d1763e348d629a99a594bdf02d1136ad59d33ff82401d",
+    "bytes": 23927
+  },
+  {
+    "file": "eurostat_flows_IT.json",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/lfsi_long_q?lang=EN&geo=IT&sex=T&sinceTimePeriod=2024-Q1&untilTimePeriod=2025-Q4",
+    "retrieved_utc": "2026-10-10T18:33:54.155717+00:00",
+    "sha256": "f62eec00a589a3ed541bf888b8ec5f7b1ef6aa04be3d1b96e51ffc490138ceb3",
+    "bytes": 10244
+  },
+  {
+    "file": "eurostat_flows_EU27_2020.json",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/lfsi_long_q?lang=EN&geo=EU27_2020&sex=T&sinceTimePeriod=2024-Q1&untilTimePeriod=2025-Q4",
+    "retrieved_utc": "2026-10-10T18:33:54.625791+00:00",
+    "sha256": "0ef8cba8cd6dadd37c67495618c7bdf82023d328e14d82cd99e4b0162c1313d4",
+    "bytes": 10450
+  },
+  {
+    "file": "stanford_dashboard.html",
+    "url": "https://digitaleconomy.stanford.edu/project/indicators/canaries-dashboard/",
+    "retrieved_utc": "2026-10-10T18:33:54.855207+00:00",
+    "sha256": "79923683d6f9268b887e85226f843fa5c70bdbc798fd248cc781a4f3a8cb4240",
+    "bytes": 482349
+  },
+  {
+    "file": "stanford_00.dat",
+    "url": "https://storage.googleapis.com/aviary-del-public/release_memos/latest/downloads/canaries_by_exposure_results.zip",
+    "retrieved_utc": "2026-10-10T18:33:55.755618+00:00",
+    "sha256": "12b33fb846d552ebec8cb3332da29e34ab1a317414cf3767628ea0fd2ca39359",
+    "bytes": 5172
+  },
+  {
+    "file": "stanford_01.dat",
+    "url": "https://storage.googleapis.com/aviary-del-public/release_memos/latest/downloads/canaries_age_by_exposure_results.zip",
+    "retrieved_utc": "2026-10-10T18:33:56.607768+00:00",
+    "sha256": "a99c3912381eeb6b1f7e74b6e86dd1e2a760676adc3848ba901254e76086a397",
+    "bytes": 15864
+  },
+  {
+    "file": "stanford_02.dat",
+    "url": "https://storage.googleapis.com/aviary-del-public/release_memos/latest/downloads/canaries_by_age_results.zip",
+    "retrieved_utc": "2026-10-10T18:33:56.893139+00:00",
+    "sha256": "e3a1413b00162b853078a9770c690a89a2ae235a5f784b95f6e559839e1e5842",
+    "bytes": 4792
+  },
+  {
+    "file": "stanford_03.dat",
+    "url": "https://storage.googleapis.com/aviary-del-public/release_memos/latest/downloads/canaries_composition_results.zip",
+    "retrieved_utc": "2026-10-10T18:33:57.770290+00:00",
+    "sha256": "42b1d691d598b05775fcf7601b919382ebb9aa84e44426afb67eb4f8414422e6",
+    "bytes": 1543
+  },
+  {
+    "file": "stanford_04.dat",
+    "url": "https://storage.googleapis.com/aviary-del-public/release_memos/latest/downloads/canaries_software_developers_results.zip",
+    "retrieved_utc": "2026-10-10T18:33:58.016325+00:00",
+    "sha256": "fe013d6076b6d0a6d977be3fb67f1fa1e6546c70ce62888b25f689154b9d353a",
+    "bytes": 5079
+  },
+  {
+    "file": "stanford_05.dat",
+    "url": "https://storage.googleapis.com/aviary-del-public/release_memos/latest/downloads/canaries_customer_service_results.zip",
+    "retrieved_utc": "2026-10-10T18:33:58.519806+00:00",
+    "sha256": "b1d54b1f17c6cb84f50b1c049fce766bb19c0820a5ccb45460edb02d9d0ce1d0",
+    "bytes": 5048
+  }
+]
