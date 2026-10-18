@@ -269,7 +269,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   const canvas = $("map"), ctx = canvas.getContext("2d");
   const projection = d3.geoEquirectangular();
   const path = d3.geoPath(projection, ctx);
-  let features = null, land = null, mesh = null, t = DATA.start * 12, running = false, frac = 0, last = performance.now();
+  let features = null, land = null, mesh = null, t = DATA.start * 12, running = false, started = false, frac = 0, last = performance.now();
   const byNum = {};
   SOCIAL.countries.forEach(c => { if (c.num) byNum[Number(c.num)] = c; });
   const LABELS = new Set(["USA", "CAN", "MEX", "BRA", "ARG", "COL", "GBR", "FRA", "DEU", "ITA", "ESP", "POL", "UKR", "RUS", "TUR", "IRN", "SAU", "EGY", "NGA", "ETH", "COD", "ZAF", "KEN", "IND", "PAK", "CHN", "JPN", "KOR", "IDN", "VNM", "AUS", "ARE", "ISR"]);
@@ -303,6 +303,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     if (!features) return;
     ctx.fillStyle = "rgba(92,170,170,0.28)"; ctx.beginPath(); path(land); ctx.fill();
     ctx.strokeStyle = "rgba(160,235,225,0.22)"; ctx.lineWidth = 0.6 * d; ctx.beginPath(); path(mesh); ctx.stroke();
+    if (!started) return;                                               // empty map until Start
     // dots: people using AI (red), robots (yellow)
     for (const f of features) {
       const c = f.country; if (!c || !c.points) continue;
@@ -348,13 +349,18 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
 
   function stats() {
     $("clock").textContent = fmtM(t);
+    if (!started) {                                                     // nothing shown before Start
+      for (const r of REG) ["ai", "rob", "u"].forEach(k => $(k + r).textContent = "–");
+      GRID.forEach(([c, el, rk]) => { el.textContent = "–"; rk.textContent = "–"; });
+      return;
+    }
     const yr = t / 12;
     for (const r of REG) {
       const cs = SOCIAL.countries.filter(c => c.region === r);
       $("ai" + r).textContent = fmtPct(cs.reduce((s, c) => s + aiUse(c, yr), 0) / cs.length);
       $("rob" + r).textContent = fmtPct(robotShare(r, yr)); $("u" + r).textContent = fmtPP(unempAt(r, yr));
     }
-    GRID.forEach(([c, el]) => { el.textContent = fmtPct(aiUse(c, yr)); });
+    GRID.forEach(([c, el, rk]) => { el.textContent = fmtPct(aiUse(c, yr)); rk.textContent = Math.round(c.risk); });
   }
 
   // country grid, highest starting risk first
@@ -362,9 +368,9 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   $("grid").innerHTML = "";
   [...SOCIAL.countries].sort((a, b) => b.risk - a.risk).forEach(c => {
     const row = document.createElement("div"); row.className = "r";
-    row.innerHTML = "<span></span><b class=\"risk\">" + Math.round(c.risk) + "</b><b class=\"ai\"></b>";
+    row.innerHTML = "<span></span><b class=\"risk\"></b><b class=\"ai\"></b>";
     row.firstChild.textContent = cname(c);
-    $("grid").appendChild(row); GRID.push([c, row.lastChild]);
+    $("grid").appendChild(row); GRID.push([c, row.lastChild, row.children[1]]);
   });
 
   function loop(now) {
@@ -378,8 +384,8 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     requestAnimationFrame(loop);
   }
 
-  $("play").onclick = () => { if (t >= END) { t = START; frac = 0; } running = !running; $("play").textContent = running ? L("Pause", "Pausa") : L("Resume", "Riprendi"); };
-  const restart = () => { period(); running = false; t = START; frac = 0; $("play").textContent = L("Start", "Avvia"); stats(); };
+  $("play").onclick = () => { if (t >= END) { t = START; frac = 0; } started = true; running = !running; $("play").textContent = running ? L("Pause", "Pausa") : L("Resume", "Riprendi"); stats(); };
+  const restart = () => { period(); running = false; started = false; t = START; frac = 0; $("play").textContent = L("Start", "Avvia"); stats(); };
   $("reset").onclick = restart;
   ["fromM", "fromY", "toM", "toY"].forEach(id => $(id).onchange = restart);
   window.addEventListener("resize", size);
