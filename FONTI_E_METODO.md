@@ -220,4 +220,8 @@ sostituite, piu tensione, prima nei paesi sviluppati.
 - Regioni: avanzate = lista FMI delle economie avanzate; basso reddito = Banca Mondiale basso reddito, piu reddito
   medio-basso nell'Africa subsahariana; tutti gli altri emergenti.
 Non e una previsione di disordini: il libro non ha un legame stimato tra lavoro perso e disordini (capitolo 17);
-il fattore 0,5 e una regola dell'autore, non un coefficiente misurato.
+il fattore 0,5, il quarto di velocita prima dei robot e i 3 punti di ingresso dei robot sono regole dell'autore,
+non coefficienti misurati.
+Capitolo 37 del libro: `aimodel/analysis/social_tension.py` ripete passo per passo i calcoli della pagina (inizio
+gennaio 2026) e scrive `outputs/social_tension.json`, da cui escono le Tabelle 66 e 67 e i numeri del testo;
+`tests/test_social_tension.py` controlla che pagina, modulo e capitolo usino le stesse regole e gli stessi numeri.
