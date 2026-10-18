@@ -207,8 +207,8 @@ sostituite, piu tensione, prima nei paesi sviluppati.
 - Pressione: lavoro preso da AI e robot nella regione rispetto al mese di partenza (i diciannove mestieri della
   Tabella 65 pesati per occupati, in punti percentuali; non la disoccupazione netta, che nel modello si riassorbe
   in parte), ripartito tra i paesi della regione
-  secondo quanto adottano AI e robot: (nuovi utenti dell'AI del paese + robot della regione) / (media regionale dei
-  nuovi utenti dell'AI + robot). Chi adotta di piu perde piu lavoro, anche se parte stabile.
+  secondo quanto usano AI e robot: (persone che usano l'AI nel paese + robot della regione) / (media regionale delle
+  persone che usano l'AI + robot). Chi usa piu AI perde piu lavoro, anche se parte stabile.
 - I diciannove mestieri sono scalati per l'occupazione esposta della regione (60/40/26 per cento, capitolo 6).
 - Amplificatore: dove il paese e gia teso la stessa sostituzione pesa fino a meta in piu (cassa di risonanza), mai
   abbastanza da ribaltare una sostituzione molto maggiore. Il rischio di partenza non si mostra.
