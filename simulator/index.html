@@ -295,7 +295,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
       <li><b>Frontier occupations</b>: in the Stanford Digital Economy Lab / ADP "Canaries" data used in the book (vintage September 2026), employment of 22–25 year olds fell by 4.5% for software developers and by 7.5% for customer service between August 2025 and August 2026, and the decline reached ages 26–34. Only the last year is used. These two occupations adopt from 2030, the earliest central year in the book's range, instead of the scenario value. This is a choice of the simulator, not a book parameter.</li>
       <li><b>Why frontier occupations get different values</b>: the book's substitution (55%) and automation (47.5%) are central values for the whole economy, and the book does not assign them to single occupations. For the two frontier occupations the simulator uses three different choices, all declared: exposure with software tools (gamma measure of the same study: tasks exposed once tools such as coding agents are built on the model; software developers 84% by human experts, 95% by GPT-4, against 45% and 87% with the beta measure); substitution at 70% and automation by 2046 at 70% at least, the top of the book's ranges. These are assumptions for jobs where the technology is already in use, not estimates for each occupation.</li>
       <li><b>Observed pace</b>: for the two frontier occupations in advanced economies, the end of a run also shows what the last 12 months of the Stanford/ADP data would imply if the same yearly pace held over the selected period. August 2025 – August 2026, all ages: software developers −0.4% to −2.1%, customer service −1.2% to −3.1% (the files give an index for each age group but not its size, so the total is shown between a young-heavy and an older-heavy age mix); ages 22–25: −4.5% and −7.5%. Only the last year is used because the AI boom in these jobs shows up from 2025, while 2022–2024 also reflect post-pandemic over-hiring and higher interest rates. US data, shown as a comparison with the scenarios, not as a forecast.</li>
-      <li><b>Author's forecast (beyond the book)</b>: a fifth scenario, declared as a forecast and not as a book estimate, the default for frontier occupations. It follows chapter 36: code writing is largely taken over by AI and replaced by fewer architect roles that use AI tools. Substitution 85% and automation by 2046 85%, exposure with software tools growing 60% (never above 95%), 0.15 new tasks inside the same occupation for each task lost, arriving within 3 years. The central adoption year is not chosen by hand: it is calibrated so that the first simulated year reproduces the decline observed in the last 12 months (middle of the observed range). Occupations without observed data use the book's central year.</li>
+      <li><b>Author's forecast (beyond the book)</b>: the default scenario for every occupation, declared as a forecast and not as a book estimate. It follows chapter 36. Exposure uses the gamma measure of Eloundou et al. (tasks exposed once software tools are built on the model) for every occupation, with no further widening, since that measure already includes the tools. For routine office jobs (office clerk, accountant, customer service) it takes the higher of that value and the Frey and Osborne probability of computerisation (0.96, 0.94 and 0.55, appendix of the 2013 paper), so that classic office automation is counted too; never above 95%. Substitution and automation by 2046 depend on the type of occupation, following the book's distinction between exposure and complementarity (IMF SDN/2024/001): routine office and creative work 85% and 85%; the architect role 70% and 70%; professions with responsibility and human contact (doctor, nurse, teacher, lawyer) 55% and 47.5%, the book's central values; manual jobs 55% and 70%, reached mainly through robots. New tasks inside the same occupation: 0.15 for each task lost, within 3 years. The central adoption year is calibrated on the decline observed in the last 12 months for software developers and customer service, and for office clerks on the customer service series, the closest office job with observed data; the other occupations use 2033, close to those calibrated years. With these values the largest possible loss by 2046 is about 58%: 95% exposure, 85% of it substitutable and 85% of that automated, minus the new roles. Results are rounded to whole percentages: differences of a few points between occupations are not meaningful.</li>
       <li><b>New tasks inside the occupation</b>: in the book, new tasks appear anywhere in the economy. In the book scenarios the simulator counts them inside the same occupation, which overstates what is left of that occupation; the author's forecast keeps only the new roles that stay in the occupation.</li>
       <li><b>Range</b>: at the end of a run the simulator also shows the result of the same job, region and period under the four book scenarios and both exposure ratings, from the lowest to the highest. As in the book, the range matters more than the single path.</li>
       <li><b>Exposure is not job loss</b>: as the book stresses, both studies measure technical possibility. The book's logic decides how much of it becomes substitution, and when.</li>
@@ -330,27 +330,28 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   // humanG / gpt4G = gamma measure (E1 + E2, tasks exposed once software tools are built on the model), same source,
   //   used for frontier occupations, where tools such as coding agents are already in use.
   const JOBS = [
-    { id: "clerk",       name: "Office clerk",          soc: "43-9061 Office Clerks, General",                          human: 0.500, gpt4: 0.576, rob: 0 },
-    { id: "accountant",  name: "Accountant",            soc: "13-2011 Accountants and Auditors",                        human: 0.520, gpt4: 0.560, rob: 0 },
-    { id: "callcenter",  name: "Call center agent",     soc: "43-4051 Customer Service Representatives",                human: 0.705, gpt4: 0.568, humanG: 0.864, gpt4G: 1.000, rob: 0, frontier: true,
+    { id: "clerk",       name: "Office clerk",          soc: "43-9061 Office Clerks, General",                          human: 0.500, gpt4: 0.576, humanG: 0.788, gpt4G: 0.788, cls: "sub", fo: 0.96, rob: 0 ,
+      obs: { lo: -0.0313, hi: -0.0118, young: -0.075, proxy: "customer service" } },
+    { id: "accountant",  name: "Accountant",            soc: "13-2011 Accountants and Auditors",                        human: 0.520, gpt4: 0.560, humanG: 0.840, gpt4G: 1.000, cls: "sub", fo: 0.94, rob: 0 },
+    { id: "callcenter",  name: "Call center agent",     soc: "43-4051 Customer Service Representatives",                human: 0.705, gpt4: 0.568, humanG: 0.864, gpt4G: 1.000, cls: "sub", fo: 0.55, rob: 0, frontier: true,
       obs: { lo: -0.0313, hi: -0.0118, young: -0.075 } },
-    { id: "translator",  name: "Translator",            soc: "27-3091 Interpreters and Translators",                    human: 0.840, gpt4: 0.880, rob: 0 },
-    { id: "developer",   name: "Software developer",    soc: "15-1252 Software Developers",                             human: 0.447, gpt4: 0.868, humanG: 0.842, gpt4G: 0.947, rob: 0, frontier: true,
+    { id: "translator",  name: "Translator",            soc: "27-3091 Interpreters and Translators",                    human: 0.840, gpt4: 0.880, humanG: 0.880, gpt4G: 0.880, cls: "sub", rob: 0 },
+    { id: "developer",   name: "Software developer",    soc: "15-1252 Software Developers",                             human: 0.447, gpt4: 0.868, humanG: 0.842, gpt4G: 0.947, cls: "sub", rob: 0, frontier: true,
       obs: { lo: -0.0212, hi: -0.0037, young: -0.045 } },
-    { id: "architect",   name: "Solution architect",    soc: "15-1211 Computer Systems Analysts (closest category)",    human: 0.471, gpt4: 0.750, rob: 0 },
-    { id: "designer",    name: "Graphic designer",      soc: "27-1024 Graphic Designers",                               human: 0.411, gpt4: 0.500, rob: 0 },
-    { id: "journalist",  name: "Journalist",            soc: "27-3023 News Analysts, Reporters, and Journalists",       human: 0.633, gpt4: 0.650, rob: 0 },
-    { id: "lawyer",      name: "Lawyer",                soc: "23-1011 Lawyers",                                         human: 0.475, gpt4: 0.425, rob: 0 },
-    { id: "retail",      name: "Retail clerk",          soc: "41-2031 Retail Salespersons",                             human: 0.355, gpt4: 0.342, rob: 0.92 },
-    { id: "driver",      name: "Driver",                soc: "53-3032 Heavy and Tractor-Trailer Truck Drivers",         human: 0.173, gpt4: 0.279, rob: 0.79 },
-    { id: "warehouse",   name: "Warehouse worker",      soc: "53-7062 Laborers and Freight, Stock, and Material Movers", human: 0.060, gpt4: 0.040, rob: 0.85 },
-    { id: "factory",     name: "Factory worker",        soc: "51-2092 Team Assemblers",                                 human: 0.088, gpt4: 0.235, rob: 0.97 },
-    { id: "cook",        name: "Cook",                  soc: "35-2014 Cooks, Restaurant",                               human: 0.122, gpt4: 0.095, rob: 0.96 },
-    { id: "teacher",     name: "Teacher",               soc: "25-2031 Secondary School Teachers",                       human: 0.341, gpt4: 0.333, rob: 0 },
-    { id: "doctor",      name: "Doctor",                soc: "29-1215 Family Medicine Physicians",                      human: 0.375, gpt4: 0.438, rob: 0 },
-    { id: "nurse",       name: "Nurse",                 soc: "29-1141 Registered Nurses",                               human: 0.381, gpt4: 0.333, rob: 0 },
-    { id: "construction", name: "Construction worker",  soc: "47-2061 Construction Laborers",                           human: 0.025, gpt4: 0.050, rob: 0.88 },
-    { id: "electrician", name: "Electrician / plumber", soc: "47-2111 Electricians and 47-2152 Plumbers (average)",      human: 0.101, gpt4: 0.124, rob: 0.25 },
+    { id: "architect",   name: "Solution architect",    soc: "15-1211 Computer Systems Analysts (closest category)",    human: 0.471, gpt4: 0.750, humanG: 0.824, gpt4G: 0.912, cls: "arch", rob: 0 },
+    { id: "designer",    name: "Graphic designer",      soc: "27-1024 Graphic Designers",                               human: 0.411, gpt4: 0.500, humanG: 0.821, gpt4G: 1.000, cls: "sub", rob: 0 },
+    { id: "journalist",  name: "Journalist",            soc: "27-3023 News Analysts, Reporters, and Journalists",       human: 0.633, gpt4: 0.650, humanG: 0.833, gpt4G: 1.000, cls: "sub", rob: 0 },
+    { id: "lawyer",      name: "Lawyer",                soc: "23-1011 Lawyers",                                         human: 0.475, gpt4: 0.425, humanG: 0.800, gpt4G: 0.850, cls: "comp", rob: 0 },
+    { id: "retail",      name: "Retail clerk",          soc: "41-2031 Retail Salespersons",                             human: 0.355, gpt4: 0.342, humanG: 0.447, gpt4G: 0.605, cls: "man", rob: 0.92 },
+    { id: "driver",      name: "Driver",                soc: "53-3032 Heavy and Tractor-Trailer Truck Drivers",         human: 0.173, gpt4: 0.279, humanG: 0.308, gpt4G: 0.365, cls: "man", rob: 0.79 },
+    { id: "warehouse",   name: "Warehouse worker",      soc: "53-7062 Laborers and Freight, Stock, and Material Movers", human: 0.060, gpt4: 0.040, humanG: 0.120, gpt4G: 0.040, cls: "man", rob: 0.85 },
+    { id: "factory",     name: "Factory worker",        soc: "51-2092 Team Assemblers",                                 human: 0.088, gpt4: 0.235, humanG: 0.176, gpt4G: 0.294, cls: "man", rob: 0.97 },
+    { id: "cook",        name: "Cook",                  soc: "35-2014 Cooks, Restaurant",                               human: 0.122, gpt4: 0.095, humanG: 0.162, gpt4G: 0.162, cls: "man", rob: 0.96 },
+    { id: "teacher",     name: "Teacher",               soc: "25-2031 Secondary School Teachers",                       human: 0.341, gpt4: 0.333, humanG: 0.524, gpt4G: 0.635, cls: "comp", rob: 0 },
+    { id: "doctor",      name: "Doctor",                soc: "29-1215 Family Medicine Physicians",                      human: 0.375, gpt4: 0.438, humanG: 0.542, gpt4G: 0.875, cls: "comp", rob: 0 },
+    { id: "nurse",       name: "Nurse",                 soc: "29-1141 Registered Nurses",                               human: 0.381, gpt4: 0.333, humanG: 0.571, gpt4G: 0.619, cls: "comp", rob: 0 },
+    { id: "construction", name: "Construction worker",  soc: "47-2061 Construction Laborers",                           human: 0.025, gpt4: 0.050, humanG: 0.050, gpt4G: 0.100, cls: "man", rob: 0.88 },
+    { id: "electrician", name: "Electrician / plumber", soc: "47-2111 Electricians and 47-2152 Plumbers (average)",      human: 0.101, gpt4: 0.124, humanG: 0.178, gpt4G: 0.181, cls: "man", rob: 0.25 },
   ];
 
   // The four scenarios of the book's employment module (config/employment.json), at the centre of each range
@@ -363,13 +364,20 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     // few new tasks inside the same occupation (0.15: the architect roles that replace code writing), arriving
     // within 3 years. For occupations with observed data, the central adoption year is calibrated so that the first
     // simulated year reproduces the observed decline of the last 12 months.
-    { id: "author",     name: "Author's forecast (beyond the book)", theta: 0.85, psi: 0.15, lagNew: 3, expMult: 1.6, phi: 0.85, calibrate: true },
+    { id: "author",     name: "Author's forecast (beyond the book)", psi: 0.15, lagNew: 3, expMult: 1.0, calibrate: true },
   ];
   const BOOK_SCENARIOS = SCENARIOS.filter(s => !s.calibrate);
   const FRONTIER_MID = 2030; // earliest central adoption year in the book's range
   // Frontier occupations: substitutable share and automation by 2046 at the top of the book's ranges
   // (phi 0.40-0.70, theta 0.25-0.70). An assumption of the simulator for these jobs, not a book estimate.
   const FRONTIER = { phi: 0.70, theta: 0.70 };
+  // Author's forecast by type of occupation, following the book's distinction between exposure and complementarity
+  // (IMF SDN/2024/001): routine office and creative work is mostly substituted; the architect role keeps more human
+  // work; professions with responsibility and human contact (doctor, nurse, teacher, lawyer) keep the book's central
+  // automation, slowed by rules and liability; manual jobs are reached mainly through robots. Assumptions, declared.
+  const AUTHOR_CLS = { sub: { phi: 0.85, theta: 0.85 }, arch: { phi: 0.70, theta: 0.70 },
+                       comp: { phi: 0.55, theta: 0.475 }, man: { phi: 0.55, theta: 0.70 } };
+  const AUTHOR_MID = 2033; // occupations without observed data: close to the years calibrated on the two frontier jobs
   // Book result: extra unemployment from AI, median of 4,000 draws, percentage points (outputs/headline.json)
   const BOOK_UNEMP = { ADV: { 2036: 4.3, 2046: 1.4 }, EME: { 2036: 1.9, 2046: 2.3 }, LIC: { 2036: 0.5, 2046: 2.2 } };
   const GROUP_NAME = { ADV: "advanced economies", EME: "emerging economies", LIC: "low-income countries" };
@@ -446,17 +454,23 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     eAi: $("expAi").value / 100, eRob: $("robOn").checked ? $("expRob").value / 100 : 0,
   });
   // starting AI exposure of the current job: gamma measure for frontier occupations, beta otherwise
-  const exposureOf = (j, src) => j.frontier ? j[src + "G"] : j[src];
-  const phiOf = (j, s) => s.phi || (j.frontier ? FRONTIER.phi : BOOK.phi);
-  const thetaOf = (j, s) => s.calibrate ? s.theta : (j.frontier ? Math.max(s.theta, FRONTIER.theta) : s.theta);
+  // Exposure: the author's forecast uses the gamma measure (with software tools) for every occupation; the book
+  // scenarios keep the beta measure, except for the two frontier occupations.
+  // Routine office jobs (fo) also count classic office automation: the higher of the two studies, never above 0.95.
+  const exposureOf = (j, src, s = scenario()) => s.calibrate ? Math.min(0.95, Math.max(j[src + "G"], j.fo || 0))
+                                                             : (j.frontier ? j[src + "G"] : j[src]);
+  // Author's forecast: substitution and automation by type of occupation (AUTHOR_CLS); book scenarios as before.
+  const phiOf = (j, s) => s.calibrate ? AUTHOR_CLS[j.cls].phi : (j.frontier ? FRONTIER.phi : BOOK.phi);
+  const thetaOf = (j, s) => s.calibrate ? AUTHOR_CLS[j.cls].theta : (j.frontier ? Math.max(s.theta, FRONTIER.theta) : s.theta);
   // Central adoption year: for the author's forecast and occupations with observed data, the year that makes the
   // loss in the first simulated year (2026-2027) equal to the observed yearly decline (middle of the observed range).
   function midOf(j, s, src, pick) {
-    if (!(s.calibrate && j.obs)) return BOOK.mid;
+    if (!s.calibrate) return BOOK.mid;
+    if (!j.obs) return AUTHOR_MID;
     const r = pick === "lo" ? j.obs.lo : pick === "hi" ? j.obs.hi : (j.obs.lo + j.obs.hi) / 2;
-    const target = -r, phi = phiOf(j, s), e = exposureOf(j, src);
+    const target = -r, phi = phiOf(j, s), e = exposureOf(j, src, s), theta = thetaOf(j, s);
     const p = { expMult: s.expMult };
-    const first = m => phi * expoAI(e, BOOK.start + 1, p) * adoption(BOOK.start + 1, m, s.theta);
+    const first = m => phi * expoAI(e, BOOK.start + 1, p) * adoption(BOOK.start + 1, m, theta);
     let lo = BOOK.start + 0.5, hi = 2045;   // first-year loss falls as the central year moves later
     for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if (first(m) > target) lo = m; else hi = m; }
     return Math.round((lo + hi) / 2 * 2) / 2;
@@ -604,7 +618,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
       for (const s of list) for (const src of ["human", "gpt4"]) for (const pick of picks) {
         const p = { theta: thetaOf(j, s), mid: midOf(j, s, src, pick), psi: s.psi, lagNew: s.lagNew, calibrated: !!s.calibrate,
                     robots: $("robOn").checked, expMult: s.expMult, phi: phiOf(j, s),
-                    eAi: exposureOf(j, src), eRob: $("robOn").checked ? j.rob : 0 };
+                    eAi: exposureOf(j, src, s), eRob: $("robOn").checked ? j.rob : 0 };
         const a = shares(S.to / 12, p), b = shares(S.from / 12, p);
         out.push(((a.created - b.created) - (a.ai - b.ai) - (a.rob - b.rob)) * 100);
       }
@@ -626,16 +640,16 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     $("play").textContent = "Start";
     const r = modelResult(), diff = r.jobs - N0;
     $("endtitle").textContent = job().name + " · " + region().name + " · " + fmtM(S.from) + " → " + fmtM(S.to);
-    $("endpct").textContent = (diff >= 0 ? "+" : "") + (diff / N0 * 100).toFixed(1) + "%";
+    $("endpct").textContent = (diff >= 0 ? "+" : "") + (diff / N0 * 100).toFixed(0) + "%";
     $("endpct").style.color = diff >= 0 ? C.job : C.ai;
     $("endtxt").textContent = r.ai + " jobs replaced by AI, " + r.robot + " by robots, " + r.created + " new tasks created. " + r.jobs + " of " + N0 + " jobs remain, compared with a world without AI.";
-    const rg = scenarioRange(), f1 = v => (v >= 0 ? "+" : "") + v.toFixed(1) + "%";
-    const span = r => Math.abs(r.hi - r.lo) < 0.5 ? f1((r.lo + r.hi) / 2) : "from " + f1(r.lo) + " to " + f1(r.hi);
+    const rg = scenarioRange(), f1 = v => (v >= 0 ? "+" : "") + v.toFixed(0) + "%", fd = v => (v >= 0 ? "+" : "") + v.toFixed(1) + "%";
+    const span = r => Math.abs(r.hi - r.lo) < 1 ? f1((r.lo + r.hi) / 2) : "from " + f1(r.lo) + " to " + f1(r.hi);
     $("endrange").textContent = "Book scenarios, both exposure ratings: " + span(rg.book) + ". Author's forecast, beyond the book" + (job().obs ? ", across the observed range of last year's decline" : "") + ": " + span(rg.author) + ". The single value above is the path chosen in the menus." +
       (job().frontier ? " Frontier occupation: exposure with software tools (gamma). In the book scenarios substitution and automation are at the top of the book's ranges (70% and 70%); in the author's forecast they are 85% and 85%, with adoption calibrated on the observed last year." : "");
     const o = job().obs, yrs = (S.to - S.from + 1) / 12, pace = r => (Math.pow(1 + r, yrs) - 1) * 100;
     $("endobs").textContent = o && region().g === "ADV"
-      ? "At the pace of the last 12 months (Stanford/ADP, US payroll data, Aug 2025 – Aug 2026: all ages " + f1(o.lo * 100) + " to " + f1(o.hi * 100) + ", ages 22–25 " + f1(o.young * 100) + "), over the selected period: from " + f1(pace(o.lo)) + " to " + f1(pace(o.hi)) + ". One year of data: a comparison, not a forecast."
+      ? "At the pace of the last 12 months (Stanford/ADP, US payroll data" + (o.proxy ? ", " + o.proxy + " series used as the closest office job" : "") + ", Aug 2025 – Aug 2026: all ages " + fd(o.lo * 100) + " to " + fd(o.hi * 100) + ", ages 22–25 " + fd(o.young * 100) + "), over the selected period: from " + f1(pace(o.lo)) + " to " + f1(pace(o.hi)) + ". One year of data: a comparison, not a forecast."
       : "";
     const g = region().g, u = BOOK_UNEMP[g];
     $("endnote").textContent = "This is work taken over by machines, not unemployment. Wages, prices and moves to other jobs absorb part of it. For all " + GROUP_NAME[g] + " together, the book estimates extra unemployment of +" + u[2036] + " points in 2036 and +" + u[2046] + " in 2046 (median of its 4,000 simulations).";
@@ -687,7 +701,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     $("s2").textContent = r.ai;
     $("s2r").textContent = r.robot;
     $("s3").textContent = r.created;
-    $("s4").textContent = (net >= 0 ? "+" : "") + net + " (" + (net / N0 * 100).toFixed(1) + "%)";
+    $("s4").textContent = (net >= 0 ? "+" : "") + net + " (" + (net / N0 * 100).toFixed(0) + "%)";
     $("s6").textContent = (S.t - S.from + 1) + " / " + (S.to - S.from + 1);
   }
 
@@ -753,9 +767,10 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   $("reset").onclick = reset;
   $("central").onclick = () => { setCentral(); reset(); };
   // frontier occupations open on the author's forecast, the others on the book's reference scenario
-  sel.onchange = () => { scnSel.value = job().frontier ? "author" : "reference"; syncSliders(); setCentral(); reset(); };
+  // every occupation opens on the author's forecast; the book scenarios stay in the menu for comparison
+  sel.onchange = () => { scnSel.value = "author"; syncSliders(); setCentral(); reset(); };
   $("source").onchange = () => { syncSliders(); setCentral(); reset(); };
-  scnSel.onchange = () => { setCentral(); reset(); };
+  scnSel.onchange = () => { syncSliders(); setCentral(); reset(); };
   regSel.onchange = reset;
   ["fromM", "fromY", "toM", "toY", "robOn"].forEach(id => $(id).onchange = () => { showSliders(); reset(); });
   ["expAi", "expRob", "theta", "mid", "psi", "lag"].forEach(id => { $(id).oninput = showSliders; $(id).onchange = reset; });
@@ -768,6 +783,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
 
   sel.value = "clerk";
   regSel.value = "ADV";
+  scnSel.value = "author";
   syncSliders();
   setCentral();
   reset();
