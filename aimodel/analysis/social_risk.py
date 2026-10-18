@@ -9,12 +9,13 @@ Sources (archived in data/observed/social, downloaded 18 October 2026, not modif
 - Codes: ISO 3166 alpha-3 and numeric (iso_codes.json, from the npm package i18n-iso-countries 7.11.0) and the
   World Bank country list with regions and capital coordinates (wb_countries.json).
 
-The book's regions (advanced, emerging, low-income) follow the job simulator: USA, Canada, Japan, Europe and
-Oceania advanced; China, India, Russia, the rest of Asia and the Americas emerging; Africa low-income.
+The book's regions follow the IMF groups used for the exposure (chapter 6): advanced = the IMF list of advanced
+economies (World Economic Outlook); low-income = World Bank low income, plus lower middle income in sub-Saharan
+Africa; every other country emerging.
 After the last observation the page lets AI use grow along the book's adoption curve up to the share of
 employment exposed to AI in the region (calibration exposure 60/40/26 percent, IMF, chapter 6).
-Social tension on the page = work lost in the region since the start, shared by AI and robot take-up, x (1 + 2 x
-risk / 100). The starting risk amplifies, it is not shown; the book has no estimated link to unrest (chapter 17).
+Social tension on the page = work taken by AI and robots since the start (scaled by the region's exposure, shared
+by AI take-up) x (1 + 0.5 x risk / 100). The starting risk amplifies, it is not shown; the book has no estimated link to unrest (chapter 17).
 """
 import csv
 import json
@@ -25,21 +26,18 @@ from aimodel.calibration.data import CAL
 ROOT = Path(__file__).resolve().parents[2]
 RAW = ROOT / "data" / "observed" / "social"
 
-CENTRAL_ASIA = {"KAZ", "UZB", "KGZ", "TJK", "TKM", "AZE", "ARM", "GEO", "TUR", "RUS"}
-NORTH_AFRICA = {"DZA", "EGY", "LBY", "MAR", "TUN", "DJI"}
-OCEANIA = {"AUS", "NZL", "FJI", "PNG", "SLB", "VUT", "WSM", "TON", "KIR", "FSM", "MHL", "PLW", "NRU", "TUV",
-           "NCL", "PYF", "GUM", "ASM", "MNP"}
+# IMF World Economic Outlook, advanced economies
+IMF_ADVANCED = {"AND", "AUS", "AUT", "BEL", "CAN", "HRV", "CYP", "CZE", "DNK", "EST", "FIN", "FRA", "DEU", "GRC",
+                "HKG", "ISL", "IRL", "ISR", "ITA", "JPN", "KOR", "LVA", "LTU", "LUX", "MAC", "MLT", "NLD", "NZL",
+                "NOR", "PRT", "PRI", "SMR", "SGP", "SVK", "SVN", "ESP", "SWE", "CHE", "TWN", "GBR", "USA"}
 
 
-def book_region(iso3, wb_region):
-    r = wb_region.strip()
-    if iso3 in ("USA", "CAN", "BMU", "JPN") or iso3 in OCEANIA:
+def book_region(iso3, wb_region, income):
+    if iso3 in IMF_ADVANCED:
         return "ADV"
-    if r == "Europe & Central Asia":
-        return "EME" if iso3 in CENTRAL_ASIA else "ADV"
-    if r == "Sub-Saharan Africa" or iso3 in NORTH_AFRICA:
+    if income == "Low income" or (income == "Lower middle income" and wb_region.strip() == "Sub-Saharan Africa"):
         return "LIC"
-    return "EME"   # rest of Asia, Middle East, South Asia, Latin America & Caribbean
+    return "EME"
 
 
 def build():
@@ -59,7 +57,7 @@ def build():
             continue
         c = wb[iso3]
         countries.append(dict(
-            iso3=iso3, iso2=c["iso2Code"], num=num.get(iso3), name=c["name"], region=book_region(iso3, c["region"]["value"]),
+            iso3=iso3, iso2=c["iso2Code"], num=num.get(iso3), name=c["name"], region=book_region(iso3, c["region"]["value"], c["incomeLevel"]["value"]),
             wgi=round(v, 3), risk=round(max(0.0, min(100.0, (2.5 - v) / 5 * 100)), 1),
             lon=float(c["longitude"]) if c["longitude"] else None, lat=float(c["latitude"]) if c["latitude"] else None,
             ai_use=ai.get(iso3, {})))
