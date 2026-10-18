@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="author" content="Enrico Lorenzo De Vito">
+<title>Social Risk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: control-room world map on top, region panel below; site colours for the frame */
+:root {
+  --bg: #0b1220;
+  --panel: #111a2c;
+  --line: #22304a;
+  --fg: #dbe4f3;
+  --muted: #8292ad;
+  --accent: #7aa7ff;
+  --field: #070c16;
+  --map: #2fe3c8;
+  --ai: #f0507a;
+  --robot: #f5c842;
+  --tension: #ff8c28;
+  --f-ui: "IBM Plex Sans", system-ui, sans-serif;
+  --f-data: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg); color: var(--fg); font-family: var(--f-ui); font-size: 14px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 28px;
+}
+.topnav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+.topnav .in { max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; padding-block: 10px; }
+.topnav .brand { font-weight: 600; margin-right: 14px; font-size: .9rem; }
+.topnav a { color: var(--muted); text-decoration: none; font-size: .88rem; font-weight: 500; padding: 7px 14px; border-radius: 999px; border: 1px solid transparent; }
+.topnav a:hover { color: var(--fg); border-color: var(--line); }
+.topnav a[aria-current="page"] { color: var(--bg); background: var(--accent); }
+.topnav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.topnav a.excerpt { color: var(--fg); border-color: var(--line); }
+.topnav .flags { margin-left: auto; display: flex; gap: 6px; }
+.topnav .flag { padding: 3px; border-radius: 4px; border: 1px solid transparent; background: none; line-height: 0; opacity: .55; cursor: pointer; }
+.topnav .flag.on { opacity: 1; border-color: var(--line); }
+.topnav .flag:hover { opacity: 1; }
+.wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; }
+h1 { margin: 0; font-size: 1.45rem; font-weight: 600; text-wrap: balance; }
+.byline { color: var(--accent); font-size: .85rem; font-weight: 500; margin-block: 2px 4px; }
+.sub { color: var(--muted); font-size: .85rem; max-width: 75ch; }
+.clock { font-family: var(--f-data); font-size: 1.05rem; padding: 6px 14px; border: 1px solid var(--map); color: var(--map); border-radius: 999px; font-variant-numeric: tabular-nums; }
+.bar { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: flex-end; }
+.ctl { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.ctl label { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+select { background: var(--field); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; font: inherit; font-family: var(--f-data); font-size: .85rem; max-width: 100%; }
+.btns { display: flex; gap: 8px; margin-left: auto; }
+@media (max-width: 820px) { .btns { margin-left: 0; } }
+button { font: inherit; font-weight: 600; font-size: .85rem; border-radius: 6px; padding: 8px 16px; cursor: pointer; border: 1px solid var(--line); background: var(--field); color: var(--fg); }
+button.primary { background: var(--map); border-color: var(--map); color: #02231e; }
+button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.room { background: #000; border: 1px solid #0f3b37; border-radius: 10px; overflow: hidden; }
+.mapbox { position: relative; aspect-ratio: 2 / 1; }
+#map { width: 100%; height: 100%; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: .8rem; color: #9fe9dd; padding: 8px 14px; border-top: 1px solid #0f3b37; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.legend i.ring { width: 12px; height: 12px; background: none; border: 2px solid var(--tension); box-shadow: 0 0 6px var(--tension); }
+.panel { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: #062a26; border-top: 1px solid #0f5a52; }
+@media (max-width: 720px) { .panel { grid-template-columns: minmax(0, 1fr); } }
+.panel section { padding: 10px 14px 12px; border-right: 1px solid #0f5a52; }
+.panel section:last-child { border-right: none; }
+.panel h2 { margin: 0 0 6px; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: #b7f5ea; font-weight: 600; }
+.panel .row { display: flex; justify-content: space-between; gap: 10px; font-size: .82rem; color: #9fe9dd; padding: 2px 0; }
+.panel .row b { font-family: var(--f-data); font-weight: 600; font-variant-numeric: tabular-nums; }
+.panel .row b.ai { color: var(--ai); } .panel .row b.robot { color: var(--robot); } .panel .row b.tension { color: var(--tension); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1px; background: #0f5a52; border-top: 1px solid #0f5a52; }
+.grid div { background: #031f1c; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; }
+.grid span { font-size: .78rem; color: #9fe9dd; }
+.grid b { font-family: var(--f-data); font-size: 1.05rem; font-variant-numeric: tabular-nums; color: var(--tension); }
+.gridnote { margin: 0; padding: 6px 14px 10px; font-size: .74rem; color: #6fbfb2; background: #031f1c; }
+.note { color: var(--muted); font-size: .8rem; line-height: 1.5; margin: 0; max-width: 95ch; }
+.note b { color: var(--fg); font-weight: 500; }
+footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--line); padding-top: 12px; }
+</style>
+<script src="i18n.js"></script>
+</head>
+<body>
+
+<nav class="topnav" aria-label="Main">
+  <div class="in">
+    <span class="brand">The Last Forecast</span>
+    <a href="index.html">Job Simulator</a>
+    <a href="model.html">Economy Model</a>
+    <a href="social.html" aria-current="page">Social Risk</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>AI, robots and social risk around the world</h1>
+      <div class="byline">by Enrico Lorenzo De Vito</div>
+      <div class="sub">Red dots are AI systems and yellow dots robots, as many as the share of work they take over in the nineteen occupations of the book in each region. Orange rings are social risk: they grow with the additional unemployment of the region in the book’s economy model.</div>
+    </div>
+    <div class="clock" id="clock">Jan 2026</div>
+  </header>
+
+  <div class="bar">
+    <div class="ctl">
+      <label for="spd">Speed</label>
+      <select id="spd">
+        <option value="2" selected>2 months/s</option>
+        <option value="4">4 months/s</option>
+        <option value="8">8 months/s</option>
+        <option value="16">16 months/s</option>
+      </select>
+    </div>
+    <div class="btns">
+      <button class="primary" id="play">Start</button>
+      <button id="reset">Restart</button>
+    </div>
+  </div>
+
+  <div class="room">
+    <div class="mapbox"><canvas id="map"></canvas></div>
+    <div class="legend">
+      <span><i style="background: var(--ai); box-shadow: 0 0 6px var(--ai)"></i>AI</span>
+      <span><i style="background: var(--robot); box-shadow: 0 0 6px var(--robot)"></i>Robots</span>
+      <span><i class="ring"></i>Social risk</span>
+    </div>
+    <div class="panel">
+      <section><h2 id="nADV">Advanced economies</h2>
+        <div class="row"><span>Work taken by AI</span><b class="ai" id="aiADV"></b></div>
+        <div class="row"><span>Work taken by robots</span><b class="robot" id="robADV"></b></div>
+        <div class="row"><span>Extra unemployment</span><b class="tension" id="uADV"></b></div></section>
+      <section><h2 id="nEME">Emerging economies</h2>
+        <div class="row"><span>Work taken by AI</span><b class="ai" id="aiEME"></b></div>
+        <div class="row"><span>Work taken by robots</span><b class="robot" id="robEME"></b></div>
+        <div class="row"><span>Extra unemployment</span><b class="tension" id="uEME"></b></div></section>
+      <section><h2 id="nLIC">Low-income countries</h2>
+        <div class="row"><span>Work taken by AI</span><b class="ai" id="aiLIC"></b></div>
+        <div class="row"><span>Work taken by robots</span><b class="robot" id="robLIC"></b></div>
+        <div class="row"><span>Extra unemployment</span><b class="tension" id="uLIC"></b></div></section>
+    </div>
+    <div class="grid" id="grid"></div>
+    <p class="gridnote">By country: extra unemployment, percentage points of the labour force. The book models three regions, so each country takes the value of its region.</p>
+  </div>
+
+  <p class="note"><b>Where the numbers come from.</b> AI and robots: share of the work of the nineteen occupations of Table 65 taken over by machines, each occupation weighted by its 2025 employment, with the timing of the region (emerging economies 3 years later, low-income countries 6.5 years later). Social risk: median additional unemployment of the region, world with AI minus world without AI, in the 4,000 paired simulations of the book’s economy model (chapter 14); in the advanced economies it rises to 4.9 points around 2039 and falls to 1.4 in 2046. The book does not measure social unrest (chapter 17): the rings show lost work, not a forecast of disorder.</p>
+  <p class="note"><b>Regions.</b> As in the book: USA, Canada, Japan, Europe and Oceania are advanced economies; China, India, Russia, the rest of Asia and the Americas are emerging; Africa is low-income. Country shapes: Natural Earth via world-atlas.</p>
+  <footer>© 2026 Enrico Lorenzo De Vito · Social Risk · The Last Forecast, chapters 14, 17 and 36 (aimodel v3.1)</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+(() => {
+  /* OCCUPATIONS:BEGIN generated from outputs/occupations.json by simulator/sync_occupations.py, do not edit by hand */
+  const DATA = {"start":2026,"end":2046,"slope":0.425,"region_lag":{"ADV":0.0,"EME":3.0,"LIC":6.5},"robot_lag":5.0,"new_tasks":0.15,"new_tasks_lag":3.0,"cap":0.95,"types":{"routine":{"phi":0.85,"theta":0.85,"it":"Routine d'ufficio e contenuti","en":"Routine office and content work"},"architect":{"phi":0.7,"theta":0.7,"it":"Progettazione con strumenti AI","en":"Design with AI tools"},"care":{"phi":0.55,"theta":0.475,"it":"Responsabilità e contatto umano","en":"Responsibility and human contact"},"manual":{"phi":0.55,"theta":0.7,"it":"Manuale, soprattutto robot","en":"Manual, mainly robots"}},"observed":{"customer_service":-0.0192,"software_developers":0.0044},"bls_years":10.0,"occupations":[{"id":"clerk","en":"Office clerk","it":"Impiegato d'ufficio","soc":"43-9061","exposure_ai":0.95,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2032.5,"observed":"customer_service","bls_soc":"43-9061","bls_change":-6.0,"demand_growth":0.0,"work":{"ADV_2036":-49.8,"ADV_2046":-58.2,"EME_2036":-34.9,"EME_2046":-58.0,"LIC_2036":-14.1,"LIC_2046":-56.6},"results":{"ADV_2036":-49.8,"ADV_2046":-58.2,"EME_2036":-34.9,"EME_2046":-58.0,"LIC_2036":-14.1,"LIC_2046":-56.6}},{"id":"accountant","en":"Accountant","it":"Contabile","soc":"13-2011","exposure_ai":0.94,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2033.0,"observed":null,"bls_soc":"13-2011","bls_change":5.0,"demand_growth":0.004891,"work":{"ADV_2036":-47.5,"ADV_2046":-57.6,"EME_2036":-31.4,"EME_2046":-57.3,"LIC_2036":-11.8,"LIC_2046":-55.6},"results":{"ADV_2036":-44.9,"ADV_2046":-53.2,"EME_2036":-27.9,"EME_2046":-52.9,"LIC_2036":-7.4,"LIC_2046":-51.0}},{"id":"callcenter","en":"Call center agent","it":"Addetto call center","soc":"43-4051","exposure_ai":0.864,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2032.5,"observed":"customer_service","bls_soc":"43-4051","bls_change":-5.3,"demand_growth":0.0,"work":{"ADV_2036":-45.3,"ADV_2046":-53.0,"EME_2036":-31.7,"EME_2046":-52.7,"LIC_2036":-12.8,"LIC_2046":-51.5},"results":{"ADV_2036":-45.3,"ADV_2046":-53.0,"EME_2036":-31.7,"EME_2046":-52.7,"LIC_2036":-12.8,"LIC_2046":-51.5}},{"id":"translator","en":"Translator","it":"Traduttore","soc":"27-3091","exposure_ai":0.88,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2033.0,"observed":null,"bls_soc":"27-3091","bls_change":2.0,"demand_growth":0.001982,"work":{"ADV_2036":-44.5,"ADV_2046":-53.9,"EME_2036":-29.4,"EME_2046":-53.6,"LIC_2036":-11.0,"LIC_2046":-52.0},"results":{"ADV_2036":-43.3,"ADV_2046":-52.1,"EME_2036":-27.9,"EME_2046":-51.7,"LIC_2036":-9.2,"LIC_2046":-50.1}},{"id":"developer","en":"Software developer","it":"Sviluppatore software","soc":"15-1252","exposure_ai":0.842,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2033.0,"observed":"software_developers","bls_soc":"15-1252","bls_change":10.2,"demand_growth":0.00976,"work":{"ADV_2036":-42.5,"ADV_2046":-51.6,"EME_2036":-28.1,"EME_2046":-51.3,"LIC_2036":-10.5,"LIC_2046":-49.8},"results":{"ADV_2036":-36.7,"ADV_2046":-41.2,"EME_2036":-20.8,"EME_2046":-40.8,"LIC_2036":-1.4,"LIC_2046":-39.0}},{"id":"designer","en":"Graphic designer","it":"Grafico","soc":"27-1024","exposure_ai":0.821,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2033.0,"observed":null,"bls_soc":"27-1024","bls_change":-1.7,"demand_growth":-0.001713,"work":{"ADV_2036":-41.5,"ADV_2046":-50.3,"EME_2036":-27.4,"EME_2046":-50.0,"LIC_2036":-10.3,"LIC_2046":-48.5},"results":{"ADV_2036":-42.5,"ADV_2046":-52.0,"EME_2036":-28.6,"EME_2046":-51.7,"LIC_2036":-11.8,"LIC_2046":-50.3}},{"id":"journalist","en":"Journalist","it":"Giornalista","soc":"27-3023","exposure_ai":0.833,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2033.0,"observed":null,"bls_soc":"27-3023","bls_change":-5.9,"demand_growth":-0.006063,"work":{"ADV_2036":-42.1,"ADV_2046":-51.0,"EME_2036":-27.8,"EME_2046":-50.7,"LIC_2036":-10.4,"LIC_2046":-49.2},"results":{"ADV_2036":-45.5,"ADV_2046":-56.6,"EME_2036":-32.1,"EME_2046":-56.4,"LIC_2036":-15.7,"LIC_2046":-55.1}},{"id":"architect","en":"Solution architect","it":"Architetto software","soc":"15-1211","exposure_ai":0.824,"exposure_robots":0.0,"type":"architect","phi":0.7,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"15-1211","bls_change":7.9,"demand_growth":0.007632,"work":{"ADV_2036":-28.2,"ADV_2046":-34.2,"EME_2036":-18.6,"EME_2046":-34.0,"LIC_2036":-7.0,"LIC_2046":-33.0},"results":{"ADV_2036":-22.6,"ADV_2046":-23.4,"EME_2036":-12.2,"EME_2046":-23.2,"LIC_2036":0.4,"LIC_2046":-22.0}},{"id":"lawyer","en":"Lawyer","it":"Avvocato","soc":"23-1011","exposure_ai":0.8,"exposure_robots":0.0,"type":"care","phi":0.55,"theta":0.475,"mid_adv":2033.0,"observed":null,"bls_soc":"23-1011","bls_change":4.7,"demand_growth":0.004603,"work":{"ADV_2036":-14.6,"ADV_2046":-17.7,"EME_2036":-9.7,"EME_2046":-17.6,"LIC_2036":-3.6,"LIC_2046":-17.1},"results":{"ADV_2036":-10.6,"ADV_2046":-9.8,"EME_2036":-5.4,"EME_2046":-9.7,"LIC_2036":0.9,"LIC_2046":-9.1}},{"id":"doctor","en":"Doctor","it":"Medico","soc":"29-1215","exposure_ai":0.542,"exposure_robots":0.0,"type":"care","phi":0.55,"theta":0.475,"mid_adv":2033.0,"observed":null,"bls_soc":"29-1215","bls_change":3.3,"demand_growth":0.003252,"work":{"ADV_2036":-9.9,"ADV_2046":-12.0,"EME_2036":-6.5,"EME_2046":-11.9,"LIC_2036":-2.5,"LIC_2046":-11.6},"results":{"ADV_2036":-6.9,"ADV_2046":-6.1,"EME_2036":-3.5,"EME_2046":-6.0,"LIC_2036":0.8,"LIC_2046":-5.7}},{"id":"nurse","en":"Nurse","it":"Infermiere","soc":"29-1141","exposure_ai":0.571,"exposure_robots":0.0,"type":"care","phi":0.55,"theta":0.475,"mid_adv":2033.0,"observed":null,"bls_soc":"29-1141","bls_change":5.6,"demand_growth":0.005464,"work":{"ADV_2036":-10.4,"ADV_2046":-12.7,"EME_2036":-6.9,"EME_2046":-12.6,"LIC_2036":-2.6,"LIC_2046":-12.2},"results":{"ADV_2036":-5.4,"ADV_2046":-2.6,"EME_2036":-1.7,"EME_2046":-2.5,"LIC_2036":2.9,"LIC_2046":-2.1}},{"id":"teacher","en":"Teacher","it":"Insegnante","soc":"25-2031","exposure_ai":0.524,"exposure_robots":0.0,"type":"care","phi":0.55,"theta":0.475,"mid_adv":2033.0,"observed":null,"bls_soc":"25-2031","bls_change":-0.2,"demand_growth":-0.0002,"work":{"ADV_2036":-9.6,"ADV_2046":-11.6,"EME_2036":-6.3,"EME_2046":-11.5,"LIC_2036":-2.4,"LIC_2046":-11.2},"results":{"ADV_2036":-9.8,"ADV_2046":-12.0,"EME_2036":-6.5,"EME_2046":-11.9,"LIC_2036":-2.6,"LIC_2046":-11.6}},{"id":"retail","en":"Retail clerk","it":"Commesso","soc":"41-2031","exposure_ai":0.447,"exposure_robots":0.92,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"41-2031","bls_change":-0.3,"demand_growth":-0.0003,"work":{"ADV_2036":-30.1,"ADV_2046":-68.3,"EME_2036":-14.4,"EME_2046":-65.3,"LIC_2036":-4.6,"LIC_2046":-52.9},"results":{"ADV_2036":-30.3,"ADV_2046":-68.5,"EME_2036":-14.7,"EME_2046":-65.5,"LIC_2036":-4.9,"LIC_2046":-53.1}},{"id":"driver","en":"Driver","it":"Autista","soc":"53-3032","exposure_ai":0.308,"exposure_robots":0.79,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"53-3032","bls_change":3.8,"demand_growth":0.003737,"work":{"ADV_2036":-23.8,"ADV_2046":-56.2,"EME_2036":-11.0,"EME_2046":-53.6,"LIC_2036":-3.4,"LIC_2046":-43.0},"results":{"ADV_2036":-20.9,"ADV_2046":-52.8,"EME_2036":-7.7,"EME_2046":-50.0,"LIC_2036":0.2,"LIC_2046":-38.6}},{"id":"warehouse","en":"Warehouse worker","it":"Magazziniere","soc":"53-7062","exposure_ai":0.12,"exposure_robots":0.85,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"53-7062","bls_change":1.8,"demand_growth":0.001786,"work":{"ADV_2036":-19.9,"ADV_2046":-53.5,"EME_2036":-8.1,"EME_2046":-50.8,"LIC_2036":-2.3,"LIC_2046":-39.6},"results":{"ADV_2036":-18.4,"ADV_2046":-51.8,"EME_2036":-6.5,"EME_2046":-49.0,"LIC_2036":-0.5,"LIC_2046":-37.4}},{"id":"factory","en":"Factory worker","it":"Operaio","soc":"51-2092","exposure_ai":0.176,"exposure_robots":0.97,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"51-2090","bls_change":1.1,"demand_growth":0.001095,"work":{"ADV_2036":-23.7,"ADV_2046":-62.3,"EME_2036":-10.0,"EME_2046":-59.2,"LIC_2036":-2.9,"LIC_2046":-46.4},"results":{"ADV_2036":-22.9,"ADV_2046":-61.5,"EME_2036":-9.0,"EME_2046":-58.3,"LIC_2036":-1.8,"LIC_2046":-45.2}},{"id":"cook","en":"Cook","it":"Cuoco","soc":"35-2014","exposure_ai":0.162,"exposure_robots":0.96,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"35-2014","bls_change":12.1,"demand_growth":0.011488,"work":{"ADV_2036":-23.2,"ADV_2046":-61.3,"EME_2036":-9.6,"EME_2046":-58.2,"LIC_2036":-2.7,"LIC_2046":-45.6},"results":{"ADV_2036":-13.9,"ADV_2046":-51.4,"EME_2036":1.3,"EME_2046":-47.5,"LIC_2036":9.0,"LIC_2046":-31.6}},{"id":"construction","en":"Construction worker","it":"Muratore","soc":"47-2061","exposure_ai":0.05,"exposure_robots":0.88,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"47-2061","bls_change":7.3,"demand_growth":0.007071,"work":{"ADV_2036":-18.6,"ADV_2046":-53.0,"EME_2036":-7.1,"EME_2046":-50.2,"LIC_2036":-1.9,"LIC_2046":-38.7},"results":{"ADV_2036":-12.6,"ADV_2046":-45.9,"EME_2036":-0.3,"EME_2046":-42.6,"LIC_2036":5.3,"LIC_2046":-29.4}},{"id":"electrician","en":"Electrician / plumber","it":"Elettricista / idraulico","soc":"47-2111, 47-2152","exposure_ai":0.178,"exposure_robots":0.25,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"47-2111, 47-2152","bls_change":8.3,"demand_growth":0.008005,"work":{"ADV_2036":-9.7,"ADV_2046":-20.4,"EME_2036":-4.9,"EME_2046":-19.6,"LIC_2036":-1.6,"LIC_2046":-16.1},"results":{"ADV_2036":-2.2,"ADV_2046":-6.6,"EME_2036":3.0,"EME_2046":-5.7,"LIC_2036":6.5,"LIC_2046":-1.6}}],"aggregate":{"id":"all","en":"All 19 occupations","it":"Tutti i 19 mestieri","weights":{"clerk":2600.0,"accountant":1595.2,"callcenter":2666.0,"translator":73.9,"developer":1717.8,"designer":253.1,"journalist":47.1,"architect":544.4,"lawyer":863.7,"doctor":808.8,"nurse":3465.4,"teacher":1087.5,"retail":3998.1,"driver":2221.2,"warehouse":2940.3,"factory":1403.5,"cook":1417.5,"construction":1489.3,"electrician":1331.6},"results":{"ADV_2036":-24.7,"ADV_2046":-42.5,"EME_2036":-13.0,"EME_2046":-41.0,"LIC_2036":-2.4,"LIC_2046":-34.7}}};
+  /* OCCUPATIONS:END */
+  /* UNEMP:BEGIN generated from outputs/unemployment_path.json by simulator/sync_occupations.py, do not edit by hand */
+  const UNEMP = {"years":[2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046],"draws":4000,"seed":20261010,"unit":"pp","median_additional_unemployment":{"ADV":[0.0,0.149,0.357,0.638,1.023,1.518,2.101,2.749,3.405,3.961,4.33,4.615,4.843,4.913,4.745,4.349,3.833,3.246,2.572,1.941,1.377],"EME":[0.0,0.032,0.075,0.139,0.23,0.361,0.535,0.77,1.078,1.452,1.888,2.319,2.656,2.943,3.176,3.267,3.319,3.264,3.032,2.685,2.274],"LIC":[0.0,0.005,0.013,0.024,0.04,0.065,0.1,0.149,0.221,0.318,0.464,0.66,0.905,1.176,1.462,1.715,1.925,2.097,2.207,2.253,2.235]}};
+  /* UNEMP:END */
+
+  const IT = {
+    "__title": "Rischio sociale",
+    "AI, robots and social risk around the world": "AI, robot e rischio sociale nel mondo",
+    "by Enrico Lorenzo De Vito": "di Enrico Lorenzo De Vito",
+    "Red dots are AI systems and yellow dots robots, as many as the share of work they take over in the nineteen occupations of the book in each region. Orange rings are social risk: they grow with the additional unemployment of the region in the book’s economy model.":
+      "I puntini rossi sono sistemi di AI e quelli gialli robot, tanti quanta è la parte di lavoro che prendono nei diciannove mestieri del libro in ogni regione. Gli anelli arancioni sono il rischio sociale: crescono con la disoccupazione in più della regione nel modello economico del libro.",
+    "Speed": "Velocità", "2 months/s": "2 mesi/s", "4 months/s": "4 mesi/s", "8 months/s": "8 mesi/s", "16 months/s": "16 mesi/s",
+    "Start": "Avvia", "Restart": "Ricomincia",
+    '<i style="background: var(--ai); box-shadow: 0 0 6px var(--ai)"></i>AI': '<i style="background: var(--ai); box-shadow: 0 0 6px var(--ai)"></i>AI',
+    '<i style="background: var(--robot); box-shadow: 0 0 6px var(--robot)"></i>Robots': '<i style="background: var(--robot); box-shadow: 0 0 6px var(--robot)"></i>Robot',
+    '<i class="ring"></i>Social risk': '<i class="ring"></i>Rischio sociale',
+    "Advanced economies": "Economie avanzate", "Emerging economies": "Economie emergenti", "Low-income countries": "Paesi a basso reddito",
+    "Work taken by AI": "Lavoro preso dall’AI", "Work taken by robots": "Lavoro preso dai robot", "Extra unemployment": "Disoccupazione in più",
+    "<b>Where the numbers come from.</b> AI and robots: share of the work of the nineteen occupations of Table 65 taken over by machines, each occupation weighted by its 2025 employment, with the timing of the region (emerging economies 3 years later, low-income countries 6.5 years later). Social risk: median additional unemployment of the region, world with AI minus world without AI, in the 4,000 paired simulations of the book’s economy model (chapter 14); in the advanced economies it rises to 4.9 points around 2039 and falls to 1.4 in 2046. The book does not measure social unrest (chapter 17): the rings show lost work, not a forecast of disorder.":
+      "<b>Da dove vengono i numeri.</b> AI e robot: parte del lavoro dei diciannove mestieri della Tabella 65 presa dalle macchine, con ogni mestiere pesato per i suoi occupati 2025 e i tempi della regione (economie emergenti 3 anni dopo, paesi a basso reddito 6,5 anni dopo). Rischio sociale: disoccupazione mediana in più della regione, mondo con AI meno mondo senza AI, nelle 4.000 simulazioni appaiate del modello economico del libro (capitolo 14); nelle economie avanzate sale a 4,9 punti verso il 2039 e scende a 1,4 nel 2046. Il libro non misura il disordine sociale (capitolo 17): gli anelli mostrano il lavoro perso, non una previsione di disordini.",
+    "<b>Regions.</b> As in the book: USA, Canada, Japan, Europe and Oceania are advanced economies; China, India, Russia, the rest of Asia and the Americas are emerging; Africa is low-income. Country shapes: Natural Earth via world-atlas.":
+      "<b>Regioni.</b> Come nel libro: Stati Uniti, Canada, Giappone, Europa e Oceania sono economie avanzate; Cina, India, Russia, il resto dell’Asia e delle Americhe sono emergenti; l’Africa è a basso reddito. Forme dei paesi: Natural Earth tramite world-atlas.",
+    "© 2026 Enrico Lorenzo De Vito · Social Risk · The Last Forecast, chapters 14, 17 and 36 (aimodel v3.1)":
+      "© 2026 Enrico Lorenzo De Vito · Rischio sociale · The Last Forecast, capitoli 14, 17 e 36 (aimodel v3.1)",
+    "By country: extra unemployment, percentage points of the labour force. The book models three regions, so each country takes the value of its region.":
+      "Per paese: disoccupazione in più, in punti percentuali della forza lavoro. Il libro calcola tre regioni, quindi ogni paese prende il valore della sua regione.",
+  };
+  i18nNav();
+  window.i18nMissing = i18nApply(IT, "h1, h2, .byline, .sub, label, button, option, .legend span, .row span, p.note, p.gridnote, footer");
+
+  const $ = id => document.getElementById(id);
+  const MONTHS = L(["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"]);
+  const REG = ["ADV", "EME", "LIC"];
+  const START = DATA.start * 12, END = DATA.end * 12;
+  const fmtM = t => MONTHS[t % 12] + " " + Math.floor(t / 12);
+  const dec = (v, n) => v.toFixed(n).replace(".", L(".", ","));
+  const fmtPP = v => (v >= 0 ? "+" : "−") + dec(Math.abs(v), 1) + " pp";
+  const fmtPct = v => dec(v * 100, 1) + "%";
+
+  // ---- same formulas as aimodel/analysis/occupations.py, nineteen occupations weighted by 2025 employment ----
+  const logistic = (t, mid) => 1 / (1 + Math.exp(-DATA.slope * (t - mid)));
+  const adoption = (t, mid, theta) => {
+    if (t <= DATA.start) return 0;
+    const f0 = logistic(DATA.start, mid);
+    return theta * (logistic(t, mid) - f0) / (1 - f0);
+  };
+  function shares(t, j, lag) {
+    const mid = j.mid_adv + lag, midR = mid + DATA.robot_lag;
+    let ai = j.phi * j.exposure_ai * adoption(t, mid, j.theta), rob = j.exposure_robots * adoption(t, midR, j.theta);
+    if (ai + rob > DATA.cap) { const s = DATA.cap / (ai + rob); ai *= s; rob *= s; }
+    return { ai, rob };
+  }
+  function regionShares(r, t) {
+    const lag = DATA.region_lag[r], w = DATA.aggregate.weights;
+    let W = 0, ai = 0, rob = 0;
+    for (const j of DATA.occupations) { const s = shares(t, j, lag), k = w[j.id]; W += k; ai += k * s.ai; rob += k * s.rob; }
+    return { ai: ai / W, rob: rob / W };
+  }
+  const unempAt = (r, t) => {
+    const u = UNEMP.median_additional_unemployment[r], ys = UNEMP.years;
+    if (t <= ys[0]) return u[0];
+    if (t >= ys[ys.length - 1]) return u[u.length - 1];
+    const i = Math.floor(t - ys[0]), f = t - ys[0] - i;
+    return u[i] + (u[i + 1] - u[i]) * f;
+  };
+
+  // ---- map ----
+  function regionOf(f) {
+    const id = Number(f.id), [lon, lat] = d3.geoCentroid(f);
+    if ([840, 124, 392].includes(id)) return "ADV";                    // USA, Canada, Japan
+    if ([156, 356, 643].includes(id)) return "EME";                    // China, India, Russia
+    if (lon < -25) return "EME";                                       // rest of the Americas
+    if (lat < -8 && lon > 110) return "ADV";                           // Australia, New Zealand and nearby Oceania
+    if (lat > 34 && lon > -25 && lon < 42 && id !== 792) return "ADV"; // Europe (Turkey with Asia)
+    if (lat < 36 && lon > -20 && lon < 52 && !(lon > 34 && lat > 12)) return "LIC"; // Africa, not the Middle East
+    return "EME";                                                      // rest of Asia
+  }
+  const HOTSPOTS = {                                                   // where the tension rings sit
+    ADV: [[-95, 40], [10, 49], [139, 36], [145, -32]],
+    EME: [[110, 33], [78, 22], [45, 28], [-55, -15], [-100, 22], [105, 12]],
+    LIC: [[15, 8], [32, -12], [-2, 12]],
+  };
+  const COUNTRIES = [                                                // same countries and areas as the job simulator
+    ["USA", "Stati Uniti", "ADV"], ["Canada", "Canada", "ADV"], ["Japan", "Giappone", "ADV"], ["Europe (excl. Russia)", "Europa (esclusa la Russia)", "ADV"],
+    ["Oceania", "Oceania", "ADV"], ["China", "Cina", "EME"], ["India", "India", "EME"], ["Russia", "Russia", "EME"],
+    ["Asia (excl. China, India, Japan)", "Asia (escluse Cina, India, Giappone)", "EME"], ["North America (excl. USA, Canada)", "Nord America (esclusi Stati Uniti e Canada)", "EME"],
+    ["South America", "Sud America", "EME"], ["Africa", "Africa", "LIC"],
+  ];
+  $("grid").innerHTML = COUNTRIES.map((c, i) => '<div><span>' + L(c[0], c[1]) + '</span><b id="g' + i + '"></b></div>').join("");
+  const MAX_DOTS = 160;                                                // dots of each kind at full takeover
+  const canvas = $("map"), ctx = canvas.getContext("2d");
+  const projection = d3.geoEquirectangular();
+  const path = d3.geoPath(projection, ctx);
+  let countries = null, land = null, points = { ADV: [], EME: [], LIC: [] }, t = START, running = false, frac = 0, last = performance.now();
+
+  function size() {
+    const r = canvas.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+    canvas.width = Math.round(r.width * d); canvas.height = Math.round(r.height * d);
+    projection.fitExtent([[6 * d, 6 * d], [canvas.width - 6 * d, canvas.height - 6 * d]], { type: "Sphere" });
+    projection.clipExtent([[0, -canvas.height], [canvas.width, canvas.height * 2]]);
+    projection.precision(0.5);
+    const s = projection.scale(); projection.scale(s * 1.18).translate([canvas.width / 2, canvas.height * 0.58]); // crop the poles
+  }
+
+  // random points inside the countries of each region, for the dots (fixed, so they blink in place)
+  function samplePoints() {
+    const byReg = { ADV: [], EME: [], LIC: [] };
+    countries.forEach(f => byReg[f.region].push(f));
+    for (const r of REG) {
+      const fs = byReg[r], out = [];
+      const area = fs.map(f => d3.geoArea(f)), tot = area.reduce((a, b) => a + b, 0);
+      let guard = 0;
+      while (out.length < MAX_DOTS * 2 && guard++ < 40000) {
+        let k = Math.random() * tot, i = 0; while (k > area[i]) { k -= area[i]; i++; }
+        const [[x0, y0], [x1, y1]] = d3.geoBounds(fs[i]);
+        const p = [x0 + Math.random() * ((x1 < x0 ? x1 + 360 : x1) - x0), y0 + Math.random() * (y1 - y0)];
+        if (p[0] > 180) p[0] -= 360;
+        if (d3.geoContains(fs[i], p)) out.push({ p, ph: Math.random() * 6.28 });
+      }
+      points[r] = out;
+    }
+  }
+
+  function draw(now) {
+    const d = window.devicePixelRatio || 1, w = canvas.width, h = canvas.height, yr = t / 12;
+    ctx.fillStyle = "#000"; ctx.fillRect(0, 0, w, h);
+    if (countries) {
+      ctx.save();
+      ctx.shadowColor = "#2fe3c8"; ctx.shadowBlur = 8 * d;
+      ctx.strokeStyle = "#2fe3c8"; ctx.lineWidth = 1.1 * d;
+      ctx.beginPath(); path(land); ctx.stroke();
+      ctx.restore();
+      ctx.strokeStyle = "rgba(47,227,200,0.35)"; ctx.lineWidth = 0.5 * d;
+      ctx.beginPath(); path(countries.mesh); ctx.stroke();
+    }
+    // tension rings: radius grows with the additional unemployment (5 pp = 9% of the map width)
+    for (const r of REG) {
+      const u = Math.max(0, unempAt(r, yr));
+      if (u < 0.03) continue;
+      const R = w * 0.09 * Math.sqrt(u / 5);
+      for (const a of HOTSPOTS[r]) {
+        const [x, y] = projection(a);
+        const g = ctx.createRadialGradient(x, y, 0, x, y, R);
+        g.addColorStop(0, "rgba(255,140,40,0.45)"); g.addColorStop(0.5, "rgba(255,140,40,0.16)"); g.addColorStop(1, "rgba(255,140,40,0)");
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, R, 0, 7); ctx.fill();
+        ctx.save(); ctx.shadowColor = "#ff8c28"; ctx.shadowBlur = 10 * d; ctx.strokeStyle = "rgba(255,150,50,0.9)";
+        for (let k = 0; k < 3; k++) {                                  // pulsing rings
+          const ph = ((now / 1800 + k / 3 + a[0] / 97) % 1);
+          ctx.globalAlpha = (1 - ph) * 0.9; ctx.lineWidth = (2.2 - ph) * d;
+          ctx.beginPath(); ctx.arc(x, y, R * (0.25 + 0.75 * ph), 0, 7); ctx.stroke();
+        }
+        ctx.restore();
+      }
+    }
+    // AI and robot dots, as many as the share of work taken over in the region
+    for (const r of REG) {
+      const s = regionShares(r, yr), pts = points[r];
+      const nAI = Math.round(MAX_DOTS * s.ai), nR = Math.round(MAX_DOTS * s.rob);
+      for (let i = 0; i < nAI + nR && i < pts.length; i++) {
+        const robot = i >= nAI, q = pts[i], [x, y] = projection(q.p);
+        const blink = 0.55 + 0.45 * Math.sin(now / 420 + q.ph);
+        ctx.save(); ctx.globalAlpha = blink; ctx.fillStyle = robot ? "#f5c842" : "#f0507a";
+        ctx.shadowColor = ctx.fillStyle; ctx.shadowBlur = 6 * d;
+        ctx.beginPath(); ctx.arc(x, y, (robot ? 1.9 : 1.6) * d, 0, 7); ctx.fill(); ctx.restore();
+      }
+    }
+  }
+
+  function stats() {
+    $("clock").textContent = fmtM(t);
+    for (const r of REG) {
+      const s = regionShares(r, t / 12);
+      $("ai" + r).textContent = fmtPct(s.ai); $("rob" + r).textContent = fmtPct(s.rob); $("u" + r).textContent = fmtPP(unempAt(r, t / 12));
+    }
+    COUNTRIES.forEach((c, i) => { $("g" + i).textContent = fmtPP(unempAt(c[2], t / 12)); });
+  }
+
+  function loop(now) {
+    const dt = Math.min((now - last) / 1000, 0.1); last = now;
+    if (running) {
+      frac += dt * Number($("spd").value);
+      while (frac >= 1) { frac -= 1; if (t >= END) { running = false; $("play").textContent = L("Start", "Avvia"); break; } t++; }
+      stats();
+    }
+    draw(now);
+    requestAnimationFrame(loop);
+  }
+
+  $("play").onclick = () => {
+    if (t >= END) { t = START; frac = 0; }
+    running = !running;
+    $("play").textContent = running ? L("Pause", "Pausa") : L("Resume", "Riprendi");
+  };
+  $("reset").onclick = () => { running = false; t = START; frac = 0; $("play").textContent = L("Start", "Avvia"); stats(); };
+  window.addEventListener("resize", size);
+
+  size(); stats();
+  fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json").then(r => r.json()).then(topo => {
+    const all = topojson.feature(topo, topo.objects.countries).features.filter(f => f.id !== "010");   // no Antarctica
+    all.forEach(f => f.region = regionOf(f));
+    countries = all;
+    countries.mesh = topojson.mesh(topo, topo.objects.countries, (a, b) => a !== b);
+    land = topojson.merge(topo, topo.objects.countries.geometries.filter(g => g.id !== "010"));
+    samplePoints();
+  }).catch(() => {});
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

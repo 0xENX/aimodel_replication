@@ -86,6 +86,16 @@ BLS = {
 }
 BLS_YEARS = 10.0
 
+# Employment 2025 in thousands, same BLS table: weights of the nineteen occupations taken together ("all").
+# Doctors weigh with all physicians (29-1210, 808.8) rather than family medicine alone (114.3); electricians and
+# plumbers are summed (821.0 + 510.6).
+EMPLOYMENT_2025 = {
+    "clerk": 2600.0, "accountant": 1595.2, "callcenter": 2666.0, "translator": 73.9, "developer": 1717.8,
+    "designer": 253.1, "journalist": 47.1, "architect": 544.4, "lawyer": 863.7, "doctor": 808.8, "nurse": 3465.4,
+    "teacher": 1087.5, "retail": 3998.1, "driver": 2221.2, "warehouse": 2940.3, "factory": 1403.5, "cook": 1417.5,
+    "construction": 1489.3, "electrician": 1331.6,
+}
+
 
 def demand_growth(oid):
     """Yearly demand growth used: BLS pace, flat for office and administrative support (BLS: decline due to AI)."""
@@ -185,11 +195,22 @@ def forecast():
     return rows
 
 
+def aggregate(rows):
+    """The nineteen occupations together: jobs weighted by 2025 employment, change compared with 2026."""
+    total = sum(EMPLOYMENT_2025.values())
+    res = {}
+    for key in rows[0]["results"]:
+        level = sum(EMPLOYMENT_2025[o["id"]] * (1 + o["results"][key] / 100) for o in rows) / total
+        res[key] = round((level - 1) * 100, 1)
+    return dict(id="all", en="All 19 occupations", it="Tutti i 19 mestieri", weights=EMPLOYMENT_2025, results=res)
+
+
 def write(path=None):
     path = Path(path or Path(__file__).resolve().parents[2] / "outputs" / "occupations.json")
     data = dict(start=START, end=END, slope=SLOPE, region_lag=REGION_LAG, robot_lag=ROBOT_LAG,
                 new_tasks=NEW_TASKS, new_tasks_lag=NEW_TASKS_LAG, cap=CAP, types=TYPES,
                 observed=OBSERVED, bls_years=BLS_YEARS, occupations=forecast())
+    data["aggregate"] = aggregate(data["occupations"])
     path.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     return data
 

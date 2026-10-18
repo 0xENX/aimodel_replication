@@ -651,5 +651,39 @@
     "LIC_2046": -1.6
    }
   }
- ]
+ ],
+ "aggregate": {
+  "id": "all",
+  "en": "All 19 occupations",
+  "it": "Tutti i 19 mestieri",
+  "weights": {
+   "clerk": 2600.0,
+   "accountant": 1595.2,
+   "callcenter": 2666.0,
+   "translator": 73.9,
+   "developer": 1717.8,
+   "designer": 253.1,
+   "journalist": 47.1,
+   "architect": 544.4,
+   "lawyer": 863.7,
+   "doctor": 808.8,
+   "nurse": 3465.4,
+   "teacher": 1087.5,
+   "retail": 3998.1,
+   "driver": 2221.2,
+   "warehouse": 2940.3,
+   "factory": 1403.5,
+   "cook": 1417.5,
+   "construction": 1489.3,
+   "electrician": 1331.6
+  },
+  "results": {
+   "ADV_2036": -24.7,
+   "ADV_2046": -42.5,
+   "EME_2036": -13.0,
+   "EME_2046": -41.0,
+   "LIC_2036": -2.4,
+   "LIC_2046": -34.7
+  }
+ }
 }

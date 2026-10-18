@@ -30,7 +30,7 @@
   window.i18nNav = function () {
     const bar = document.querySelector(".topnav .in");
     if (!bar) return;
-    const NAMES = { "index.html": L("Job Simulator", "Simulatore"), "model.html": L("Economy Model", "Modello economico") };
+    const NAMES = { "index.html": L("Job Simulator", "Simulatore"), "model.html": L("Economy Model", "Modello economico"), "social.html": L("Social Risk", "Rischio sociale") };
     bar.querySelectorAll("a[href$='.html']").forEach(a => {
       const page = a.getAttribute("href");
       if (NAMES[page]) a.textContent = NAMES[page];
