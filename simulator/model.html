@@ -106,8 +106,14 @@ td.bad { color: var(--bad); } td.good { color: var(--good); }
 @media (max-width: 860px) { .grid2 { grid-template-columns: minmax(0, 1fr); } .btns { margin-left: 0; } .bar { grid-template-columns: minmax(0, 150px) 1fr 44px; } }
 .note { color: var(--muted); font-size: .8rem; line-height: 1.55; margin: 0; max-width: 90ch; }
 .note b { color: var(--fg); font-weight: 500; }
+.topnav a.excerpt { color: var(--fg); border-color: var(--line); }
+.topnav .flags { margin-left: auto; display: flex; gap: 6px; }
+.topnav .flag { padding: 3px; border-radius: 4px; border: 1px solid transparent; background: none; line-height: 0; opacity: .55; cursor: pointer; }
+.topnav .flag.on { opacity: 1; border-color: var(--line); }
+.topnav .flag:hover { opacity: 1; }
 footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--line); padding-top: 12px; }
 </style>
+<script src="i18n.js"></script>
 </head>
 <body>
 <nav class="topnav" aria-label="Main">
@@ -225,42 +231,49 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     "aimodel/core/__init__.py", "aimodel/core/economy.py", "aimodel/core/run.py",
     "aimodel/analysis/__init__.py", "aimodel/analysis/metrics.py", "aimodel/analysis/montecarlo.py", "aimodel/analysis/policy.py"];
   const SEED = 20261010;
+  const IT = {"__title": "Il modello di The Last Forecast", "The Last Forecast Model": "Il modello di The Last Forecast", "by Enrico Lorenzo De Vito": "di Enrico Lorenzo De Vito", "This page runs the book's own Python model (aimodel v3.1) inside your browser. Every result compares the same future with and without the AI wave, across thousands of draws of the uncertain assumptions. Change an assumption or a policy and the model runs again.": "Questa pagina fa girare nel browser il modello Python del libro (aimodel v3.1). Ogni risultato confronta lo stesso futuro con e senza l’ondata di AI, su migliaia di estrazioni delle ipotesi incerte. Cambia un’ipotesi o una politica e il modello gira di nuovo.", "Loading Python…": "Caricamento di Python…", "Run": "Simulazione", "Policy": "Politica", "Simulations": "Simulazioni", "500 (fast)": "500 (veloce)", "1,000": "1.000", "4,000 (as in the book)": "4.000 (come nel libro)", "Year shown": "Anno mostrato", "Run the model": "Fai girare il modello", "Back to the book": "Torna al libro", "Assumptions · tick one to fix its value, otherwise it varies across the book's range": "Ipotesi · spunta una casella per fissarne il valore, altrimenti varia nell’intervallo del libro", "A value outside the book's range turns yellow. The book excludes those values on purpose: for example, exposure growing by more than 60% means an AI able to do almost every task, which the book leaves out (chapter 18).": "Un valore fuori dall’intervallo del libro diventa giallo. Il libro esclude quei valori di proposito: per esempio, un’esposizione che cresce più del 60% vuol dire un’AI capace di fare quasi tutto, che il libro lascia fuori (capitolo 18).", "Year by year": "Anno per anno", "Indicator": "Indicatore", "<i style=\"background: var(--band-outer); opacity: .45\"></i>5th–95th percentile": "<i style=\"background: var(--band-outer); opacity: .45\"></i>5°–95° percentile", "<i style=\"background: var(--band-inner); opacity: .7\"></i>25th–75th percentile": "<i style=\"background: var(--band-inner); opacity: .7\"></i>25°–75° percentile", "<i style=\"background: var(--median)\"></i>median, this run": "<i style=\"background: var(--median)\"></i>mediana, questa simulazione", "<i style=\"background: var(--book)\"></i>median, book": "<i style=\"background: var(--book)\"></i>mediana, libro", "The book's ten policies": "Le dieci politiche del libro", "Compare policies": "Confronta le politiche", "Press \"Compare policies\" to run every policy with the current assumptions (1,000 simulations each).": "Premi «Confronta le politiche» per far girare ogni politica con le ipotesi attuali (1.000 simulazioni ciascuna).", "Which assumptions matter most": "Quali ipotesi pesano di più", "Result": "Risultato", "Share of the uncertainty in the result explained by each assumption (total Sobol index, 23,552 runs). From the book's own analysis (outputs/sobol.json), not recalculated here.": "Quota dell’incertezza del risultato spiegata da ciascuna ipotesi (indice di Sobol totale, 23.552 simulazioni). Dall’analisi del libro (outputs/sobol.json), non ricalcolata qui.", "About this page": "Questa pagina", "<b>What runs here.</b> The files of the aimodel package are loaded into Pyodide, a version of Python that works in the browser, and called without changes. With the book's settings (4,000 simulations, seed 20261010, no assumption fixed, status quo) the page reproduces the book's published results exactly. The status line above checks this every time the page opens.": "<b>Che cosa gira qui.</b> I file del pacchetto aimodel vengono caricati in Pyodide, una versione di Python che funziona nel browser, e usati senza modifiche. Con le impostazioni del libro (4.000 simulazioni, seme 20261010, nessuna ipotesi fissata, politiche invariate) la pagina riproduce esattamente i risultati pubblicati nel libro. La riga di stato in alto lo verifica ogni volta che la pagina si apre.", "<b>How to read it.</b> Unemployment and public debt are differences in percentage points from the world without AI. GDP and consumption are percentage differences. These are conditional results of the model, not forecasts. The Sobol analysis needs the SALib library, which does not run in the browser, so it shows the book's stored results.": "<b>Come leggerla.</b> Disoccupazione e debito pubblico sono differenze in punti percentuali rispetto al mondo senza AI. PIL e consumi sono differenze percentuali. Sono risultati del modello a parità di ipotesi, non previsioni. L’analisi di Sobol richiede la libreria SALib, che nel browser non funziona, quindi mostra i risultati salvati del libro.", "<b>Job by job.</b> The Job Simulator applies the same logic to single occupations and countries, using published occupation data.": "<b>Mestiere per mestiere.</b> Il Simulatore dei mestieri applica la stessa logica ai singoli mestieri e paesi, con dati pubblicati per mestiere.", "© 2026 Enrico Lorenzo De Vito · The Last Forecast Model · aimodel v3.1": "© 2026 Enrico Lorenzo De Vito · Il modello di The Last Forecast · aimodel v3.1"};
+  i18nNav();
+  window.i18nMissing = i18nApply(IT, "h1, h2, .byline, .sub, .status, label, button, option, .keys span, p.note, td.note, footer");
+  const POL_IT = { "Status quo": "Politiche invariate", "Capital income tax +5 pp, recycled per head": "Imposta sul capitale +5 punti, restituita pro capite", "AI dividend fund (50% of AI-induced profits)": "Fondo dividendo AI (50% dei profitti dovuti all’AI)", "Income support decoupled from work": "Sostegno al reddito slegato dal lavoro", "Retraining and new-task creation": "Riqualificazione e creazione di compiti nuovi", "Bargaining and profit-sharing": "Contrattazione e partecipazione ai profitti", "Slower rollout (+2 years)": "Diffusione più lenta (+2 anni)", "AI rents taxed where used": "Rendite AI tassate dove si usano", "Package: dividend + support + retraining + bargaining": "Pacchetto: dividendo + sostegno + riqualificazione + contrattazione", "Package + capital tax + rents taxed where used": "Pacchetto + imposta sul capitale + rendite tassate dove si usano" };
+  const polName = n => L(n, POL_IT[n] || n);
 
   // Indicators: label, unit, and whether a positive value is bad news
   const IND = {
-    gdp:       { label: "World GDP", unit: "%", worse: -1 },
-    unemp_adv: { label: "Unemployment, advanced economies", unit: "pp", worse: 1 },
-    unemp_eme: { label: "Unemployment, emerging economies", unit: "pp", worse: 1 },
-    unemp_lic: { label: "Unemployment, low-income countries", unit: "pp", worse: 1 },
-    labshare:  { label: "World labour share of income", unit: "pp", worse: -1 },
-    b50:       { label: "Consumption, poorer half", unit: "%", worse: -1 },
-    m40:       { label: "Consumption, middle 40%", unit: "%", worse: -1 },
-    t10:       { label: "Consumption, richest 10%", unit: "%", worse: -1 },
-    debt_adv:  { label: "Public debt, advanced economies", unit: "pp of GDP", worse: 1 },
-    debt_eme:  { label: "Public debt, emerging economies", unit: "pp of GDP", worse: 1 },
-    debt_lic:  { label: "Public debt, low-income countries", unit: "pp of GDP", worse: 1 },
+    gdp:       { label: L("World GDP", "PIL mondiale"), unit: "%", worse: -1 },
+    unemp_adv: { label: L("Unemployment, advanced economies", "Disoccupazione, economie avanzate"), unit: "pp", worse: 1 },
+    unemp_eme: { label: L("Unemployment, emerging economies", "Disoccupazione, economie emergenti"), unit: "pp", worse: 1 },
+    unemp_lic: { label: L("Unemployment, low-income countries", "Disoccupazione, paesi a basso reddito"), unit: "pp", worse: 1 },
+    labshare:  { label: L("World labour share of income", "Quota del reddito mondiale al lavoro"), unit: "pp", worse: -1 },
+    b50:       { label: L("Consumption, poorer half", "Consumi, metà più povera"), unit: "%", worse: -1 },
+    m40:       { label: L("Consumption, middle 40%", "Consumi, 40% centrale"), unit: "%", worse: -1 },
+    t10:       { label: L("Consumption, richest 10%", "Consumi, 10% più ricco"), unit: "%", worse: -1 },
+    debt_adv:  { label: L("Public debt, advanced economies", "Debito pubblico, economie avanzate"), unit: L("pp of GDP", "pp di PIL"), worse: 1 },
+    debt_eme:  { label: L("Public debt, emerging economies", "Debito pubblico, economie emergenti"), unit: L("pp of GDP", "pp di PIL"), worse: 1 },
+    debt_lic:  { label: L("Public debt, low-income countries", "Debito pubblico, paesi a basso reddito"), unit: L("pp of GDP", "pp di PIL"), worse: 1 },
   };
   const TILES = ["unemp_adv", "unemp_eme", "unemp_lic", "gdp", "labshare", "b50", "t10", "debt_adv"];
 
   // Assumptions the reader can fix; slider range is wider than the book's range on purpose
   const PARAMS = [
-    { k: "mid_adv",    label: "Central adoption year, advanced economies", min: 2027, max: 2045, step: 0.5, fmt: v => v.toFixed(1) },
-    { k: "theta",      label: "Share of substitutable tasks automated by 2046", min: 0.10, max: 0.95, step: 0.01, fmt: v => Math.round(v * 100) + "%" },
-    { k: "phi_s",      label: "Substitutable share of exposed work", min: 0.30, max: 0.90, step: 0.01, fmt: v => Math.round(v * 100) + "%" },
-    { k: "exp_mult",   label: "Growth of exposure by 2046", min: 1.0, max: 2.5, step: 0.05, fmt: v => "×" + v.toFixed(2) },
-    { k: "psi",        label: "New tasks per task lost", min: 0, max: 1.2, step: 0.01, fmt: v => v.toFixed(2) },
-    { k: "lag_new",    label: "Years before new tasks appear", min: 1, max: 16, step: 0.5, fmt: v => v.toFixed(1) + " yr" },
-    { k: "kappa",      label: "Wage response to unemployment", min: 0, max: 0.8, step: 0.01, fmt: v => v.toFixed(2) },
-    { k: "eps",        label: "Labour demand response to wages", min: 0.01, max: 1.0, step: 0.01, fmt: v => v.toFixed(2) },
-    { k: "rent_share", label: "AI gains recovered by workers", min: 0, max: 0.6, step: 0.01, fmt: v => Math.round(v * 100) + "%" },
+    { k: "mid_adv",    label: L("Central adoption year, advanced economies", "Anno centrale dell’adozione, economie avanzate"), min: 2027, max: 2045, step: 0.5, fmt: v => v.toFixed(1).replace(".", L(".", ",")) },
+    { k: "theta",      label: L("Share of substitutable tasks automated by 2046", "Quota dei compiti sostituibili automatizzata entro il 2046"), min: 0.10, max: 0.95, step: 0.01, fmt: v => Math.round(v * 100) + "%" },
+    { k: "phi_s",      label: L("Substitutable share of exposed work", "Quota sostituibile del lavoro esposto"), min: 0.30, max: 0.90, step: 0.01, fmt: v => Math.round(v * 100) + "%" },
+    { k: "exp_mult",   label: L("Growth of exposure by 2046", "Crescita dell’esposizione entro il 2046"), min: 1.0, max: 2.5, step: 0.05, fmt: v => "×" + v.toFixed(2).replace(".", L(".", ",")) },
+    { k: "psi",        label: L("New tasks per task lost", "Compiti nuovi per compito perso"), min: 0, max: 1.2, step: 0.01, fmt: v => v.toFixed(2).replace(".", L(".", ",")) },
+    { k: "lag_new",    label: L("Years before new tasks appear", "Anni prima che compaiano i compiti nuovi"), min: 1, max: 16, step: 0.5, fmt: v => v.toFixed(1).replace(".", L(".", ",")) + L(" yr", " anni") },
+    { k: "kappa",      label: L("Wage response to unemployment", "Risposta dei salari alla disoccupazione"), min: 0, max: 0.8, step: 0.01, fmt: v => v.toFixed(2).replace(".", L(".", ",")) },
+    { k: "eps",        label: L("Labour demand response to wages", "Risposta della domanda di lavoro ai salari"), min: 0.01, max: 1.0, step: 0.01, fmt: v => v.toFixed(2).replace(".", L(".", ",")) },
+    { k: "rent_share", label: L("AI gains recovered by workers", "Guadagni dell’AI recuperati dai lavoratori"), min: 0, max: 0.6, step: 0.01, fmt: v => Math.round(v * 100) + "%" },
   ];
-  const SOBOL_OUT = { unemp_adv_2036: "Unemployment, advanced, 2036", b50_2036: "Consumption, poorer half, 2036", b50_2046: "Consumption, poorer half, 2046",
-    m40_2036: "Consumption, middle 40%, 2036", gdp_2036: "World GDP, 2036", debt_adv_2046: "Public debt, advanced, 2046" };
+  const SOBOL_OUT = L({ unemp_adv_2036: "Unemployment, advanced, 2036", b50_2036: "Consumption, poorer half, 2036", b50_2046: "Consumption, poorer half, 2046",
+    m40_2036: "Consumption, middle 40%, 2036", gdp_2036: "World GDP, 2036", debt_adv_2046: "Public debt, advanced, 2046" },
+    { unemp_adv_2036: "Disoccupazione, economie avanzate, 2036", b50_2036: "Consumi, metà più povera, 2036", b50_2046: "Consumi, metà più povera, 2046",
+    m40_2036: "Consumi, 40% centrale, 2036", gdp_2036: "PIL mondiale, 2036", debt_adv_2046: "Debito pubblico, economie avanzate, 2046" });
 
   let py = null, priors = null, headline = null, sobol = null, bookRun = null, lastRun = null;
 
   const setStatus = (text, cls) => { const s = $("status"); s.textContent = text; s.className = "status" + (cls ? " " + cls : ""); };
-  const fmtNum = (v, unit) => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(unit === "%" ? 2 : 2) + (unit === "%" ? "%" : " " + unit);
+  const fmtNum = (v, unit) => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(2).replace(".", L(".", ",")) + (unit === "%" ? "%" : " " + unit);
   const tone = (v, worse) => (v * worse > 0.005 ? "bad" : v * worse < -0.005 ? "good" : "");
   const nextFrame = () => new Promise(r => requestAnimationFrame(() => setTimeout(r, 0)));
 
@@ -270,16 +283,16 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
       const [lo, hi] = priors[p.k];
       const mid = (lo + hi) / 2;
       return '<div class="param off" id="row_' + p.k + '">' +
-        '<input type="checkbox" id="fix_' + p.k + '" aria-label="Fix ' + p.label + '">' +
+        '<input type="checkbox" id="fix_' + p.k + '" aria-label="' + L('Fix ', 'Fissa ') + p.label + '">' +
         '<label class="name" for="fix_' + p.k + '">' + p.label + '</label>' +
         '<input type="range" id="val_' + p.k + '" min="' + p.min + '" max="' + p.max + '" step="' + p.step + '" value="' + mid + '" aria-label="' + p.label + ' value">' +
         '<span class="val" id="out_' + p.k + '"></span>' +
-        '<span class="range">Book range ' + p.fmt(lo) + ' – ' + p.fmt(hi) + '</span></div>';
+        '<span class="range">' + L('Book range ', 'Intervallo del libro ') + p.fmt(lo) + ' – ' + p.fmt(hi) + '</span></div>';
     }).join("");
     PARAMS.forEach(p => {
       const show = () => {
         const [lo, hi] = priors[p.k], v = Number($("val_" + p.k).value), on = $("fix_" + p.k).checked;
-        $("out_" + p.k).textContent = on ? p.fmt(v) : "varies";
+        $("out_" + p.k).textContent = on ? p.fmt(v) : L("varies", "varia");
         $("out_" + p.k).classList.toggle("out", on && (v < lo - 1e-9 || v > hi + 1e-9));
         $("row_" + p.k).classList.toggle("off", !on);
       };
@@ -296,11 +309,11 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   // ---- python ----------------------------------------------------------------------------
   async function boot() {
     try {
-      setStatus("Loading Python…");
+      setStatus(L("Loading Python…", "Caricamento di Python…"));
       py = await loadPyodide();
-      setStatus("Loading NumPy…");
+      setStatus(L("Loading NumPy…", "Caricamento di NumPy…"));
       await py.loadPackage("numpy");
-      setStatus("Loading the book's model…");
+      setStatus(L("Loading the book's model…", "Caricamento del modello del libro…"));
       const texts = await Promise.all(FILES.map(f => fetch("py/" + f).then(r => { if (!r.ok) throw new Error(f); return r.text(); })));
       FILES.forEach((f, i) => { py.FS.mkdirTree("/home/pyodide/" + f.split("/").slice(0, -1).join("/")); py.FS.writeFile("/home/pyodide/" + f, texts[i]); });
       py.FS.writeFile("/home/pyodide/dashboard.py", await fetch("dashboard.py").then(r => r.text()));
@@ -308,20 +321,20 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
       py.runPython("import sys; sys.path.insert(0, '/home/pyodide'); import dashboard");
       priors = JSON.parse(py.runPython("dashboard.priors()"));
       const names = JSON.parse(py.runPython("dashboard.policy_names()"));
-      $("policy").innerHTML = names.map(n => "<option>" + n + "</option>").join("");
+      $("policy").innerHTML = names.map(n => '<option value="' + n + '">' + polName(n) + "</option>").join("");
       buildParams();
-      setStatus("Running the book's 4,000 simulations…");
+      setStatus(L("Running the book's 4,000 simulations…", "Il modello fa le 4.000 simulazioni del libro…"));
       await nextFrame();
       bookRun = call("run", 4000, SEED, {}, "Status quo");
       lastRun = bookRun;
       // check against the published results
       const i = bookRun.years.indexOf(2036), mine = bookRun.q.unemp_adv[2][i], book = headline.unemp_adv_2036.median;
       const same = Math.abs(mine - book) < 1e-3;
-      setStatus(same ? "✓ Reproduces the book: unemployment, advanced 2036 = +" + mine.toFixed(2) + " pp" : "Differs from the book: " + mine.toFixed(3) + " vs " + book.toFixed(3), same ? "ok" : "err");
+      setStatus(same ? L("✓ Reproduces the book: unemployment, advanced 2036 = +" + mine.toFixed(2) + " pp", "✓ Riproduce il libro: disoccupazione, economie avanzate 2036 = +" + mine.toFixed(2).replace(".", ",") + " pp") : L("Differs from the book: ", "Diverso dal libro: ") + mine.toFixed(3) + " vs " + book.toFixed(3), same ? "ok" : "err");
       ["run", "bookBtn", "polBtn"].forEach(id => $(id).disabled = false);
       render();
     } catch (e) {
-      setStatus("Could not load the model: " + e.message, "err");
+      setStatus(L("Could not load the model: ", "Impossibile caricare il modello: ") + e.message, "err");
       console.error(e);
     }
   }
@@ -333,24 +346,24 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   }
 
   async function runModel() {
-    $("run").disabled = true; setStatus("Running " + Number($("draws").value).toLocaleString("en") + " simulations…");
+    $("run").disabled = true; setStatus(L("Running ", "Il modello fa ") + Number($("draws").value).toLocaleString(L("en", "it")) + L(" simulations…", " simulazioni…"));
     await nextFrame();
     const t0 = performance.now();
     lastRun = call("run", Number($("draws").value), SEED, fixed(), $("policy").value);
-    setStatus((isBook() ? "✓ Book settings" : "Custom run") + " · " + ((performance.now() - t0) / 1000).toFixed(1) + " s", isBook() ? "ok" : "");
+    setStatus((isBook() ? L("✓ Book settings", "✓ Impostazioni del libro") : L("Custom run", "Simulazione personalizzata")) + " · " + ((performance.now() - t0) / 1000).toFixed(1).replace(".", L(".", ",")) + " s", isBook() ? "ok" : "");
     $("run").disabled = false;
     render();
   }
 
   async function comparePolicies() {
-    $("polBtn").disabled = true; setStatus("Running the ten policies…");
+    $("polBtn").disabled = true; setStatus(L("Running the ten policies…", "Il modello fa girare le dieci politiche…"));
     await nextFrame();
     const year = Number($("year").value);
     const rows = call("policies", 1000, SEED, fixed(), year);
-    const cols = [["unemp_adv", "Unemployment, adv."], ["b50", "Poorer half"], ["t10", "Richest 10%"], ["gdp", "World GDP"], ["debt_adv", "Debt, adv."]];
-    $("polTable").innerHTML = "<thead><tr><th>Policy · " + year + " · median</th>" + cols.map(c => '<th class="n">' + c[1] + "</th>").join("") + "</tr></thead><tbody>" +
-      rows.map(r => "<tr><td>" + r.name + "</td>" + cols.map(([k]) => '<td class="n ' + tone(r[k], IND[k].worse) + '">' + fmtNum(r[k], IND[k].unit === "%" ? "%" : "pp") + "</td>").join("") + "</tr>").join("") + "</tbody>";
-    setStatus("Policies compared · 1,000 simulations each", "");
+    const cols = [["unemp_adv", L("Unemployment, adv.", "Disoccup., avanzate")], ["b50", L("Poorer half", "Metà più povera")], ["t10", L("Richest 10%", "10% più ricco")], ["gdp", L("World GDP", "PIL mondiale")], ["debt_adv", L("Debt, adv.", "Debito, avanzate")]];
+    $("polTable").innerHTML = "<thead><tr><th>" + L("Policy · ", "Politica · ") + year + L(" · median", " · mediana") + "</th>" + cols.map(c => '<th class="n">' + c[1] + "</th>").join("") + "</tr></thead><tbody>" +
+      rows.map(r => "<tr><td>" + polName(r.name) + "</td>" + cols.map(([k]) => '<td class="n ' + tone(r[k], IND[k].worse) + '">' + fmtNum(r[k], IND[k].unit === "%" ? "%" : "pp") + "</td>").join("") + "</tr>").join("") + "</tbody>";
+    setStatus(L("Policies compared · 1,000 simulations each", "Politiche confrontate · 1.000 simulazioni ciascuna"), "");
     $("polBtn").disabled = false;
   }
 
@@ -365,15 +378,15 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
       const hb = headline[k + "_" + year];
       return '<div class="tile"><span class="k">' + m.label + " · " + year + '</span>' +
         '<span class="v ' + tone(v, m.worse) + '">' + fmtNum(v, m.unit) + "</span>" +
-        '<span class="r">90% of runs: ' + fmtNum(q[0][i], m.unit) + " to " + fmtNum(q[4][i], m.unit) + "</span>" +
-        (hb ? '<span class="b">Book: ' + fmtNum(hb.median, m.unit) + "</span>" : "") + "</div>";
+        '<span class="r">' + L('90% of runs: ', '90% delle simulazioni: ') + fmtNum(q[0][i], m.unit) + L(" to ", " a ") + fmtNum(q[4][i], m.unit) + "</span>" +
+        (hb ? '<span class="b">' + L('Book: ', 'Libro: ') + fmtNum(hb.median, m.unit) + "</span>" : "") + "</div>";
     }).join("");
   }
 
   function renderFan() {
     if (!lastRun) return;
     const k = $("ind").value, m = IND[k], q = lastRun.q[k], ys = lastRun.years;
-    $("fanTitle").textContent = m.label + " · difference from the world without AI (" + m.unit + ")";
+    $("fanTitle").textContent = m.label + window.L(" · difference from the world without AI (", " · differenza dal mondo senza AI (") + m.unit + ")";
     const c = $("fan"), r = c.getBoundingClientRect(), d = window.devicePixelRatio || 1;
     c.width = Math.round(r.width * d); c.height = Math.round(r.height * d);
     const x = c.getContext("2d"), L = 52 * d, R = 12 * d, T = 12 * d, B = 26 * d, W = c.width - L - R, H = c.height - T - B;
@@ -417,12 +430,17 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     const top = Object.entries(st).sort((a, b) => b[1] - a[1]).slice(0, 8);
     const max = top[0][1];
     const label = k => (priors && priors[k] ? priors[k][2].split(".")[0] : k);
-    $("sobol").innerHTML = top.map(([k, v]) => '<div class="bar"><span title="' + label(k).replace(/"/g, "") + '">' + k + " · " + shortName(k) + '</span><div class="track"><div class="fill" style="width:' + (v / max * 100).toFixed(1) + '%"></div></div><span class="num">' + Math.round(v * 100) + "%</span></div>").join("");
+    $("sobol").innerHTML = top.map(([k, v]) => '<div class="bar"><span title="' + (LANG === "en" ? label(k).replace(/"/g, "") : shortName(k)) + '">' + k + " · " + shortName(k) + '</span><div class="track"><div class="fill" style="width:' + (v / max * 100).toFixed(1) + '%"></div></div><span class="num">' + Math.round(v * 100) + "%</span></div>").join("");
   }
-  const SHORT = { theta: "share automated", phi_s: "substitutable share", mid_adv: "adoption year", k_slope: "adoption speed", lag_eme: "lag, emerging", lag_lic: "lag, low-income",
+  const SHORT_EN = { theta: "share automated", phi_s: "substitutable share", mid_adv: "adoption year", k_slope: "adoption speed", lag_eme: "lag, emerging", lag_lic: "lag, low-income",
     psi: "new tasks", lag_new: "delay of new tasks", d0: "non-AI erosion", pi_save: "cost saving", mu: "productivity gain", beta_w: "productivity to wages", kappa: "wage response",
     eps: "demand elasticity", rent_share: "rents to workers", eta: "investment response", nu: "demand pass-through", zeta: "rents booked abroad", exp_mult: "exposure growth",
     omega: "unmeasured welfare", dr: "interest rates" };
+  const SHORT_IT = { theta: "quota automatizzata", phi_s: "quota sostituibile", mid_adv: "anno dell’adozione", k_slope: "velocità dell’adozione", lag_eme: "ritardo, emergenti", lag_lic: "ritardo, basso reddito",
+    psi: "compiti nuovi", lag_new: "ritardo dei compiti nuovi", d0: "erosione senza AI", pi_save: "risparmio di costo", mu: "aumento di produttività", beta_w: "produttività ai salari", kappa: "risposta dei salari",
+    eps: "elasticità della domanda", rent_share: "rendite ai lavoratori", eta: "risposta degli investimenti", nu: "trasmissione della domanda", zeta: "rendite contabilizzate all’estero", exp_mult: "crescita dell’esposizione",
+    omega: "benessere non misurato", dr: "tassi d’interesse" };
+  const SHORT = L(SHORT_EN, SHORT_IT);
   const shortName = k => SHORT[k] || k;
 
   // ---- wiring ----------------------------------------------------------------------------
@@ -433,7 +451,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   $("bookBtn").onclick = () => {
     PARAMS.forEach(p => { $("fix_" + p.k).checked = false; $("fix_" + p.k).onchange(); });
     $("policy").value = "Status quo"; $("draws").value = "4000";
-    lastRun = bookRun; setStatus("✓ Book settings", "ok"); render();
+    lastRun = bookRun; setStatus(L("✓ Book settings", "✓ Impostazioni del libro"), "ok"); render();
   };
   $("year").onchange = () => { renderTiles(); renderFan(); };
   $("ind").onchange = renderFan;

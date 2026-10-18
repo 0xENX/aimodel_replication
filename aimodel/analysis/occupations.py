@@ -10,7 +10,9 @@ Inputs, each with its source:
 - Classic office automation: for routine office jobs the exposure is the higher of the Eloundou value and the
   Frey and Osborne probability of computerisation (2013 appendix): office clerks 0.96, accountants 0.94,
   customer service 0.55.
-- Robots: Frey and Osborne probability for manual and physical occupations; robots reach the central adoption
+- Robots: Frey and Osborne probability for manual and physical occupations, used directly as the automatable
+  share (the substitutable share phi applies only to the Eloundou exposure, which counts tasks touched, not
+  tasks that can be automated); robots reach the central adoption
   year 5 years after AI.
 - Type of occupation: following the distinction between exposure and complementarity of the IMF
   (Pizzinelli et al., WP/23/216; Cazzaniga et al., SDN/2024/001): clerical and routine content work is highly
@@ -153,7 +155,7 @@ def calibrated_mid(e, phi, theta, decline, g=0.0):
 def shares(t, e, e_rob, phi, theta, mid):
     """Cumulative shares of starting jobs at time t: lost to AI, lost to robots, new tasks."""
     lost_ai = lambda x: phi * e * adoption(x, mid, theta)
-    lost_rob = lambda x: phi * e_rob * adoption(x, mid + ROBOT_LAG, theta)
+    lost_rob = lambda x: e_rob * adoption(x, mid + ROBOT_LAG, theta)  # Frey-Osborne is already the automatable share
     ai, rob = lost_ai(t), lost_rob(t)
     if ai + rob > CAP:
         s = CAP / (ai + rob)
