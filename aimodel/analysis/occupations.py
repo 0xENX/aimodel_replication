@@ -24,6 +24,12 @@ Inputs, each with its source:
   Emerging economies adopt 3 years later, low-income countries 6.5 years later (book central values).
 - New tasks inside the same occupation: 0.15 for each task lost, within 3 years (the new roles, such as the
   architect who guides the AI tools).
+- Demand: the work machines take over is not the same as jobs lost when demand for the occupation grows (nurses,
+  cooks, electricians). Each occupation keeps the yearly growth of the BLS Employment Projections 2025-35
+  (published 21 September 2026, table "Occupational projections and characteristics"), extended at the same pace
+  to 2046. BLS attributes to AI and automation only the decline of office and administrative support
+  occupations (SOC 43): for those, demand is held flat, so that automation is not counted twice.
+  Jobs at year t = demand index x (1 - work taken by AI and robots + new roles).
 """
 import json
 import math
@@ -47,6 +53,33 @@ TYPES = {
 
 # observed yearly change, Stanford/ADP Canaries, Aug 2025 - Aug 2026 (young-heavy mix, older-heavy mix)
 OBSERVED = {"customer_service": (-0.0313, -0.0118), "software_developers": (-0.0212, -0.0037)}
+
+# BLS Employment Projections 2025-35, percent change in employment 2025-2035 (SOC used by BLS)
+BLS = {
+    "clerk": ("43-9061", -6.0), "accountant": ("13-2011", 5.0), "callcenter": ("43-4051", -5.3),
+    "translator": ("27-3091", 2.0), "developer": ("15-1252", 10.2), "designer": ("27-1024", -1.7),
+    "journalist": ("27-3023", -5.9), "architect": ("15-1211", 7.9), "lawyer": ("23-1011", 4.7),
+    "doctor": ("29-1215", 3.3), "nurse": ("29-1141", 5.6), "teacher": ("25-2031", -0.2),
+    "retail": ("41-2031", -0.3), "driver": ("53-3032", 3.8), "warehouse": ("53-7062", 1.8),
+    "factory": ("51-2090", 1.1),  # team assemblers are part of 51-2090 since SOC 2018
+    "cook": ("35-2014", 12.1), "construction": ("47-2061", 7.3),
+    # electricians 821.0 -> 896.9 and plumbers 510.6 -> 545.2 thousand: (896.9 + 545.2) / (821.0 + 510.6) - 1
+    "electrician": ("47-2111, 47-2152", 8.3),
+}
+BLS_YEARS = 10.0
+
+
+def demand_growth(oid):
+    """Yearly demand growth used: BLS pace, flat for office and administrative support (BLS: decline due to AI)."""
+    soc, pct = BLS[oid]
+    if soc.startswith("43-"):
+        return 0.0
+    return (1.0 + pct / 100.0) ** (1.0 / BLS_YEARS) - 1.0
+
+
+def demand(t, g):
+    return (1.0 + g) ** (t - START)
+
 
 OCCUPATIONS = [
     # id, English, Italian, SOC, Eloundou gamma (human), Frey-Osborne office, Frey-Osborne robots, type, observed
@@ -88,12 +121,13 @@ def exposure(gamma, fo_office):
     return min(CAP, max(gamma, fo_office))
 
 
-def calibrated_mid(e, phi, theta, decline):
-    """Central year that makes the loss in the first year (2026-2027) equal to the observed decline."""
+def calibrated_mid(e, phi, theta, decline, g=0.0):
+    """Central year that makes the net change in the first year (2026-2027) equal to the observed decline."""
+    target = 1.0 - (1.0 - decline) / (1.0 + g)  # work taken that, with demand growth g, gives the observed decline
     lo, hi = START + 0.5, 2045.0
     for _ in range(60):
         m = (lo + hi) / 2
-        if phi * e * adoption(START + 1, m, theta) > decline:
+        if phi * e * adoption(START + 1, m, theta) > target:
             lo = m
         else:
             hi = m
@@ -117,14 +151,18 @@ def forecast():
     for oid, en, it, soc, gamma, fo_office, fo_rob, typ, obs in OCCUPATIONS:
         phi, theta = TYPES[typ]["phi"], TYPES[typ]["theta"]
         e = exposure(gamma, fo_office)
-        mid = calibrated_mid(e, phi, theta, -sum(OBSERVED[obs]) / 2) if obs else DEFAULT_MID
-        res = {}
+        g = demand_growth(oid)
+        mid = calibrated_mid(e, phi, theta, -sum(OBSERVED[obs]) / 2, g) if obs else DEFAULT_MID
+        res, work = {}, {}
         for reg, lag in REGION_LAG.items():
             for year in (2036, 2046):
                 ai, rob, cr = shares(year, e, fo_rob, phi, theta, mid + lag)
-                res[f"{reg}_{year}"] = round((cr - ai - rob) * 100, 1)
+                work[f"{reg}_{year}"] = round((cr - ai - rob) * 100, 1)
+                res[f"{reg}_{year}"] = round((demand(year, g) * (1.0 + cr - ai - rob) - 1.0) * 100, 1)
         rows.append(dict(id=oid, en=en, it=it, soc=soc, exposure_ai=round(e, 3), exposure_robots=fo_rob,
-                         type=typ, phi=phi, theta=theta, mid_adv=mid, observed=obs, results=res))
+                         type=typ, phi=phi, theta=theta, mid_adv=mid, observed=obs,
+                         bls_soc=BLS[oid][0], bls_change=BLS[oid][1], demand_growth=round(g, 6),
+                         work=work, results=res))
     return rows
 
 
@@ -132,7 +170,7 @@ def write(path=None):
     path = Path(path or Path(__file__).resolve().parents[2] / "outputs" / "occupations.json")
     data = dict(start=START, end=END, slope=SLOPE, region_lag=REGION_LAG, robot_lag=ROBOT_LAG,
                 new_tasks=NEW_TASKS, new_tasks_lag=NEW_TASKS_LAG, cap=CAP, types=TYPES,
-                observed=OBSERVED, occupations=forecast())
+                observed=OBSERVED, bls_years=BLS_YEARS, occupations=forecast())
     path.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     return data
 
@@ -141,5 +179,6 @@ if __name__ == "__main__":
     d = write()
     for o in sorted(d["occupations"], key=lambda o: o["results"]["ADV_2046"]):
         r = o["results"]
-        print(f'{o["it"]:26s} {o["type"]:9s} esposizione {o["exposure_ai"]:.2f} anno centrale {o["mid_adv"]}'
-              f'  ADV 2036 {r["ADV_2036"]:6.1f}  2046 {r["ADV_2046"]:6.1f}')
+        w = o["work"]
+        print(f'{o["it"]:26s} {o["type"]:9s} esp {o["exposure_ai"]:.2f} anno {o["mid_adv"]} BLS {o["bls_change"]:+5.1f}'
+              f'  lavoro 2046 {w["ADV_2046"]:6.1f}  posti 2036 {r["ADV_2036"]:6.1f}  2046 {r["ADV_2046"]:6.1f}')
