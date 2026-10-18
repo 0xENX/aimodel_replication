@@ -16,7 +16,7 @@
 
   const EXCERPT = {
     it: { href: "excerpt/The_Last_Forecast_estratto.pdf", label: "Estratto del libro" },
-    en: { href: "excerpt/The_Last_Forecast_excerpt.pdf", label: "Book excerpt" },
+    en: { href: "excerpt/The_Last_Forecast_excerpt.pdf", label: "Book demo" },
   };
   const FLAG_IT = '<svg viewBox="0 0 3 2" width="22" height="15" aria-hidden="true"><rect width="1" height="2" fill="#009246"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ce2b37"/></svg>';
   const FLAG_EN = '<svg viewBox="0 0 60 30" width="22" height="15" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg>';
@@ -30,7 +30,7 @@
   window.i18nNav = function () {
     const bar = document.querySelector(".topnav .in");
     if (!bar) return;
-    const NAMES = { "index.html": L("Job Simulator", "Simulatore dei mestieri"), "model.html": L("Economy Model", "Modello dell’economia") };
+    const NAMES = { "index.html": L("Job Simulator", "Simulatore"), "model.html": L("Economy Model", "Modello economico") };
     bar.querySelectorAll("a[href$='.html']").forEach(a => {
       const page = a.getAttribute("href");
       if (NAMES[page]) a.textContent = NAMES[page];
