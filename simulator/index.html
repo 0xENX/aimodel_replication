@@ -44,7 +44,8 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
 .bar { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: flex-end; }
 .ctl { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .ctl label { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
-select, input[type="month"] {
+.pair { display: flex; gap: 6px; }
+select {
   background: var(--field); color: var(--fg); border: 1px solid var(--line); border-radius: 6px;
   padding: 7px 9px; font: inherit; font-family: var(--f-data); font-size: .85rem;
 }
@@ -113,12 +114,12 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
       <select id="region"></select>
     </div>
     <div class="ctl">
-      <label for="from">From</label>
-      <input type="month" id="from" value="2026-01">
+      <label for="fromM">From</label>
+      <div class="pair"><select id="fromM" aria-label="From month"></select><select id="fromY" aria-label="From year"></select></div>
     </div>
     <div class="ctl">
-      <label for="to">To</label>
-      <input type="month" id="to" value="2040-12">
+      <label for="toM">To</label>
+      <div class="pair"><select id="toM" aria-label="To month"></select><select id="toY" aria-label="To year"></select></div>
     </div>
     <div class="ctl">
       <label for="expAi">AI exposure <span class="rangeval" id="expAiv"></span></label>
@@ -265,7 +266,13 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   const chart = $("chart"), cx = chart.getContext("2d");
 
   let S;
-  const parseM = v => { const [y, m] = v.split("-").map(Number); return y * 12 + (m - 1); };
+  // Month/year pickers built here so they always show English month names, whatever the browser language
+  const fill = (id, items, value) => { const s = $(id); items.forEach(([v, t]) => { const o = document.createElement("option"); o.value = v; o.textContent = t; s.appendChild(o); }); s.value = value; };
+  const monthItems = MONTHS.map((m, i) => [i, m]);
+  const yearItems = Array.from({ length: 2060 - 2024 + 1 }, (_, i) => [2024 + i, 2024 + i]);
+  fill("fromM", monthItems, 0); fill("fromY", yearItems, 2026);
+  fill("toM", monthItems, 11); fill("toY", yearItems, 2040);
+  const pickM = p => Number($(p + "Y").value) * 12 + Number($(p + "M").value);
   const fmtM = t => MONTHS[((t % 12) + 12) % 12] + " " + Math.floor(t / 12);
   const adoption = (kind, t) => 1 / (1 + Math.exp(-KINDS[kind].k * (t - midOf(kind))));
   const job = () => JOBS.find(j => j.id === sel.value);
@@ -284,7 +291,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   }
 
   function reset() {
-    let from = parseM($("from").value || "2026-01"), to = parseM($("to").value || "2040-12");
+    let from = pickM("from"), to = pickM("to");
     if (to <= from) to = from + 12;
     const jobs = [];
     for (let i = 0; i < N0; i++) jobs.push({ x: Math.random(), y: Math.random(), born: 0, alive: true });
@@ -464,7 +471,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   $("reset").onclick = reset;
   sel.onchange = () => { syncSliders(); reset(); };
   regSel.onchange = reset;
-  $("from").onchange = reset; $("to").onchange = reset;
+  ["fromM", "fromY", "toM", "toY"].forEach(id => $(id).onchange = reset);
   ["expAi", "expRob", "cre"].forEach(id => $(id).oninput = showSliders);
   window.addEventListener("resize", () => { draw(); drawChart(); });
 
