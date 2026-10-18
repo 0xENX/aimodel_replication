@@ -28,6 +28,8 @@ class TestOccupations(unittest.TestCase):
         unemp = json.loads(re.search(r"const UNEMP = (\{.*?\});\n", html, re.S).group(1))
         self.assertEqual(data, json.loads((ROOT / "outputs" / "occupations.json").read_text(encoding="utf-8")))
         self.assertEqual(unemp, json.loads((ROOT / "outputs" / "unemployment_path.json").read_text(encoding="utf-8")))
+        social = json.loads(re.search(r"const SOCIAL = (\{.*?\});\n", html, re.S).group(1))
+        self.assertEqual(social, json.loads((ROOT / "outputs" / "social_risk.json").read_text(encoding="utf-8")))
 
     def test_aggregate_is_weighted_average(self):
         saved = json.loads((ROOT / "outputs" / "occupations.json").read_text(encoding="utf-8"))
