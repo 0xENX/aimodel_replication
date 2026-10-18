@@ -10,7 +10,7 @@ Sources (archived in data/observed/social, downloaded 18 October 2026, not modif
   (oews_state_M2024_dl.xlsx, public domain): employment of the nineteen occupations in each state, so that the work
   taken by AI and robots follows the occupations of the state. Doctors are all physicians (29-121x, 29-122x, 29-124x);
   the few suppressed cells take the national share of the occupation.
-- China, Russia, Canada and Australia by large city: no comparable data on occupations by city, so every city carries the value of its
+- China, Russia, Canada, Australia, Brazil and India by large city: no comparable data on occupations by city, so every city carries the value of its
   country; the cities only show where people live (city centre coordinates).
 - Codes: ISO 3166 alpha-3 and numeric (iso_codes.json, from the npm package i18n-iso-countries 7.11.0) and the
   World Bank country list with regions and capital coordinates (wb_countries.json).
@@ -81,6 +81,17 @@ CITIES = {
             ("Perth", "Perth", 115.86, -31.95), ("Adelaide", "Adelaide", 138.60, -34.93), ("Gold Coast", "Gold Coast", 153.40, -28.02),
             ("Canberra", "Canberra", 149.13, -35.28), ("Newcastle", "Newcastle", 151.78, -32.93), ("Hobart", "Hobart", 147.33, -42.88),
             ("Darwin", "Darwin", 130.84, -12.46), ("Townsville", "Townsville", 146.82, -19.26), ("Cairns", "Cairns", 145.77, -16.92)],
+    "BRA": [("São Paulo", "San Paolo", -46.63, -23.55), ("Rio de Janeiro", "Rio de Janeiro", -43.17, -22.91), ("Brasília", "Brasília", -47.88, -15.79),
+            ("Salvador", "Salvador", -38.50, -12.97), ("Fortaleza", "Fortaleza", -38.54, -3.73), ("Belo Horizonte", "Belo Horizonte", -43.94, -19.92),
+            ("Manaus", "Manaus", -60.02, -3.12), ("Curitiba", "Curitiba", -49.27, -25.43), ("Recife", "Recife", -34.88, -8.05),
+            ("Goiânia", "Goiânia", -49.25, -16.69), ("Belém", "Belém", -48.50, -1.46), ("Porto Alegre", "Porto Alegre", -51.23, -30.03),
+            ("São Luís", "São Luís", -44.30, -2.53), ("Campo Grande", "Campo Grande", -54.62, -20.47), ("Cuiabá", "Cuiabá", -56.10, -15.60)],
+    "IND": [("Mumbai", "Mumbai", 72.88, 19.08), ("Delhi", "Delhi", 77.21, 28.61), ("Bengaluru", "Bangalore", 77.59, 12.97),
+            ("Hyderabad", "Hyderabad", 78.49, 17.39), ("Ahmedabad", "Ahmedabad", 72.57, 23.02), ("Chennai", "Chennai", 80.27, 13.08),
+            ("Kolkata", "Calcutta", 88.36, 22.57), ("Surat", "Surat", 72.83, 21.17), ("Pune", "Pune", 73.86, 18.52),
+            ("Jaipur", "Jaipur", 75.79, 26.91), ("Lucknow", "Lucknow", 80.95, 26.85), ("Kanpur", "Kanpur", 80.33, 26.45),
+            ("Nagpur", "Nagpur", 79.09, 21.15), ("Indore", "Indore", 75.86, 22.72), ("Bhopal", "Bhopal", 77.41, 23.26),
+            ("Patna", "Patna", 85.14, 25.59), ("Visakhapatnam", "Visakhapatnam", 83.22, 17.69), ("Guwahati", "Guwahati", 91.74, 26.14)],
 }
 
 

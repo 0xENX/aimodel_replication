@@ -4804,6 +4804,208 @@
     "lon": 145.77,
     "lat": -16.92
    }
+  ],
+  "BRA": [
+   {
+    "name": "São Paulo",
+    "it": "San Paolo",
+    "lon": -46.63,
+    "lat": -23.55
+   },
+   {
+    "name": "Rio de Janeiro",
+    "it": "Rio de Janeiro",
+    "lon": -43.17,
+    "lat": -22.91
+   },
+   {
+    "name": "Brasília",
+    "it": "Brasília",
+    "lon": -47.88,
+    "lat": -15.79
+   },
+   {
+    "name": "Salvador",
+    "it": "Salvador",
+    "lon": -38.5,
+    "lat": -12.97
+   },
+   {
+    "name": "Fortaleza",
+    "it": "Fortaleza",
+    "lon": -38.54,
+    "lat": -3.73
+   },
+   {
+    "name": "Belo Horizonte",
+    "it": "Belo Horizonte",
+    "lon": -43.94,
+    "lat": -19.92
+   },
+   {
+    "name": "Manaus",
+    "it": "Manaus",
+    "lon": -60.02,
+    "lat": -3.12
+   },
+   {
+    "name": "Curitiba",
+    "it": "Curitiba",
+    "lon": -49.27,
+    "lat": -25.43
+   },
+   {
+    "name": "Recife",
+    "it": "Recife",
+    "lon": -34.88,
+    "lat": -8.05
+   },
+   {
+    "name": "Goiânia",
+    "it": "Goiânia",
+    "lon": -49.25,
+    "lat": -16.69
+   },
+   {
+    "name": "Belém",
+    "it": "Belém",
+    "lon": -48.5,
+    "lat": -1.46
+   },
+   {
+    "name": "Porto Alegre",
+    "it": "Porto Alegre",
+    "lon": -51.23,
+    "lat": -30.03
+   },
+   {
+    "name": "São Luís",
+    "it": "São Luís",
+    "lon": -44.3,
+    "lat": -2.53
+   },
+   {
+    "name": "Campo Grande",
+    "it": "Campo Grande",
+    "lon": -54.62,
+    "lat": -20.47
+   },
+   {
+    "name": "Cuiabá",
+    "it": "Cuiabá",
+    "lon": -56.1,
+    "lat": -15.6
+   }
+  ],
+  "IND": [
+   {
+    "name": "Mumbai",
+    "it": "Mumbai",
+    "lon": 72.88,
+    "lat": 19.08
+   },
+   {
+    "name": "Delhi",
+    "it": "Delhi",
+    "lon": 77.21,
+    "lat": 28.61
+   },
+   {
+    "name": "Bengaluru",
+    "it": "Bangalore",
+    "lon": 77.59,
+    "lat": 12.97
+   },
+   {
+    "name": "Hyderabad",
+    "it": "Hyderabad",
+    "lon": 78.49,
+    "lat": 17.39
+   },
+   {
+    "name": "Ahmedabad",
+    "it": "Ahmedabad",
+    "lon": 72.57,
+    "lat": 23.02
+   },
+   {
+    "name": "Chennai",
+    "it": "Chennai",
+    "lon": 80.27,
+    "lat": 13.08
+   },
+   {
+    "name": "Kolkata",
+    "it": "Calcutta",
+    "lon": 88.36,
+    "lat": 22.57
+   },
+   {
+    "name": "Surat",
+    "it": "Surat",
+    "lon": 72.83,
+    "lat": 21.17
+   },
+   {
+    "name": "Pune",
+    "it": "Pune",
+    "lon": 73.86,
+    "lat": 18.52
+   },
+   {
+    "name": "Jaipur",
+    "it": "Jaipur",
+    "lon": 75.79,
+    "lat": 26.91
+   },
+   {
+    "name": "Lucknow",
+    "it": "Lucknow",
+    "lon": 80.95,
+    "lat": 26.85
+   },
+   {
+    "name": "Kanpur",
+    "it": "Kanpur",
+    "lon": 80.33,
+    "lat": 26.45
+   },
+   {
+    "name": "Nagpur",
+    "it": "Nagpur",
+    "lon": 79.09,
+    "lat": 21.15
+   },
+   {
+    "name": "Indore",
+    "it": "Indore",
+    "lon": 75.86,
+    "lat": 22.72
+   },
+   {
+    "name": "Bhopal",
+    "it": "Bhopal",
+    "lon": 77.41,
+    "lat": 23.26
+   },
+   {
+    "name": "Patna",
+    "it": "Patna",
+    "lon": 85.14,
+    "lat": 25.59
+   },
+   {
+    "name": "Visakhapatnam",
+    "it": "Visakhapatnam",
+    "lon": 83.22,
+    "lat": 17.69
+   },
+   {
+    "name": "Guwahati",
+    "it": "Guwahati",
+    "lon": 91.74,
+    "lat": 26.14
+   }
   ]
  }
 }
