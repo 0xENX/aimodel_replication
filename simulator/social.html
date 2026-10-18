@@ -54,6 +54,7 @@ h1 { margin: 0; font-size: 1.45rem; font-weight: 600; text-wrap: balance; }
 .bar { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: flex-end; }
 .ctl { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .ctl label { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.pair { display: flex; gap: 6px; }
 select { background: var(--field); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; font: inherit; font-family: var(--f-data); font-size: .85rem; max-width: 100%; }
 .btns { display: flex; gap: 8px; margin-left: auto; }
 @media (max-width: 820px) { .btns { margin-left: 0; } }
@@ -108,6 +109,14 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   </header>
 
   <div class="bar">
+    <div class="ctl">
+      <label for="fromM">From</label>
+      <div class="pair"><select id="fromM" aria-label="From month"></select><select id="fromY" aria-label="From year"></select></div>
+    </div>
+    <div class="ctl">
+      <label for="toM">To</label>
+      <div class="pair"><select id="toM" aria-label="To month"></select><select id="toY" aria-label="To year"></select></div>
+    </div>
     <div class="ctl">
       <label for="spd">Speed</label>
       <select id="spd">
@@ -170,6 +179,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     "by Enrico Lorenzo De Vito": "di Enrico Lorenzo De Vito",
     "Red dots are AI systems and yellow dots robots, as many as the share of work they take over in the nineteen occupations of the book in each region. Orange rings are social risk: they grow with the additional unemployment of the region in the book’s economy model.":
       "I puntini rossi sono sistemi di AI e quelli gialli robot, tanti quanta è la parte di lavoro che prendono nei diciannove mestieri del libro in ogni regione. Gli anelli arancioni sono il rischio sociale: crescono con la disoccupazione in più della regione nel modello economico del libro.",
+    "From": "Da", "To": "A",
     "Speed": "Velocità", "2 months/s": "2 mesi/s", "4 months/s": "4 mesi/s", "8 months/s": "8 mesi/s", "16 months/s": "16 mesi/s",
     "Start": "Avvia", "Restart": "Ricomincia",
     '<i style="background: var(--ai); box-shadow: 0 0 6px var(--ai)"></i>AI': '<i style="background: var(--ai); box-shadow: 0 0 6px var(--ai)"></i>AI',
@@ -192,7 +202,17 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   const $ = id => document.getElementById(id);
   const MONTHS = L(["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"]);
   const REG = ["ADV", "EME", "LIC"];
-  const START = DATA.start * 12, END = DATA.end * 12;
+  // period chosen by the reader, January 2026 to January 2046 by default (twenty years, as in the book)
+  const fill = (id, items, value) => { const sl = $(id); items.forEach(([v, txt]) => { const o = document.createElement("option"); o.value = v; o.textContent = txt; sl.appendChild(o); }); sl.value = value; };
+  fill("fromM", MONTHS.map((m, i) => [i, m]), 0); fill("toM", MONTHS.map((m, i) => [i, m]), 0);
+  const years = Array.from({ length: DATA.end - DATA.start + 1 }, (_, i) => [DATA.start + i, DATA.start + i]);
+  fill("fromY", years, DATA.start); fill("toY", years, DATA.end);
+  const pickM = id => Number($(id + "Y").value) * 12 + Number($(id + "M").value);
+  let START = DATA.start * 12, END = DATA.end * 12;
+  function period() {
+    START = pickM("from"); END = pickM("to");
+    if (END <= START) END = Math.min(START + 12, DATA.end * 12 + 11);
+  }
   const fmtM = t => MONTHS[t % 12] + " " + Math.floor(t / 12);
   const dec = (v, n) => v.toFixed(n).replace(".", L(".", ","));
   const fmtPP = v => (v >= 0 ? "+" : "−") + dec(Math.abs(v), 1) + " pp";
@@ -306,7 +326,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
         ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, R, 0, 7); ctx.fill();
         ctx.save(); ctx.shadowColor = "#ff8c28"; ctx.shadowBlur = 10 * d; ctx.strokeStyle = "rgba(255,150,50,0.9)";
         for (let k = 0; k < 3; k++) {                                  // pulsing rings
-          const ph = ((now / 1800 + k / 3 + a[0] / 97) % 1);
+          const ph = (((now / 1800 + k / 3 + a[0] / 97) % 1) + 1) % 1;   // always between 0 and 1, also west of Greenwich
           ctx.globalAlpha = (1 - ph) * 0.9; ctx.lineWidth = (2.2 - ph) * d;
           ctx.beginPath(); ctx.arc(x, y, R * (0.25 + 0.75 * ph), 0, 7); ctx.stroke();
         }
@@ -352,10 +372,12 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     running = !running;
     $("play").textContent = running ? L("Pause", "Pausa") : L("Resume", "Riprendi");
   };
-  $("reset").onclick = () => { running = false; t = START; frac = 0; $("play").textContent = L("Start", "Avvia"); stats(); };
+  const restart = () => { period(); running = false; t = START; frac = 0; $("play").textContent = L("Start", "Avvia"); stats(); };
+  $("reset").onclick = restart;
+  ["fromM", "fromY", "toM", "toY"].forEach(id => $(id).onchange = restart);
   window.addEventListener("resize", size);
 
-  size(); stats();
+  size(); period(); t = START; stats();
   fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json").then(r => r.json()).then(topo => {
     const all = topojson.feature(topo, topo.objects.countries).features.filter(f => f.id !== "010");   // no Antarctica
     all.forEach(f => f.region = regionOf(f));
