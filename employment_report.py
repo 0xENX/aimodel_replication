@@ -2,12 +2,15 @@
 import json
 from pathlib import Path
 
+from observed_window import last_year
+
 ROOT = Path(__file__).resolve().parent
 
 
 def write_html(result, folder):
     observed = ROOT / "data" / "observed" / "observed_summary.json"
     obs = json.loads(observed.read_text(encoding="utf-8")) if observed.exists() else {}
+    obs = last_year(obs)  # observed data: last year only, never 2022-2024
     template = (ROOT / "report_template.html").read_text(encoding="utf-8")
     # JSON in script is escaped against premature closing tags.
     payload = json.dumps(dict(sim=result,obs=obs),ensure_ascii=False).replace("<","\\u003c")

@@ -7,7 +7,7 @@ calibrazione parziale e ipotesi di scenario; non stima ancora effetti causali AI
 
 ### Eurostat, EU Labour Force Survey
 
-- [Stock per eta, lfsa_pganws](https://ec.europa.eu/eurostat/databrowser/view/lfsa_pganws/default/table): Italia e UE-27, 2019-2025, sesso totale, cittadinanza totale. Stock di popolazione, forza lavoro, occupati, disoccupati, inattivi in migliaia di persone.
+- [Stock per eta, lfsa_pganws](https://ec.europa.eu/eurostat/databrowser/view/lfsa_pganws/default/table): Italia e UE-27, 2019-2025 archiviati, nei grafici solo 2024-2025, sesso totale, cittadinanza totale. Stock di popolazione, forza lavoro, occupati, disoccupati, inattivi in migliaia di persone.
 - [Metodologia LFS](https://ec.europa.eu/eurostat/cache/metadata/en/employ_simslfs2_rs.htm): occupati e disoccupati costituiscono la forza lavoro; inattivi esclusi. Unemployment/population e unemployment/labour force sono indicatori differenti.
 - [Transizioni lfsi_long_q](https://ec.europa.eu/eurostat/databrowser/view/lfsi_long_q/default/table): Italia/UE, trimestri 2024-2025, transizioni fra occupazione, disoccupazione, inattivita. I dati scaricati NON hanno una dimensione eta. Le tabelle sperimentali piu dettagliate e i microdati vanno esplorati separatamente.
 - [Metodologia transizioni](https://ec.europa.eu/eurostat/cache/metadata/EN/lfsi_long_esms.htm): flussi fra stati non equivalgono alle assunzioni amministrative; un cambio datore di lavoro puo rimanere EMP_EMP. Non convertire un tasso trimestrale in annuale moltiplicandolo per quattro.
@@ -30,7 +30,16 @@ e scoraggiamento. Nessun coefficiente causale AI e ricavato da Eurostat.
 pubblica ZIP scaricabili con CSV e dizionari. Sono stati archiviati gli indici per
 esposizione, eta x esposizione, eta aggregata, composizione del campione,
 sviluppatori software e assistenza clienti. Vintage: 17 settembre 2026;
-ultima osservazione degli indici: agosto 2026. Base: novembre 2022 = 100.
+ultima osservazione degli indici: agosto 2026. Base della fonte: novembre 2022 = 100.
+
+**Solo l'ultimo anno.** Per leggere l'effetto dell'AI il progetto usa solo l'ultimo
+anno di dati: agosto 2025 - agosto 2026 per Stanford/ADP (indici riportati ad
+agosto 2025 = 100) e 2024-2025 per Eurostat. I dati 2022-2024 risentono delle
+assunzioni eccessive del dopo-Covid e del rialzo dei tassi e non si usano ne nei
+grafici ne nei report (`observed_window.py`). I file originali restano archiviati
+senza modifiche. Le serie storiche lunghe usate per costruire il mondo senza AI
+(per esempio la quota del lavoro ILO 2004-2024) restano: servono come termine di
+confronto, non misurano l'effetto dell'AI.
 
 Gli indici per eta usano 22-25, 26-30, 31-34, 35-40, 41-49, 50+; questi gruppi
 NON sono ricostruibili esattamente nelle quattro fasce del modello. I grafici

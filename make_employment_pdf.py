@@ -47,7 +47,8 @@ def plot(c,x,y,w,h,xs,series,title,unit,limits=None):
 
 def main():
     S=json.loads((FOLDER/"results.json").read_text(encoding="utf-8"))
-    O=json.loads((ROOT/"data/observed/observed_summary.json").read_text(encoding="utf-8"))
+    from observed_window import last_year
+    O=last_year(json.loads((ROOT/"data/observed/observed_summary.json").read_text(encoding="utf-8")))  # last year only, never 2022-2024
     dest=FOLDER/"sezione_occupazione.pdf"
     c=canvas.Canvas(str(dest),pagesize=A4);W,H=A4;page=0
     c.setTitle("Occupazione, eta e AI - appendice esplorativa")
@@ -74,7 +75,7 @@ def main():
     yy=H-140
     blocks=[
       ("Che cosa misura", "Quattro fasce nelle simulazioni: 15-24, 25-34, 35-49 e 50-64. Le coorti avanzano di un anno; il modello distingue occupati, primo ingresso, ricollocamento e scoraggiamento. I grafici Stanford conservano le fasce della fonte, diverse da quelle del modello."),
-      ("Dati osservati", "Eurostat LFS: Italia e UE-27, 2019-2025, popolazione, occupati, forza lavoro e disoccupati. Stanford/ADP: serie mensili per eta ed esposizione, fino ad agosto 2026, vintage settembre 2026. I dati originali e gli hash sono archiviati nel progetto."),
+      ("Dati osservati", "Eurostat LFS: Italia e UE-27, popolazione, occupati, forza lavoro e disoccupati; nei grafici solo 2024 e 2025. Stanford/ADP: serie mensili per eta ed esposizione, nei grafici solo agosto 2025 - agosto 2026 (agosto 2025 = 100), vintage settembre 2026. I dati 2022-2024 risentono delle assunzioni del dopo-Covid e del rialzo dei tassi e non si usano per leggere l'effetto dell'AI. I dati originali e gli hash sono archiviati nel progetto."),
       ("Calibrazione parziale", "Il profilo iniziale ADV usa quote di popolazione e partecipazione dell'UE come proxy; la forma della disoccupazione per eta e normalizzata al tasso strutturale ADV del modello originale. L'UE non rappresenta tutte le economie avanzate. Le fasce EME/LIC e i parametri AI e di matching restano assunzioni."),
       ("Come funziona", "La domanda aggregata arriva dal modello macroeconomico e viene allocata per eta tramite pesi di accessibilita espliciti. I posti disponibili non vengono coperti automaticamente: probabilita di assunzione e ricollocamento limitano gli ingressi. Gli scoraggiati escono dall'offerta attiva, ma rimangono nell'offerta potenziale."),
       ("Limite decisivo", "Il modulo per eta e collegato in una sola direzione. Le sue nuove traiettorie occupazionali non modificano ancora PIL, salari, redditi o debito. Non usare quindi i risultati fiscali originari come valutazione delle nuove simulazioni occupazionali."),
@@ -93,8 +94,8 @@ def main():
                 series.append(dict(color=col,y=[r[key] for r in rows]))
             items.append((age+" anni",series))
         vals=[v for _,ss in items for s in ss for v in s["y"]]
-        panels(list(range(2019,2026)),items,"% della popolazione" if key=="employment_rate" else "% della forza lavoro",(0,max(vals)))
-        paragraph(c,"Fonte: Eurostat lfsa_pganws. I gruppi di cinque anni sono sommati; nessuna media semplice dei tassi.",36,75,W-72,8,11);footer()
+        panels(sorted({int(r["year"]) for r in O["eurostat"]}),items,"% della popolazione" if key=="employment_rate" else "% della forza lavoro",(0,max(vals)))
+        paragraph(c,"Fonte: Eurostat lfsa_pganws, solo 2024 e 2025. I gruppi di cinque anni sono sommati; nessuna media semplice dei tassi.",36,75,W-72,8,11);footer()
     rows=O["stanford"]["canaries_age_by_exposure"]
     ages=["Early Career 1 (22-25)","Early Career 2 (26-30)","Developing (31-34)","Mid-Career 1 (35-40)"]
     header("Esposizione AI e occupazione negli USA","Stanford/ADP: campione bilanciato, non rappresentativo dell'intero mercato USA. Correlazioni, non causalita.")
@@ -102,13 +103,13 @@ def main():
     groups=[[r for r in rows if r["exposure_quintile"]==q] for q in ("Quintile 1 (least exposed)","Quintile 5 (most exposed)")]
     for age in ages:items.append((age.split("(")[-1].rstrip(")")+" anni",[dict(color=col,y=[float(r[age]) for r in g]) for g,col in zip(groups,(COLORS[1],COLORS[0]))]))
     vals=[v for _,ss in items for s in ss for v in s["y"]]
-    panels([r["observation_date"] for r in groups[0]],items,"Indice novembre 2022 = 100",(min(vals),max(vals)))
-    paragraph(c,"Fonte: Canaries Dashboard, file age_by_exposure. Osservazioni fino ad agosto 2026; vintage 17 settembre 2026.",36,75,W-72,8,11);footer()
+    panels([r["observation_date"] for r in groups[0]],items,"Indice agosto 2025 = 100",(min(vals),max(vals)))
+    paragraph(c,"Fonte: Canaries Dashboard, file age_by_exposure. Solo l'ultimo anno, agosto 2025 - agosto 2026: i dati 2022-2024 risentono delle assunzioni del dopo-Covid e del rialzo dei tassi. Vintage 17 settembre 2026.",36,75,W-72,8,11);footer()
     rows=O["stanford"]["canaries_software_developers"]
     header("Sviluppatori software per eta","Serie osservata Stanford/ADP. Le fasce della fonte sono conservate senza convertirle artificialmente in quelle del modello.")
     legends([("Occupati nel campione",COLORS[0])]);items=[(age.split("(")[-1].rstrip(")")+" anni",[dict(color=COLORS[0],y=[float(r[age]) for r in rows])]) for age in ages]
     vals=[v for _,ss in items for s in ss for v in s["y"]]
-    panels([r["observation_date"] for r in rows],items,"Indice novembre 2022 = 100",(min(vals),max(vals)))
+    panels([r["observation_date"] for r in rows],items,"Indice agosto 2025 = 100",(min(vals),max(vals)))
     paragraph(c,"Fonte: Canaries Dashboard, file software_developers. Serie descrittiva; non misura tutti i posti disponibili.",36,75,W-72,8,11);footer()
     for metric,title in [("gap_potential","Forbice: offerta potenziale e domanda"),("employment_rate","Effetto sul tasso di occupazione"),("hire_rate","Effetto sulle assunzioni annuali"),("rehire_rate","Effetto sul ricollocamento"),("broad_nonemployment","Senza lavoro, inclusi gli scoraggiati")]:
         header(title,"ADV: profilo UE come proxy. Differenza AI meno senza AI, stesso matching in ciascuna coppia. Medianei scenari esplorativi.".replace("Medianei","Mediane dei"))

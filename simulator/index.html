@@ -225,6 +225,8 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
             <div class="note" id="endtitle"></div>
             <div class="big" id="endpct"></div>
             <div id="endtxt"></div>
+            <div class="note" id="endrange"></div>
+            <div class="note" id="endobs"></div>
             <div class="note" id="endnote"></div>
           </div>
         </div>
@@ -263,7 +265,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
         <div class="keys"><span><i style="background:var(--job)"></i>jobs</span><span><i style="background:var(--ai)"></i>lost to AI</span><span><i style="background:var(--robot)"></i>lost to robots</span><span><i style="background:var(--new)"></i>new tasks</span></div>
       </div>
       <p class="note"><b>Logic from the book.</b> Adoption follows the S-curve of appendix A1, starting from zero in 2026. Only 55% of exposed work is substitutable, and only part of it is automated by 2046. New tasks are a share of the tasks lost and arrive years later. Emerging economies adopt 3 years after advanced ones, low-income countries 6.5 years after. The four scenarios are those of the book's employment module. Numbers show the difference from a world without AI.</p>
-      <p class="note"><b>Data by occupation.</b> AI exposure from Eloundou et al. (Science 2024), robot exposure from Frey and Osborne (2013) for manual jobs only. Software developers and customer service already show a decline in the Stanford/ADP data, so they adopt from 2030. Full table and sources in the appendix below.</p>
+      <p class="note"><b>Data by occupation.</b> AI exposure from Eloundou et al. (Science 2024), robot exposure from Frey and Osborne (2013) for manual jobs only. Software developers and customer service already show a decline in the Stanford/ADP data: they adopt from 2030, use exposure with software tools, and take substitution and automation at the top of the book's ranges. Full table and sources in the appendix below.</p>
       <p class="note"><b>Book reference.</b> In advanced economies, extra unemployment from AI has a median of +4.3 points in 2036 and +1.4 in 2046, across the whole economy.</p>
     </div>
   </div>
@@ -288,9 +290,14 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     </ul>
     <h3>Data by occupation</h3>
     <ul>
-      <li><b>AI exposure</b>: share of each occupation's tasks where a GPT-type system can cut the time needed by at least half (beta measure: fully exposed tasks plus half of the tasks exposed with extra software). Eloundou, Manning, Mishkin and Rock, "GPTs are GPTs: Labor market impact potential of LLMs", <cite>Science</cite> 384 (2024); occupation-level data in the authors' public repository github.com/openai/GPTs-are-GPTs (file occ_level.csv). The paper gives two ratings for the same tasks, by human experts and by GPT-4; both can be selected. Human ratings are the default.</li>
+      <li><b>AI exposure</b>: share of each occupation's tasks where a GPT-type system can cut the time needed by at least half (beta measure: fully exposed tasks plus half of the tasks exposed with extra software). Eloundou, Manning, Mishkin and Rock, "GPTs are GPTs: Labor market impact potential of LLMs", <cite>Science</cite> 384 (2024); occupation-level data in the authors' public repository github.com/openai/GPTs-are-GPTs (file occ_level.csv). The paper gives two ratings for the same tasks, by human experts and by GPT-4; both can be selected. Human ratings are the default. For frontier occupations the gamma measure is used (all tasks exposed with extra software), from the same file.</li>
       <li><b>Robot exposure</b>: probability of computerisation of each occupation, Frey and Osborne, "The Future of Employment" (Oxford Martin School 2013; <cite>Technological Forecasting and Social Change</cite> 114, 2017). It covers both software and machines, so it is used only for manual and physical occupations (food preparation, sales floor, construction, production, transport) and set to zero for office and professional occupations, where the AI rating applies.</li>
-      <li><b>Frontier occupations</b>: in the Stanford Digital Economy Lab / ADP "Canaries" data used in the book (vintage September 2026, index November 2022 = 100), employment of 22–25 year olds had fallen to 80.5 for software developers and to 82.0 for customer service by August 2026. These two occupations adopt from 2030, the earliest central year in the book's range, instead of the scenario value. This is a choice of the simulator, not a book parameter.</li>
+      <li><b>Frontier occupations</b>: in the Stanford Digital Economy Lab / ADP "Canaries" data used in the book (vintage September 2026), employment of 22–25 year olds fell by 4.5% for software developers and by 7.5% for customer service between August 2025 and August 2026, and the decline reached ages 26–34. Only the last year is used. These two occupations adopt from 2030, the earliest central year in the book's range, instead of the scenario value. This is a choice of the simulator, not a book parameter.</li>
+      <li><b>Why frontier occupations get different values</b>: the book's substitution (55%) and automation (47.5%) are central values for the whole economy, and the book does not assign them to single occupations. For the two frontier occupations the simulator uses three different choices, all declared: exposure with software tools (gamma measure of the same study: tasks exposed once tools such as coding agents are built on the model; software developers 84% by human experts, 95% by GPT-4, against 45% and 87% with the beta measure); substitution at 70% and automation by 2046 at 70% at least, the top of the book's ranges. These are assumptions for jobs where the technology is already in use, not estimates for each occupation.</li>
+      <li><b>Observed pace</b>: for the two frontier occupations in advanced economies, the end of a run also shows what the last 12 months of the Stanford/ADP data would imply if the same yearly pace held over the selected period. August 2025 – August 2026, all ages: software developers −0.4% to −2.1%, customer service −1.2% to −3.1% (the files give an index for each age group but not its size, so the total is shown between a young-heavy and an older-heavy age mix); ages 22–25: −4.5% and −7.5%. Only the last year is used because the AI boom in these jobs shows up from 2025, while 2022–2024 also reflect post-pandemic over-hiring and higher interest rates. US data, shown as a comparison with the scenarios, not as a forecast.</li>
+      <li><b>Author's forecast (beyond the book)</b>: a fifth scenario, declared as a forecast and not as a book estimate, the default for frontier occupations. It follows chapter 36: code writing is largely taken over by AI and replaced by fewer architect roles that use AI tools. Substitution 85% and automation by 2046 85%, exposure with software tools growing 60% (never above 95%), 0.15 new tasks inside the same occupation for each task lost, arriving within 3 years. The central adoption year is not chosen by hand: it is calibrated so that the first simulated year reproduces the decline observed in the last 12 months (middle of the observed range). Occupations without observed data use the book's central year.</li>
+      <li><b>New tasks inside the occupation</b>: in the book, new tasks appear anywhere in the economy. In the book scenarios the simulator counts them inside the same occupation, which overstates what is left of that occupation; the author's forecast keeps only the new roles that stay in the occupation.</li>
+      <li><b>Range</b>: at the end of a run the simulator also shows the result of the same job, region and period under the four book scenarios and both exposure ratings, from the lowest to the highest. As in the book, the range matters more than the single path.</li>
       <li><b>Exposure is not job loss</b>: as the book stresses, both studies measure technical possibility. The book's logic decides how much of it becomes substitution, and when.</li>
     </ul>
     <div class="tablewrap"><table id="srcTable"></table></div>
@@ -316,12 +323,20 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   //   (SOC groups 35, 41-2, 47, 51, 53) as exposure to robotics; 0 for office and professional occupations.
   // frontier = observed early decline in the Stanford/ADP Canaries data (vintage Sept 2026): adoption uses the
   //   earliest central year in the book's range (2030) instead of the scenario value.
+  // obs = observed change in the last 12 months (Aug 2025 - Aug 2026), Stanford/ADP Canaries, US payroll sample
+  //   (vintage Sept 2026): all ages between two extreme age mixes (lo = young-heavy, hi = older-heavy), and ages 22-25.
+  //   Only the last year is used: the AI boom in these jobs shows up from 2025, while 2022-2024 also reflect
+  //   post-pandemic over-hiring and higher interest rates.
+  // humanG / gpt4G = gamma measure (E1 + E2, tasks exposed once software tools are built on the model), same source,
+  //   used for frontier occupations, where tools such as coding agents are already in use.
   const JOBS = [
     { id: "clerk",       name: "Office clerk",          soc: "43-9061 Office Clerks, General",                          human: 0.500, gpt4: 0.576, rob: 0 },
     { id: "accountant",  name: "Accountant",            soc: "13-2011 Accountants and Auditors",                        human: 0.520, gpt4: 0.560, rob: 0 },
-    { id: "callcenter",  name: "Call center agent",     soc: "43-4051 Customer Service Representatives",                human: 0.705, gpt4: 0.568, rob: 0, frontier: true },
+    { id: "callcenter",  name: "Call center agent",     soc: "43-4051 Customer Service Representatives",                human: 0.705, gpt4: 0.568, humanG: 0.864, gpt4G: 1.000, rob: 0, frontier: true,
+      obs: { lo: -0.0313, hi: -0.0118, young: -0.075 } },
     { id: "translator",  name: "Translator",            soc: "27-3091 Interpreters and Translators",                    human: 0.840, gpt4: 0.880, rob: 0 },
-    { id: "developer",   name: "Software developer",    soc: "15-1252 Software Developers",                             human: 0.447, gpt4: 0.868, rob: 0, frontier: true },
+    { id: "developer",   name: "Software developer",    soc: "15-1252 Software Developers",                             human: 0.447, gpt4: 0.868, humanG: 0.842, gpt4G: 0.947, rob: 0, frontier: true,
+      obs: { lo: -0.0212, hi: -0.0037, young: -0.045 } },
     { id: "architect",   name: "Solution architect",    soc: "15-1211 Computer Systems Analysts (closest category)",    human: 0.471, gpt4: 0.750, rob: 0 },
     { id: "designer",    name: "Graphic designer",      soc: "27-1024 Graphic Designers",                               human: 0.411, gpt4: 0.500, rob: 0 },
     { id: "journalist",  name: "Journalist",            soc: "27-3023 News Analysts, Reporters, and Journalists",       human: 0.633, gpt4: 0.650, rob: 0 },
@@ -344,8 +359,17 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     { id: "effective",  name: "Effective compensation",           theta: 0.475, psi: 1.025, lagNew: 4,  expMult: 1.3 },
     { id: "slow",       name: "Slow retraining",                  theta: 0.475, psi: 0.45,  lagNew: 9,  expMult: 1.3 },
     { id: "persistent", name: "Persistent displacement",          theta: 0.675, psi: 0.175, lagNew: 12, expMult: 1.6 },
+    // Author's forecast, beyond the book's ranges (chapter 36): substitution and automation at 85%, exposure +60%,
+    // few new tasks inside the same occupation (0.15: the architect roles that replace code writing), arriving
+    // within 3 years. For occupations with observed data, the central adoption year is calibrated so that the first
+    // simulated year reproduces the observed decline of the last 12 months.
+    { id: "author",     name: "Author's forecast (beyond the book)", theta: 0.85, psi: 0.15, lagNew: 3, expMult: 1.6, phi: 0.85, calibrate: true },
   ];
+  const BOOK_SCENARIOS = SCENARIOS.filter(s => !s.calibrate);
   const FRONTIER_MID = 2030; // earliest central adoption year in the book's range
+  // Frontier occupations: substitutable share and automation by 2046 at the top of the book's ranges
+  // (phi 0.40-0.70, theta 0.25-0.70). An assumption of the simulator for these jobs, not a book estimate.
+  const FRONTIER = { phi: 0.70, theta: 0.70 };
   // Book result: extra unemployment from AI, median of 4,000 draws, percentage points (outputs/headline.json)
   const BOOK_UNEMP = { ADV: { 2036: 4.3, 2046: 1.4 }, EME: { 2036: 1.9, 2046: 2.3 }, LIC: { 2036: 0.5, 2046: 2.2 } };
   const GROUP_NAME = { ADV: "advanced economies", EME: "emerging economies", LIC: "low-income countries" };
@@ -418,8 +442,25 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   const P = () => ({
     theta: $("theta").value / 100, mid: Number($("mid").value),
     psi: $("psi").value / 100, lagNew: Number($("lag").value), robots: $("robOn").checked,
-    expMult: scenario().expMult,
+    expMult: scenario().expMult, phi: phiOf(job(), scenario()), calibrated: !!scenario().calibrate,
+    eAi: $("expAi").value / 100, eRob: $("robOn").checked ? $("expRob").value / 100 : 0,
   });
+  // starting AI exposure of the current job: gamma measure for frontier occupations, beta otherwise
+  const exposureOf = (j, src) => j.frontier ? j[src + "G"] : j[src];
+  const phiOf = (j, s) => s.phi || (j.frontier ? FRONTIER.phi : BOOK.phi);
+  const thetaOf = (j, s) => s.calibrate ? s.theta : (j.frontier ? Math.max(s.theta, FRONTIER.theta) : s.theta);
+  // Central adoption year: for the author's forecast and occupations with observed data, the year that makes the
+  // loss in the first simulated year (2026-2027) equal to the observed yearly decline (middle of the observed range).
+  function midOf(j, s, src, pick) {
+    if (!(s.calibrate && j.obs)) return BOOK.mid;
+    const r = pick === "lo" ? j.obs.lo : pick === "hi" ? j.obs.hi : (j.obs.lo + j.obs.hi) / 2;
+    const target = -r, phi = phiOf(j, s), e = exposureOf(j, src);
+    const p = { expMult: s.expMult };
+    const first = m => phi * expoAI(e, BOOK.start + 1, p) * adoption(BOOK.start + 1, m, s.theta);
+    let lo = BOOK.start + 0.5, hi = 2045;   // first-year loss falls as the central year moves later
+    for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if (first(m) > target) lo = m; else hi = m; }
+    return Math.round((lo + hi) / 2 * 2) / 2;
+  }
   const logistic = (t, mid) => 1 / (1 + Math.exp(-BOOK.k * (t - mid)));
   // additional adoption, zero in 2026, limit theta
   const adoption = (t, mid, theta) => {
@@ -427,15 +468,14 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     const f0 = logistic(BOOK.start, mid);
     return theta * (logistic(t, mid) - f0) / (1 - f0);
   };
-  const midAI = p => (job().frontier ? Math.min(FRONTIER_MID, p.mid) : p.mid) + BOOK.lag[region().g];
+  const midAI = p => (job().frontier && !p.calibrated ? Math.min(FRONTIER_MID, p.mid) : p.mid) + BOOK.lag[region().g];
   const midRob = p => midAI(p) + ROBOT_LAG;
   // AI exposure widens linearly to the scenario's multiple by 2046, never above 0.95
   const expoAI = (e, t, p) => Math.min(0.95, e * (1 + (p.expMult - 1) * Math.max(0, (t - BOOK.start) / (BOOK.end - BOOK.start))));
   // cumulative shares of starting jobs: lost to AI, lost to robots, new tasks
   function shares(t, p) {
-    const eAi = $("expAi").value / 100, eRob = p.robots ? $("expRob").value / 100 : 0;
-    const lostAI = (tt) => BOOK.phi * expoAI(eAi, tt, p) * adoption(tt, midAI(p), p.theta);
-    const lostRob = (tt) => BOOK.phi * eRob * adoption(tt, midRob(p), p.theta);
+    const lostAI = (tt) => p.phi * expoAI(p.eAi, tt, p) * adoption(tt, midAI(p), p.theta);
+    const lostRob = (tt) => p.phi * p.eRob * adoption(tt, midRob(p), p.theta);
     let ai = lostAI(t), rob = lostRob(t);
     if (ai + rob > 0.95) { const s = 0.95 / (ai + rob); ai *= s; rob *= s; }
     const tl = t - p.lagNew;
@@ -445,13 +485,13 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
 
   function syncSliders() {
     const j = job();
-    $("expAi").value = Math.round(j[$("source").value] * 100);
+    $("expAi").value = Math.round(exposureOf(j, $("source").value) * 100);
     $("expRob").value = Math.round(j.rob * 100);
     showSliders();
   }
   function setCentral() {
     const s = scenario();
-    $("theta").value = s.theta * 100; $("mid").value = BOOK.mid; $("psi").value = s.psi * 100; $("lag").value = s.lagNew;
+    $("theta").value = thetaOf(job(), s) * 100; $("mid").value = midOf(job(), s, $("source").value); $("psi").value = s.psi * 100; $("lag").value = s.lagNew;
     showSliders();
   }
   function showSliders() {
@@ -557,6 +597,23 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     return { ai, robot, created, jobs: N0 - ai - robot + created };
   }
 
+  // Same job, region and period under each book scenario and both exposure ratings, at the scenario's central values
+  function scenarioRange() {
+    const j = job(), run = (list, picks) => {
+      const out = [];
+      for (const s of list) for (const src of ["human", "gpt4"]) for (const pick of picks) {
+        const p = { theta: thetaOf(j, s), mid: midOf(j, s, src, pick), psi: s.psi, lagNew: s.lagNew, calibrated: !!s.calibrate,
+                    robots: $("robOn").checked, expMult: s.expMult, phi: phiOf(j, s),
+                    eAi: exposureOf(j, src), eRob: $("robOn").checked ? j.rob : 0 };
+        const a = shares(S.to / 12, p), b = shares(S.from / 12, p);
+        out.push(((a.created - b.created) - (a.ai - b.ai) - (a.rob - b.rob)) * 100);
+      }
+      return { lo: Math.min(...out), hi: Math.max(...out) };
+    };
+    // the author's forecast varies with the observed decline (fastest and slowest end of the observed range)
+    return { book: run(BOOK_SCENARIOS, ["mid"]), author: run(SCENARIOS.filter(s => s.calibrate), j.obs ? ["lo", "hi"] : ["mid"]) };
+  }
+
   function finish() {
     S.done = true; S.running = false;
     // settle any job the agents had not reached yet
@@ -572,6 +629,14 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     $("endpct").textContent = (diff >= 0 ? "+" : "") + (diff / N0 * 100).toFixed(1) + "%";
     $("endpct").style.color = diff >= 0 ? C.job : C.ai;
     $("endtxt").textContent = r.ai + " jobs replaced by AI, " + r.robot + " by robots, " + r.created + " new tasks created. " + r.jobs + " of " + N0 + " jobs remain, compared with a world without AI.";
+    const rg = scenarioRange(), f1 = v => (v >= 0 ? "+" : "") + v.toFixed(1) + "%";
+    const span = r => Math.abs(r.hi - r.lo) < 0.5 ? f1((r.lo + r.hi) / 2) : "from " + f1(r.lo) + " to " + f1(r.hi);
+    $("endrange").textContent = "Book scenarios, both exposure ratings: " + span(rg.book) + ". Author's forecast, beyond the book" + (job().obs ? ", across the observed range of last year's decline" : "") + ": " + span(rg.author) + ". The single value above is the path chosen in the menus." +
+      (job().frontier ? " Frontier occupation: exposure with software tools (gamma). In the book scenarios substitution and automation are at the top of the book's ranges (70% and 70%); in the author's forecast they are 85% and 85%, with adoption calibrated on the observed last year." : "");
+    const o = job().obs, yrs = (S.to - S.from + 1) / 12, pace = r => (Math.pow(1 + r, yrs) - 1) * 100;
+    $("endobs").textContent = o && region().g === "ADV"
+      ? "At the pace of the last 12 months (Stanford/ADP, US payroll data, Aug 2025 – Aug 2026: all ages " + f1(o.lo * 100) + " to " + f1(o.hi * 100) + ", ages 22–25 " + f1(o.young * 100) + "), over the selected period: from " + f1(pace(o.lo)) + " to " + f1(pace(o.hi)) + ". One year of data: a comparison, not a forecast."
+      : "";
     const g = region().g, u = BOOK_UNEMP[g];
     $("endnote").textContent = "This is work taken over by machines, not unemployment. Wages, prices and moves to other jobs absorb part of it. For all " + GROUP_NAME[g] + " together, the book estimates extra unemployment of +" + u[2036] + " points in 2036 and +" + u[2046] + " in 2046 (median of its 4,000 simulations).";
     $("end").hidden = false;
@@ -687,8 +752,9 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   };
   $("reset").onclick = reset;
   $("central").onclick = () => { setCentral(); reset(); };
-  sel.onchange = () => { syncSliders(); reset(); };
-  $("source").onchange = () => { syncSliders(); reset(); };
+  // frontier occupations open on the author's forecast, the others on the book's reference scenario
+  sel.onchange = () => { scnSel.value = job().frontier ? "author" : "reference"; syncSliders(); setCentral(); reset(); };
+  $("source").onchange = () => { syncSliders(); setCentral(); reset(); };
   scnSel.onchange = () => { setCentral(); reset(); };
   regSel.onchange = reset;
   ["fromM", "fromY", "toM", "toY", "robOn"].forEach(id => $(id).onchange = () => { showSliders(); reset(); });
@@ -697,8 +763,8 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
 
   // Sources table in the appendix, built from the same data the simulation uses
   const pct = v => v ? Math.round(v * 100) + "%" : "–";
-  $("srcTable").innerHTML = "<thead><tr><th>Occupation</th><th>Category used (O*NET-SOC)</th><th class=\"n\">AI, human</th><th class=\"n\">AI, GPT-4</th><th class=\"n\">Robots</th><th>Adoption</th></tr></thead><tbody>" +
-    JOBS.map(j => "<tr><td>" + j.name + "</td><td>" + j.soc + "</td><td class=\"n\">" + pct(j.human) + "</td><td class=\"n\">" + pct(j.gpt4) + "</td><td class=\"n\">" + pct(j.rob) + "</td><td>" + (j.frontier ? "Frontier (2030)" : "Scenario") + "</td></tr>").join("") + "</tbody>";
+  $("srcTable").innerHTML = "<thead><tr><th>Occupation</th><th>Category used (O*NET-SOC)</th><th class=\"n\">AI, human</th><th class=\"n\">AI, GPT-4</th><th class=\"n\">With tools, human</th><th class=\"n\">With tools, GPT-4</th><th class=\"n\">Robots</th><th>Adoption</th></tr></thead><tbody>" +
+    JOBS.map(j => "<tr><td>" + j.name + "</td><td>" + j.soc + "</td><td class=\"n\">" + pct(j.human) + "</td><td class=\"n\">" + pct(j.gpt4) + "</td><td class=\"n\">" + pct(j.humanG) + "</td><td class=\"n\">" + pct(j.gpt4G) + "</td><td class=\"n\">" + pct(j.rob) + "</td><td>" + (j.frontier ? "Frontier (2030, 70% / 70%)" : "Scenario") + "</td></tr>").join("") + "</tbody>";
 
   sel.value = "clerk";
   regSel.value = "ADV";
