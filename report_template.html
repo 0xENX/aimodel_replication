@@ -8,12 +8,12 @@
 <h1>Occupazione, età e AI</h1>
 <p>Il totale degli occupati può nascondere un peggioramento degli ingressi. Questa sezione separa gli andamenti osservati dalle simulazioni di domanda, assunzioni, ricollocamento e scoraggiamento.</p>
 <h2>1. Dati osservati: Italia e Unione europea</h2>
-<p>Eurostat, EU Labour Force Survey, 2019–2025. Tutte le professioni: questi grafici descrivono il mercato del lavoro e non isolano l'effetto dell'AI. Le fasce sono ricostruite sommando gruppi di cinque anni; i tassi usano i rispettivi denominatori.</p>
+<p>Eurostat, EU Labour Force Survey, solo l’ultimo anno: 2024 e 2025. Tutte le professioni: questi grafici descrivono il mercato del lavoro e non isolano l'effetto dell'AI. Le fasce sono ricostruite sommando gruppi di cinque anni; i tassi usano i rispettivi denominatori.</p>
 <div class="controls"><label>Indicatore osservato<select id="observedMetric"><option value="employment_rate">Occupati / popolazione (%)</option><option value="unemployment_rate">Disoccupati / forza lavoro (%)</option><option value="participation_rate">Forza lavoro / popolazione (%)</option></select></label></div>
 <div class="legend"><span><i class="swatch" style="background:#1463a0"></i>Italia</span><span><i class="swatch" style="background:#14947e"></i>UE-27</span></div><div id="observedCharts" class="grid"></div>
 <p class="small">Fonte: <a href="https://ec.europa.eu/eurostat/databrowser/view/lfsa_pganws/default/table">Eurostat lfsa_pganws</a>. Possibile discontinuità metodologica nel 2021; i flag originali sono conservati nei CSV.</p>
 <h2>2. Dati osservati: età ed esposizione all'AI negli USA</h2>
-<p>Stanford Digital Economy Lab / ADP. Indice degli occupati, novembre 2022 = 100. Le fasce originali della fonte sono conservate: 22–25 anni non equivale a 15–24 anni.</p>
+<p>Stanford Digital Economy Lab / ADP. Indice degli occupati, agosto 2025 = 100: solo l’ultimo anno, fino ad agosto 2026. I dati 2022–2024 risentono delle assunzioni del dopo-Covid e del rialzo dei tassi e non si usano per leggere l’effetto dell’AI. Le fasce originali della fonte sono conservate: 22–25 anni non equivale a 15–24 anni.</p>
 <div class="controls"><label>Serie<select id="stanfordMetric"><option value="exposure">Professioni meno e più esposte</option><option value="canaries_software_developers">Sviluppatori software</option><option value="canaries_customer_service">Assistenza clienti</option></select></label></div>
 <div id="stanfordLegend" class="legend"></div><div id="stanfordCharts" class="grid"></div>
 <p class="small">Fonte: <a href="https://digitaleconomy.stanford.edu/project/indicators/canaries-dashboard/">Canaries Dashboard</a>. Campione bilanciato di imprese ADP, non rappresentativo dell'intero mercato USA. Correlazione fra esposizione e occupazione, non stima causale. Vintage dei file scaricati: settembre 2026.</p>
