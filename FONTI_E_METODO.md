@@ -176,7 +176,8 @@ controlla che modulo, file e simulatore coincidano.
 
 Dati: esposizione Eloundou et al. (Science 2024, misura gamma, valutazione degli esperti); per i lavori
 d'ufficio di routine il valore piu alto fra Eloundou e Frey-Osborne (impiegati 0,96, contabili 0,94,
-assistenza clienti 0,55); robot Frey-Osborne per i lavori manuali, cinque anni dopo l'AI; calo osservato
+assistenza clienti 0,55); robot Frey-Osborne per i lavori manuali, usata direttamente come quota automatizzabile (la quota
+sostituibile vale solo per l'esposizione Eloundou), cinque anni dopo l'AI; calo osservato
 Stanford/ADP con anni pesati, come differenza con i coetanei nei lavori meno esposti (assistenza
 clienti -1,9% l'anno; sviluppatori nessun calo complessivo, solo sotto i 30 anni). Regole: tipo di lavoro secondo la distinzione FMI fra esposizione e
 complementarita (Pizzinelli et al., WP/23/216); curva di adozione del libro (appendice A1); 0,15 ruoli
