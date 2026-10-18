@@ -2,7 +2,7 @@
 import json
 from pathlib import Path
 
-from observed_window import last_year
+from observed_weights import summary
 
 ROOT = Path(__file__).resolve().parent
 
@@ -10,7 +10,8 @@ ROOT = Path(__file__).resolve().parent
 def write_html(result, folder):
     observed = ROOT / "data" / "observed" / "observed_summary.json"
     obs = json.loads(observed.read_text(encoding="utf-8")) if observed.exists() else {}
-    obs = last_year(obs)  # observed data: last year only, never 2022-2024
+    if obs:
+        obs["weighted"] = summary(obs)  # yearly pace with 2026-2025 100%, 2024 50%, 2023 5%, 2022 1%
     template = (ROOT / "report_template.html").read_text(encoding="utf-8")
     # JSON in script is escaped against premature closing tags.
     payload = json.dumps(dict(sim=result,obs=obs),ensure_ascii=False).replace("<","\\u003c")

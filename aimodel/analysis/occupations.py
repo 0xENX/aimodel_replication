@@ -16,11 +16,13 @@ Inputs, each with its source:
   (Pizzinelli et al., WP/23/216; Cazzaniga et al., SDN/2024/001): clerical and routine content work is highly
   exposed with low complementarity; professions with responsibility and human contact have the highest
   complementarity. Software developers and customer service are placed with routine work because the observed
-  data already show a decline (Stanford/ADP, last year).
-- Adoption: the S-curve of the book (appendix A1), slope 0.425 a year. Where observed data exist, the central
-  year is calibrated so that the first simulated year reproduces the decline of the last 12 months
-  (Stanford/ADP, August 2025 - August 2026, middle of the range between a young-heavy and an older-heavy age mix);
-  office clerks use the customer service series. The other occupations use 2033, close to the calibrated years.
+  data already show a decline (Stanford/ADP).
+- Adoption: the S-curve of the book (appendix A1), slope 0.425 a year. Where observed data show a decline, the
+  central year is calibrated so that the first simulated year reproduces it: Stanford/ADP monthly series, each
+  monthly change weighted by its year (2026 and 2025 100%, 2024 50%, 2023 5%, 2022 1%; observed_weights.py),
+  as the gap with peers of the same age in the least exposed jobs, averaged over the six age groups. Office
+  clerks use the customer service series. Software developers decline only under age 30 and grow above it: no
+  overall decline, so they keep 2033 like the other occupations.
   Emerging economies adopt 3 years later, low-income countries 6.5 years later (book central values).
 - New tasks inside the same occupation: 0.15 for each task lost, within 3 years (the new roles, such as the
   architect who guides the AI tools).
@@ -51,8 +53,22 @@ TYPES = {
     "manual":    {"phi": 0.55, "theta": 0.70, "it": "Manuale, soprattutto robot", "en": "Manual, mainly robots"},
 }
 
-# observed yearly change, Stanford/ADP Canaries, Aug 2025 - Aug 2026 (young-heavy mix, older-heavy mix)
-OBSERVED = {"customer_service": (-0.0313, -0.0118), "software_developers": (-0.0212, -0.0037)}
+def observed():
+    """Weighted yearly gap with the least exposed peers, per occupation series (observed_weights.py)."""
+    import sys
+    root = Path(__file__).resolve().parents[2]
+    sys.path.insert(0, str(root))
+    from observed_weights import weighted_pace, AGES
+    st = json.loads((root / "data" / "observed" / "observed_summary.json").read_text(encoding="utf-8"))["stanford"]
+    least = [r for r in st["canaries_age_by_exposure"] if r["exposure_quintile"].startswith("Quintile 1")]
+    out = {}
+    for occ in ("customer_service", "software_developers"):
+        gaps = [weighted_pace(st["canaries_" + occ], a) - weighted_pace(least, a) for a in AGES]
+        out[occ] = round(sum(gaps) / len(gaps), 4)
+    return out
+
+
+OBSERVED = observed()
 
 # BLS Employment Projections 2025-35, percent change in employment 2025-2035 (SOC used by BLS)
 BLS = {
@@ -152,7 +168,8 @@ def forecast():
         phi, theta = TYPES[typ]["phi"], TYPES[typ]["theta"]
         e = exposure(gamma, fo_office)
         g = demand_growth(oid)
-        mid = calibrated_mid(e, phi, theta, -sum(OBSERVED[obs]) / 2, g) if obs else DEFAULT_MID
+        decline = -OBSERVED[obs] if obs else 0.0
+        mid = calibrated_mid(e, phi, theta, decline, g) if decline > 0 else DEFAULT_MID
         res, work = {}, {}
         for reg, lag in REGION_LAG.items():
             for year in (2036, 2046):
