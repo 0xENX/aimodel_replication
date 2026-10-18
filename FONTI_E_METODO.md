@@ -214,7 +214,7 @@ sostituite, piu tensione, prima nei paesi sviluppati.
   abbastanza da ribaltare una sostituzione molto maggiore. Il rischio di partenza non si mostra.
 - Stati Uniti per stato: i diciannove mestieri pesati per gli occupati di ogni stato (BLS OEWS maggio 2024,
   `data/observed/social/oews_state_M2024_dl.xlsx`; medici = tutti i medici; celle soppresse = quota nazionale).
-- Cina e Russia per grandi citta: nessun dato confrontabile sui mestieri per citta, ogni citta ha il valore del paese.
+- Cina, Russia, Canada e Australia per grandi citta: nessun dato confrontabile sui mestieri per citta, ogni citta ha il valore del paese.
 - Regioni: avanzate = lista FMI delle economie avanzate; basso reddito = Banca Mondiale basso reddito, piu reddito
   medio-basso nell'Africa subsahariana; tutti gli altri emergenti.
 Non e una previsione di disordini: il libro non ha un legame stimato tra lavoro perso e disordini (capitolo 17);

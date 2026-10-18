@@ -4656,6 +4656,154 @@
     "lon": 131.89,
     "lat": 43.12
    }
+  ],
+  "CAN": [
+   {
+    "name": "Toronto",
+    "it": "Toronto",
+    "lon": -79.38,
+    "lat": 43.65
+   },
+   {
+    "name": "Montreal",
+    "it": "Montréal",
+    "lon": -73.57,
+    "lat": 45.5
+   },
+   {
+    "name": "Vancouver",
+    "it": "Vancouver",
+    "lon": -123.12,
+    "lat": 49.28
+   },
+   {
+    "name": "Calgary",
+    "it": "Calgary",
+    "lon": -114.07,
+    "lat": 51.05
+   },
+   {
+    "name": "Edmonton",
+    "it": "Edmonton",
+    "lon": -113.49,
+    "lat": 53.55
+   },
+   {
+    "name": "Ottawa",
+    "it": "Ottawa",
+    "lon": -75.7,
+    "lat": 45.42
+   },
+   {
+    "name": "Winnipeg",
+    "it": "Winnipeg",
+    "lon": -97.14,
+    "lat": 49.9
+   },
+   {
+    "name": "Quebec City",
+    "it": "Québec",
+    "lon": -71.21,
+    "lat": 46.81
+   },
+   {
+    "name": "Halifax",
+    "it": "Halifax",
+    "lon": -63.57,
+    "lat": 44.65
+   },
+   {
+    "name": "Saskatoon",
+    "it": "Saskatoon",
+    "lon": -106.67,
+    "lat": 52.13
+   },
+   {
+    "name": "Regina",
+    "it": "Regina",
+    "lon": -104.62,
+    "lat": 50.45
+   },
+   {
+    "name": "St. John's",
+    "it": "St. John's",
+    "lon": -52.71,
+    "lat": 47.56
+   }
+  ],
+  "AUS": [
+   {
+    "name": "Sydney",
+    "it": "Sydney",
+    "lon": 151.21,
+    "lat": -33.87
+   },
+   {
+    "name": "Melbourne",
+    "it": "Melbourne",
+    "lon": 144.96,
+    "lat": -37.81
+   },
+   {
+    "name": "Brisbane",
+    "it": "Brisbane",
+    "lon": 153.03,
+    "lat": -27.47
+   },
+   {
+    "name": "Perth",
+    "it": "Perth",
+    "lon": 115.86,
+    "lat": -31.95
+   },
+   {
+    "name": "Adelaide",
+    "it": "Adelaide",
+    "lon": 138.6,
+    "lat": -34.93
+   },
+   {
+    "name": "Gold Coast",
+    "it": "Gold Coast",
+    "lon": 153.4,
+    "lat": -28.02
+   },
+   {
+    "name": "Canberra",
+    "it": "Canberra",
+    "lon": 149.13,
+    "lat": -35.28
+   },
+   {
+    "name": "Newcastle",
+    "it": "Newcastle",
+    "lon": 151.78,
+    "lat": -32.93
+   },
+   {
+    "name": "Hobart",
+    "it": "Hobart",
+    "lon": 147.33,
+    "lat": -42.88
+   },
+   {
+    "name": "Darwin",
+    "it": "Darwin",
+    "lon": 130.84,
+    "lat": -12.46
+   },
+   {
+    "name": "Townsville",
+    "it": "Townsville",
+    "lon": 146.82,
+    "lat": -19.26
+   },
+   {
+    "name": "Cairns",
+    "it": "Cairns",
+    "lon": 145.77,
+    "lat": -16.92
+   }
   ]
  }
 }
