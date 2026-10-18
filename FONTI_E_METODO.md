@@ -202,6 +202,12 @@ Dati archiviati in `data/observed/social` (scaricati il 18 ottobre 2026, non mod
   eta da lavoro, trimestrale da giugno 2025 a marzo 2026 (CC BY 4.0); dopo l'ultima osservazione la quota
   cresce con la curva di adozione del libro fino all'esposizione della regione (60/40/26 per cento, capitolo 6);
 - codici ISO (pacchetto npm i18n-iso-countries 7.11.0) ed elenco dei paesi della Banca Mondiale.
-La pressione dell'AI e la disoccupazione in piu della regione (`aimodel/analysis/unemployment_path.py`, stesse
-4.000 simulazioni del libro). Nessuna formula collega disoccupazione e disordini (capitolo 17): rischio di
-partenza e pressione dell'AI restano separati.
+Tensione sociale di un paese = pressione x risonanza.
+- Pressione: lavoro perso nella regione rispetto al mese di partenza (disoccupazione in piu,
+  `aimodel/analysis/unemployment_path.py`, stesse 4.000 simulazioni del libro), ripartito tra i paesi della regione
+  secondo quanto adottano AI e robot: (nuovi utenti dell'AI del paese + robot della regione) / (media regionale dei
+  nuovi utenti dell'AI + robot). Chi adotta di piu perde piu lavoro, anche se parte stabile.
+- Risonanza: 1 + 2 x rischio di partenza / 100, da 1 nel paese piu stabile a 3 nel meno stabile: dove le
+  tensioni sono gia forti anche poca AI pesa di piu (cassa di risonanza). Il rischio di partenza non si mostra.
+Non e una previsione di disordini: il libro non ha un legame stimato tra lavoro perso e disordini (capitolo 17);
+il fattore 2 e una regola dell'autore, non un coefficiente misurato.

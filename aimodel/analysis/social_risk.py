@@ -13,7 +13,8 @@ The book's regions (advanced, emerging, low-income) follow the job simulator: US
 Oceania advanced; China, India, Russia, the rest of Asia and the Americas emerging; Africa low-income.
 After the last observation the page lets AI use grow along the book's adoption curve up to the share of
 employment exposed to AI in the region (calibration exposure 60/40/26 percent, IMF, chapter 6).
-No formula links unemployment to unrest: the page shows the starting risk and the AI pressure side by side.
+Social tension on the page = work lost in the region since the start, shared by AI and robot take-up, x (1 + 2 x
+risk / 100). The starting risk amplifies, it is not shown; the book has no estimated link to unrest (chapter 17).
 """
 import csv
 import json
