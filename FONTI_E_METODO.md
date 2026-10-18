@@ -32,14 +32,14 @@ esposizione, eta x esposizione, eta aggregata, composizione del campione,
 sviluppatori software e assistenza clienti. Vintage: 17 settembre 2026;
 ultima osservazione degli indici: agosto 2026. Base della fonte: novembre 2022 = 100.
 
-**Solo l'ultimo anno.** Per leggere l'effetto dell'AI il progetto usa solo l'ultimo
-anno di dati: agosto 2025 - agosto 2026 per Stanford/ADP (indici riportati ad
-agosto 2025 = 100) e 2024-2025 per Eurostat. I dati 2022-2024 risentono delle
-assunzioni eccessive del dopo-Covid e del rialzo dei tassi e non si usano ne nei
-grafici ne nei report (`observed_window.py`). I file originali restano archiviati
-senza modifiche. Le serie storiche lunghe usate per costruire il mondo senza AI
-(per esempio la quota del lavoro ILO 2004-2024) restano: servono come termine di
-confronto, non misurano l'effetto dell'AI.
+**Anni pesati.** Le serie complete restano nei grafici, nel report e nel libro. Per leggere
+l'effetto dell'AI ogni variazione pesa secondo il suo anno: 2026 e 2025 100%, 2024 50%, 2023 5%,
+2022 1% (mensile per Stanford/ADP, annuale per Eurostat; `observed_weights.py`). Il 2022 e il 2023
+risentono delle assunzioni eccessive del dopo-Covid e del rialzo dei tassi. Con questi pesi i 22-25enni
+nelle professioni piu esposte calano del 4,2% l'anno contro lo 0,3% dei meno esposti; in Italia
+l'occupazione dei 15-24enni scende di 1,35 punti l'anno (UE 0,32). I file originali restano archiviati
+senza modifiche. Le serie storiche lunghe usate per costruire il mondo senza AI (per esempio la quota
+del lavoro ILO 2004-2024) restano: servono come termine di confronto, non misurano l'effetto dell'AI.
 
 Gli indici per eta usano 22-25, 26-30, 31-34, 35-40, 41-49, 50+; questi gruppi
 NON sono ricostruibili esattamente nelle quattro fasce del modello. I grafici
@@ -177,7 +177,8 @@ controlla che modulo, file e simulatore coincidano.
 Dati: esposizione Eloundou et al. (Science 2024, misura gamma, valutazione degli esperti); per i lavori
 d'ufficio di routine il valore piu alto fra Eloundou e Frey-Osborne (impiegati 0,96, contabili 0,94,
 assistenza clienti 0,55); robot Frey-Osborne per i lavori manuali, cinque anni dopo l'AI; calo osservato
-Stanford/ADP solo nell'ultimo anno. Regole: tipo di lavoro secondo la distinzione FMI fra esposizione e
+Stanford/ADP con anni pesati, come differenza con i coetanei nei lavori meno esposti (assistenza
+clienti -1,9% l'anno; sviluppatori nessun calo complessivo, solo sotto i 30 anni). Regole: tipo di lavoro secondo la distinzione FMI fra esposizione e
 complementarita (Pizzinelli et al., WP/23/216); curva di adozione del libro (appendice A1); 0,15 ruoli
 nuovi dentro il mestiere per ogni compito perso, entro tre anni.
 

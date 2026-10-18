@@ -47,8 +47,7 @@ def plot(c,x,y,w,h,xs,series,title,unit,limits=None):
 
 def main():
     S=json.loads((FOLDER/"results.json").read_text(encoding="utf-8"))
-    from observed_window import last_year
-    O=last_year(json.loads((ROOT/"data/observed/observed_summary.json").read_text(encoding="utf-8")))  # last year only, never 2022-2024
+    O=json.loads((ROOT/"data/observed/observed_summary.json").read_text(encoding="utf-8"))  # full series; weights in observed_weights.py
     dest=FOLDER/"sezione_occupazione.pdf"
     c=canvas.Canvas(str(dest),pagesize=A4);W,H=A4;page=0
     c.setTitle("Occupazione, eta e AI - appendice esplorativa")
