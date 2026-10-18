@@ -16,7 +16,7 @@
   --fg: #dbe4f3;
   --muted: #8292ad;
   --job: #4fd59a;
-  --new: #9be7c4;
+  --new: #3d8bff;
   --ai: #f0507a;
   --robot: #f5c842;
   --accent: #7aa7ff;
@@ -133,7 +133,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     <div>
       <h1>AI + Robot Job Impact</h1>
       <div class="byline">by Enrico Lorenzo De Vito</div>
-      <div class="sub">Each green dot is a job. Red dots are AI systems, yellow squares are robots. The numbers are those of the forecast by occupation in the book The Last Forecast (chapter 36, Table 65): one result for each occupation.</div>
+      <div class="sub">Each green dot is a job, electric-blue dots are new jobs. Red dots are AI systems, yellow squares are robots. The numbers are those of the forecast by occupation in the book The Last Forecast (chapter 36, Table 65): one result for each occupation.</div>
     </div>
     <div class="clock" id="clock">Jan 2026</div>
   </header>
@@ -185,7 +185,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
       </div>
       <div class="legend">
         <div class="item"><i class="mark job"></i><div><b>Job</b><span>One position held by a person.</span></div></div>
-        <div class="item"><i class="mark new"></i><div><b>New role</b><span>Work that stays in the occupation after the change, such as the person who guides the AI tools.</span></div></div>
+        <div class="item"><i class="mark new"></i><div><b>New job</b><span>New roles inside the occupation, such as the person who guides the AI tools, and jobs added when demand for the occupation grows.</span></div></div>
         <div class="item"><i class="mark ai"></i><div><b>AI</b><span>Software: text, code, documents, customer service.</span></div></div>
         <div class="item"><i class="mark robot"></i><div><b>Robot</b><span>AI with a physical body: vehicles, warehouse, kitchen and factory robots. Only in manual jobs, five years after AI.</span></div></div>
       </div>
@@ -198,11 +198,11 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
           <span>Type of work</span><span class="v" id="typ"></span>
           <span>Starting jobs</span><span class="v" id="s0"></span>
           <span>Current jobs</span><span class="v job" id="s1"></span>
-          <span>Change vs no AI</span><span class="v" id="s4"></span>
+          <span>Change since start</span><span class="v" id="s4"></span>
           <hr>
           <span>Replaced by AI</span><span class="v ai" id="s2"></span>
           <span>Replaced by robots</span><span class="v robot" id="s2r"></span>
-          <span>New roles</span><span class="v new" id="s3"></span>
+          <span>New jobs</span><span class="v new" id="s3"></span>
           <hr>
           <span>AI exposure</span><span class="v ai" id="eai"></span>
           <span>Robot exposure</span><span class="v robot" id="erob"></span>
@@ -214,7 +214,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
       <div class="card">
         <h2>Month by month</h2>
         <canvas id="chart"></canvas>
-        <div class="keys"><span><i style="background:var(--job)"></i>jobs</span><span><i style="background:var(--ai)"></i>lost to AI</span><span><i style="background:var(--robot)"></i>lost to robots</span><span><i style="background:var(--new)"></i>new roles</span></div>
+        <div class="keys"><span><i style="background:var(--job)"></i>jobs</span><span><i style="background:var(--ai)"></i>lost to AI</span><span><i style="background:var(--robot)"></i>lost to robots</span><span><i style="background:var(--new)"></i>new jobs</span></div>
       </div>
       <p class="note"><b>One result per occupation.</b> The simulator shows the forecast by occupation of the book <cite>The Last Forecast</cite>, chapter 36, Table 65: same data, same rules, same numbers. Nothing to adjust: choosing other assumptions would give other numbers, and the book gives one.</p>
     </div>
@@ -479,7 +479,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     $("s1").textContent = r.jobs;
     $("s2").textContent = r.ai;
     $("s2r").textContent = r.robot;
-    $("s3").textContent = r.created;
+    $("s3").textContent = r.created + Math.max(r.demand, 0);
     $("s4").textContent = (net >= 0 ? "+" : "−") + Math.abs(net) + " (" + (net >= 0 ? "+" : "−") + Math.abs(Math.round(net / N0 * 100)) + "%)";
     $("s6").textContent = (S.t - S.from + 1) + " / " + (S.to - S.from + 1);
   }
@@ -493,7 +493,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     const pts = [];
     for (let m = S.from; m <= S.to; m++) {
       const c = counts(m / 12);
-      pts.push({ t: m, jobs: c.jobs, ai: c.ai, robot: c.robot, created: c.created });
+      pts.push({ t: m, jobs: c.jobs, ai: c.ai, robot: c.robot, created: c.created + Math.max(c.demand, 0) });
     }
     const maxV = Math.max(N0 * 1.05, ...pts.map(q => q.jobs));
     cx.font = (10 * d) + "px IBM Plex Mono, monospace"; cx.fillStyle = C.muted; cx.strokeStyle = C.line; cx.lineWidth = 1;
