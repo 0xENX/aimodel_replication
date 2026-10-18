@@ -209,6 +209,8 @@ sostituite, piu tensione, prima nei paesi sviluppati.
   in parte), ripartito tra i paesi della regione
   secondo quanto usano AI e robot: (persone che usano l'AI nel paese + robot della regione) / (media regionale delle
   persone che usano l'AI + robot). Chi usa piu AI perde piu lavoro, anche se parte stabile.
+- Ritmo: finche i robot non entrano nel lavoro della regione la tensione cresce a un quarto della velocita; a
+  velocita piena quando i robot prendono 3 punti percentuali del lavoro. Si somma mese per mese la crescita pesata.
 - I diciannove mestieri sono scalati per l'occupazione esposta della regione (60/40/26 per cento, capitolo 6).
 - Amplificatore: dove il paese e gia teso la stessa sostituzione pesa fino a meta in piu (cassa di risonanza), mai
   abbastanza da ribaltare una sostituzione molto maggiore. Il rischio di partenza non si mostra.
