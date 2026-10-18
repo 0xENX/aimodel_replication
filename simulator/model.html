@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="author" content="Enrico Lorenzo De Vito">
+<title>The Last Forecast Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: shared top menu, status line, controls and assumptions, then result tiles, time chart, policies and sensitivity */
+:root {
+  --bg: #0b1220;
+  --panel: #111a2c;
+  --line: #22304a;
+  --fg: #dbe4f3;
+  --muted: #8292ad;
+  --accent: #7aa7ff;
+  --field: #070c16;
+  --good: #4fd59a;
+  --bad: #f0507a;
+  --warn: #f5c842;
+  --band: #7aa7ff;
+  --f-ui: "IBM Plex Sans", system-ui, sans-serif;
+  --f-data: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg); color: var(--fg); font-family: var(--f-ui); font-size: 14px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 28px;
+}
+[hidden] { display: none !important; }
+.wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+
+.topnav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+.topnav .in { max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; padding-block: 10px; }
+.topnav .brand { font-weight: 600; margin-right: 14px; font-size: .9rem; }
+.topnav a { color: var(--muted); text-decoration: none; font-size: .88rem; font-weight: 500; padding: 7px 14px; border-radius: 999px; border: 1px solid transparent; }
+.topnav a:hover { color: var(--fg); border-color: var(--line); }
+.topnav a[aria-current="page"] { color: var(--bg); background: var(--accent); }
+
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; }
+h1 { margin: 0; font-size: 1.45rem; font-weight: 600; text-wrap: balance; }
+.byline { color: var(--accent); font-size: .85rem; font-weight: 500; margin-block: 2px 4px; }
+.sub { color: var(--muted); font-size: .85rem; max-width: 75ch; line-height: 1.5; }
+.status { font-family: var(--f-data); font-size: .8rem; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); }
+.status.ok { color: var(--good); border-color: var(--good); }
+.status.err { color: var(--bad); border-color: var(--bad); }
+
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card h2 { margin: 0; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 500; }
+.row { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: flex-end; }
+.ctl { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.ctl label { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+select { background: var(--field); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; font: inherit; font-family: var(--f-data); font-size: .85rem; max-width: 100%; }
+button { font: inherit; font-weight: 600; font-size: .85rem; border-radius: 6px; padding: 8px 16px; cursor: pointer; border: 1px solid var(--line); background: var(--field); color: var(--fg); }
+button.primary { background: var(--accent); border-color: var(--accent); color: #07122a; }
+button:disabled { opacity: .5; cursor: wait; }
+button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btns { display: flex; gap: 8px; margin-left: auto; }
+
+.params { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 10px 22px; }
+.param { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 10px; align-items: center; padding: 8px 0; border-top: 1px solid var(--line); }
+.param .name { grid-column: 2 / 4; font-size: .85rem; }
+.param .range { grid-column: 2 / 3; font-size: .74rem; color: var(--muted); }
+.param input[type="range"] { grid-column: 2 / 3; width: 100%; accent-color: var(--accent); }
+.param .val { font-family: var(--f-data); font-size: .82rem; text-align: right; min-width: 64px; }
+.param .val.out { color: var(--warn); }
+.param input[type="checkbox"] { grid-row: 1 / 4; accent-color: var(--accent); width: 16px; height: 16px; }
+.param.off input[type="range"], .param.off .val { opacity: .35; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.tile .k { font-size: .74rem; color: var(--muted); }
+.tile .v { font-family: var(--f-data); font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+.tile .v.bad { color: var(--bad); } .tile .v.good { color: var(--good); }
+.tile .r { font-family: var(--f-data); font-size: .74rem; color: var(--muted); }
+.tile .b { font-size: .74rem; color: var(--muted); }
+
+.chartwrap { position: relative; }
+#fan { width: 100%; height: 300px; display: block; }
+.keys { display: flex; flex-wrap: wrap; gap: 14px; font-size: .75rem; color: var(--muted); }
+.keys i { display: inline-block; width: 14px; height: 8px; vertical-align: middle; margin-right: 6px; border-radius: 2px; }
+
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: .82rem; }
+th, td { padding: 7px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+th { color: var(--muted); font-weight: 500; font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; }
+td.n, th.n { text-align: right; font-family: var(--f-data); font-variant-numeric: tabular-nums; }
+td.bad { color: var(--bad); } td.good { color: var(--good); }
+
+.bars { display: flex; flex-direction: column; gap: 6px; }
+.bar { display: grid; grid-template-columns: minmax(0, 260px) 1fr 52px; gap: 10px; align-items: center; font-size: .8rem; }
+.bar .track { height: 10px; background: var(--field); border-radius: 3px; overflow: hidden; }
+.bar .fill { height: 100%; background: var(--accent); }
+.bar .num { font-family: var(--f-data); text-align: right; color: var(--muted); }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 860px) { .grid2 { grid-template-columns: minmax(0, 1fr); } .btns { margin-left: 0; } .bar { grid-template-columns: minmax(0, 150px) 1fr 44px; } }
+.note { color: var(--muted); font-size: .8rem; line-height: 1.55; margin: 0; max-width: 90ch; }
+.note b { color: var(--fg); font-weight: 500; }
+footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--line); padding-top: 12px; }
+</style>
+</head>
+<body>
+<nav class="topnav" aria-label="Main">
+  <div class="in">
+    <span class="brand">The Last Forecast</span>
+    <a href="index.html">Job Simulator</a>
+    <a href="model.html" aria-current="page">Economy Model</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>The Last Forecast Model</h1>
+      <div class="byline">by Enrico Lorenzo De Vito</div>
+      <div class="sub">This page runs the book's own Python model (aimodel v3.1) inside your browser. Every result compares the same future with and without the AI wave, across thousands of draws of the uncertain assumptions. Change an assumption or a policy and the model runs again.</div>
+    </div>
+    <div class="status" id="status">Loading Python…</div>
+  </header>
+
+  <section class="card">
+    <h2>Run</h2>
+    <div class="row">
+      <div class="ctl">
+        <label for="policy">Policy</label>
+        <select id="policy"><option>Status quo</option></select>
+      </div>
+      <div class="ctl">
+        <label for="draws">Simulations</label>
+        <select id="draws">
+          <option value="500">500 (fast)</option>
+          <option value="1000">1,000</option>
+          <option value="4000" selected>4,000 (as in the book)</option>
+        </select>
+      </div>
+      <div class="ctl">
+        <label for="year">Year shown</label>
+        <select id="year">
+          <option>2031</option><option selected>2036</option><option>2041</option><option>2046</option>
+        </select>
+      </div>
+      <div class="btns">
+        <button class="primary" id="run" disabled>Run the model</button>
+        <button id="bookBtn" disabled>Back to the book</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Assumptions · tick one to fix its value, otherwise it varies across the book's range</h2>
+    <div class="params" id="params"></div>
+    <p class="note">A value outside the book's range turns yellow. The book excludes those values on purpose: for example, exposure growing by more than 60% means an AI able to do almost every task, which the book leaves out (chapter 18).</p>
+  </section>
+
+  <section>
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section class="card">
+    <div class="row" style="justify-content: space-between">
+      <h2 id="fanTitle">Year by year</h2>
+      <div class="ctl">
+        <label for="ind">Indicator</label>
+        <select id="ind"></select>
+      </div>
+    </div>
+    <div class="chartwrap"><canvas id="fan"></canvas></div>
+    <div class="keys">
+      <span><i style="background: var(--band); opacity: .18"></i>5th–95th percentile</span>
+      <span><i style="background: var(--band); opacity: .4"></i>25th–75th percentile</span>
+      <span><i style="background: var(--band)"></i>median, this run</span>
+      <span><i style="background: var(--muted)"></i>median, book</span>
+    </div>
+  </section>
+
+  <div class="grid2">
+    <section class="card">
+      <div class="row" style="justify-content: space-between">
+        <h2>The book's ten policies</h2>
+        <button id="polBtn" disabled>Compare policies</button>
+      </div>
+      <div class="tablewrap"><table id="polTable"><tbody><tr><td class="note">Press "Compare policies" to run every policy with the current assumptions (1,000 simulations each).</td></tr></tbody></table></div>
+    </section>
+    <section class="card">
+      <div class="row" style="justify-content: space-between">
+        <h2>Which assumptions matter most</h2>
+        <div class="ctl">
+          <label for="sobolOut">Result</label>
+          <select id="sobolOut"></select>
+        </div>
+      </div>
+      <div class="bars" id="sobol"></div>
+      <p class="note">Share of the uncertainty in the result explained by each assumption (total Sobol index, 23,552 runs). From the book's own analysis (outputs/sobol.json), not recalculated here.</p>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2>About this page</h2>
+    <p class="note"><b>What runs here.</b> The files of the aimodel package are loaded into Pyodide, a version of Python that works in the browser, and called without changes. With the book's settings (4,000 simulations, seed 20261010, no assumption fixed, status quo) the page reproduces the book's published results exactly. The status line above checks this every time the page opens.</p>
+    <p class="note"><b>How to read it.</b> Unemployment and public debt are differences in percentage points from the world without AI. GDP and consumption are percentage differences. These are conditional results of the model, not forecasts. The Sobol analysis needs the SALib library, which does not run in the browser, so it shows the book's stored results.</p>
+    <p class="note"><b>Job by job.</b> The Job Simulator applies the same logic to single occupations and countries, using published occupation data.</p>
+  </section>
+  <footer>© 2026 Enrico Lorenzo De Vito · The Last Forecast Model · aimodel v3.1</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const css = getComputedStyle(document.documentElement);
+  const C = {};
+  ["fg", "muted", "line", "band", "good", "bad"].forEach(k => C[k] = css.getPropertyValue("--" + k).trim());
+
+  const FILES = ["aimodel/__init__.py", "aimodel/calibration/__init__.py", "aimodel/calibration/data.py",
+    "aimodel/core/__init__.py", "aimodel/core/economy.py", "aimodel/core/run.py",
+    "aimodel/analysis/__init__.py", "aimodel/analysis/metrics.py", "aimodel/analysis/montecarlo.py", "aimodel/analysis/policy.py"];
+  const SEED = 20261010;
+
+  // Indicators: label, unit, and whether a positive value is bad news
+  const IND = {
+    gdp:       { label: "World GDP", unit: "%", worse: -1 },
+    unemp_adv: { label: "Unemployment, advanced economies", unit: "pp", worse: 1 },
+    unemp_eme: { label: "Unemployment, emerging economies", unit: "pp", worse: 1 },
+    unemp_lic: { label: "Unemployment, low-income countries", unit: "pp", worse: 1 },
+    labshare:  { label: "World labour share of income", unit: "pp", worse: -1 },
+    b50:       { label: "Consumption, poorer half", unit: "%", worse: -1 },
+    m40:       { label: "Consumption, middle 40%", unit: "%", worse: -1 },
+    t10:       { label: "Consumption, richest 10%", unit: "%", worse: -1 },
+    debt_adv:  { label: "Public debt, advanced economies", unit: "pp of GDP", worse: 1 },
+    debt_eme:  { label: "Public debt, emerging economies", unit: "pp of GDP", worse: 1 },
+    debt_lic:  { label: "Public debt, low-income countries", unit: "pp of GDP", worse: 1 },
+  };
+  const TILES = ["unemp_adv", "unemp_eme", "unemp_lic", "gdp", "labshare", "b50", "t10", "debt_adv"];
+
+  // Assumptions the reader can fix; slider range is wider than the book's range on purpose
+  const PARAMS = [
+    { k: "mid_adv",    label: "Central adoption year, advanced economies", min: 2027, max: 2045, step: 0.5, fmt: v => v.toFixed(1) },
+    { k: "theta",      label: "Share of substitutable tasks automated by 2046", min: 0.10, max: 0.95, step: 0.01, fmt: v => Math.round(v * 100) + "%" },
+    { k: "phi_s",      label: "Substitutable share of exposed work", min: 0.30, max: 0.90, step: 0.01, fmt: v => Math.round(v * 100) + "%" },
+    { k: "exp_mult",   label: "Growth of exposure by 2046", min: 1.0, max: 2.5, step: 0.05, fmt: v => "×" + v.toFixed(2) },
+    { k: "psi",        label: "New tasks per task lost", min: 0, max: 1.2, step: 0.01, fmt: v => v.toFixed(2) },
+    { k: "lag_new",    label: "Years before new tasks appear", min: 1, max: 16, step: 0.5, fmt: v => v.toFixed(1) + " yr" },
+    { k: "kappa",      label: "Wage response to unemployment", min: 0, max: 0.8, step: 0.01, fmt: v => v.toFixed(2) },
+    { k: "eps",        label: "Labour demand response to wages", min: 0.01, max: 1.0, step: 0.01, fmt: v => v.toFixed(2) },
+    { k: "rent_share", label: "AI gains recovered by workers", min: 0, max: 0.6, step: 0.01, fmt: v => Math.round(v * 100) + "%" },
+  ];
+  const SOBOL_OUT = { unemp_adv_2036: "Unemployment, advanced, 2036", b50_2036: "Consumption, poorer half, 2036", b50_2046: "Consumption, poorer half, 2046",
+    m40_2036: "Consumption, middle 40%, 2036", gdp_2036: "World GDP, 2036", debt_adv_2046: "Public debt, advanced, 2046" };
+
+  let py = null, priors = null, headline = null, sobol = null, bookRun = null, lastRun = null;
+
+  const setStatus = (text, cls) => { const s = $("status"); s.textContent = text; s.className = "status" + (cls ? " " + cls : ""); };
+  const fmtNum = (v, unit) => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(unit === "%" ? 2 : 2) + (unit === "%" ? "%" : " " + unit);
+  const tone = (v, worse) => (v * worse > 0.005 ? "bad" : v * worse < -0.005 ? "good" : "");
+  const nextFrame = () => new Promise(r => requestAnimationFrame(() => setTimeout(r, 0)));
+
+  // ---- assumptions panel -----------------------------------------------------------------
+  function buildParams() {
+    $("params").innerHTML = PARAMS.map(p => {
+      const [lo, hi] = priors[p.k];
+      const mid = (lo + hi) / 2;
+      return '<div class="param off" id="row_' + p.k + '">' +
+        '<input type="checkbox" id="fix_' + p.k + '" aria-label="Fix ' + p.label + '">' +
+        '<label class="name" for="fix_' + p.k + '">' + p.label + '</label>' +
+        '<input type="range" id="val_' + p.k + '" min="' + p.min + '" max="' + p.max + '" step="' + p.step + '" value="' + mid + '" aria-label="' + p.label + ' value">' +
+        '<span class="val" id="out_' + p.k + '"></span>' +
+        '<span class="range">Book range ' + p.fmt(lo) + ' – ' + p.fmt(hi) + '</span></div>';
+    }).join("");
+    PARAMS.forEach(p => {
+      const show = () => {
+        const [lo, hi] = priors[p.k], v = Number($("val_" + p.k).value), on = $("fix_" + p.k).checked;
+        $("out_" + p.k).textContent = on ? p.fmt(v) : "varies";
+        $("out_" + p.k).classList.toggle("out", on && (v < lo - 1e-9 || v > hi + 1e-9));
+        $("row_" + p.k).classList.toggle("off", !on);
+      };
+      $("fix_" + p.k).onchange = show; $("val_" + p.k).oninput = show; show();
+    });
+  }
+  const fixed = () => {
+    const f = {};
+    PARAMS.forEach(p => { if ($("fix_" + p.k).checked) f[p.k] = Number($("val_" + p.k).value); });
+    return f;
+  };
+  const isBook = () => Object.keys(fixed()).length === 0 && $("policy").value === "Status quo" && $("draws").value === "4000";
+
+  // ---- python ----------------------------------------------------------------------------
+  async function boot() {
+    try {
+      setStatus("Loading Python…");
+      py = await loadPyodide();
+      setStatus("Loading NumPy…");
+      await py.loadPackage("numpy");
+      setStatus("Loading the book's model…");
+      const texts = await Promise.all(FILES.map(f => fetch("py/" + f).then(r => { if (!r.ok) throw new Error(f); return r.text(); })));
+      FILES.forEach((f, i) => { py.FS.mkdirTree("/home/pyodide/" + f.split("/").slice(0, -1).join("/")); py.FS.writeFile("/home/pyodide/" + f, texts[i]); });
+      py.FS.writeFile("/home/pyodide/dashboard.py", await fetch("dashboard.py").then(r => r.text()));
+      [headline, sobol] = await Promise.all(["data/headline.json", "data/sobol.json"].map(u => fetch(u).then(r => r.json())));
+      py.runPython("import sys; sys.path.insert(0, '/home/pyodide'); import dashboard");
+      priors = JSON.parse(py.runPython("dashboard.priors()"));
+      const names = JSON.parse(py.runPython("dashboard.policy_names()"));
+      $("policy").innerHTML = names.map(n => "<option>" + n + "</option>").join("");
+      buildParams();
+      setStatus("Running the book's 4,000 simulations…");
+      await nextFrame();
+      bookRun = call("run", 4000, SEED, {}, "Status quo");
+      lastRun = bookRun;
+      // check against the published results
+      const i = bookRun.years.indexOf(2036), mine = bookRun.q.unemp_adv[2][i], book = headline.unemp_adv_2036.median;
+      const same = Math.abs(mine - book) < 1e-3;
+      setStatus(same ? "✓ Reproduces the book: unemployment, advanced 2036 = +" + mine.toFixed(2) + " pp" : "Differs from the book: " + mine.toFixed(3) + " vs " + book.toFixed(3), same ? "ok" : "err");
+      ["run", "bookBtn", "polBtn"].forEach(id => $(id).disabled = false);
+      render();
+    } catch (e) {
+      setStatus("Could not load the model: " + e.message, "err");
+      console.error(e);
+    }
+  }
+  function call(fn, n, seed, fix, extra) {
+    const f = py.globals.get("dashboard")[fn];
+    const out = f(n, seed, JSON.stringify(fix), extra);
+    f.destroy && f.destroy();
+    return JSON.parse(out);
+  }
+
+  async function runModel() {
+    $("run").disabled = true; setStatus("Running " + Number($("draws").value).toLocaleString("en") + " simulations…");
+    await nextFrame();
+    const t0 = performance.now();
+    lastRun = call("run", Number($("draws").value), SEED, fixed(), $("policy").value);
+    setStatus((isBook() ? "✓ Book settings" : "Custom run") + " · " + ((performance.now() - t0) / 1000).toFixed(1) + " s", isBook() ? "ok" : "");
+    $("run").disabled = false;
+    render();
+  }
+
+  async function comparePolicies() {
+    $("polBtn").disabled = true; setStatus("Running the ten policies…");
+    await nextFrame();
+    const year = Number($("year").value);
+    const rows = call("policies", 1000, SEED, fixed(), year);
+    const cols = [["unemp_adv", "Unemployment, adv."], ["b50", "Poorer half"], ["t10", "Richest 10%"], ["gdp", "World GDP"], ["debt_adv", "Debt, adv."]];
+    $("polTable").innerHTML = "<thead><tr><th>Policy · " + year + " · median</th>" + cols.map(c => '<th class="n">' + c[1] + "</th>").join("") + "</tr></thead><tbody>" +
+      rows.map(r => "<tr><td>" + r.name + "</td>" + cols.map(([k]) => '<td class="n ' + tone(r[k], IND[k].worse) + '">' + fmtNum(r[k], IND[k].unit === "%" ? "%" : "pp") + "</td>").join("") + "</tr>").join("") + "</tbody>";
+    setStatus("Policies compared · 1,000 simulations each", "");
+    $("polBtn").disabled = false;
+  }
+
+  // ---- rendering -------------------------------------------------------------------------
+  function render() { renderTiles(); renderFan(); renderSobol(); }
+
+  function renderTiles() {
+    if (!lastRun) return;
+    const year = Number($("year").value), i = lastRun.years.indexOf(year);
+    $("tiles").innerHTML = TILES.map(k => {
+      const q = lastRun.q[k], m = IND[k], v = q[2][i];
+      const hb = headline[k + "_" + year];
+      return '<div class="tile"><span class="k">' + m.label + " · " + year + '</span>' +
+        '<span class="v ' + tone(v, m.worse) + '">' + fmtNum(v, m.unit) + "</span>" +
+        '<span class="r">90% of runs: ' + fmtNum(q[0][i], m.unit) + " to " + fmtNum(q[4][i], m.unit) + "</span>" +
+        (hb ? '<span class="b">Book: ' + fmtNum(hb.median, m.unit) + "</span>" : "") + "</div>";
+    }).join("");
+  }
+
+  function renderFan() {
+    if (!lastRun) return;
+    const k = $("ind").value, m = IND[k], q = lastRun.q[k], ys = lastRun.years;
+    $("fanTitle").textContent = m.label + " · difference from the world without AI (" + m.unit + ")";
+    const c = $("fan"), r = c.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+    c.width = Math.round(r.width * d); c.height = Math.round(r.height * d);
+    const x = c.getContext("2d"), L = 52 * d, R = 12 * d, T = 12 * d, B = 26 * d, W = c.width - L - R, H = c.height - T - B;
+    const all = q[0].concat(q[4], bookRun ? bookRun.q[k][2] : []);
+    let lo = Math.min(0, ...all), hi = Math.max(0, ...all);
+    const pad = (hi - lo) * 0.08 || 1; lo -= pad; hi += pad;
+    const X = j => L + j / (ys.length - 1) * W, Y = v => T + (hi - v) / (hi - lo) * H;
+    x.clearRect(0, 0, c.width, c.height);
+    x.font = (11 * d) + "px IBM Plex Mono, monospace"; x.fillStyle = C.muted; x.strokeStyle = C.line; x.lineWidth = 1;
+    const step = niceStep((hi - lo) / 5);
+    for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) {
+      x.beginPath(); x.moveTo(L, Y(v)); x.lineTo(L + W, Y(v)); x.stroke();
+      x.textAlign = "right"; x.fillText((Math.abs(v) < 1e-9 ? 0 : +v.toFixed(2)).toString(), L - 6 * d, Y(v) + 4 * d);
+    }
+    x.strokeStyle = C.muted; x.beginPath(); x.moveTo(L, Y(0)); x.lineTo(L + W, Y(0)); x.stroke();
+    x.textAlign = "center";
+    ys.forEach((y, j) => { if (y % 5 === 1 || y === 2026 || y === 2046) x.fillText(String(y), X(j), c.height - 8 * d); });
+    const band = (a, b, alpha) => {
+      x.beginPath(); ys.forEach((_, j) => j ? x.lineTo(X(j), Y(q[a][j])) : x.moveTo(X(j), Y(q[a][j])));
+      for (let j = ys.length - 1; j >= 0; j--) x.lineTo(X(j), Y(q[b][j]));
+      x.closePath(); x.globalAlpha = alpha; x.fillStyle = C.band; x.fill(); x.globalAlpha = 1;
+    };
+    band(0, 4, 0.18); band(1, 3, 0.35);
+    const line = (arr, color, w, dash) => {
+      x.setLineDash(dash ? [6 * d, 5 * d] : []); x.strokeStyle = color; x.lineWidth = w * d;
+      x.beginPath(); arr.forEach((v, j) => j ? x.lineTo(X(j), Y(v)) : x.moveTo(X(j), Y(v))); x.stroke(); x.setLineDash([]);
+    };
+    if (bookRun) line(bookRun.q[k][2], C.muted, 1.5, true);
+    line(q[2], C.band, 2.2, false);
+    const yi = ys.indexOf(Number($("year").value));
+    x.fillStyle = C.band; x.beginPath(); x.arc(X(yi), Y(q[2][yi]), 4 * d, 0, 7); x.fill();
+  }
+  function niceStep(raw) {
+    const p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p;
+    return (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * p;
+  }
+
+  function renderSobol() {
+    if (!sobol) return;
+    const out = $("sobolOut").value, st = sobol[out].ST;
+    const top = Object.entries(st).sort((a, b) => b[1] - a[1]).slice(0, 8);
+    const max = top[0][1];
+    const label = k => (priors && priors[k] ? priors[k][2].split(".")[0] : k);
+    $("sobol").innerHTML = top.map(([k, v]) => '<div class="bar"><span title="' + label(k).replace(/"/g, "") + '">' + k + " · " + shortName(k) + '</span><div class="track"><div class="fill" style="width:' + (v / max * 100).toFixed(1) + '%"></div></div><span class="num">' + Math.round(v * 100) + "%</span></div>").join("");
+  }
+  const SHORT = { theta: "share automated", phi_s: "substitutable share", mid_adv: "adoption year", k_slope: "adoption speed", lag_eme: "lag, emerging", lag_lic: "lag, low-income",
+    psi: "new tasks", lag_new: "delay of new tasks", d0: "non-AI erosion", pi_save: "cost saving", mu: "productivity gain", beta_w: "productivity to wages", kappa: "wage response",
+    eps: "demand elasticity", rent_share: "rents to workers", eta: "investment response", nu: "demand pass-through", zeta: "rents booked abroad", exp_mult: "exposure growth",
+    omega: "unmeasured welfare", dr: "interest rates" };
+  const shortName = k => SHORT[k] || k;
+
+  // ---- wiring ----------------------------------------------------------------------------
+  $("ind").innerHTML = Object.entries(IND).map(([k, m]) => '<option value="' + k + '"' + (k === "unemp_adv" ? " selected" : "") + ">" + m.label + "</option>").join("");
+  $("sobolOut").innerHTML = Object.entries(SOBOL_OUT).map(([k, v]) => '<option value="' + k + '">' + v + "</option>").join("");
+  $("run").onclick = runModel;
+  $("polBtn").onclick = comparePolicies;
+  $("bookBtn").onclick = () => {
+    PARAMS.forEach(p => { $("fix_" + p.k).checked = false; $("fix_" + p.k).onchange(); });
+    $("policy").value = "Status quo"; $("draws").value = "4000";
+    lastRun = bookRun; setStatus("✓ Book settings", "ok"); render();
+  };
+  $("year").onchange = () => { renderTiles(); renderFan(); };
+  $("ind").onchange = renderFan;
+  $("sobolOut").onchange = renderSobol;
+  window.addEventListener("resize", renderFan);
+  fetch("data/sobol.json").then(r => r.json()).then(j => { sobol = j; renderSobol(); }).catch(() => {});
+  boot();
+})();
+</script>
+</body>
+</html>

@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - "simulator/**"
+      - "aimodel/**"
+      - "outputs/headline.json"
+      - "outputs/sobol.json"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -25,9 +28,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Assemble site
+        run: bash simulator/build_site.sh _site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: simulator
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
