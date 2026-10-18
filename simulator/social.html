@@ -78,11 +78,11 @@ button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); o
 .panel .row { display: flex; justify-content: space-between; gap: 10px; font-size: .82rem; color: #a9e4dc; padding: 2px 0; }
 .panel .row b { font-family: var(--f-data); font-weight: 600; font-variant-numeric: tabular-nums; }
 .panel .row b.ai { color: var(--ai); } .panel .row b.robot { color: var(--robot); } .panel .row b.tension { color: var(--tension); }
-.gridhead { display: grid; grid-template-columns: minmax(0, 1fr) 70px 70px; gap: 8px; padding: 8px 14px; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--teal); border-top: 1px solid #1d4a52; background: #0c2830; }
+.gridhead { display: grid; grid-template-columns: minmax(0, 1fr) 70px 110px; gap: 8px; padding: 8px 14px; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--teal); border-top: 1px solid #1d4a52; background: #0c2830; }
 .grid { max-height: 260px; overflow-y: auto; background: #0a2128; }
-.grid .r { display: grid; grid-template-columns: minmax(0, 1fr) 70px 70px; gap: 8px; padding: 4px 14px; font-size: .82rem; color: #cfeee9; border-top: 1px solid rgba(29,74,82,.6); }
+.grid .r { display: grid; grid-template-columns: minmax(0, 1fr) 70px 110px; gap: 8px; padding: 4px 14px; font-size: .82rem; color: #cfeee9; border-top: 1px solid rgba(29,74,82,.6); }
 .grid .r b { font-family: var(--f-data); text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
-.grid .r b.risk { color: var(--teal); } .grid .r b.ai { color: var(--ai); }
+.grid .r b.risk { color: var(--tension); } .grid .r b.ai { color: var(--ai); }
 .gridhead span:not(:first-child) { text-align: right; }
 .note { color: var(--muted); font-size: .8rem; line-height: 1.5; margin: 0; max-width: 95ch; }
 .note b { color: var(--fg); font-weight: 500; }
@@ -106,7 +106,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     <div>
       <h1>SOCIAL RISK</h1>
       <div class="byline">by Enrico Lorenzo De Vito</div>
-      <div class="sub">Each bubble is a country: size and number show its starting risk, from the World Bank index of political stability. The orange glow is the AI pressure: it grows with the additional unemployment of the region in the book’s economy model. Red dots are people using AI, yellow dots robots.</div>
+      <div class="sub">Each bubble is the social tension of a country: it grows as AI and robots take work from people, more where they spread more, and the same loss weighs more where the country is already unstable (World Bank index of political stability), as in a sounding board. Everything is measured as the increase since the start month: red dots are new AI users, yellow dots work taken by robots.</div>
     </div>
     <div class="clock" id="clock">Jan 2026</div>
   </header>
@@ -138,31 +138,30 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   <div class="room">
     <div class="mapbox"><canvas id="map"></canvas></div>
     <div class="legend">
-      <span><i class="bubble"></i>Starting risk of the country</span>
-      <span><i class="halo"></i>AI pressure</span>
-      <span><i style="background: var(--ai); box-shadow: 0 0 6px var(--ai)"></i>People using AI</span>
+      <span><i class="halo"></i>Social tension of the country</span>
+      <span><i style="background: var(--ai); box-shadow: 0 0 6px var(--ai)"></i>New AI users</span>
       <span><i style="background: var(--robot); box-shadow: 0 0 6px var(--robot)"></i>Robots</span>
     </div>
     <div class="panel">
       <section><h2>Advanced economies</h2>
-        <div class="row"><span>People using AI</span><b class="ai" id="aiADV"></b></div>
+        <div class="row"><span>New AI users</span><b class="ai" id="aiADV"></b></div>
         <div class="row"><span>Work taken by robots</span><b class="robot" id="robADV"></b></div>
         <div class="row"><span>Extra unemployment</span><b class="tension" id="uADV"></b></div></section>
       <section><h2>Emerging economies</h2>
-        <div class="row"><span>People using AI</span><b class="ai" id="aiEME"></b></div>
+        <div class="row"><span>New AI users</span><b class="ai" id="aiEME"></b></div>
         <div class="row"><span>Work taken by robots</span><b class="robot" id="robEME"></b></div>
         <div class="row"><span>Extra unemployment</span><b class="tension" id="uEME"></b></div></section>
       <section><h2>Low-income countries</h2>
-        <div class="row"><span>People using AI</span><b class="ai" id="aiLIC"></b></div>
+        <div class="row"><span>New AI users</span><b class="ai" id="aiLIC"></b></div>
         <div class="row"><span>Work taken by robots</span><b class="robot" id="robLIC"></b></div>
         <div class="row"><span>Extra unemployment</span><b class="tension" id="uLIC"></b></div></section>
     </div>
-    <div class="gridhead"><span>Country</span><span>Risk</span><span>AI use</span></div>
+    <div class="gridhead"><span>Country</span><span>Tension</span><span>New AI users</span></div>
     <div class="grid" id="grid"></div>
   </div>
 
-  <p class="note"><b>Where the numbers come from.</b> Starting risk: World Bank, Worldwide Governance Indicators, Political Stability and Absence of Violence/Terrorism, 2024, brought to a 0–100 scale (higher means less stable). People using AI: Our World in Data from Microsoft’s AI Economy Institute, share of the working-age population, observed until March 2026; after that it grows along the book’s adoption curve up to the share of employment exposed to AI in the region (60% advanced, 40% emerging, 26% low-income, IMF, chapter 6). Robots: share of the work of the nineteen occupations of Table 65 taken over by robots, weighted by employment. AI pressure: median additional unemployment of the region in the 4,000 paired simulations of the book’s economy model (chapter 14).</p>
-  <p class="note"><b>What the page does not do.</b> No formula turns unemployment into unrest: the book does not propose one (chapter 17). Starting risk and AI pressure are shown side by side, not multiplied together. The economy model has three regions, so the AI pressure is the same for all the countries of a region; the starting risk and AI use are country by country.</p>
+  <p class="note"><b>Where the numbers come from.</b> Weight of each country: World Bank, Worldwide Governance Indicators, Political Stability and Absence of Violence/Terrorism, 2024, brought to a 0–100 scale (higher means less stable). People using AI: Our World in Data from Microsoft’s AI Economy Institute, share of the working-age population, observed until March 2026; after that it grows along the book’s adoption curve up to the share of employment exposed to AI in the region (60% advanced, 40% emerging, 26% low-income, IMF, chapter 6). Robots: share of the work of the nineteen occupations of Table 65 taken over by robots, weighted by employment. Social tension: work lost in the region (median additional unemployment in the 4,000 paired simulations of the book’s economy model, chapter 14), shared among its countries by how much AI and robots they take up (new AI users plus robots, over the regional average), then multiplied by 1 + 2 × starting risk / 100: from 1 in the most stable country to 3 in the least stable. Dots and numbers show the increase since the start month, in percentage points.</p>
+  <p class="note"><b>What the page does not do.</b> It does not forecast unrest: the book has no estimated link between lost work and unrest (chapter 17), so the sounding-board factor is the author’s rule, not a measured coefficient. The economy model has three regions; AI use and starting risk are country by country, robots by region.</p>
   <footer>© 2026 Enrico Lorenzo De Vito · Social Risk · The Last Forecast, chapters 6, 14, 17 and 36 (aimodel v3.1) · Data: World Bank WGI, Our World in Data / Microsoft, Natural Earth via world-atlas</footer>
 </div>
 
@@ -184,21 +183,20 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     "__title": "Rischio sociale",
     "SOCIAL RISK": "RISCHIO SOCIALE",
     "by Enrico Lorenzo De Vito": "di Enrico Lorenzo De Vito",
-    "Each bubble is a country: size and number show its starting risk, from the World Bank index of political stability. The orange glow is the AI pressure: it grows with the additional unemployment of the region in the book’s economy model. Red dots are people using AI, yellow dots robots.":
-      "Ogni bolla è un paese: grandezza e numero mostrano il suo rischio di partenza, dall’indice di stabilità politica della Banca Mondiale. L’alone arancione è la pressione dell’AI: cresce con la disoccupazione in più della regione nel modello economico del libro. I puntini rossi sono persone che usano l’AI, quelli gialli robot.",
+    "Each bubble is the social tension of a country: it grows as AI and robots take work from people, more where they spread more, and the same loss weighs more where the country is already unstable (World Bank index of political stability), as in a sounding board. Everything is measured as the increase since the start month: red dots are new AI users, yellow dots work taken by robots.":
+      "Ogni bolla è la tensione sociale di un paese: cresce man mano che AI e robot tolgono lavoro alle persone, di più dove si diffondono di più, e la stessa perdita pesa di più dove il paese è già instabile (indice di stabilità politica della Banca Mondiale), come in una cassa di risonanza. Tutto è misurato come incremento rispetto al mese di partenza: i puntini rossi sono i nuovi utenti dell’AI, quelli gialli il lavoro preso dai robot.",
     "From": "Da", "To": "A", "Speed": "Velocità", "2 months/s": "2 mesi/s", "4 months/s": "4 mesi/s", "8 months/s": "8 mesi/s", "16 months/s": "16 mesi/s",
     "Start": "Avvia", "Restart": "Ricomincia",
-    '<i class="bubble"></i>Starting risk of the country': '<i class="bubble"></i>Rischio di partenza del paese',
-    '<i class="halo"></i>AI pressure': '<i class="halo"></i>Pressione dell’AI',
-    '<i style="background: var(--ai); box-shadow: 0 0 6px var(--ai)"></i>People using AI': '<i style="background: var(--ai); box-shadow: 0 0 6px var(--ai)"></i>Persone che usano l’AI',
+    '<i class="halo"></i>Social tension of the country': '<i class="halo"></i>Tensione sociale del paese',
+    '<i style="background: var(--ai); box-shadow: 0 0 6px var(--ai)"></i>New AI users': '<i style="background: var(--ai); box-shadow: 0 0 6px var(--ai)"></i>Nuovi utenti dell’AI',
     '<i style="background: var(--robot); box-shadow: 0 0 6px var(--robot)"></i>Robots': '<i style="background: var(--robot); box-shadow: 0 0 6px var(--robot)"></i>Robot',
     "Advanced economies": "Economie avanzate", "Emerging economies": "Economie emergenti", "Low-income countries": "Paesi a basso reddito",
-    "People using AI": "Persone che usano l’AI", "Work taken by robots": "Lavoro preso dai robot", "Extra unemployment": "Disoccupazione in più",
-    "Country": "Paese", "Risk": "Rischio", "AI use": "Uso AI",
-    "<b>Where the numbers come from.</b> Starting risk: World Bank, Worldwide Governance Indicators, Political Stability and Absence of Violence/Terrorism, 2024, brought to a 0–100 scale (higher means less stable). People using AI: Our World in Data from Microsoft’s AI Economy Institute, share of the working-age population, observed until March 2026; after that it grows along the book’s adoption curve up to the share of employment exposed to AI in the region (60% advanced, 40% emerging, 26% low-income, IMF, chapter 6). Robots: share of the work of the nineteen occupations of Table 65 taken over by robots, weighted by employment. AI pressure: median additional unemployment of the region in the 4,000 paired simulations of the book’s economy model (chapter 14).":
-      "<b>Da dove vengono i numeri.</b> Rischio di partenza: Banca Mondiale, Worldwide Governance Indicators, Stabilità politica e assenza di violenza/terrorismo, 2024, portato su una scala da 0 a 100 (più alto vuol dire meno stabile). Persone che usano l’AI: Our World in Data su dati dell’AI Economy Institute di Microsoft, quota della popolazione in età da lavoro, osservata fino a marzo 2026; dopo cresce lungo la curva di adozione del libro fino alla quota di occupazione esposta all’AI nella regione (60% avanzate, 40% emergenti, 26% basso reddito, Fondo monetario, capitolo 6). Robot: parte del lavoro dei diciannove mestieri della Tabella 65 presa dai robot, pesata per occupati. Pressione dell’AI: disoccupazione mediana in più della regione nelle 4.000 simulazioni appaiate del modello economico del libro (capitolo 14).",
-    "<b>What the page does not do.</b> No formula turns unemployment into unrest: the book does not propose one (chapter 17). Starting risk and AI pressure are shown side by side, not multiplied together. The economy model has three regions, so the AI pressure is the same for all the countries of a region; the starting risk and AI use are country by country.":
-      "<b>Che cosa la pagina non fa.</b> Nessuna formula trasforma la disoccupazione in disordini: il libro non ne propone una (capitolo 17). Rischio di partenza e pressione dell’AI sono mostrati uno accanto all’altra, non moltiplicati. Il modello economico ha tre regioni, quindi la pressione dell’AI è la stessa per tutti i paesi di una regione; rischio di partenza e uso dell’AI sono paese per paese.",
+    "New AI users": "Nuovi utenti dell’AI", "Work taken by robots": "Lavoro preso dai robot", "Extra unemployment": "Disoccupazione in più",
+    "Country": "Paese", "Tension": "Tensione",
+    "<b>Where the numbers come from.</b> Weight of each country: World Bank, Worldwide Governance Indicators, Political Stability and Absence of Violence/Terrorism, 2024, brought to a 0–100 scale (higher means less stable). People using AI: Our World in Data from Microsoft’s AI Economy Institute, share of the working-age population, observed until March 2026; after that it grows along the book’s adoption curve up to the share of employment exposed to AI in the region (60% advanced, 40% emerging, 26% low-income, IMF, chapter 6). Robots: share of the work of the nineteen occupations of Table 65 taken over by robots, weighted by employment. Social tension: work lost in the region (median additional unemployment in the 4,000 paired simulations of the book’s economy model, chapter 14), shared among its countries by how much AI and robots they take up (new AI users plus robots, over the regional average), then multiplied by 1 + 2 × starting risk / 100: from 1 in the most stable country to 3 in the least stable. Dots and numbers show the increase since the start month, in percentage points.":
+      "<b>Da dove vengono i numeri.</b> Peso di ogni paese: Banca Mondiale, Worldwide Governance Indicators, Stabilità politica e assenza di violenza/terrorismo, 2024, portato su una scala da 0 a 100 (più alto vuol dire meno stabile). Persone che usano l’AI: Our World in Data su dati dell’AI Economy Institute di Microsoft, quota della popolazione in età da lavoro, osservata fino a marzo 2026; dopo cresce lungo la curva di adozione del libro fino alla quota di occupazione esposta all’AI nella regione (60% avanzate, 40% emergenti, 26% basso reddito, Fondo monetario, capitolo 6). Robot: parte del lavoro dei diciannove mestieri della Tabella 65 presa dai robot, pesata per occupati. Tensione sociale: lavoro perso nella regione (disoccupazione mediana in più nelle 4.000 simulazioni appaiate del modello economico del libro, capitolo 14), ripartito tra i suoi paesi secondo quanto adottano AI e robot (nuovi utenti dell’AI più robot, rispetto alla media della regione), poi moltiplicato per 1 + 2 × rischio di partenza / 100: da 1 nel paese più stabile a 3 nel meno stabile. Puntini e numeri mostrano l’incremento rispetto al mese di partenza, in punti percentuali.",
+    "<b>What the page does not do.</b> It does not forecast unrest: the book has no estimated link between lost work and unrest (chapter 17), so the sounding-board factor is the author’s rule, not a measured coefficient. The economy model has three regions; AI use and starting risk are country by country, robots by region.":
+      "<b>Che cosa la pagina non fa.</b> Non prevede disordini: il libro non ha un legame stimato tra lavoro perso e disordini (capitolo 17), quindi il fattore cassa di risonanza è una regola dell’autore, non un coefficiente misurato. Il modello economico ha tre regioni; uso dell’AI e rischio di partenza sono paese per paese, i robot per regione.",
     "© 2026 Enrico Lorenzo De Vito · Social Risk · The Last Forecast, chapters 6, 14, 17 and 36 (aimodel v3.1) · Data: World Bank WGI, Our World in Data / Microsoft, Natural Earth via world-atlas":
       "© 2026 Enrico Lorenzo De Vito · Rischio sociale · The Last Forecast, capitoli 6, 14, 17 e 36 (aimodel v3.1) · Dati: Banca Mondiale WGI, Our World in Data / Microsoft, Natural Earth tramite world-atlas",
   };
@@ -243,6 +241,27 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     if (t <= ys[0]) return u[0]; if (t >= ys[ys.length - 1]) return u[u.length - 1];
     const i = Math.floor(t - ys[0]), f = t - ys[0] - i; return u[i] + (u[i + 1] - u[i]) * f;
   };
+
+  // social tension: work lost to AI and robots, amplified by the country's starting risk
+  //   pressure = additional unemployment of the region since the start x (new AI users of the country + robots)
+  //              / (average new AI users of the region + robots): who adopts more loses more work
+  //   resonance = 1 + RESONANCE x risk / 100: the same pressure weighs up to three times more where the country is unstable
+  const RESONANCE = 2;
+  const pressCache = { yr: null, start: null, mean: {} };
+  function tension(c, yr) {
+    const t0 = START / 12;
+    if (pressCache.yr !== yr || pressCache.start !== t0) {
+      pressCache.yr = yr; pressCache.start = t0;
+      for (const r of REG) {
+        const cs = SOCIAL.countries.filter(x => x.region === r);
+        pressCache.mean[r] = [cs.reduce((s, x) => s + Math.max(0, aiUse(x, yr) - aiUse(x, t0)), 0) / cs.length,
+                              Math.max(0, robotShare(r, yr) - robotShare(r, t0)), Math.max(0, unempAt(r, yr) - unempAt(r, t0))];
+      }
+    }
+    const [aiMean, rob, u] = pressCache.mean[c.region], own = Math.max(0, aiUse(c, yr) - aiUse(c, t0)) + rob;
+    const pressure = aiMean + rob > 0 ? u * own / (aiMean + rob) : 0;
+    return pressure * (1 + RESONANCE * c.risk / 100);
+  }
 
   // ---- AI use by country: observed until the last quarter, then the book's adoption curve up to the region's exposure ----
   const dateY = s => { const [y, m, d] = s.split("-").map(Number); return y + (m - 1 + d / 31) / 12; };
@@ -307,7 +326,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     // dots: people using AI (red), robots (yellow)
     for (const f of features) {
       const c = f.country; if (!c || !c.points) continue;
-      const nAI = Math.round(c.points.length * aiUse(c, yr)), rob = robotShare(c.region, yr);
+      const nAI = Math.round(c.points.length * Math.max(0, aiUse(c, yr) - aiUse(c, START / 12))), rob = robotShare(c.region, yr) - robotShare(c.region, START / 12);
       c.points.forEach((q, i) => {
         const isAI = i < nAI, isRob = !isAI && q.rb < rob;
         if (!isAI && !isRob) return;
@@ -316,24 +335,22 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
         ctx.beginPath(); ctx.arc(x, y, 1.5 * d, 0, 7); ctx.fill(); ctx.restore();
       });
     }
-    // bubbles: starting risk; orange glow: AI pressure of the region
-    const list = SOCIAL.countries.filter(c => c.centre || (c.lon != null && c.lat != null)).sort((a, b) => b.risk - a.risk);
+    // bubbles: social tension of the country (nothing at the start)
+    const list = SOCIAL.countries.filter(c => c.centre || (c.lon != null && c.lat != null)).map(c => [c, tension(c, yr)]).sort((a, b) => b[1] - a[1]);
     const labels = [];                                                  // names drawn after the bubbles, without overlaps
-    for (const c of list) {
+    for (const [c, u] of list) {
       const [x, y] = projection(c.centre || [c.lon, c.lat]);
-      const R = (2.5 + 15 * Math.pow(c.risk / 100, 1.6)) * d * (w / (1100 * d));
-      const u = Math.max(0, unempAt(c.region, yr));
-      if (u > 0.05) {
-        const H = R * (1.4 + 1.1 * Math.min(u, 6) / 5), pulse = 0.85 + 0.15 * Math.sin(now / 700 + x);
-        const g = ctx.createRadialGradient(x, y, R * 0.6, x, y, H);
-        g.addColorStop(0, "rgba(255,140,40," + (0.45 * Math.min(u, 6) / 5 * pulse).toFixed(3) + ")"); g.addColorStop(1, "rgba(255,140,40,0)");
-        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, H, 0, 7); ctx.fill();
-      }
+      if (u < 0.02) { if (LABELS.has(c.iso3)) labels.push([cname(c), x, y - 2 * d]); continue; }
+      const R = 4.2 * Math.sqrt(Math.min(u, 18)) * d * (w / (1100 * d));
+      const H = R * 1.8, pulse = 0.85 + 0.15 * Math.sin(now / 700 + x);
+      const g = ctx.createRadialGradient(x, y, R * 0.6, x, y, H);
+      g.addColorStop(0, "rgba(255,140,40," + (Math.min(0.6, 0.12 + 0.04 * u) * pulse).toFixed(3) + ")"); g.addColorStop(1, "rgba(255,140,40,0)");
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, H, 0, 7); ctx.fill();
       ctx.fillStyle = "rgba(95,224,208,0.22)"; ctx.strokeStyle = "rgba(150,255,240,0.85)"; ctx.lineWidth = 1.1 * d;
       ctx.beginPath(); ctx.arc(x, y, R, 0, 7); ctx.fill(); ctx.stroke();
-      if (R > 10 * d) {
+      if (R > 9 * d) {
         ctx.fillStyle = "#e9fffb"; ctx.font = "600 " + Math.round(Math.min(R * 0.7, 15 * d)) + "px IBM Plex Sans, sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-        ctx.fillText(String(Math.round(c.risk)), x, y);
+        ctx.fillText(dec(u, 1), x, y);
       }
       if (LABELS.has(c.iso3)) labels.push([cname(c), x, y - R - 2 * d]);
     }
@@ -351,26 +368,29 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     $("clock").textContent = fmtM(t);
     if (!started) {                                                     // nothing shown before Start
       for (const r of REG) ["ai", "rob", "u"].forEach(k => $(k + r).textContent = "–");
-      GRID.forEach(([c, el, rk]) => { el.textContent = "–"; rk.textContent = "–"; });
+      GRID.forEach(g => { g[1].textContent = "–"; g[2].textContent = "–"; });
       return;
     }
     const yr = t / 12;
     for (const r of REG) {
       const cs = SOCIAL.countries.filter(c => c.region === r);
-      $("ai" + r).textContent = fmtPct(cs.reduce((s, c) => s + aiUse(c, yr), 0) / cs.length);
-      $("rob" + r).textContent = fmtPct(robotShare(r, yr)); $("u" + r).textContent = fmtPP(unempAt(r, yr));
+      const t0 = START / 12;
+      $("ai" + r).textContent = fmtPP(100 * cs.reduce((s, c) => s + aiUse(c, yr) - aiUse(c, t0), 0) / cs.length);
+      $("rob" + r).textContent = fmtPP(100 * (robotShare(r, yr) - robotShare(r, t0))); $("u" + r).textContent = fmtPP(unempAt(r, yr) - unempAt(r, t0));
     }
-    GRID.forEach(([c, el, rk]) => { el.textContent = fmtPct(aiUse(c, yr)); rk.textContent = Math.round(c.risk); });
+    GRID.forEach(g => { g[3] = tension(g[0], yr); g[1].textContent = fmtPP(100 * (aiUse(g[0], yr) - aiUse(g[0], START / 12))); g[2].textContent = dec(g[3], 1); });
+    const order = [...GRID].sort((a, b) => b[3] - a[3] || b[0].risk - a[0].risk), box = $("grid");
+    order.forEach((g, i) => { if (box.children[i] !== g[4]) box.insertBefore(g[4], box.children[i] || null); });
   }
 
-  // country grid, highest starting risk first
+  // country grid, highest tension first
   const GRID = [];
   $("grid").innerHTML = "";
   [...SOCIAL.countries].sort((a, b) => b.risk - a.risk).forEach(c => {
     const row = document.createElement("div"); row.className = "r";
     row.innerHTML = "<span></span><b class=\"risk\"></b><b class=\"ai\"></b>";
     row.firstChild.textContent = cname(c);
-    $("grid").appendChild(row); GRID.push([c, row.lastChild, row.children[1]]);
+    $("grid").appendChild(row); GRID.push([c, row.lastChild, row.children[1], 0, row]);
   });
 
   function loop(now) {
