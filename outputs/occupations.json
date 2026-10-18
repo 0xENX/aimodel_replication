@@ -1,0 +1,451 @@
+{
+ "start": 2026,
+ "end": 2046,
+ "slope": 0.425,
+ "region_lag": {
+  "ADV": 0.0,
+  "EME": 3.0,
+  "LIC": 6.5
+ },
+ "robot_lag": 5.0,
+ "new_tasks": 0.15,
+ "new_tasks_lag": 3.0,
+ "cap": 0.95,
+ "types": {
+  "routine": {
+   "phi": 0.85,
+   "theta": 0.85,
+   "it": "Routine d'ufficio e contenuti",
+   "en": "Routine office and content work"
+  },
+  "architect": {
+   "phi": 0.7,
+   "theta": 0.7,
+   "it": "Progettazione con strumenti AI",
+   "en": "Design with AI tools"
+  },
+  "care": {
+   "phi": 0.55,
+   "theta": 0.475,
+   "it": "Responsabilità e contatto umano",
+   "en": "Responsibility and human contact"
+  },
+  "manual": {
+   "phi": 0.55,
+   "theta": 0.7,
+   "it": "Manuale, soprattutto robot",
+   "en": "Manual, mainly robots"
+  }
+ },
+ "observed": {
+  "customer_service": [
+   -0.0313,
+   -0.0118
+  ],
+  "software_developers": [
+   -0.0212,
+   -0.0037
+  ]
+ },
+ "occupations": [
+  {
+   "id": "clerk",
+   "en": "Office clerk",
+   "it": "Impiegato d'ufficio",
+   "soc": "43-9061",
+   "exposure_ai": 0.95,
+   "exposure_robots": 0.0,
+   "type": "routine",
+   "phi": 0.85,
+   "theta": 0.85,
+   "mid_adv": 2032.5,
+   "observed": "customer_service",
+   "results": {
+    "ADV_2036": -49.8,
+    "ADV_2046": -58.2,
+    "EME_2036": -34.9,
+    "EME_2046": -58.0,
+    "LIC_2036": -14.1,
+    "LIC_2046": -56.6
+   }
+  },
+  {
+   "id": "accountant",
+   "en": "Accountant",
+   "it": "Contabile",
+   "soc": "13-2011",
+   "exposure_ai": 0.94,
+   "exposure_robots": 0.0,
+   "type": "routine",
+   "phi": 0.85,
+   "theta": 0.85,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -47.5,
+    "ADV_2046": -57.6,
+    "EME_2036": -31.4,
+    "EME_2046": -57.3,
+    "LIC_2036": -11.8,
+    "LIC_2046": -55.6
+   }
+  },
+  {
+   "id": "callcenter",
+   "en": "Call center agent",
+   "it": "Addetto call center",
+   "soc": "43-4051",
+   "exposure_ai": 0.864,
+   "exposure_robots": 0.0,
+   "type": "routine",
+   "phi": 0.85,
+   "theta": 0.85,
+   "mid_adv": 2032.0,
+   "observed": "customer_service",
+   "results": {
+    "ADV_2036": -46.7,
+    "ADV_2046": -53.0,
+    "EME_2036": -34.5,
+    "EME_2046": -52.8,
+    "LIC_2036": -15.0,
+    "LIC_2046": -51.8
+   }
+  },
+  {
+   "id": "translator",
+   "en": "Translator",
+   "it": "Traduttore",
+   "soc": "27-3091",
+   "exposure_ai": 0.88,
+   "exposure_robots": 0.0,
+   "type": "routine",
+   "phi": 0.85,
+   "theta": 0.85,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -44.5,
+    "ADV_2046": -53.9,
+    "EME_2036": -29.4,
+    "EME_2046": -53.6,
+    "LIC_2036": -11.0,
+    "LIC_2046": -52.0
+   }
+  },
+  {
+   "id": "developer",
+   "en": "Software developer",
+   "it": "Sviluppatore software",
+   "soc": "15-1252",
+   "exposure_ai": 0.842,
+   "exposure_robots": 0.0,
+   "type": "routine",
+   "phi": 0.85,
+   "theta": 0.85,
+   "mid_adv": 2033.5,
+   "observed": "software_developers",
+   "results": {
+    "ADV_2036": -40.7,
+    "ADV_2046": -51.6,
+    "EME_2036": -25.2,
+    "EME_2046": -51.2,
+    "LIC_2036": -8.8,
+    "LIC_2046": -49.3
+   }
+  },
+  {
+   "id": "designer",
+   "en": "Graphic designer",
+   "it": "Grafico",
+   "soc": "27-1024",
+   "exposure_ai": 0.821,
+   "exposure_robots": 0.0,
+   "type": "routine",
+   "phi": 0.85,
+   "theta": 0.85,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -41.5,
+    "ADV_2046": -50.3,
+    "EME_2036": -27.4,
+    "EME_2046": -50.0,
+    "LIC_2036": -10.3,
+    "LIC_2046": -48.5
+   }
+  },
+  {
+   "id": "journalist",
+   "en": "Journalist",
+   "it": "Giornalista",
+   "soc": "27-3023",
+   "exposure_ai": 0.833,
+   "exposure_robots": 0.0,
+   "type": "routine",
+   "phi": 0.85,
+   "theta": 0.85,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -42.1,
+    "ADV_2046": -51.0,
+    "EME_2036": -27.8,
+    "EME_2046": -50.7,
+    "LIC_2036": -10.4,
+    "LIC_2046": -49.2
+   }
+  },
+  {
+   "id": "architect",
+   "en": "Solution architect",
+   "it": "Architetto software",
+   "soc": "15-1211",
+   "exposure_ai": 0.824,
+   "exposure_robots": 0.0,
+   "type": "architect",
+   "phi": 0.7,
+   "theta": 0.7,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -28.2,
+    "ADV_2046": -34.2,
+    "EME_2036": -18.6,
+    "EME_2046": -34.0,
+    "LIC_2036": -7.0,
+    "LIC_2046": -33.0
+   }
+  },
+  {
+   "id": "lawyer",
+   "en": "Lawyer",
+   "it": "Avvocato",
+   "soc": "23-1011",
+   "exposure_ai": 0.8,
+   "exposure_robots": 0.0,
+   "type": "care",
+   "phi": 0.55,
+   "theta": 0.475,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -14.6,
+    "ADV_2046": -17.7,
+    "EME_2036": -9.7,
+    "EME_2046": -17.6,
+    "LIC_2036": -3.6,
+    "LIC_2046": -17.1
+   }
+  },
+  {
+   "id": "doctor",
+   "en": "Doctor",
+   "it": "Medico",
+   "soc": "29-1215",
+   "exposure_ai": 0.542,
+   "exposure_robots": 0.0,
+   "type": "care",
+   "phi": 0.55,
+   "theta": 0.475,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -9.9,
+    "ADV_2046": -12.0,
+    "EME_2036": -6.5,
+    "EME_2046": -11.9,
+    "LIC_2036": -2.5,
+    "LIC_2046": -11.6
+   }
+  },
+  {
+   "id": "nurse",
+   "en": "Nurse",
+   "it": "Infermiere",
+   "soc": "29-1141",
+   "exposure_ai": 0.571,
+   "exposure_robots": 0.0,
+   "type": "care",
+   "phi": 0.55,
+   "theta": 0.475,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -10.4,
+    "ADV_2046": -12.7,
+    "EME_2036": -6.9,
+    "EME_2046": -12.6,
+    "LIC_2036": -2.6,
+    "LIC_2046": -12.2
+   }
+  },
+  {
+   "id": "teacher",
+   "en": "Teacher",
+   "it": "Insegnante",
+   "soc": "25-2031",
+   "exposure_ai": 0.524,
+   "exposure_robots": 0.0,
+   "type": "care",
+   "phi": 0.55,
+   "theta": 0.475,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -9.6,
+    "ADV_2046": -11.6,
+    "EME_2036": -6.3,
+    "EME_2046": -11.5,
+    "LIC_2036": -2.4,
+    "LIC_2046": -11.2
+   }
+  },
+  {
+   "id": "retail",
+   "en": "Retail clerk",
+   "it": "Commesso",
+   "soc": "41-2031",
+   "exposure_ai": 0.447,
+   "exposure_robots": 0.92,
+   "type": "manual",
+   "phi": 0.55,
+   "theta": 0.7,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -22.0,
+    "ADV_2046": -44.1,
+    "EME_2036": -11.5,
+    "EME_2046": -42.4,
+    "LIC_2036": -3.9,
+    "LIC_2046": -35.4
+   }
+  },
+  {
+   "id": "driver",
+   "en": "Driver",
+   "it": "Autista",
+   "soc": "53-3032",
+   "exposure_ai": 0.308,
+   "exposure_robots": 0.79,
+   "type": "manual",
+   "phi": 0.55,
+   "theta": 0.7,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -16.8,
+    "ADV_2046": -35.4,
+    "EME_2036": -8.5,
+    "EME_2046": -34.0,
+    "LIC_2036": -2.8,
+    "LIC_2046": -28.0
+   }
+  },
+  {
+   "id": "warehouse",
+   "en": "Warehouse worker",
+   "it": "Magazziniere",
+   "soc": "53-7062",
+   "exposure_ai": 0.12,
+   "exposure_robots": 0.85,
+   "type": "manual",
+   "phi": 0.55,
+   "theta": 0.7,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -12.4,
+    "ADV_2046": -31.2,
+    "EME_2036": -5.4,
+    "EME_2046": -29.7,
+    "LIC_2036": -1.6,
+    "LIC_2046": -23.5
+   }
+  },
+  {
+   "id": "factory",
+   "en": "Factory worker",
+   "it": "Operaio",
+   "soc": "51-2092",
+   "exposure_ai": 0.176,
+   "exposure_robots": 0.97,
+   "type": "manual",
+   "phi": 0.55,
+   "theta": 0.7,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -15.2,
+    "ADV_2046": -36.9,
+    "EME_2036": -6.9,
+    "EME_2046": -35.1,
+    "LIC_2036": -2.1,
+    "LIC_2046": -28.0
+   }
+  },
+  {
+   "id": "cook",
+   "en": "Cook",
+   "it": "Cuoco",
+   "soc": "35-2014",
+   "exposure_ai": 0.162,
+   "exposure_robots": 0.96,
+   "type": "manual",
+   "phi": 0.55,
+   "theta": 0.7,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -14.7,
+    "ADV_2046": -36.1,
+    "EME_2036": -6.6,
+    "EME_2046": -34.4,
+    "LIC_2036": -2.0,
+    "LIC_2046": -27.4
+   }
+  },
+  {
+   "id": "construction",
+   "en": "Construction worker",
+   "it": "Muratore",
+   "soc": "47-2061",
+   "exposure_ai": 0.05,
+   "exposure_robots": 0.88,
+   "type": "manual",
+   "phi": 0.55,
+   "theta": 0.7,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -10.8,
+    "ADV_2046": -29.9,
+    "EME_2036": -4.3,
+    "EME_2046": -28.3,
+    "LIC_2036": -1.2,
+    "LIC_2046": -22.0
+   }
+  },
+  {
+   "id": "electrician",
+   "en": "Electrician / plumber",
+   "it": "Elettricista / idraulico",
+   "soc": "47-2111, 47-2152",
+   "exposure_ai": 0.178,
+   "exposure_robots": 0.25,
+   "type": "manual",
+   "phi": 0.55,
+   "theta": 0.7,
+   "mid_adv": 2033.0,
+   "observed": null,
+   "results": {
+    "ADV_2036": -7.5,
+    "ADV_2046": -13.8,
+    "EME_2036": -4.1,
+    "EME_2046": -13.4,
+    "LIC_2036": -1.4,
+    "LIC_2046": -11.4
+   }
+  }
+ ]
+}

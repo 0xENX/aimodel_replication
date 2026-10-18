@@ -166,3 +166,17 @@ scenari; non sono stimati.
 
 Non e corretto trattare la forbice crescente negli scenari di stress come prova
 che la previsione sia vera: dimostra quali ipotesi possono produrla.
+
+## Previsione per mestiere (capitolo 36, Tabella 65; simulatore)
+
+Un'unica fonte: `aimodel/analysis/occupations.py` scrive `outputs/occupations.json`; la tabella del
+libro e il simulatore (`simulator/sync_occupations.py`) leggono quel file. Nessuno scenario alternativo:
+un solo insieme di dati e regole, un solo risultato per mestiere. Il test `tests/test_occupations.py`
+controlla che modulo, file e simulatore coincidano.
+
+Dati: esposizione Eloundou et al. (Science 2024, misura gamma, valutazione degli esperti); per i lavori
+d'ufficio di routine il valore piu alto fra Eloundou e Frey-Osborne (impiegati 0,96, contabili 0,94,
+assistenza clienti 0,55); robot Frey-Osborne per i lavori manuali, cinque anni dopo l'AI; calo osservato
+Stanford/ADP solo nell'ultimo anno. Regole: tipo di lavoro secondo la distinzione FMI fra esposizione e
+complementarita (Pizzinelli et al., WP/23/216); curva di adozione del libro (appendice A1); 0,15 ruoli
+nuovi dentro il mestiere per ogni compito perso, entro tre anni.
