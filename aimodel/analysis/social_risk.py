@@ -10,7 +10,7 @@ Sources (archived in data/observed/social, downloaded 18 October 2026, not modif
   (oews_state_M2024_dl.xlsx, public domain): employment of the nineteen occupations in each state, so that the work
   taken by AI and robots follows the occupations of the state. Doctors are all physicians (29-121x, 29-122x, 29-124x);
   the few suppressed cells take the national share of the occupation.
-- China and Russia by large city: no comparable data on occupations by city, so every city carries the value of its
+- China, Russia, Canada and Australia by large city: no comparable data on occupations by city, so every city carries the value of its
   country; the cities only show where people live (city centre coordinates).
 - Codes: ISO 3166 alpha-3 and numeric (iso_codes.json, from the npm package i18n-iso-countries 7.11.0) and the
   World Bank country list with regions and capital coordinates (wb_countries.json).
@@ -73,6 +73,14 @@ CITIES = {
             ("Chelyabinsk", "Čeljabinsk", 61.40, 55.16), ("Krasnoyarsk", "Krasnojarsk", 92.87, 56.01), ("Samara", "Samara", 50.10, 53.20),
             ("Rostov-on-Don", "Rostov sul Don", 39.72, 47.24), ("Omsk", "Omsk", 73.37, 54.99), ("Irkutsk", "Irkutsk", 104.28, 52.29),
             ("Khabarovsk", "Chabarovsk", 135.07, 48.48), ("Vladivostok", "Vladivostok", 131.89, 43.12)],
+    "CAN": [("Toronto", "Toronto", -79.38, 43.65), ("Montreal", "Montréal", -73.57, 45.50), ("Vancouver", "Vancouver", -123.12, 49.28),
+            ("Calgary", "Calgary", -114.07, 51.05), ("Edmonton", "Edmonton", -113.49, 53.55), ("Ottawa", "Ottawa", -75.70, 45.42),
+            ("Winnipeg", "Winnipeg", -97.14, 49.90), ("Quebec City", "Québec", -71.21, 46.81), ("Halifax", "Halifax", -63.57, 44.65),
+            ("Saskatoon", "Saskatoon", -106.67, 52.13), ("Regina", "Regina", -104.62, 50.45), ("St. John's", "St. John's", -52.71, 47.56)],
+    "AUS": [("Sydney", "Sydney", 151.21, -33.87), ("Melbourne", "Melbourne", 144.96, -37.81), ("Brisbane", "Brisbane", 153.03, -27.47),
+            ("Perth", "Perth", 115.86, -31.95), ("Adelaide", "Adelaide", 138.60, -34.93), ("Gold Coast", "Gold Coast", 153.40, -28.02),
+            ("Canberra", "Canberra", 149.13, -35.28), ("Newcastle", "Newcastle", 151.78, -32.93), ("Hobart", "Hobart", 147.33, -42.88),
+            ("Darwin", "Darwin", 130.84, -12.46), ("Townsville", "Townsville", 146.82, -19.26), ("Cairns", "Cairns", 145.77, -16.92)],
 }
 
 
