@@ -191,3 +191,17 @@ calo dei lavori d'ufficio e amministrativi (SOC 43): per impiegati e addetti ai 
 ferma, per non contare due volte l'automazione. Posti = indice di domanda x (1 - lavoro preso da AI e robot
 + ruoli nuovi). La calibrazione sul calo osservato include la domanda. Nel file restano entrambe le misure:
 `work` (lavoro preso dalle macchine) e `results` (posti).
+
+## Rischio sociale (pagina social.html)
+
+Dati archiviati in `data/observed/social` (scaricati il 18 ottobre 2026, non modificati), uniti da
+`aimodel/analysis/social_risk.py` in `outputs/social_risk.json`:
+- rischio di partenza per paese: Banca Mondiale, Worldwide Governance Indicators, Political Stability and
+  Absence of Violence/Terrorism, 2024 (GOV_WGI_PV.EST, licenza CC BY 4.0), su scala 0-100 = (2,5 - stima) / 5;
+- persone che usano l'AI: Our World in Data su dati Microsoft AI Economy Institute, quota della popolazione in
+  eta da lavoro, trimestrale da giugno 2025 a marzo 2026 (CC BY 4.0); dopo l'ultima osservazione la quota
+  cresce con la curva di adozione del libro fino all'esposizione della regione (60/40/26 per cento, capitolo 6);
+- codici ISO (pacchetto npm i18n-iso-countries 7.11.0) ed elenco dei paesi della Banca Mondiale.
+La pressione dell'AI e la disoccupazione in piu della regione (`aimodel/analysis/unemployment_path.py`, stesse
+4.000 simulazioni del libro). Nessuna formula collega disoccupazione e disordini (capitolo 17): rischio di
+partenza e pressione dell'AI restano separati.

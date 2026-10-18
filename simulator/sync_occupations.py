@@ -4,6 +4,7 @@ The job simulator and the book table read the same numbers; the social tensions 
 additional unemployment by region. Run after the two analysis modules:
     python -m aimodel.analysis.occupations
     python -m aimodel.analysis.unemployment_path
+    python -m aimodel.analysis.social_risk
     python simulator/sync_occupations.py
 """
 import json
@@ -13,6 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 occupations = json.loads((ROOT / "outputs" / "occupations.json").read_text(encoding="utf-8"))
 unemployment = json.loads((ROOT / "outputs" / "unemployment_path.json").read_text(encoding="utf-8"))
+social = json.loads((ROOT / "outputs" / "social_risk.json").read_text(encoding="utf-8"))
 
 
 def inject(html, marker, name, data):
@@ -24,7 +26,7 @@ def inject(html, marker, name, data):
 
 
 for page, blocks in (("index.html", [("OCCUPATIONS", "DATA", occupations)]),
-                     ("social.html", [("OCCUPATIONS", "DATA", occupations), ("UNEMP", "UNEMP", unemployment)])):
+                     ("social.html", [("OCCUPATIONS", "DATA", occupations), ("UNEMP", "UNEMP", unemployment), ("SOCIAL", "SOCIAL", social)])):
     p = ROOT / "simulator" / page
     html = p.read_text(encoding="utf-8")
     for marker, name, data in blocks:
