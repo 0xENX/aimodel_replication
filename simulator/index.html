@@ -109,6 +109,10 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
       <select id="job"></select>
     </div>
     <div class="ctl">
+      <label for="region">Region</label>
+      <select id="region"></select>
+    </div>
+    <div class="ctl">
       <label for="from">From</label>
       <input type="month" id="from" value="2026-01">
     </div>
@@ -175,6 +179,8 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
           <span>Replaced by robots</span><span class="v robot" id="s2r"></span>
           <span>Active AI systems</span><span class="v ai" id="s5"></span>
           <span>Active robots</span><span class="v robot" id="s5r"></span>
+          <span>AI halfway adoption</span><span class="v ai" id="hAi"></span>
+          <span>Robots halfway adoption</span><span class="v robot" id="hRob"></span>
           <hr>
           <span>Month</span><span class="v" id="s6"></span>
         </div>
@@ -184,7 +190,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
         <canvas id="chart"></canvas>
         <div class="keys"><span><i style="background:var(--job)"></i>jobs</span><span><i style="background:var(--ai)"></i>AI</span><span><i style="background:var(--robot)"></i>robots</span></div>
       </div>
-      <p class="note">Occupation values are illustrative, not forecasts. Adjust them with the sliders. Exposure sets how much AI or robots can replace; new jobs sets how many appear each year, as a % of starting jobs. Adoption follows an S-curve: AI reaches its halfway point in 2029, robots in 2035.</p>
+      <p class="note">Occupation values are illustrative, not forecasts. Adjust them with the sliders. Exposure sets how much AI or robots can replace; new jobs sets how many appear each year, as a % of starting jobs. Adoption follows an S-curve: worldwide, AI reaches its halfway point in 2029 and robots in 2035. The region moves those dates earlier or later and scales exposure and new jobs. USA, China, Canada, India, Japan and Russia are simulated on their own and are not counted in their continents.</p>
     </div>
   </div>
   <footer>© 2026 Enrico Lorenzo De Vito · AI vs Jobs simulator</footer>
@@ -213,13 +219,30 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
     { id: "construction", name: "Construction worker",  ai: 0.02, rob: 0.15, cre: 4 },
     { id: "electrician", name: "Electrician / plumber", ai: 0.04, rob: 0.10, cre: 5 },
   ];
-  const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  // Illustrative regional factors. aiY / robY = years earlier (-) or later (+) than the world adoption curve;
+  // aiX / robX = multiplier on exposure; creX = multiplier on new jobs. The six countries are excluded from their continents.
+  const REGIONS = [
+    { group: "Global",    id: "world",    name: "World",                             aiY:  0, robY:  0, aiX: 1.0, robX: 1.0, creX: 1.0 },
+    { group: "Countries", id: "usa",      name: "USA",                               aiY: -1, robY: -1, aiX: 1.1, robX: 1.0, creX: 1.2 },
+    { group: "Countries", id: "china",    name: "China",                             aiY:  0, robY: -3, aiX: 1.0, robX: 1.3, creX: 1.0 },
+    { group: "Countries", id: "canada",   name: "Canada",                            aiY: -1, robY:  0, aiX: 1.0, robX: 1.0, creX: 1.1 },
+    { group: "Countries", id: "india",    name: "India",                             aiY:  1, robY:  6, aiX: 0.9, robX: 0.5, creX: 1.3 },
+    { group: "Countries", id: "japan",    name: "Japan",                             aiY:  1, robY: -3, aiX: 0.9, robX: 1.3, creX: 0.7 },
+    { group: "Countries", id: "russia",   name: "Russia",                            aiY:  3, robY:  4, aiX: 0.8, robX: 0.7, creX: 0.8 },
+    { group: "Continents (excluding the countries above)", id: "europe",   name: "Europe (excl. Russia)",              aiY: 1, robY: 0, aiX: 0.9, robX: 1.1, creX: 0.9 },
+    { group: "Continents (excluding the countries above)", id: "asia",     name: "Asia (excl. China, India, Japan)",   aiY: 2, robY: 2, aiX: 0.9, robX: 1.0, creX: 1.1 },
+    { group: "Continents (excluding the countries above)", id: "namerica", name: "North America (excl. USA, Canada)", aiY: 3, robY: 5, aiX: 0.8, robX: 0.7, creX: 1.0 },
+    { group: "Continents (excluding the countries above)", id: "samerica", name: "South America",                      aiY: 3, robY: 5, aiX: 0.8, robX: 0.6, creX: 1.0 },
+    { group: "Continents (excluding the countries above)", id: "africa",   name: "Africa",                             aiY: 5, robY: 9, aiX: 0.7, robX: 0.4, creX: 1.3 },
+    { group: "Continents (excluding the countries above)", id: "oceania",  name: "Oceania",                            aiY: 0, robY: 1, aiX: 1.0, robX: 1.0, creX: 1.0 },
+  ];
+  const MONTHS =["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   const N0 = 1400;          // starting jobs on the field
   const MAX_AGENTS = 40;    // agents of each kind at full adoption with 100% exposure
   const LOSS = 0.035;       // share of starting jobs replaceable per month at full adoption and 100% exposure
   const KINDS = {
-    ai:    { mid: 2029 * 12, k: 0.07, speed: 1.0, slider: "expAi" },
-    robot: { mid: 2035 * 12, k: 0.05, speed: 0.7, slider: "expRob" },
+    ai:    { mid: 2029 * 12, k: 0.07, speed: 1.0, slider: "expAi",  shift: "aiY",  mult: "aiX" },
+    robot: { mid: 2035 * 12, k: 0.05, speed: 0.7, slider: "expRob", shift: "robY", mult: "robX" },
   };
 
   const $ = id => document.getElementById(id);
@@ -229,6 +252,13 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 
   const sel = $("job");
   JOBS.forEach(j => { const o = document.createElement("option"); o.value = j.id; o.textContent = j.name; sel.appendChild(o); });
+  const regSel = $("region"), groups = {};
+  REGIONS.forEach(r => {
+    if (!groups[r.group]) { groups[r.group] = document.createElement("optgroup"); groups[r.group].label = r.group; regSel.appendChild(groups[r.group]); }
+    const o = document.createElement("option"); o.value = r.id; o.textContent = r.name; groups[r.group].appendChild(o);
+  });
+  const region = () => REGIONS.find(r => r.id === regSel.value);
+  const midOf = kind => KINDS[kind].mid + region()[KINDS[kind].shift] * 12;
 
   const field = $("field"), fx = field.getContext("2d");
   const chart = $("chart"), cx = chart.getContext("2d");
@@ -236,7 +266,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   let S;
   const parseM = v => { const [y, m] = v.split("-").map(Number); return y * 12 + (m - 1); };
   const fmtM = t => MONTHS[((t % 12) + 12) % 12] + " " + Math.floor(t / 12);
-  const adoption = (kind, t) => 1 / (1 + Math.exp(-KINDS[kind].k * (t - KINDS[kind].mid)));
+  const adoption = (kind, t) => 1 / (1 + Math.exp(-KINDS[kind].k * (t - midOf(kind))));
   const job = () => JOBS.find(j => j.id === sel.value);
 
   function syncSliders() {
@@ -260,7 +290,9 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
     S = { from, to, t: from, frac: 0, jobs, agents: { ai: [], robot: [] }, eaten: { ai: 0, robot: 0 }, created: 0, carry: 0, hist: [], running: false, done: false, flashes: [] };
     $("end").hidden = true;
     $("play").textContent = "Start";
-    $("jobname").textContent = job().name;
+    $("jobname").textContent = job().name + " · " + region().name;
+    $("hAi").textContent = fmtM(midOf("ai"));
+    $("hRob").textContent = fmtM(midOf("robot"));
     monthTick(true);
     draw(); stats(); drawChart();
   }
@@ -270,7 +302,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   // Runs at every new month: sets how many AI systems and robots exist and how many jobs appear
   function monthTick(first) {
     for (const kind in KINDS) {
-      const esp = $(KINDS[kind].slider).value / 100, ad = adoption(kind, S.t), list = S.agents[kind];
+      const esp = Math.min(1, $(KINDS[kind].slider).value / 100 * region()[KINDS[kind].mult]), ad = adoption(kind, S.t), list = S.agents[kind];
       const target = Math.round(MAX_AGENTS * esp * ad);
       while (list.length < target) list.push({ kind, x: Math.random(), y: Math.random(), vx: 0, vy: 0, hunger: 0, tgt: null });
       while (list.length > target) list.pop();
@@ -279,7 +311,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
       list.forEach(a => a.hunger = Math.min(a.hunger + budget / list.length, 6));
     }
     if (!first) {
-      S.carry += N0 * ($("cre").value / 100) / 12;
+      S.carry += N0 * ($("cre").value / 100) * region().creX / 12;
       while (S.carry >= 1) { S.jobs.push({ x: Math.random(), y: Math.random(), born: performance.now(), alive: true }); S.created++; S.carry--; }
     }
     S.hist.push({ t: S.t, jobs: liveJobs().length, ai: S.agents.ai.length, robot: S.agents.robot.length });
@@ -328,7 +360,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
     S.done = true; S.running = false;
     $("play").textContent = "Start";
     const now = liveJobs().length, diff = now - N0;
-    $("endtitle").textContent = job().name + " · " + fmtM(S.from) + " → " + fmtM(S.to);
+    $("endtitle").textContent = job().name + " · " + region().name + " · " + fmtM(S.from) + " → " + fmtM(S.to);
     $("endpct").textContent = (diff >= 0 ? "+" : "") + (diff / N0 * 100).toFixed(1) + "%";
     $("endpct").style.color = diff >= 0 ? C.job : C.ai;
     $("endtxt").textContent = S.eaten.ai + " jobs replaced by AI, " + S.eaten.robot + " by robots, " + S.created + " new jobs created. " + now + " of " + N0 + " jobs remain.";
@@ -430,6 +462,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   };
   $("reset").onclick = reset;
   sel.onchange = () => { syncSliders(); reset(); };
+  regSel.onchange = reset;
   $("from").onchange = reset; $("to").onchange = reset;
   ["expAi", "expRob", "cre"].forEach(id => $(id).oninput = showSliders);
   window.addEventListener("resize", () => { draw(); drawChart(); });
