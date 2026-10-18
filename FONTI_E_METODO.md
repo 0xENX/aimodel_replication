@@ -180,3 +180,12 @@ assistenza clienti 0,55); robot Frey-Osborne per i lavori manuali, cinque anni d
 Stanford/ADP solo nell'ultimo anno. Regole: tipo di lavoro secondo la distinzione FMI fra esposizione e
 complementarita (Pizzinelli et al., WP/23/216); curva di adozione del libro (appendice A1); 0,15 ruoli
 nuovi dentro il mestiere per ogni compito perso, entro tre anni.
+
+Domanda del mestiere: il lavoro preso dalle macchine non coincide con i posti persi quando la domanda
+cresce (infermieri, cuochi, elettricisti). Ogni mestiere tiene il ritmo annuo delle BLS Employment
+Projections 2025-35 (pubblicate il 21 settembre 2026, tabella "Occupational projections and
+characteristics"), prolungato fino al 2046 e usato per tutte le regioni. Il BLS attribuisce all'AI solo il
+calo dei lavori d'ufficio e amministrativi (SOC 43): per impiegati e addetti ai call center la domanda resta
+ferma, per non contare due volte l'automazione. Posti = indice di domanda x (1 - lavoro preso da AI e robot
++ ruoli nuovi). La calibrazione sul calo osservato include la domanda. Nel file restano entrambe le misure:
+`work` (lavoro preso dalle macchine) e `results` (posti).
