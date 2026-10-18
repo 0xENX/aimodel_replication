@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI contro il lavoro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: barra comandi in alto, campo di simulazione a sinistra, pannello numeri e grafico a destra (impilati su telefono) */
+:root {
+  --bg: #0b1220;
+  --panel: #111a2c;
+  --line: #22304a;
+  --fg: #dbe4f3;
+  --muted: #8292ad;
+  --job: #4fd59a;
+  --ai: #f0507a;
+  --accent: #7aa7ff;
+  --field: #070c16;
+  --f-ui: "IBM Plex Sans", system-ui, sans-serif;
+  --f-data: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { margin: 0; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--f-ui); font-size: 14px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 18px 28px;
+}
+.wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; }
+h1 { margin: 0; font-size: 1.45rem; font-weight: 600; text-wrap: balance; }
+.sub { color: var(--muted); font-size: .85rem; }
+.clock { font-family: var(--f-data); font-size: 1.05rem; padding: 6px 14px; border: 1px solid var(--job); color: var(--job); border-radius: 999px; font-variant-numeric: tabular-nums; }
+
+.bar { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: flex-end; }
+.ctl { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.ctl label { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+select, input[type="month"], input[type="number"] {
+  background: var(--field); color: var(--fg); border: 1px solid var(--line); border-radius: 6px;
+  padding: 7px 9px; font: inherit; font-family: var(--f-data); font-size: .85rem;
+}
+input[type="range"] { accent-color: var(--accent); width: 130px; }
+.rangeval { font-family: var(--f-data); font-size: .8rem; color: var(--fg); }
+.btns { display: flex; gap: 8px; margin-left: auto; }
+button {
+  font: inherit; font-weight: 600; font-size: .85rem; border-radius: 6px; padding: 8px 16px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--field); color: var(--fg);
+}
+button.primary { background: var(--job); border-color: var(--job); color: #062014; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.main { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px; align-items: start; }
+@media (max-width: 820px) { .main { grid-template-columns: minmax(0, 1fr); } .btns { margin-left: 0; } }
+.stage { position: relative; background: var(--field); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; aspect-ratio: 1 / 1; max-width: 100%; }
+#field { display: block; width: 100%; height: 100%; }
+.legend { position: absolute; left: 10px; bottom: 10px; display: flex; gap: 12px; font-size: .75rem; color: var(--muted); background: rgba(7,12,22,.75); padding: 5px 9px; border-radius: 6px; }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+.overlay { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(7,12,22,.78); text-align: center; padding: 20px; }
+.overlay .box { max-width: 380px; display: flex; flex-direction: column; gap: 8px; }
+.overlay .big { font-family: var(--f-data); font-size: 2.2rem; color: var(--ai); }
+
+.side { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.card h2 { margin: 0; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 500; }
+.stats { display: grid; grid-template-columns: 1fr auto; gap: 7px 10px; font-size: .88rem; }
+.stats .v { font-family: var(--f-data); font-variant-numeric: tabular-nums; text-align: right; }
+.v.job { color: var(--job); } .v.ai { color: var(--ai); }
+#chart { width: 100%; height: 150px; display: block; }
+.note { color: var(--muted); font-size: .78rem; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>AI contro il lavoro</h1>
+      <div class="sub">Ogni puntino verde è un posto di lavoro, ogni puntino rosso un sistema di AI che lo sostituisce.</div>
+    </div>
+    <div class="clock" id="clock">gen 2026</div>
+  </header>
+
+  <div class="bar">
+    <div class="ctl">
+      <label for="job">Professione</label>
+      <select id="job"></select>
+    </div>
+    <div class="ctl">
+      <label for="from">Da</label>
+      <input type="month" id="from" value="2026-01">
+    </div>
+    <div class="ctl">
+      <label for="to">A</label>
+      <input type="month" id="to" value="2035-12">
+    </div>
+    <div class="ctl">
+      <label for="exp">Esposizione all'AI <span class="rangeval" id="expv"></span></label>
+      <input type="range" id="exp" min="0" max="100" step="1">
+    </div>
+    <div class="ctl">
+      <label for="cre">Nuovi posti / anno <span class="rangeval" id="crev"></span></label>
+      <input type="range" id="cre" min="0" max="20" step="0.5">
+    </div>
+    <div class="ctl">
+      <label for="spd">Velocità</label>
+      <select id="spd">
+        <option value="1">1 mese/s</option>
+        <option value="2" selected>2 mesi/s</option>
+        <option value="4">4 mesi/s</option>
+        <option value="8">8 mesi/s</option>
+      </select>
+    </div>
+    <div class="btns">
+      <button class="primary" id="play">Avvia</button>
+      <button id="reset">Ricomincia</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="stage">
+      <canvas id="field"></canvas>
+      <div class="legend"><span><i class="dot" style="background:var(--job)"></i>posto di lavoro</span><span><i class="dot" style="background:var(--ai)"></i>AI</span></div>
+      <div class="overlay" id="end" hidden>
+        <div class="box">
+          <div class="note" id="endtitle"></div>
+          <div class="big" id="endpct"></div>
+          <div id="endtxt"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="card">
+        <h2 id="jobname">Professione</h2>
+        <div class="stats">
+          <span>Posti iniziali</span><span class="v" id="s0"></span>
+          <span>Posti attuali</span><span class="v job" id="s1"></span>
+          <span>Sostituiti dall'AI</span><span class="v ai" id="s2"></span>
+          <span>Nuovi creati</span><span class="v" id="s3"></span>
+          <span>Saldo</span><span class="v" id="s4"></span>
+          <span>Sistemi AI attivi</span><span class="v ai" id="s5"></span>
+          <span>Mese</span><span class="v" id="s6"></span>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Andamento mese per mese</h2>
+        <canvas id="chart"></canvas>
+      </div>
+      <p class="note">I parametri delle professioni sono valori dimostrativi, non previsioni. Puoi cambiarli con i cursori: l'esposizione decide quanto l'AI "mangia", i nuovi posti quanti ne nascono ogni anno (in % dei posti iniziali). L'adozione dell'AI segue una curva a S con il punto di metà nel 2029.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // Valori dimostrativi: esp = esposizione all'automazione (0-1), cre = nuovi posti l'anno in % dei posti iniziali
+  const JOBS = [
+    { id: "impiegato",   name: "Impiegato amministrativo", esp: 0.78, cre: 2 },
+    { id: "contabile",   name: "Contabile",                esp: 0.74, cre: 2 },
+    { id: "callcenter",  name: "Operatore call center",    esp: 0.90, cre: 1 },
+    { id: "traduttore",  name: "Traduttore",               esp: 0.88, cre: 1 },
+    { id: "programmatore", name: "Programmatore",          esp: 0.58, cre: 9 },
+    { id: "grafico",     name: "Grafico",                  esp: 0.62, cre: 3 },
+    { id: "giornalista", name: "Giornalista",              esp: 0.55, cre: 2 },
+    { id: "avvocato",    name: "Avvocato",                 esp: 0.40, cre: 3 },
+    { id: "commesso",    name: "Commesso",                 esp: 0.45, cre: 2 },
+    { id: "autista",     name: "Autista",                  esp: 0.35, cre: 3 },
+    { id: "insegnante",  name: "Insegnante",               esp: 0.22, cre: 3 },
+    { id: "medico",      name: "Medico",                   esp: 0.18, cre: 4 },
+    { id: "infermiere",  name: "Infermiere",               esp: 0.08, cre: 5 },
+    { id: "muratore",    name: "Muratore",                 esp: 0.05, cre: 4 },
+    { id: "elettricista", name: "Elettricista / idraulico", esp: 0.06, cre: 5 },
+  ];
+  const MESI = ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  const N0 = 1400;          // posti iniziali sul campo
+  const MAX_AI = 40;        // sistemi AI a piena adozione con esposizione 100%
+  const MID = 2029 * 12;    // punto di metà della curva di adozione (gen 2029)
+  const K = 0.07;           // ripidità della curva di adozione
+  const LOSS = 0.035;       // quota di posti sostituibili al mese a piena adozione ed esposizione 100%
+
+  const $ = id => document.getElementById(id);
+  const css = getComputedStyle(document.documentElement);
+  const C = { job: css.getPropertyValue("--job").trim(), ai: css.getPropertyValue("--ai").trim(), muted: css.getPropertyValue("--muted").trim(), line: css.getPropertyValue("--line").trim() };
+
+  const sel = $("job");
+  JOBS.forEach(j => { const o = document.createElement("option"); o.value = j.id; o.textContent = j.name; sel.appendChild(o); });
+
+  const field = $("field"), fx = field.getContext("2d");
+  const chart = $("chart"), cx = chart.getContext("2d");
+
+  let S;
+  const parseM = v => { const [y, m] = v.split("-").map(Number); return y * 12 + (m - 1); };
+  const fmtM = t => MESI[((t % 12) + 12) % 12] + " " + Math.floor(t / 12);
+  const adoption = t => 1 / (1 + Math.exp(-K * (t - MID)));
+
+  function job() { return JOBS.find(j => j.id === sel.value); }
+  function syncSliders() {
+    const j = job();
+    $("exp").value = Math.round(j.esp * 100);
+    $("cre").value = j.cre;
+    showSliders();
+  }
+  function showSliders() {
+    $("expv").textContent = $("exp").value + "%";
+    $("crev").textContent = $("cre").value + "%";
+  }
+
+  function reset() {
+    let from = parseM($("from").value || "2026-01"), to = parseM($("to").value || "2035-12");
+    if (to <= from) to = from + 12;
+    const jobs = [];
+    for (let i = 0; i < N0; i++) jobs.push({ x: Math.random(), y: Math.random(), born: 0, alive: true });
+    S = { from, to, t: from, frac: 0, jobs, ais: [], eaten: 0, created: 0, hist: [], running: false, done: false, flashes: [] };
+    $("end").hidden = true;
+    $("play").textContent = "Avvia";
+    $("jobname").textContent = job().name;
+    monthTick(true);
+    draw(); stats(); drawChart();
+  }
+
+  function liveJobs() { return S.jobs.filter(j => j.alive); }
+
+  // Eseguito a ogni cambio di mese: calcola quanti sistemi AI ci sono e quanti posti nascono
+  function monthTick(first) {
+    const esp = $("exp").value / 100, cre = $("cre").value / 100;
+    const ad = adoption(S.t);
+    const target = Math.round(MAX_AI * esp * ad);
+    while (S.ais.length < target) S.ais.push({ x: Math.random(), y: Math.random(), vx: 0, vy: 0, hunger: 0, tgt: null });
+    while (S.ais.length > target) S.ais.pop();
+    // budget di posti che l'AI può sostituire questo mese, diviso tra i sistemi attivi
+    const budget = N0 * LOSS * esp * ad;
+    if (S.ais.length) S.ais.forEach(a => a.hunger = Math.min(a.hunger + budget / S.ais.length, 6));
+    if (!first) {
+      S.carry = (S.carry || 0) + N0 * cre / 12;
+      while (S.carry >= 1) { S.jobs.push({ x: Math.random(), y: Math.random(), born: performance.now(), alive: true }); S.created++; S.carry--; }
+    }
+    S.hist.push({ t: S.t, jobs: liveJobs().length, ai: S.ais.length });
+    if (S.jobs.length > N0 * 3) S.jobs = liveJobs();
+  }
+
+  function step(dt) {
+    const speed = Number($("spd").value);
+    S.frac += dt * speed;
+    while (S.frac >= 1 && !S.done) {
+      S.frac -= 1;
+      if (S.t >= S.to) { finish(); break; }
+      S.t++;
+      monthTick(false);
+    }
+    const alive = liveJobs();
+    const v = 0.06 * Math.min(speed, 4);
+    S.ais.forEach(a => {
+      if (a.hunger >= 1 && alive.length) {
+        if (!a.tgt || !a.tgt.alive) {
+          let best = null, bd = Infinity;
+          for (let k = 0; k < 40; k++) { const j = alive[(Math.random() * alive.length) | 0]; const d = (j.x - a.x) ** 2 + (j.y - a.y) ** 2; if (d < bd) { bd = d; best = j; } }
+          a.tgt = best;
+        }
+        const dx = a.tgt.x - a.x, dy = a.tgt.y - a.y, d = Math.hypot(dx, dy);
+        if (d < 0.008) {
+          a.tgt.alive = false; a.hunger -= 1; S.eaten++;
+          S.flashes.push({ x: a.tgt.x, y: a.tgt.y, t: 0 });
+          a.tgt = null;
+        } else { a.vx = dx / d * v * 1.6; a.vy = dy / d * v * 1.6; }
+      } else {
+        a.vx += (Math.random() - 0.5) * 0.02; a.vy += (Math.random() - 0.5) * 0.02;
+        const m = Math.hypot(a.vx, a.vy); if (m > v * 0.5) { a.vx *= v * 0.5 / m; a.vy *= v * 0.5 / m; }
+      }
+      a.x += a.vx * dt; a.y += a.vy * dt;
+      if (a.x < 0 || a.x > 1) { a.vx *= -1; a.x = Math.max(0, Math.min(1, a.x)); }
+      if (a.y < 0 || a.y > 1) { a.vy *= -1; a.y = Math.max(0, Math.min(1, a.y)); }
+    });
+    S.flashes.forEach(f => f.t += dt); S.flashes = S.flashes.filter(f => f.t < 0.6);
+  }
+
+  function finish() {
+    S.done = true; S.running = false;
+    $("play").textContent = "Avvia";
+    const now = liveJobs().length, diff = now - N0;
+    $("endtitle").textContent = job().name + " · " + fmtM(S.from) + " → " + fmtM(S.to);
+    $("endpct").textContent = (diff >= 0 ? "+" : "") + (diff / N0 * 100).toFixed(1) + "%";
+    $("endpct").style.color = diff >= 0 ? C.job : C.ai;
+    $("endtxt").textContent = S.eaten + " posti sostituiti dall'AI, " + S.created + " nuovi posti creati. Restano " + now + " posti su " + N0 + ".";
+    $("end").hidden = false;
+  }
+
+  function fit(c) {
+    const r = c.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+    if (c.width !== Math.round(r.width * d) || c.height !== Math.round(r.height * d)) { c.width = Math.round(r.width * d); c.height = Math.round(r.height * d); }
+    return { w: c.width, h: c.height, d };
+  }
+
+  function draw() {
+    const { w, h, d } = fit(field);
+    fx.clearRect(0, 0, w, h);
+    const pad = 8 * d, W = w - 2 * pad, H = h - 2 * pad, now = performance.now();
+    fx.fillStyle = C.job;
+    S.jobs.forEach(j => {
+      if (!j.alive) return;
+      const age = j.born ? Math.min((now - j.born) / 600, 1) : 1;
+      fx.globalAlpha = 0.85;
+      fx.beginPath(); fx.arc(pad + j.x * W, pad + j.y * H, 1.9 * d * (0.4 + 0.6 * age) * (j.born && age < 1 ? 1.6 - 0.6 * age : 1), 0, 7); fx.fill();
+    });
+    fx.globalAlpha = 1;
+    S.flashes.forEach(f => {
+      fx.strokeStyle = C.ai; fx.globalAlpha = 1 - f.t / 0.6; fx.lineWidth = 1.2 * d;
+      fx.beginPath(); fx.arc(pad + f.x * W, pad + f.y * H, (3 + f.t * 18) * d, 0, 7); fx.stroke();
+    });
+    fx.globalAlpha = 1;
+    S.ais.forEach(a => {
+      fx.fillStyle = C.ai; fx.shadowColor = C.ai; fx.shadowBlur = 10 * d;
+      fx.beginPath(); fx.arc(pad + a.x * W, pad + a.y * H, 4.2 * d, 0, 7); fx.fill();
+    });
+    fx.shadowBlur = 0;
+  }
+
+  function stats() {
+    const n = liveJobs().length, saldo = n - N0;
+    $("clock").textContent = fmtM(S.t);
+    $("s0").textContent = N0;
+    $("s1").textContent = n;
+    $("s2").textContent = S.eaten;
+    $("s3").textContent = S.created;
+    $("s4").textContent = (saldo >= 0 ? "+" : "") + saldo + " (" + (saldo / N0 * 100).toFixed(1) + "%)";
+    $("s5").textContent = S.ais.length;
+    $("s6").textContent = (S.t - S.from + 1) + " / " + (S.to - S.from + 1);
+  }
+
+  function drawChart() {
+    const { w, h, d } = fit(chart);
+    cx.clearRect(0, 0, w, h);
+    const L = 34 * d, R = 6 * d, T = 8 * d, B = 18 * d, W = w - L - R, H = h - T - B;
+    const span = Math.max(S.to - S.from, 1);
+    const maxJ = Math.max(N0 * 1.2, ...S.hist.map(p => p.jobs));
+    cx.font = (10 * d) + "px IBM Plex Mono, monospace"; cx.fillStyle = C.muted; cx.strokeStyle = C.line; cx.lineWidth = 1;
+    [0, 0.5, 1].forEach(f => {
+      const y = T + H - f * H; cx.beginPath(); cx.moveTo(L, y); cx.lineTo(L + W, y); cx.stroke();
+      cx.textAlign = "right"; cx.fillText(Math.round(maxJ * f), L - 4 * d, y + 3 * d);
+    });
+    cx.textAlign = "left"; cx.fillText(Math.floor(S.from / 12), L, h - 4 * d);
+    cx.textAlign = "right"; cx.fillText(Math.floor(S.to / 12), L + W, h - 4 * d);
+    const X = t => L + (t - S.from) / span * W;
+    const line = (key, max, color, fill) => {
+      if (!S.hist.length) return;
+      cx.beginPath();
+      S.hist.forEach((p, i) => { const x = X(p.t), y = T + H - p[key] / max * H; i ? cx.lineTo(x, y) : cx.moveTo(x, y); });
+      if (fill) { const last = S.hist[S.hist.length - 1]; cx.lineTo(X(last.t), T + H); cx.lineTo(X(S.from), T + H); cx.closePath(); cx.globalAlpha = 0.15; cx.fillStyle = color; cx.fill(); cx.globalAlpha = 1;
+        cx.beginPath(); S.hist.forEach((p, i) => { const x = X(p.t), y = T + H - p[key] / max * H; i ? cx.lineTo(x, y) : cx.moveTo(x, y); }); }
+      cx.strokeStyle = color; cx.lineWidth = 1.6 * d; cx.stroke();
+      const p = S.hist[S.hist.length - 1]; cx.fillStyle = color; cx.beginPath(); cx.arc(X(p.t), T + H - p[key] / max * H, 2.6 * d, 0, 7); cx.fill();
+    };
+    line("jobs", maxJ, C.job, true);
+    line("ai", MAX_AI * 1.2, C.ai, false);
+  }
+
+  let last = performance.now(), lastStats = 0;
+  function loop(now) {
+    const dt = Math.min((now - last) / 1000, 0.1); last = now;
+    if (S.running) step(dt);
+    draw();
+    if (now - lastStats > 120) { stats(); drawChart(); lastStats = now; }
+    requestAnimationFrame(loop);
+  }
+
+  $("play").onclick = () => {
+    if (S.done) reset();
+    S.running = !S.running;
+    $("play").textContent = S.running ? "Pausa" : "Riprendi";
+  };
+  $("reset").onclick = reset;
+  sel.onchange = () => { syncSliders(); reset(); };
+  $("from").onchange = reset; $("to").onchange = reset;
+  $("exp").oninput = showSliders; $("cre").oninput = showSliders;
+  window.addEventListener("resize", () => { draw(); drawChart(); });
+
+  sel.value = "impiegato";
+  syncSliders();
+  reset();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
