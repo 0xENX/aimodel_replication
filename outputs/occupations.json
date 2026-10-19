@@ -655,7 +655,7 @@
  "aggregate": {
   "id": "all",
   "en": "All 19 occupations",
-  "it": "Tutti i 19 mestieri",
+  "it": "Tutte le 19 professioni",
   "weights": {
    "clerk": 2600.0,
    "accountant": 1595.2,

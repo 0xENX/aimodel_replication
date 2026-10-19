@@ -1,4 +1,4 @@
-"""Forecast by occupation (book, chapter 36, table "Previsione per mestiere"; job simulator).
+"""Forecast by occupation (book, chapter 36, table "Previsione per professione"; job simulator).
 
 One source for every number by occupation: the book table and the simulator read outputs/occupations.json,
 written by this module. There are no alternative scenarios: one set of inputs, one result per occupation.
@@ -202,7 +202,7 @@ def aggregate(rows):
     for key in rows[0]["results"]:
         level = sum(EMPLOYMENT_2025[o["id"]] * (1 + o["results"][key] / 100) for o in rows) / total
         res[key] = round((level - 1) * 100, 1)
-    return dict(id="all", en="All 19 occupations", it="Tutti i 19 mestieri", weights=EMPLOYMENT_2025, results=res)
+    return dict(id="all", en="All 19 occupations", it="Tutte le 19 professioni", weights=EMPLOYMENT_2025, results=res)
 
 
 def write(path=None):
