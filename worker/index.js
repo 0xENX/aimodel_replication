@@ -65,12 +65,13 @@ export default {
     const url = new URL(request.url);
     if (url.pathname === "/stats") {
       if (!env.STATS_KEY || url.searchParams.get("k") !== env.STATS_KEY) return new Response("Not found", { status: 404 });
+      // no-transform: Cloudflare does not inject the Web Analytics script here, so checking the counter is not a visit
       // the button posts back to the same address (key included); after the reset, back to the table
       if (request.method === "POST") {
         await counter(env).rebase();
         return Response.redirect(url.toString(), 303);
       }
-      return new Response(statsPage(await counter(env).all()), { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } });
+      return new Response(statsPage(await counter(env).all()), { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store, no-transform" } });
     }
     const response = await env.ASSETS.fetch(request);
     if (url.pathname.startsWith("/book/")) {
