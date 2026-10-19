@@ -126,6 +126,11 @@
   if (lang === "en") document.getElementById("ed-it").hidden = true;
   else document.getElementById("ed-it").parentNode.prepend(document.getElementById("ed-it"));
   siteChrome();
+  // after a download the page moves to the donation box
+  document.querySelectorAll(".edition .btn").forEach(a => a.addEventListener("click", () => {
+    const d = document.getElementById("donate");
+    if (!d.hidden) setTimeout(() => d.scrollIntoView({ behavior: "smooth", block: "center" }), 400);
+  }));
 })();
 </script>
 </body>
