@@ -179,12 +179,12 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: s
           <h2>The Mind That Takes<br>Your Job</h2>
           <p>37 chapters on what artificial intelligence and robots will do to work, from the tasks of a single job to the economy of the world.</p>
           <ul>
-            <li>In Italian and English</li>
+            <li>Free, in Italian and English</li>
             <li>A source for every figure</li>
             <li>The model and its code are public</li>
           </ul>
           <div class="btns">
-            <a class="btn dark" id="bookBtn" href="excerpt/The_ReplaceMind_excerpt.pdf" download>Read an excerpt <span aria-hidden="true">↓</span></a>
+            <a class="btn dark" id="bookBtn" href="book/The_ReplaceMind_EN.pdf" download>Download the book (PDF) <span aria-hidden="true">↓</span></a>
             <a class="btn" id="donateBtn" href="#" hidden>Support the project <span aria-hidden="true">♡</span></a>
           </div>
         </div>
@@ -226,9 +226,9 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: s
 <script src="i18n.js"></script>
 <script>
 (function () {
-  // ---- links to set when ready: full book (by language) and donations; empty = the button shows the excerpt / stays hidden
+  // ---- full book by language (free download) and donations (empty = the button stays hidden)
   const SITE = {
-    book: { it: "", en: "" },
+    book: { it: "book/The_ReplaceMind_IT.pdf", en: "book/The_ReplaceMind_EN.pdf" },
     donation: "",
   };
 
@@ -250,8 +250,8 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: s
     "Chapters 36–37": "Capitoli 36–37",
     "37 chapters on what artificial intelligence and robots will do to work, from the tasks of a single job to the economy of the world.":
       "37 capitoli su che cosa faranno l’intelligenza artificiale e i robot al lavoro, dai compiti di una singola professione all’economia del mondo.",
-    "In Italian and English": "In italiano e in inglese", "A source for every figure": "Una fonte per ogni numero", "The model and its code are public": "Il modello e il suo codice sono pubblici",
-    "Read an excerpt <span aria-hidden=\"true\">↓</span>": "Leggi un estratto <span aria-hidden=\"true\">↓</span>",
+    "Free, in Italian and English": "Gratis, in italiano e in inglese", "A source for every figure": "Una fonte per ogni numero", "The model and its code are public": "Il modello e il suo codice sono pubblici",
+    "Download the book (PDF) <span aria-hidden=\"true\">↓</span>": "Scarica il libro (PDF) <span aria-hidden=\"true\">↓</span>",
     "Support the project <span aria-hidden=\"true\">♡</span>": "Sostieni il progetto <span aria-hidden=\"true\">♡</span>",
     "The simulators": "I simulatori", "Simulate the future<br>of your work": "Simula il futuro<br>del tuo lavoro",
     "The same data, rules and numbers as the book, month by month, in your browser.": "Gli stessi dati, le stesse regole e gli stessi numeri del libro, mese per mese, nel tuo browser.",
@@ -274,9 +274,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: s
 
   // cover, book and donation buttons
   document.getElementById("cover").src = "img/cover-" + lang + ".jpg";
-  const book = SITE.book[lang], bookBtn = document.getElementById("bookBtn");
-  if (book) { bookBtn.href = book; bookBtn.innerHTML = L("Download the book", "Scarica il libro") + ' <span aria-hidden="true">↓</span>'; }
-  else bookBtn.href = lang === "it" ? "excerpt/The_ReplaceMind_estratto.pdf" : "excerpt/The_ReplaceMind_excerpt.pdf";
+  document.getElementById("bookBtn").href = SITE.book[lang];
   if (SITE.donation) { const d = document.getElementById("donateBtn"); d.href = SITE.donation; d.hidden = false; }
 
   // language flags, same choice as the other pages
