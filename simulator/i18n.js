@@ -14,10 +14,6 @@
   window.LANG = lang;
   window.L = (en, it) => (lang === "it" ? it : en);
 
-  const EXCERPT = {
-    it: { href: "excerpt/The_Last_Forecast_estratto.pdf", label: "Estratto del libro" },
-    en: { href: "excerpt/The_Last_Forecast_excerpt.pdf", label: "Book demo" },
-  };
   const FLAG_IT = '<svg viewBox="0 0 3 2" width="22" height="15" aria-hidden="true"><rect width="1" height="2" fill="#009246"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ce2b37"/></svg>';
   const FLAG_EN = '<svg viewBox="0 0 60 30" width="22" height="15" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg>';
 
@@ -26,7 +22,7 @@
     const u = new URL(location.href); u.searchParams.set("lang", l); location.href = u.toString();
   }
 
-  // Top bar: excerpt link after the page links, flags at the right; page links keep the language
+  // Top bar: page links keep the language, flags at the right
   window.i18nNav = function () {
     const bar = document.querySelector(".topnav .in");
     if (!bar) return;
@@ -36,9 +32,6 @@
       if (NAMES[page]) a.textContent = NAMES[page];
       const u = new URL(page, location.href); u.searchParams.set("lang", lang); a.href = u.toString();
     });
-    const ex = document.createElement("a");
-    ex.href = EXCERPT[lang].href; ex.textContent = EXCERPT[lang].label; ex.setAttribute("download", ""); ex.className = "excerpt";
-    bar.appendChild(ex);
     const flags = document.createElement("span"); flags.className = "flags";
     [["it", FLAG_IT, "Italiano"], ["en", FLAG_EN, "English"]].forEach(([l, svg, name]) => {
       const b = document.createElement("button"); b.type = "button"; b.innerHTML = svg; b.title = name; b.setAttribute("aria-label", name);
