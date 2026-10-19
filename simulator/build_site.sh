@@ -7,7 +7,7 @@ set -euo pipefail
 OUT="${1:-_site}"
 rm -rf "$OUT"
 mkdir -p "$OUT/py" "$OUT/data"
-cp simulator/index.html simulator/simulator.html simulator/model.html simulator/social.html simulator/dashboard.py simulator/i18n.js "$OUT/"
+cp simulator/index.html simulator/libro.html simulator/home.css simulator/site.js simulator/simulator.html simulator/model.html simulator/social.html simulator/dashboard.py simulator/i18n.js "$OUT/"
 mkdir -p "$OUT/img" "$OUT/book"
 cp simulator/img/* "$OUT/img/"
 cp simulator/book/*.pdf "$OUT/book/"
