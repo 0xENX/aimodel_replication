@@ -8,113 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
-<style>
-:root {
-  --paper: #f5f0e4; --paper2: #ece5d4; --card: #fbf8f1; --ink: #1f1e1c; --muted: #5d5a53; --line: #d6ccb6; --accent: #1f1e1c;
-  --sans: "Jost", "Century Gothic", system-ui, sans-serif; --serif: "Source Serif 4", Georgia, serif;
-}
-* { box-sizing: border-box; }
-[hidden] { display: none !important; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--serif); font-size: 17px; line-height: 1.55; }
-a { color: inherit; }
-.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
-
-/* header */
-header.top { position: sticky; top: 0; z-index: 10; background: rgba(245, 240, 228, .94); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
-header.top .wrap { display: flex; align-items: center; gap: 28px; min-height: 72px; }
-.logo { font-family: var(--sans); font-weight: 400; text-decoration: none; line-height: .95; letter-spacing: .01em; }
-.logo small { display: block; font-size: .78rem; font-weight: 400; }
-.logo span { display: block; font-size: 1.32rem; }
-.logo i { display: block; width: 22px; border-top: 1.5px solid var(--ink); margin-top: 4px; }
-nav.main { display: flex; gap: 26px; margin-left: auto; font-size: .95rem; }
-nav.main a { text-decoration: none; padding: 6px 0; border-bottom: 1px solid transparent; }
-nav.main a:hover { border-bottom-color: var(--ink); }
-.flags { display: flex; gap: 6px; margin-left: 12px; }
-.flag { padding: 3px; border-radius: 4px; border: 1px solid transparent; background: none; line-height: 0; opacity: .5; cursor: pointer; }
-.flag.on { opacity: 1; border-color: var(--line); }
-.menu { display: none; margin-left: auto; background: none; border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; font-size: 1.1rem; cursor: pointer; }
-
-/* hero */
-.hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: center; gap: 24px; min-height: 620px; }
-.hero h1 { font-family: var(--sans); font-weight: 400; font-size: clamp(3.2rem, 7vw, 6rem); line-height: .9; margin: 40px 0 14px; letter-spacing: -.01em; }
-.hero h1 small { display: block; font-size: .62em; }
-.rule { display: block; width: 46px; border-top: 2px solid var(--ink); margin: 18px 0; }
-.hero h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 3vw, 2.35rem); line-height: 1.18; margin: 0 0 22px; }
-.hero p.lead { color: var(--muted); max-width: 32em; margin: 0 0 30px; }
-.hero .art { align-self: stretch; background: url("img/hero.jpg") center bottom / cover no-repeat; min-height: 520px;
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 22%); mask-image: linear-gradient(to right, transparent 0, #000 22%); }
-.btns { display: flex; flex-wrap: wrap; gap: 14px; }
-.btn { display: inline-flex; align-items: center; gap: 10px; font-family: var(--sans); font-size: .9rem; letter-spacing: .08em; text-transform: uppercase;
-  text-decoration: none; padding: 14px 22px; border: 1.5px solid var(--ink); border-radius: 2px; background: transparent; color: var(--ink); cursor: pointer; }
-.btn.dark { background: var(--ink); color: var(--paper); }
-.btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0, 0, 0, .12); }
-.btn:focus-visible, nav.main a:focus-visible, .flag:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-
-/* themes */
-.themes { border-bottom: 1px solid var(--line); }
-.themes .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
-.theme { text-align: center; padding: 34px 22px; }
-.theme + .theme { border-left: 1px solid var(--line); }
-.theme svg { width: 34px; height: 34px; stroke: var(--ink); fill: none; stroke-width: 1.4; }
-.theme h3 { font-family: var(--sans); font-weight: 500; letter-spacing: .14em; font-size: .9rem; margin: 12px 0 6px; text-transform: uppercase; }
-.theme p { margin: 0; color: var(--muted); font-size: .98rem; }
-.theme .ch { display: block; margin-top: 6px; font-family: var(--sans); font-size: .78rem; letter-spacing: .06em; color: #8a8478; }
-
-/* panels */
-.panels { padding: 40px 0 10px; }
-.panels .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-.panel { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 34px; display: grid; gap: 24px; }
-.panel.book { grid-template-columns: 190px 1fr; align-items: start; }
-.panel.book img { width: 100%; height: auto; box-shadow: 8px 10px 24px rgba(0, 0, 0, .22); border-radius: 2px; }
-.eyebrow { font-family: var(--sans); font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
-.panel h2 { font-weight: 400; font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.15; margin: 0 0 12px; }
-.panel p { margin: 0 0 14px; color: var(--muted); }
-.panel ul { list-style: none; padding: 0; margin: 0 0 22px; }
-.panel li { padding-left: 26px; position: relative; margin: 6px 0; }
-.panel li::before { content: "✓"; position: absolute; left: 0; top: 0; width: 18px; height: 18px; border-radius: 50%; background: var(--ink); color: var(--paper);
-  font-size: .7rem; display: grid; place-items: center; margin-top: 4px; font-family: var(--sans); }
-.panel.tools { background: #e9e8e3; }
-.tool { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; align-items: center; text-decoration: none; padding: 16px 0; border-top: 1px solid var(--line); }
-.tool:last-child { border-bottom: 1px solid var(--line); }
-.tool b { font-family: var(--sans); font-weight: 500; font-size: 1.08rem; letter-spacing: .02em; }
-.tool span { grid-column: 1; color: var(--muted); font-size: .96rem; }
-.tool em { grid-row: 1 / span 2; grid-column: 2; font-style: normal; font-family: var(--sans); font-size: 1.3rem; }
-.tool:hover b { text-decoration: underline; }
-
-/* author, footer */
-.author { padding: 46px 0 30px; }
-.author .wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; border-top: 1px solid var(--line); padding-top: 36px; }
-.author h2 { font-family: var(--sans); font-weight: 400; letter-spacing: .08em; margin: 0; font-size: 1.7rem; }
-.author p { margin: 0 0 10px; color: var(--muted); }
-footer { border-top: 1px solid var(--line); padding: 22px 0 40px; font-family: var(--sans); font-size: .85rem; color: var(--muted); }
-footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: space-between; }
-
-@media (max-width: 1080px) {
-  .panels .wrap { grid-template-columns: 1fr; }
-}
-@media (max-width: 900px) {
-  nav.main { display: none; position: absolute; top: 72px; left: 0; right: 0; background: var(--paper); flex-direction: column; gap: 0; padding: 8px 24px 16px; border-bottom: 1px solid var(--line); }
-  nav.main.open { display: flex; }
-  .menu { display: block; }
-  .flags { margin-left: 0; }
-  .hero .wrap { grid-template-columns: 1fr; min-height: 0; }
-  .hero .art { min-height: 360px; order: 2; margin: 0 -24px; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 18%); mask-image: linear-gradient(to bottom, transparent 0, #000 18%); }
-  .themes .wrap { grid-template-columns: 1fr 1fr; }
-  .theme:nth-child(3) { border-left: 0; }
-  .theme:nth-child(n+3) { border-top: 1px solid var(--line); }
-  .panels .wrap, .author .wrap { grid-template-columns: 1fr; }
-}
-@media (max-width: 560px) {
-  .wrap { padding: 0 16px; }
-  .themes .wrap { grid-template-columns: 1fr; }
-  .theme + .theme { border-left: 0; border-top: 1px solid var(--line); }
-  .panel { padding: 24px; }
-  .panel.book { grid-template-columns: 1fr; }
-  .panel.book img { max-width: 200px; }
-}
-</style>
+<link rel="stylesheet" href="home.css">
 </head>
 <body>
 <header class="top">
@@ -122,7 +16,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: s
     <a class="logo" href="index.html" aria-label="The ReplaceMind, home"><small>THE</small><span>REPLACE MIND</span><i></i></a>
     <button class="menu" id="menu" aria-label="Menu" aria-expanded="false">☰</button>
     <nav class="main" id="nav" aria-label="Main">
-      <a href="#book">The book</a>
+      <a href="libro.html">The book</a>
       <a href="#themes">Themes</a>
       <a href="#tools">Simulators</a>
       <a href="#author">The author</a>
@@ -141,7 +35,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: s
         <h2>The Mind That Takes<br>Your Job</h2>
         <p class="lead">A book on how artificial intelligence and robots are changing work, incomes and society, built on a model whose numbers and code are public.</p>
         <div class="btns">
-          <a class="btn dark" id="readBtn" href="#book">Read the book <span aria-hidden="true">→</span></a>
+          <a class="btn dark" href="libro.html">Read the book <span aria-hidden="true">→</span></a>
           <a class="btn" href="simulator.html">Try the simulator <span aria-hidden="true">→</span></a>
         </div>
       </div>
@@ -184,8 +78,8 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: s
             <li>The model and its code are public</li>
           </ul>
           <div class="btns">
-            <a class="btn dark" id="bookBtn" href="book/The_ReplaceMind_EN.pdf" download>Download the book (PDF) <span aria-hidden="true">↓</span></a>
-            <a class="btn" id="donateBtn" href="#" hidden>Support the project <span aria-hidden="true">♡</span></a>
+            <a class="btn dark" href="libro.html">Download the book <span aria-hidden="true">↓</span></a>
+            <a class="btn js-donate" href="#" hidden>Support the project <span aria-hidden="true">♡</span></a>
           </div>
         </div>
       </article>
@@ -224,14 +118,9 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: s
 </footer>
 
 <script src="i18n.js"></script>
+<script src="site.js"></script>
 <script>
 (function () {
-  // ---- full book by language (free download) and donations (empty = the button stays hidden)
-  const SITE = {
-    book: { it: "book/The_ReplaceMind_IT.pdf", en: "book/The_ReplaceMind_EN.pdf" },
-    donation: "",
-  };
-
   const IT = {
     "__title": "The ReplaceMind",
     "The book": "Il libro", "Themes": "Temi", "Simulators": "Simulatori", "The author": "L’autore", "Contact": "Contatti",
@@ -251,7 +140,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: s
     "37 chapters on what artificial intelligence and robots will do to work, from the tasks of a single job to the economy of the world.":
       "37 capitoli su che cosa faranno l’intelligenza artificiale e i robot al lavoro, dai compiti di una singola professione all’economia del mondo.",
     "Free, in Italian and English": "Gratis, in italiano e in inglese", "A source for every figure": "Una fonte per ogni numero", "The model and its code are public": "Il modello e il suo codice sono pubblici",
-    "Download the book (PDF) <span aria-hidden=\"true\">↓</span>": "Scarica il libro (PDF) <span aria-hidden=\"true\">↓</span>",
+    "Download the book <span aria-hidden=\"true\">↓</span>": "Scarica il libro <span aria-hidden=\"true\">↓</span>",
     "Support the project <span aria-hidden=\"true\">♡</span>": "Sostieni il progetto <span aria-hidden=\"true\">♡</span>",
     "The simulators": "I simulatori", "Simulate the future<br>of your work": "Simula il futuro<br>del tuo lavoro",
     "The same data, rules and numbers as the book, month by month, in your browser.": "Gli stessi dati, le stesse regole e gli stessi numeri del libro, mese per mese, nel tuo browser.",
@@ -269,29 +158,8 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: s
   if (lang === "it") document.querySelector("meta[name=description]").content =
     "The ReplaceMind, di E.L. De Vito: un libro su come l’intelligenza artificiale e i robot stanno cambiando il lavoro, con simulatori pubblici del lavoro, dell’economia e del rischio sociale.";
 
-  // pages of the site keep the language
-  document.querySelectorAll("a[href$='.html']").forEach(a => { const u = new URL(a.getAttribute("href"), location.href); u.searchParams.set("lang", lang); a.href = u.toString(); });
-
-  // cover, book and donation buttons
   document.getElementById("cover").src = "img/cover-" + lang + ".jpg";
-  document.getElementById("bookBtn").href = SITE.book[lang];
-  if (SITE.donation) { const d = document.getElementById("donateBtn"); d.href = SITE.donation; d.hidden = false; }
-
-  // language flags, same choice as the other pages
-  const FLAGS = { it: ['<svg viewBox="0 0 3 2" width="22" height="15" aria-hidden="true"><rect width="1" height="2" fill="#009246"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ce2b37"/></svg>', "Italiano"],
-                  en: ['<svg viewBox="0 0 60 30" width="22" height="15" aria-hidden="true"><clipPath id="ukh"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukh)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg>', "English"] };
-  const flags = document.getElementById("flags");
-  ["it", "en"].forEach(l => {
-    const b = document.createElement("button"); b.type = "button"; b.className = "flag" + (l === lang ? " on" : ""); b.innerHTML = FLAGS[l][0];
-    b.title = FLAGS[l][1]; b.setAttribute("aria-label", FLAGS[l][1]); b.setAttribute("aria-pressed", l === lang ? "true" : "false");
-    b.onclick = () => { if (l === lang) return; try { localStorage.setItem("tlf-lang", l); } catch (e) { /* ignore */ } const u = new URL(location.href); u.searchParams.set("lang", l); location.href = u.toString(); };
-    flags.appendChild(b);
-  });
-
-  // mobile menu
-  const menu = document.getElementById("menu"), nav = document.getElementById("nav");
-  menu.onclick = () => { const o = nav.classList.toggle("open"); menu.setAttribute("aria-expanded", o ? "true" : "false"); };
-  nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => { nav.classList.remove("open"); menu.setAttribute("aria-expanded", "false"); }));
+  siteChrome();
 })();
 </script>
 </body>
