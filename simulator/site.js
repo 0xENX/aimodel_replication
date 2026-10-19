@@ -3,7 +3,7 @@
 // button written in each language; empty = the donation box and buttons stay hidden.
 window.SITE = {
   book: { it: "book/The_ReplaceMind_IT.pdf", en: "book/The_ReplaceMind_EN.pdf" },
-  paypal: { clientId: "BAAkPVaCyuQ1CL-nZDnU34lPq1uQ-OXe5KyMP6_clgCzmX62UHhxlVOhMlWnipwJ_XdMeU-7SkNUsUhbpA", button: "9V4SVW6LCJYXQ" },
+  paypal: { clientId: "BAAkPVaCyuQ1CL-nZDnU34lPq1uQ-OXe5KyMP6_clgCzmX62UHhxlVOhMlWnipwJ_XdMeU-7SkNUsUhbpA", button: { it: "9V4SVW6LCJYXQ", en: "AZA93J9H9625N" } },
 };
 
 // Language flags, mobile menu, links that keep the language, donation buttons
