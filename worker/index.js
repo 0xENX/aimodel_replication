@@ -25,6 +25,13 @@ export class Downloads extends DurableObject {
   async all() {
     return Object.fromEntries(await this.ctx.storage.list());
   }
+  // "reset" deletes nothing: it stores today's numbers as the starting point, and the table shows what comes after
+  async rebase() {
+    const now = Object.fromEntries(await this.ctx.storage.list());
+    delete now.baseline;
+    now.since = new Date().toISOString();
+    await this.ctx.storage.put("baseline", now);
+  }
 }
 
 const counter = env => env.DOWNLOADS.get(env.DOWNLOADS.idFromName("book"));
@@ -38,16 +45,19 @@ function isNewDownload(request) {
 
 function statsPage(data) {
   const files = [...FILES];
-  const days = [...new Set(Object.keys(data).filter(k => /^\d{4}-\d{2}-\d{2}\|/.test(k)).map(k => k.split("|")[0]))].sort().reverse();
-  const cell = v => `<td>${v || 0}</td>`;
+  // numbers since the last "reset": the stored starting point is subtracted, nothing is deleted
+  const base = data.baseline || {};
+  const v = k => Math.max(0, (data[k] || 0) - (base[k] || 0));
+  const days = [...new Set(Object.keys(data).filter(k => /^\d{4}-\d{2}-\d{2}\|/.test(k) && v(k) > 0).map(k => k.split("|")[0]))].sort().reverse();
+  const cell = n => `<td>${n}</td>`;
+  const line = (label, key, cls = "") => `<tr${cls}><th>${label}</th>${files.map(f => cell(v(key(f)))).join("")}${cell(files.reduce((s, f) => s + v(key(f)), 0))}</tr>`;
   const head = `<tr><th></th>${files.map(f => `<th>${f.replace("The_ReplaceMind_", "")}</th>`).join("")}<th>Total</th></tr>`;
-  const total = `<tr><th>Total</th>${files.map(f => cell(data[f])).join("")}${cell(files.reduce((s, f) => s + (data[f] || 0), 0))}</tr>`;
-  const rows = days.map(d => `<tr><th>${d}</th>${files.map(f => cell(data[d + "|" + f])).join("")}${cell(files.reduce((s, f) => s + (data[d + "|" + f] || 0), 0))}</tr>`).join("");
-  const robots = `<tr class="robots"><th>Robots</th>${files.map(f => cell(data["robot|" + f])).join("")}${cell(files.reduce((s, f) => s + (data["robot|" + f] || 0), 0))}</tr>`;
+  const since = base.since ? `Counting since ${base.since.slice(0, 16).replace("T", " ")} UTC. ` : "";
   return `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>Downloads</title>
 <style>body{font:15px system-ui,sans-serif;margin:30px;color:#1f1e1c;background:#f5f0e4}table{border-collapse:collapse}th,td{border:1px solid #d6ccb6;padding:6px 12px;text-align:right}th{background:#ece5d4}tr.robots{color:#8a8070;font-style:italic}</style>
-<h1>Downloads of The ReplaceMind</h1><table>${head}${total}${rows}${robots}</table>
-<p style="color:#8a8070">Total and days count readers only. Robots (search engines, link previews, scripts) are counted apart, since this change.</p>`;
+<h1>Downloads of The ReplaceMind</h1><table>${head}${line("Total", f => f)}${days.map(d => line(d, f => d + "|" + f)).join("")}${line("Robots", f => "robot|" + f, ' class="robots"')}</table>
+<p style="color:#8a8070">${since}Total and days count readers only. Robots (search engines, link previews, scripts) are counted apart.</p>
+<form method="post" onsubmit="return confirm('Start counting again from zero? The numbers so far are kept, only no longer shown.')"><button style="font:inherit;padding:6px 14px;margin-top:10px;cursor:pointer">Reset counters</button></form>`;
 }
 
 export default {
@@ -55,6 +65,11 @@ export default {
     const url = new URL(request.url);
     if (url.pathname === "/stats") {
       if (!env.STATS_KEY || url.searchParams.get("k") !== env.STATS_KEY) return new Response("Not found", { status: 404 });
+      // the button posts back to the same address (key included); after the reset, back to the table
+      if (request.method === "POST") {
+        await counter(env).rebase();
+        return Response.redirect(url.toString(), 303);
+      }
       return new Response(statsPage(await counter(env).all()), { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } });
     }
     const response = await env.ASSETS.fetch(request);
