@@ -291,6 +291,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   ["job", "new", "ai", "robot", "muted", "line"].forEach(k => C[k] = css.getPropertyValue("--" + k).trim());
 
   const sel = $("job");
+  { const o = document.createElement("option"); o.value = "all"; o.textContent = L("Global view", "Visione globale"); sel.appendChild(o); }
   JOBS.forEach(j => { const o = document.createElement("option"); o.value = j.id; o.textContent = jn(j); sel.appendChild(o); });
   const regSel = $("region"), groups = {};
   REGIONS.forEach(r => {
@@ -299,6 +300,9 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   });
   const region = () => REGIONS.find(r => r.id === regSel.value);
   const job = () => JOBS.find(j => j.id === sel.value);
+  const GLOBAL = () => sel.value === "all";
+  const picked = () => GLOBAL() ? JOBS : [job()];
+  const WEIGHTS = DATA.aggregate.weights;                       // employment 2025 (BLS), as in the book's aggregate
 
   const fill = (id, items, value) => { const s = $(id); items.forEach(([v, t]) => { const o = document.createElement("option"); o.value = v; o.textContent = t; s.appendChild(o); }); s.value = value; };
   const monthItems = MONTHS.map((m, i) => [i, m]);
@@ -316,25 +320,36 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     const f0 = logistic(DATA.start, mid);
     return theta * (logistic(t, mid) - f0) / (1 - f0);
   };
-  const midAI = () => job().mid_adv + DATA.region_lag[region().g];
-  const midRob = () => midAI() + DATA.robot_lag;
-  function shares(t) {
-    const j = job();
-    const lostAI = x => j.phi * j.exposure_ai * adoption(x, midAI(), j.theta);
-    const lostRob = x => j.exposure_robots * adoption(x, midRob(), j.theta);  // Frey-Osborne is already the automatable share
+  const midAI = (j = job()) => j.mid_adv + DATA.region_lag[region().g];
+  const midRob = (j = job()) => midAI(j) + DATA.robot_lag;
+  function shares(t, j = job()) {
+    const lostAI = x => j.phi * j.exposure_ai * adoption(x, midAI(j), j.theta);
+    const lostRob = x => j.exposure_robots * adoption(x, midRob(j), j.theta);  // Frey-Osborne is already the automatable share
     let ai = lostAI(t), rob = lostRob(t);
     if (ai + rob > DATA.cap) { const s = DATA.cap / (ai + rob); ai *= s; rob *= s; }
     const created = DATA.new_tasks * Math.min(DATA.cap, lostAI(t - DATA.new_tasks_lag) + lostRob(t - DATA.new_tasks_lag));
     return { ai, rob, created };
   }
   // demand for the occupation (BLS 2025-35 pace, flat for office and administrative support)
-  const demandIdx = t => Math.pow(1 + job().demand_growth, t - DATA.start);
+  const demandIdx = (t, j = job()) => Math.pow(1 + j.demand_growth, t - DATA.start);
+  const levelOf = (j, t) => { const s = shares(t, j); return demandIdx(t, j) * (1 - s.ai - s.rob + s.created); };
+  // share of the field for each occupation: one occupation, or the nineteen weighted by their jobs at the start month
+  function fieldShares() {
+    const js = picked(), f = S.from / 12;
+    if (js.length === 1) return [1];
+    const v = js.map(j => WEIGHTS[j.id] * levelOf(j, f)), tot = v.reduce((a, b) => a + b, 0);
+    return v.map(x => x / tot);
+  }
   // jobs by cause since the start month, scaled so that the field starts with N0 jobs
   function counts(t) {
-    const f = S.from / 12, s0 = shares(f), s1 = shares(t), d0 = demandIdx(f), d1 = demandIdx(t);
-    const K = N0 / (d0 * (1 - s0.ai - s0.rob + s0.created));
-    const ai = Math.round(K * (d1 * s1.ai - d0 * s0.ai)), robot = Math.round(K * (d1 * s1.rob - d0 * s0.rob));
-    const created = Math.round(K * (d1 * s1.created - d0 * s0.created)), demand = Math.round(K * (d1 - d0));
+    const f = S.from / 12, w = fieldShares(), acc = { ai: 0, robot: 0, created: 0, demand: 0 };
+    picked().forEach((j, i) => {
+      const s0 = shares(f, j), s1 = shares(t, j), d0 = demandIdx(f, j), d1 = demandIdx(t, j);
+      const K = N0 * w[i] / (d0 * (1 - s0.ai - s0.rob + s0.created));
+      acc.ai += K * (d1 * s1.ai - d0 * s0.ai); acc.robot += K * (d1 * s1.rob - d0 * s0.rob);
+      acc.created += K * (d1 * s1.created - d0 * s0.created); acc.demand += K * (d1 - d0);
+    });
+    const ai = Math.round(acc.ai), robot = Math.round(acc.robot), created = Math.round(acc.created), demand = Math.round(acc.demand);
     return { ai, robot, created, demand, jobs: N0 + demand - ai - robot + created };
   }
 
@@ -348,13 +363,24 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     S = { from, to, t: from, frac: 0, jobs, agents: { ai: [], robot: [] }, eaten: { ai: 0, robot: 0 }, created: 0, demand: 0, hist: [], running: false, done: false, flashes: [] };
     $("end").hidden = true;
     $("play").textContent = L("Start", "Avvia");
-    const j = job();
-    $("jobname").textContent = jn(j) + " · " + L(region().name, region().it);
-    $("typ").textContent = TYPE_NAME[j.type];
-    $("eai").textContent = Math.round(j.exposure_ai * 100) + "%";
-    $("erob").textContent = j.exposure_robots ? Math.round(j.exposure_robots * 100) + "%" : L("none", "nessuna");
-    $("hAi").textContent = fmtY(midAI());
-    $("hRob").textContent = j.exposure_robots ? fmtY(midRob()) : L("none", "nessuno");
+    const regName = L(region().name, region().it);
+    if (GLOBAL()) {
+      const wsum = JOBS.reduce((a, j) => a + WEIGHTS[j.id], 0), avg = k => JOBS.reduce((a, j) => a + WEIGHTS[j.id] * j[k], 0) / wsum;
+      $("jobname").textContent = L("Global view", "Visione globale") + " · " + regName;
+      $("typ").textContent = L("19 occupations, weighted by jobs", "19 mestieri, pesati per occupati");
+      $("eai").textContent = Math.round(avg("exposure_ai") * 100) + "%";
+      $("erob").textContent = Math.round(avg("exposure_robots") * 100) + "%";
+      $("hAi").textContent = L("by occupation", "per mestiere");
+      $("hRob").textContent = L("by occupation", "per mestiere");
+    } else {
+      const j = job();
+      $("jobname").textContent = jn(j) + " · " + regName;
+      $("typ").textContent = TYPE_NAME[j.type];
+      $("eai").textContent = Math.round(j.exposure_ai * 100) + "%";
+      $("erob").textContent = j.exposure_robots ? Math.round(j.exposure_robots * 100) + "%" : L("none", "nessuna");
+      $("hAi").textContent = fmtY(midAI());
+      $("hRob").textContent = j.exposure_robots ? fmtY(midRob()) : L("none", "nessuno");
+    }
     monthTick();
     draw(); stats(); drawChart();
   }
@@ -364,10 +390,12 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   // Every month the model says how many jobs should be lost and created by now;
   // agents get the difference as "hunger", new roles appear directly
   function monthTick() {
-    const j = job(), t = S.t / 12, c = counts(t);
-    const target = { ai: c.ai, robot: c.robot };
-    const level = { ai: adoption(t, midAI(), j.theta) / j.theta * j.exposure_ai,
-                    robot: adoption(t, midRob(), j.theta) / j.theta * j.exposure_robots };
+    const t = S.t / 12, c = counts(t), w = fieldShares();
+    const target = { ai: c.ai, robot: c.robot }, level = { ai: 0, robot: 0 };
+    picked().forEach((j, i) => {
+      level.ai += w[i] * adoption(t, midAI(j), j.theta) / j.theta * j.exposure_ai;
+      level.robot += w[i] * adoption(t, midRob(j), j.theta) / j.theta * j.exposure_robots;
+    });
     for (const kind of ["ai", "robot"]) {
       const list = S.agents[kind];
       const want = Math.round(MAX_AGENTS * level[kind]);
@@ -436,14 +464,17 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
       S.agents[kind].forEach(a => a.hunger = 0);
     }
     $("play").textContent = L("Start", "Avvia");
-    const r = modelResult(), diff = r.jobs - N0, j = job(), g = region().g;
-    $("endtitle").textContent = jn(j) + " · " + L(region().name, region().it) + " · " + fmtM(S.from) + " → " + fmtM(S.to);
+    const r = modelResult(), diff = r.jobs - N0, j = GLOBAL() ? DATA.aggregate : job(), g = region().g;
+    $("endtitle").textContent = (GLOBAL() ? L("Global view", "Visione globale") : jn(j)) + " · " + L(region().name, region().it) + " · " + fmtM(S.from) + " → " + fmtM(S.to);
     $("endpct").textContent = (diff >= 0 ? "+" : "−") + Math.abs(Math.round(diff / N0 * 100)) + "%";
     $("endpct").style.color = diff >= 0 ? C.job : C.ai;
-    $("endtxt").textContent = L(r.ai + " jobs replaced by AI, " + r.robot + " by robots, " + r.created + " new roles, " + (r.demand >= 0 ? "+" : "−") + Math.abs(r.demand) + " from demand for the occupation. " + r.jobs + " jobs compared with " + N0 + " at the start.",
-      r.ai + " posti sostituiti dall’AI, " + r.robot + " dai robot, " + r.created + " ruoli nuovi, " + (r.demand >= 0 ? "+" : "−") + Math.abs(r.demand) + " dalla domanda del mestiere. " + r.jobs + " posti contro " + N0 + " all’inizio.");
+    $("endtxt").textContent = L(r.ai + " jobs replaced by AI, " + r.robot + " by robots, " + r.created + " new roles, " + (r.demand >= 0 ? "+" : "−") + Math.abs(r.demand) + (GLOBAL() ? " from demand for the occupations. " : " from demand for the occupation. ") + r.jobs + " jobs compared with " + N0 + " at the start.",
+      r.ai + " posti sostituiti dall’AI, " + r.robot + " dai robot, " + r.created + " ruoli nuovi, " + (r.demand >= 0 ? "+" : "−") + Math.abs(r.demand) + (GLOBAL() ? " dalla domanda dei mestieri. " : " dalla domanda del mestiere. ") + r.jobs + " posti contro " + N0 + " all’inizio.");
     const b = y => { const v = Math.round(j.results[g + "_" + y]); return (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v); };
-    $("endbook").textContent = L("Book, chapter 36, Table 65 (" + g + ", from January 2026): " + b(2036) + "% in 2036, " + b(2046) + "% in 2046. Jobs in this occupation compared with 2026, demand for it included; not unemployment: people can move to other jobs.",
+    $("endbook").textContent = GLOBAL()
+      ? L("The nineteen occupations of Table 65 together, weighted by 2025 employment (" + g + ", from January 2026): " + b(2036) + "% in 2036, " + b(2046) + "% in 2046. Jobs compared with 2026, demand included; not unemployment: new work in other occupations is counted in the economy model.",
+          "I diciannove mestieri della Tabella 65 insieme, pesati per gli occupati 2025 (" + g + ", da gennaio 2026): " + b(2036) + "% nel 2036, " + b(2046) + "% nel 2046. Posti rispetto al 2026, domanda compresa; non è disoccupazione: il lavoro nuovo in altri mestieri è contato nel modello economico.")
+      : L("Book, chapter 36, Table 65 (" + g + ", from January 2026): " + b(2036) + "% in 2036, " + b(2046) + "% in 2046. Jobs in this occupation compared with 2026, demand for it included; not unemployment: people can move to other jobs.",
       "Libro, capitolo 36, Tabella 65 (" + g + ", da gennaio 2026): " + b(2036) + "% nel 2036, " + b(2046) + "% nel 2046. Posti nel mestiere rispetto al 2026, domanda compresa; non è disoccupazione: le persone possono spostarsi in altri lavori.");
     $("end").hidden = false;
     stats(); drawChart();
@@ -568,7 +599,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   $("srcTable").innerHTML = "<thead><tr><th>" + L("Occupation", "Mestiere") + "</th><th>O*NET-SOC</th><th>" + L("Type of work", "Tipo di lavoro") + "</th><th class=\"n\">" + L("AI exposure", "Esposizione AI") + "</th><th class=\"n\">" + L("Robots", "Robot") + "</th><th class=\"n\">" + L("Demand (BLS 2025–35)", "Domanda (BLS 2025–35)") + "</th><th class=\"n\">ADV 2036</th><th class=\"n\">ADV 2046</th></tr></thead><tbody>" +
     [...JOBS].sort((x, y) => x.results.ADV_2046 - y.results.ADV_2046 || x.results.ADV_2036 - y.results.ADV_2036).map(j => "<tr><td>" + jn(j) + "</td><td>" + j.soc + "</td><td>" + TYPE_NAME[j.type] + "</td><td class=\"n\">" + pct(j.exposure_ai) + "</td><td class=\"n\">" + pct(j.exposure_robots) + "</td><td class=\"n\">" + (j.bls_soc.startsWith("43-") ? L("flat (BLS: ", "ferma (BLS: ") + sgn(j.bls_change) + ", AI)" : sgn(j.bls_change)) + "</td><td class=\"n\">" + res(j, "ADV_2036") + "</td><td class=\"n\">" + res(j, "ADV_2046") + "</td></tr>").join("") + "</tbody>";
 
-  sel.value = "clerk";
+  sel.value = "all";
   regSel.value = "ADV";
   reset();
   requestAnimationFrame(loop);
