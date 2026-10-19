@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="author" content="Enrico Lorenzo De Vito">
+<title>AI + Robot Job Impact</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: control bars on top, simulation field on the left with legend below, numbers and chart on the right (stacked on phones) */
+:root {
+  --bg: #0b1220;
+  --panel: #111a2c;
+  --line: #22304a;
+  --fg: #dbe4f3;
+  --muted: #8292ad;
+  --job: #4fd59a;
+  --new: #3d8bff;
+  --ai: #f0507a;
+  --robot: #f5c842;
+  --accent: #7aa7ff;
+  --field: #070c16;
+  --f-ui: "IBM Plex Sans", system-ui, sans-serif;
+  --f-data: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg); color: var(--fg); font-family: var(--f-ui); font-size: 14px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 28px;
+}
+[hidden] { display: none !important; }
+.topnav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+.topnav .in { max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; padding-block: 10px; }
+.topnav a.brand, .topnav .brand { color: #ffd166; text-decoration: none; background: none; border-top: 0; border-bottom: 0; border-left: 0; border-radius: 0; padding: 0 16px 0 0; font-weight: 600; margin-right: 10px; padding-right: 16px; border-right: 1px solid var(--line); font-size: .9rem; cursor: pointer; }
+.topnav a.brand:hover { background: none; border-color: var(--line); color: #ffe08a; }
+.topnav a { color: var(--fg); text-decoration: none; font-size: .88rem; font-weight: 500; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: color-mix(in srgb, var(--fg) 6%, transparent); }
+.topnav a:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.topnav a[aria-current="page"] { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+.topnav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; }
+h1 { margin: 0; font-size: 1.45rem; font-weight: 600; text-wrap: balance; }
+.byline { color: var(--accent); font-size: .85rem; font-weight: 500; margin-block: 2px 4px; }
+.sub { color: var(--muted); font-size: .85rem; max-width: 70ch; }
+.clock { font-family: var(--f-data); font-size: 1.05rem; padding: 6px 14px; border: 1px solid var(--job); color: var(--job); border-radius: 999px; font-variant-numeric: tabular-nums; }
+
+.bar { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: flex-end; }
+.bar .title { flex-basis: 100%; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); }
+.ctl { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.ctl label { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.ctl.check { flex-direction: row; align-items: center; gap: 8px; }
+.ctl.check label { text-transform: none; letter-spacing: 0; font-size: .85rem; color: var(--fg); }
+.pair { display: flex; gap: 6px; }
+select {
+  background: var(--field); color: var(--fg); border: 1px solid var(--line); border-radius: 6px;
+  padding: 7px 9px; font: inherit; font-family: var(--f-data); font-size: .85rem;
+}
+input[type="range"] { width: 130px; accent-color: var(--accent); }
+#expAi { accent-color: var(--ai); }
+#expRob, #robOn { accent-color: var(--robot); }
+.rangeval { font-family: var(--f-data); font-size: .8rem; color: var(--fg); text-transform: none; }
+.btns { display: flex; gap: 8px; margin-left: auto; }
+button {
+  font: inherit; font-weight: 600; font-size: .85rem; border-radius: 6px; padding: 8px 16px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--field); color: var(--fg);
+}
+button.primary { background: var(--job); border-color: var(--job); color: #062014; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.main { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; align-items: start; }
+@media (max-width: 820px) { .main { grid-template-columns: minmax(0, 1fr); } .btns { margin-left: 0; } }
+.left { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.stage { position: relative; background: var(--field); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; aspect-ratio: 1 / 1; max-width: 100%; }
+#field { display: block; width: 100%; height: 100%; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.legend .item { display: flex; align-items: flex-start; gap: 9px; min-width: 0; flex: 1 1 200px; }
+.legend b { display: block; font-weight: 600; font-size: .88rem; }
+.legend span { color: var(--muted); font-size: .78rem; line-height: 1.45; }
+.mark { flex: none; width: 11px; height: 11px; margin-top: 4px; }
+.mark.job { background: var(--job); border-radius: 50%; width: 8px; height: 8px; margin-top: 5px; }
+.mark.new { background: var(--new); border-radius: 50%; width: 8px; height: 8px; margin-top: 5px; box-shadow: 0 0 0 2px var(--field), 0 0 0 3px var(--new); }
+.mark.ai { background: var(--ai); border-radius: 50%; box-shadow: 0 0 8px var(--ai); }
+.mark.robot { background: var(--robot); border-radius: 2px; box-shadow: 0 0 8px var(--robot); }
+.overlay { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(7,12,22,.8); text-align: center; padding: 20px; }
+.overlay .box { max-width: 420px; display: flex; flex-direction: column; gap: 8px; }
+.overlay .big { font-family: var(--f-data); font-size: 2.2rem; }
+
+.side { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.card h2 { margin: 0; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 500; }
+.stats { display: grid; grid-template-columns: 1fr auto; gap: 7px 10px; font-size: .88rem; }
+.stats .v { font-family: var(--f-data); font-variant-numeric: tabular-nums; text-align: right; }
+.v.job { color: var(--job); } .v.new { color: var(--new); } .v.ai { color: var(--ai); } .v.robot { color: var(--robot); }
+.stats hr { grid-column: 1 / -1; border: 0; border-top: 1px solid var(--line); margin: 2px 0; width: 100%; }
+#chart { width: 100%; height: 150px; display: block; }
+.keys { display: flex; flex-wrap: wrap; gap: 12px; font-size: .75rem; color: var(--muted); }
+.keys i { display: inline-block; width: 12px; height: 2px; vertical-align: middle; margin-right: 5px; }
+.note { color: var(--muted); font-size: .78rem; line-height: 1.5; margin: 0; }
+.note b { color: var(--fg); font-weight: 500; }
+.appendix { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; line-height: 1.55; }
+.appendix h2 { margin: 0; font-size: 1.05rem; font-weight: 600; }
+.appendix h3 { margin: 6px 0 0; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); font-weight: 500; }
+.appendix p, .appendix ul { margin: 0; max-width: 85ch; color: var(--fg); font-size: .88rem; }
+.appendix ul { padding-left: 1.2em; display: flex; flex-direction: column; gap: 6px; }
+.appendix li { color: var(--muted); }
+.appendix li b { color: var(--fg); font-weight: 500; }
+.appendix cite { font-style: italic; }
+.tablewrap { overflow-x: auto; }
+#srcTable { border-collapse: collapse; font-size: .8rem; min-width: 640px; width: 100%; }
+#srcTable th, #srcTable td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+#srcTable th { color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .05em; font-size: .7rem; }
+#srcTable td.n { font-family: var(--f-data); font-variant-numeric: tabular-nums; text-align: right; }
+#srcTable th.n { text-align: right; }
+.topnav .flags { margin-left: auto; display: flex; gap: 6px; }
+.topnav .flag { padding: 3px; border-radius: 4px; border: 1px solid transparent; background: none; line-height: 0; opacity: .55; cursor: pointer; }
+.topnav .flag.on { opacity: 1; border-color: var(--line); }
+.topnav .flag:hover { opacity: 1; }
+footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--line); padding-top: 12px; }
+</style>
+<script src="i18n.js"></script>
+</head>
+<body>
+
+<nav class="topnav" aria-label="Main">
+  <div class="in">
+    <a class="brand" href="index.html">The ReplaceMind</a>
+    <a href="simulator.html" aria-current="page">Job Simulator</a>
+    <a href="model.html">Economy Model</a>
+    <a href="social.html">Social Risk</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>AI + Robot Job Impact</h1>
+      <div class="byline">by Enrico Lorenzo De Vito</div>
+      <div class="sub">Each green dot is a job, electric-blue dots are new jobs. Red dots are AI systems, yellow squares are robots. The numbers are those of the forecast by occupation in the book The ReplaceMind (chapter 36, Table 65): one result for each occupation.</div>
+    </div>
+    <div class="clock" id="clock">Jan 2026</div>
+  </header>
+
+  <div class="bar">
+    <div class="ctl">
+      <label for="job">Occupation</label>
+      <select id="job"></select>
+    </div>
+    <div class="ctl">
+      <label for="region">Region</label>
+      <select id="region"></select>
+    </div>
+    <div class="ctl">
+      <label for="fromM">From</label>
+      <div class="pair"><select id="fromM" aria-label="From month"></select><select id="fromY" aria-label="From year"></select></div>
+    </div>
+    <div class="ctl">
+      <label for="toM">To</label>
+      <div class="pair"><select id="toM" aria-label="To month"></select><select id="toY" aria-label="To year"></select></div>
+    </div>
+    <div class="ctl">
+      <label for="spd">Speed</label>
+      <select id="spd">
+        <option value="2" selected>2 months/s</option>
+        <option value="4">4 months/s</option>
+        <option value="8">8 months/s</option>
+        <option value="16">16 months/s</option>
+      </select>
+    </div>
+    <div class="btns">
+      <button class="primary" id="play">Start</button>
+      <button id="reset">Restart</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="left">
+      <div class="stage">
+        <canvas id="field"></canvas>
+        <div class="overlay" id="end" hidden>
+          <div class="box">
+            <div class="note" id="endtitle"></div>
+            <div class="big" id="endpct"></div>
+            <div id="endtxt"></div>
+            <div class="note" id="endbook"></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="item"><i class="mark job"></i><div><b>Job</b><span>One position held by a person.</span></div></div>
+        <div class="item"><i class="mark new"></i><div><b>New job</b><span>New roles inside the occupation, such as the person who guides the AI tools, and jobs added when demand for the occupation grows.</span></div></div>
+        <div class="item"><i class="mark ai"></i><div><b>AI</b><span>Software: text, code, documents, customer service.</span></div></div>
+        <div class="item"><i class="mark robot"></i><div><b>Robot</b><span>AI with a physical body: vehicles, warehouse, kitchen and factory robots. Only in manual jobs, five years after AI.</span></div></div>
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="card">
+        <h2 id="jobname">Occupation</h2>
+        <div class="stats">
+          <span>Type of work</span><span class="v" id="typ"></span>
+          <span>Starting jobs</span><span class="v" id="s0"></span>
+          <span>Current jobs</span><span class="v job" id="s1"></span>
+          <span>Change since start</span><span class="v" id="s4"></span>
+          <hr>
+          <span>Replaced by AI</span><span class="v ai" id="s2"></span>
+          <span>Replaced by robots</span><span class="v robot" id="s2r"></span>
+          <span>New jobs</span><span class="v new" id="s3"></span>
+          <hr>
+          <span>AI exposure</span><span class="v ai" id="eai"></span>
+          <span>Robot exposure</span><span class="v robot" id="erob"></span>
+          <span>AI central year</span><span class="v ai" id="hAi"></span>
+          <span>Robots central year</span><span class="v robot" id="hRob"></span>
+          <span>Month</span><span class="v" id="s6"></span>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Month by month</h2>
+        <canvas id="chart"></canvas>
+        <div class="keys"><span><i style="background:var(--job)"></i>jobs</span><span><i style="background:var(--ai)"></i>lost to AI</span><span><i style="background:var(--robot)"></i>lost to robots</span><span><i style="background:var(--new)"></i>new jobs</span></div>
+      </div>
+      <p class="note"><b>One result per occupation.</b> The simulator shows the forecast by occupation of the book <cite>The ReplaceMind</cite>, chapter 36, Table 65: same data, same rules, same numbers. Nothing to adjust: choosing other assumptions would give other numbers, and the book gives one.</p>
+    </div>
+  </div>
+  <section class="appendix" id="appendix">
+    <h2>Appendix · Data and rules</h2>
+    <p>Every number comes from the file <code>outputs/occupations.json</code>, written by the module <code>aimodel/analysis/occupations.py</code> of the book's software. The book table and this page read the same file.</p>
+    <h3>Data</h3>
+    <ul>
+      <li><b>AI exposure</b>: share of the occupation's tasks whose time a GPT-type system with software tools can cut by at least half, rated by human experts. Eloundou, Manning, Mishkin and Rock, "GPTs are GPTs", <cite>Science</cite> 384 (2024); occupation file occ_level.csv, github.com/openai/GPTs-are-GPTs.</li>
+      <li><b>Classic office automation</b>: for office clerks, accountants and customer service the exposure is the higher of that value and the probability of computerisation of Frey and Osborne (2013): 0.96, 0.94 and 0.55. Never above 95%.</li>
+      <li><b>Robots</b>: probability of computerisation of Frey and Osborne for manual and physical jobs. Robots reach the central adoption year five years after AI.</li>
+      <li><b>Demand for the occupation</b>: BLS Employment Projections 2025–35 (published 21 September 2026), percent change in employment 2025–2035, extended at the same yearly pace to 2046 and used for every region, since no comparable projections by occupation exist for the others. BLS attributes to AI and automation only the decline of office and administrative support jobs: for office clerks and customer service demand is held flat, so that automation is not counted twice.</li>
+      <li><b>Observed decline</b>: Stanford Digital Economy Lab / ADP monthly series from 2022, each monthly change weighted by its year: 2026 and 2025 100%, 2024 50%, 2023 5%, 2022 1% (2022 and 2023 reflect post-pandemic over-hiring and higher interest rates). Measured against peers of the same age in the least exposed jobs and averaged over the six age groups: customer service −1.9% a year; software developers +0.4%, because the decline concerns only those under 30 (22–25 −2.4%, 26–30 −1.3%) while older developers grow.</li>
+    </ul>
+    <h3>Rules</h3>
+    <ul>
+      <li><b>Type of work</b>, following the IMF distinction between exposure and complementarity (Pizzinelli et al., WP/23/216; Cazzaniga et al., SDN/2024/001). Routine office and content work: 85% of the exposed work can be substituted and 85% of it is automated by 2046. Design with AI tools (the architect): 70% and 70%. Work with responsibility and human contact (doctor, nurse, teacher, lawyer): 55% and 47.5%, the book's central values. Manual work: 55% and 70% for the part done by AI; for robots the Frey and Osborne probability is already the automatable share, and 70% of it is automated by 2046. Software developers and customer service are counted as routine work because the observed data already show a decline among the young.</li>
+      <li><b>Adoption</b>: the book's S-curve (appendix A1), slope 0.425 a year, starting from zero in 2026. For customer service the central year is set so that the first simulated year, demand included, reproduces the weighted observed decline; office clerks use the customer service series; software developers, with no overall decline, and the other occupations use 2033. Emerging economies adopt 3 years later, low-income countries 6.5 years later.</li>
+      <li><b>New roles</b>: 0.15 new roles inside the occupation for each task lost, within 3 years. New work in other occupations is counted in the book's economy model, not here.</li>
+      <li><b>Result</b>: jobs in the occupation compared with 2026 = demand index × (1 − work taken by AI and robots + new roles). Where demand grows, as for nurses, cooks and electricians, the work taken by machines turns largely into more service with the same people, not into fewer jobs.</li>
+    </ul>
+    <div class="tablewrap"><table id="srcTable"></table></div>
+    <h3>Geography</h3>
+    <p>The book uses three groups: advanced, emerging and low-income economies. Each country or continent here takes the timing of its group: USA, Canada, Japan, Europe and Oceania as advanced; China, India, Russia, the rest of Asia and the Americas as emerging; Africa as low-income.</p>
+  </section>
+  <p class="note">The economy model of the book, with wages, incomes, public finance and policies, runs in the <a href="model.html" style="color: var(--accent)">Economy Model</a> page.</p>
+  <footer>© 2026 Enrico Lorenzo De Vito · AI + Robot Job Impact · The ReplaceMind, chapter 36 (aimodel v3.1)</footer>
+</div>
+
+<script>
+(() => {
+  /* OCCUPATIONS:BEGIN generated from outputs/occupations.json by simulator/sync_occupations.py, do not edit by hand */
+  const DATA = {"start":2026,"end":2046,"slope":0.425,"region_lag":{"ADV":0.0,"EME":3.0,"LIC":6.5},"robot_lag":5.0,"new_tasks":0.15,"new_tasks_lag":3.0,"cap":0.95,"types":{"routine":{"phi":0.85,"theta":0.85,"it":"Routine d'ufficio e contenuti","en":"Routine office and content work"},"architect":{"phi":0.7,"theta":0.7,"it":"Progettazione con strumenti AI","en":"Design with AI tools"},"care":{"phi":0.55,"theta":0.475,"it":"Responsabilità e contatto umano","en":"Responsibility and human contact"},"manual":{"phi":0.55,"theta":0.7,"it":"Manuale, soprattutto robot","en":"Manual, mainly robots"}},"observed":{"customer_service":-0.0192,"software_developers":0.0044},"bls_years":10.0,"occupations":[{"id":"clerk","en":"Office clerk","it":"Impiegato d'ufficio","soc":"43-9061","exposure_ai":0.95,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2032.5,"observed":"customer_service","bls_soc":"43-9061","bls_change":-6.0,"demand_growth":0.0,"work":{"ADV_2036":-49.8,"ADV_2046":-58.2,"EME_2036":-34.9,"EME_2046":-58.0,"LIC_2036":-14.1,"LIC_2046":-56.6},"results":{"ADV_2036":-49.8,"ADV_2046":-58.2,"EME_2036":-34.9,"EME_2046":-58.0,"LIC_2036":-14.1,"LIC_2046":-56.6}},{"id":"accountant","en":"Accountant","it":"Contabile","soc":"13-2011","exposure_ai":0.94,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2033.0,"observed":null,"bls_soc":"13-2011","bls_change":5.0,"demand_growth":0.004891,"work":{"ADV_2036":-47.5,"ADV_2046":-57.6,"EME_2036":-31.4,"EME_2046":-57.3,"LIC_2036":-11.8,"LIC_2046":-55.6},"results":{"ADV_2036":-44.9,"ADV_2046":-53.2,"EME_2036":-27.9,"EME_2046":-52.9,"LIC_2036":-7.4,"LIC_2046":-51.0}},{"id":"callcenter","en":"Call center agent","it":"Addetto call center","soc":"43-4051","exposure_ai":0.864,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2032.5,"observed":"customer_service","bls_soc":"43-4051","bls_change":-5.3,"demand_growth":0.0,"work":{"ADV_2036":-45.3,"ADV_2046":-53.0,"EME_2036":-31.7,"EME_2046":-52.7,"LIC_2036":-12.8,"LIC_2046":-51.5},"results":{"ADV_2036":-45.3,"ADV_2046":-53.0,"EME_2036":-31.7,"EME_2046":-52.7,"LIC_2036":-12.8,"LIC_2046":-51.5}},{"id":"translator","en":"Translator","it":"Traduttore","soc":"27-3091","exposure_ai":0.88,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2033.0,"observed":null,"bls_soc":"27-3091","bls_change":2.0,"demand_growth":0.001982,"work":{"ADV_2036":-44.5,"ADV_2046":-53.9,"EME_2036":-29.4,"EME_2046":-53.6,"LIC_2036":-11.0,"LIC_2046":-52.0},"results":{"ADV_2036":-43.3,"ADV_2046":-52.1,"EME_2036":-27.9,"EME_2046":-51.7,"LIC_2036":-9.2,"LIC_2046":-50.1}},{"id":"developer","en":"Software developer","it":"Sviluppatore software","soc":"15-1252","exposure_ai":0.842,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2033.0,"observed":"software_developers","bls_soc":"15-1252","bls_change":10.2,"demand_growth":0.00976,"work":{"ADV_2036":-42.5,"ADV_2046":-51.6,"EME_2036":-28.1,"EME_2046":-51.3,"LIC_2036":-10.5,"LIC_2046":-49.8},"results":{"ADV_2036":-36.7,"ADV_2046":-41.2,"EME_2036":-20.8,"EME_2046":-40.8,"LIC_2036":-1.4,"LIC_2046":-39.0}},{"id":"designer","en":"Graphic designer","it":"Grafico","soc":"27-1024","exposure_ai":0.821,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2033.0,"observed":null,"bls_soc":"27-1024","bls_change":-1.7,"demand_growth":-0.001713,"work":{"ADV_2036":-41.5,"ADV_2046":-50.3,"EME_2036":-27.4,"EME_2046":-50.0,"LIC_2036":-10.3,"LIC_2046":-48.5},"results":{"ADV_2036":-42.5,"ADV_2046":-52.0,"EME_2036":-28.6,"EME_2046":-51.7,"LIC_2036":-11.8,"LIC_2046":-50.3}},{"id":"journalist","en":"Journalist","it":"Giornalista","soc":"27-3023","exposure_ai":0.833,"exposure_robots":0.0,"type":"routine","phi":0.85,"theta":0.85,"mid_adv":2033.0,"observed":null,"bls_soc":"27-3023","bls_change":-5.9,"demand_growth":-0.006063,"work":{"ADV_2036":-42.1,"ADV_2046":-51.0,"EME_2036":-27.8,"EME_2046":-50.7,"LIC_2036":-10.4,"LIC_2046":-49.2},"results":{"ADV_2036":-45.5,"ADV_2046":-56.6,"EME_2036":-32.1,"EME_2046":-56.4,"LIC_2036":-15.7,"LIC_2046":-55.1}},{"id":"architect","en":"Solution architect","it":"Architetto software","soc":"15-1211","exposure_ai":0.824,"exposure_robots":0.0,"type":"architect","phi":0.7,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"15-1211","bls_change":7.9,"demand_growth":0.007632,"work":{"ADV_2036":-28.2,"ADV_2046":-34.2,"EME_2036":-18.6,"EME_2046":-34.0,"LIC_2036":-7.0,"LIC_2046":-33.0},"results":{"ADV_2036":-22.6,"ADV_2046":-23.4,"EME_2036":-12.2,"EME_2046":-23.2,"LIC_2036":0.4,"LIC_2046":-22.0}},{"id":"lawyer","en":"Lawyer","it":"Avvocato","soc":"23-1011","exposure_ai":0.8,"exposure_robots":0.0,"type":"care","phi":0.55,"theta":0.475,"mid_adv":2033.0,"observed":null,"bls_soc":"23-1011","bls_change":4.7,"demand_growth":0.004603,"work":{"ADV_2036":-14.6,"ADV_2046":-17.7,"EME_2036":-9.7,"EME_2046":-17.6,"LIC_2036":-3.6,"LIC_2046":-17.1},"results":{"ADV_2036":-10.6,"ADV_2046":-9.8,"EME_2036":-5.4,"EME_2046":-9.7,"LIC_2036":0.9,"LIC_2046":-9.1}},{"id":"doctor","en":"Doctor","it":"Medico","soc":"29-1215","exposure_ai":0.542,"exposure_robots":0.0,"type":"care","phi":0.55,"theta":0.475,"mid_adv":2033.0,"observed":null,"bls_soc":"29-1215","bls_change":3.3,"demand_growth":0.003252,"work":{"ADV_2036":-9.9,"ADV_2046":-12.0,"EME_2036":-6.5,"EME_2046":-11.9,"LIC_2036":-2.5,"LIC_2046":-11.6},"results":{"ADV_2036":-6.9,"ADV_2046":-6.1,"EME_2036":-3.5,"EME_2046":-6.0,"LIC_2036":0.8,"LIC_2046":-5.7}},{"id":"nurse","en":"Nurse","it":"Infermiere","soc":"29-1141","exposure_ai":0.571,"exposure_robots":0.0,"type":"care","phi":0.55,"theta":0.475,"mid_adv":2033.0,"observed":null,"bls_soc":"29-1141","bls_change":5.6,"demand_growth":0.005464,"work":{"ADV_2036":-10.4,"ADV_2046":-12.7,"EME_2036":-6.9,"EME_2046":-12.6,"LIC_2036":-2.6,"LIC_2046":-12.2},"results":{"ADV_2036":-5.4,"ADV_2046":-2.6,"EME_2036":-1.7,"EME_2046":-2.5,"LIC_2036":2.9,"LIC_2046":-2.1}},{"id":"teacher","en":"Teacher","it":"Insegnante","soc":"25-2031","exposure_ai":0.524,"exposure_robots":0.0,"type":"care","phi":0.55,"theta":0.475,"mid_adv":2033.0,"observed":null,"bls_soc":"25-2031","bls_change":-0.2,"demand_growth":-0.0002,"work":{"ADV_2036":-9.6,"ADV_2046":-11.6,"EME_2036":-6.3,"EME_2046":-11.5,"LIC_2036":-2.4,"LIC_2046":-11.2},"results":{"ADV_2036":-9.8,"ADV_2046":-12.0,"EME_2036":-6.5,"EME_2046":-11.9,"LIC_2036":-2.6,"LIC_2046":-11.6}},{"id":"retail","en":"Retail clerk","it":"Commesso","soc":"41-2031","exposure_ai":0.447,"exposure_robots":0.92,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"41-2031","bls_change":-0.3,"demand_growth":-0.0003,"work":{"ADV_2036":-30.1,"ADV_2046":-68.3,"EME_2036":-14.4,"EME_2046":-65.3,"LIC_2036":-4.6,"LIC_2046":-52.9},"results":{"ADV_2036":-30.3,"ADV_2046":-68.5,"EME_2036":-14.7,"EME_2046":-65.5,"LIC_2036":-4.9,"LIC_2046":-53.1}},{"id":"driver","en":"Driver","it":"Autista","soc":"53-3032","exposure_ai":0.308,"exposure_robots":0.79,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"53-3032","bls_change":3.8,"demand_growth":0.003737,"work":{"ADV_2036":-23.8,"ADV_2046":-56.2,"EME_2036":-11.0,"EME_2046":-53.6,"LIC_2036":-3.4,"LIC_2046":-43.0},"results":{"ADV_2036":-20.9,"ADV_2046":-52.8,"EME_2036":-7.7,"EME_2046":-50.0,"LIC_2036":0.2,"LIC_2046":-38.6}},{"id":"warehouse","en":"Warehouse worker","it":"Magazziniere","soc":"53-7062","exposure_ai":0.12,"exposure_robots":0.85,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"53-7062","bls_change":1.8,"demand_growth":0.001786,"work":{"ADV_2036":-19.9,"ADV_2046":-53.5,"EME_2036":-8.1,"EME_2046":-50.8,"LIC_2036":-2.3,"LIC_2046":-39.6},"results":{"ADV_2036":-18.4,"ADV_2046":-51.8,"EME_2036":-6.5,"EME_2046":-49.0,"LIC_2036":-0.5,"LIC_2046":-37.4}},{"id":"factory","en":"Factory worker","it":"Operaio","soc":"51-2092","exposure_ai":0.176,"exposure_robots":0.97,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"51-2090","bls_change":1.1,"demand_growth":0.001095,"work":{"ADV_2036":-23.7,"ADV_2046":-62.3,"EME_2036":-10.0,"EME_2046":-59.2,"LIC_2036":-2.9,"LIC_2046":-46.4},"results":{"ADV_2036":-22.9,"ADV_2046":-61.5,"EME_2036":-9.0,"EME_2046":-58.3,"LIC_2036":-1.8,"LIC_2046":-45.2}},{"id":"cook","en":"Cook","it":"Cuoco","soc":"35-2014","exposure_ai":0.162,"exposure_robots":0.96,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"35-2014","bls_change":12.1,"demand_growth":0.011488,"work":{"ADV_2036":-23.2,"ADV_2046":-61.3,"EME_2036":-9.6,"EME_2046":-58.2,"LIC_2036":-2.7,"LIC_2046":-45.6},"results":{"ADV_2036":-13.9,"ADV_2046":-51.4,"EME_2036":1.3,"EME_2046":-47.5,"LIC_2036":9.0,"LIC_2046":-31.6}},{"id":"construction","en":"Construction worker","it":"Muratore","soc":"47-2061","exposure_ai":0.05,"exposure_robots":0.88,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"47-2061","bls_change":7.3,"demand_growth":0.007071,"work":{"ADV_2036":-18.6,"ADV_2046":-53.0,"EME_2036":-7.1,"EME_2046":-50.2,"LIC_2036":-1.9,"LIC_2046":-38.7},"results":{"ADV_2036":-12.6,"ADV_2046":-45.9,"EME_2036":-0.3,"EME_2046":-42.6,"LIC_2036":5.3,"LIC_2046":-29.4}},{"id":"electrician","en":"Electrician / plumber","it":"Elettricista / idraulico","soc":"47-2111, 47-2152","exposure_ai":0.178,"exposure_robots":0.25,"type":"manual","phi":0.55,"theta":0.7,"mid_adv":2033.0,"observed":null,"bls_soc":"47-2111, 47-2152","bls_change":8.3,"demand_growth":0.008005,"work":{"ADV_2036":-9.7,"ADV_2046":-20.4,"EME_2036":-4.9,"EME_2046":-19.6,"LIC_2036":-1.6,"LIC_2046":-16.1},"results":{"ADV_2036":-2.2,"ADV_2046":-6.6,"EME_2036":3.0,"EME_2046":-5.7,"LIC_2036":6.5,"LIC_2046":-1.6}}],"aggregate":{"id":"all","en":"All 19 occupations","it":"Tutte le 19 professioni","weights":{"clerk":2600.0,"accountant":1595.2,"callcenter":2666.0,"translator":73.9,"developer":1717.8,"designer":253.1,"journalist":47.1,"architect":544.4,"lawyer":863.7,"doctor":808.8,"nurse":3465.4,"teacher":1087.5,"retail":3998.1,"driver":2221.2,"warehouse":2940.3,"factory":1403.5,"cook":1417.5,"construction":1489.3,"electrician":1331.6},"results":{"ADV_2036":-24.7,"ADV_2046":-42.5,"EME_2036":-13.0,"EME_2046":-41.0,"LIC_2036":-2.4,"LIC_2046":-34.7}}};
+  /* OCCUPATIONS:END */
+
+  const IT = {"__title": "Impatto di AI e robot sul lavoro", "AI + Robot Job Impact": "Impatto di AI e robot sul lavoro", "by Enrico Lorenzo De Vito": "di Enrico Lorenzo De Vito", "Each green dot is a job, electric-blue dots are new jobs. Red dots are AI systems, yellow squares are robots. The numbers are those of the forecast by occupation in the book The ReplaceMind (chapter 36, Table 65): one result for each occupation.": "Ogni punto verde è un posto di lavoro, i punti blu elettrico sono lavori nuovi. I punti rossi sono sistemi di AI, i quadrati gialli robot. I numeri sono quelli della previsione per professione del libro The ReplaceMind (capitolo 36, Tabella 65): un risultato per ogni professione.", "Occupation": "Professione", "Region": "Regione", "From": "Da", "To": "A", "Speed": "Velocità", "2 months/s": "2 mesi/s", "4 months/s": "4 mesi/s", "8 months/s": "8 mesi/s", "16 months/s": "16 mesi/s", "Start": "Avvia", "Restart": "Ricomincia", "Job": "Posto di lavoro", "One position held by a person.": "Un posto occupato da una persona.", "New job": "Lavoro nuovo", "New roles inside the occupation, such as the person who guides the AI tools, and jobs added when demand for the occupation grows.": "Ruoli nuovi dentro la professione, come chi guida gli strumenti di AI, e posti aggiunti quando cresce la domanda della professione.", "AI": "AI", "Software: text, code, documents, customer service.": "Software: testi, codice, documenti, assistenza clienti.", "Robot": "Robot", "AI with a physical body: vehicles, warehouse, kitchen and factory robots. Only in manual jobs, five years after AI.": "AI con un corpo fisico: veicoli, robot di magazzino, di cucina e di fabbrica. Solo nei lavori manuali, cinque anni dopo l’AI.", "Type of work": "Tipo di lavoro", "Starting jobs": "Posti iniziali", "Current jobs": "Posti attuali", "Change since start": "Variazione dall’inizio", "Replaced by AI": "Sostituiti dall’AI", "Replaced by robots": "Sostituiti dai robot", "New jobs": "Lavori nuovi", "AI exposure": "Esposizione all’AI", "Robot exposure": "Esposizione ai robot", "AI central year": "Anno centrale AI", "Robots central year": "Anno centrale robot", "Month": "Mese", "Month by month": "Mese per mese", "<i style=\"background:var(--job)\"></i>jobs": "<i style=\"background:var(--job)\"></i>posti", "<i style=\"background:var(--ai)\"></i>lost to AI": "<i style=\"background:var(--ai)\"></i>persi per l’AI", "<i style=\"background:var(--robot)\"></i>lost to robots": "<i style=\"background:var(--robot)\"></i>persi per i robot", "<i style=\"background:var(--new)\"></i>new jobs": "<i style=\"background:var(--new)\"></i>lavori nuovi", "<b>One result per occupation.</b> The simulator shows the forecast by occupation of the book <cite>The ReplaceMind</cite>, chapter 36, Table 65: same data, same rules, same numbers. Nothing to adjust: choosing other assumptions would give other numbers, and the book gives one.": "<b>Un risultato per professione.</b> Il simulatore mostra la previsione per professione del libro <cite>The ReplaceMind</cite>, capitolo 36, Tabella 65: stessi dati, stesse regole, stessi numeri. Non c’è niente da regolare: altre ipotesi darebbero altri numeri, e il libro ne dà uno.", "Appendix · Data and rules": "Appendice · Dati e regole", "Every number comes from the file <code>outputs/occupations.json</code>, written by the module <code>aimodel/analysis/occupations.py</code> of the book's software. The book table and this page read the same file.": "Ogni numero viene dal file <code>outputs/occupations.json</code>, scritto dal modulo <code>aimodel/analysis/occupations.py</code> del software del libro. La tabella del libro e questa pagina leggono lo stesso file.", "Data": "Dati", "Rules": "Regole", "Geography": "Geografia", "The book uses three groups: advanced, emerging and low-income economies. Each country or continent here takes the timing of its group: USA, Canada, Japan, Europe and Oceania as advanced; China, India, Russia, the rest of Asia and the Americas as emerging; Africa as low-income.": "Il libro usa tre gruppi: economie avanzate, emergenti e a basso reddito. Ogni paese o continente prende i tempi del suo gruppo: Stati Uniti, Canada, Giappone, Europa e Oceania come avanzati; Cina, India, Russia, il resto dell’Asia e delle Americhe come emergenti; l’Africa come basso reddito.", "The economy model of the book, with wages, incomes, public finance and policies, runs in the <a href=\"model.html\" style=\"color: var(--accent)\">Economy Model</a> page.": "Il modello dell’economia del libro, con salari, redditi, conti pubblici e politiche, gira nella pagina <a href=\"model.html\" style=\"color: var(--accent)\">Modello economico</a>.", "© 2026 Enrico Lorenzo De Vito · AI + Robot Job Impact · The ReplaceMind, chapter 36 (aimodel v3.1)": "© 2026 Enrico Lorenzo De Vito · Impatto di AI e robot sul lavoro · The ReplaceMind, capitolo 36 (aimodel v3.1)", "<b>AI exposure</b>: share of the occupation's tasks whose time a GPT-type system with software tools can cut by at least half, rated by human experts. Eloundou, Manning, Mishkin and Rock, \"GPTs are GPTs\", <cite>Science</cite> 384 (2024); occupation file occ_level.csv, github.com/openai/GPTs-are-GPTs.": "<b>Esposizione all’AI</b>: quota dei compiti della professione il cui tempo un sistema di tipo GPT con strumenti software può almeno dimezzare, secondo il giudizio di esperti umani. Eloundou, Manning, Mishkin e Rock, «GPTs are GPTs», <cite>Science</cite> 384 (2024); file per professione occ_level.csv, github.com/openai/GPTs-are-GPTs.", "<b>Classic office automation</b>: for office clerks, accountants and customer service the exposure is the higher of that value and the probability of computerisation of Frey and Osborne (2013): 0.96, 0.94 and 0.55. Never above 95%.": "<b>Automazione d’ufficio classica</b>: per impiegati, contabili e assistenza clienti l’esposizione è il valore più alto fra quello e la probabilità di automazione di Frey e Osborne (2013): 0,96, 0,94 e 0,55. Mai oltre il 95%.", "<b>Robots</b>: probability of computerisation of Frey and Osborne for manual and physical jobs. Robots reach the central adoption year five years after AI.": "<b>Robot</b>: probabilità di automazione di Frey e Osborne per i lavori manuali e fisici. I robot raggiungono l’anno centrale dell’adozione cinque anni dopo l’AI.", "<b>Demand for the occupation</b>: BLS Employment Projections 2025–35 (published 21 September 2026), percent change in employment 2025–2035, extended at the same yearly pace to 2046 and used for every region, since no comparable projections by occupation exist for the others. BLS attributes to AI and automation only the decline of office and administrative support jobs: for office clerks and customer service demand is held flat, so that automation is not counted twice.": "<b>Domanda della professione</b>: BLS Employment Projections 2025–35 (pubblicate il 21 settembre 2026), variazione dell’occupazione 2025–2035, prolungata allo stesso ritmo annuo fino al 2046 e usata per tutte le regioni, perché per le altre non esistono proiezioni per professione comparabili. Il BLS attribuisce all’AI e all’automazione solo il calo dei lavori d’ufficio e amministrativi: per impiegati e assistenza clienti la domanda resta ferma, per non contare due volte l’automazione.", "<b>Observed decline</b>: Stanford Digital Economy Lab / ADP monthly series from 2022, each monthly change weighted by its year: 2026 and 2025 100%, 2024 50%, 2023 5%, 2022 1% (2022 and 2023 reflect post-pandemic over-hiring and higher interest rates). Measured against peers of the same age in the least exposed jobs and averaged over the six age groups: customer service −1.9% a year; software developers +0.4%, because the decline concerns only those under 30 (22–25 −2.4%, 26–30 −1.3%) while older developers grow.": "<b>Calo osservato</b>: serie mensili Stanford Digital Economy Lab / ADP dal 2022, con ogni variazione mensile pesata secondo il suo anno: 2026 e 2025 100%, 2024 50%, 2023 5%, 2022 1% (il 2022 e il 2023 risentono delle assunzioni eccessive del dopo-Covid e del rialzo dei tassi). Misurato rispetto ai coetanei nei lavori meno esposti e mediato sulle sei fasce d’età: assistenza clienti −1,9% l’anno; sviluppatori software +0,4%, perché il calo riguarda solo chi ha meno di 30 anni (22–25 −2,4%, 26–30 −1,3%) mentre gli sviluppatori più anziani crescono.", "<b>Type of work</b>, following the IMF distinction between exposure and complementarity (Pizzinelli et al., WP/23/216; Cazzaniga et al., SDN/2024/001). Routine office and content work: 85% of the exposed work can be substituted and 85% of it is automated by 2046. Design with AI tools (the architect): 70% and 70%. Work with responsibility and human contact (doctor, nurse, teacher, lawyer): 55% and 47.5%, the book's central values. Manual work: 55% and 70% for the part done by AI; for robots the Frey and Osborne probability is already the automatable share, and 70% of it is automated by 2046. Software developers and customer service are counted as routine work because the observed data already show a decline among the young.": "<b>Tipo di lavoro</b>, secondo la distinzione del Fondo monetario fra esposizione e complementarità (Pizzinelli e coautori, WP/23/216; Cazzaniga e coautori, SDN/2024/001). Lavoro d’ufficio ripetitivo e contenuti: l’85% del lavoro esposto è sostituibile e l’85% di questo viene automatizzato entro il 2046. Progettazione con strumenti AI (l’architetto): 70% e 70%. Lavoro con responsabilità e contatto umano (medico, infermiere, insegnante, avvocato): 55% e 47,5%, i valori centrali del libro. Lavoro manuale: 55% e 70% per la parte che fa l’AI; per i robot la probabilità di Frey e Osborne è già la quota automatizzabile, e ne viene automatizzato il 70% entro il 2046. Sviluppatori e assistenza clienti sono contati come lavoro ripetitivo perché i dati osservati mostrano già un calo fra i giovani.", "<b>Adoption</b>: the book's S-curve (appendix A1), slope 0.425 a year, starting from zero in 2026. For customer service the central year is set so that the first simulated year, demand included, reproduces the weighted observed decline; office clerks use the customer service series; software developers, with no overall decline, and the other occupations use 2033. Emerging economies adopt 3 years later, low-income countries 6.5 years later.": "<b>Adozione</b>: la curva a S del libro (appendice A1), pendenza 0,425 l’anno, da zero nel 2026. Per l’assistenza clienti l’anno centrale è scelto in modo che il primo anno simulato, domanda compresa, riproduca il calo osservato pesato; gli impiegati usano la serie dell’assistenza clienti; gli sviluppatori, senza un calo complessivo, e le altre professioni usano il 2033. Le economie emergenti adottano 3 anni dopo, i paesi a basso reddito 6,5 anni dopo.", "<b>New roles</b>: 0.15 new roles inside the occupation for each task lost, within 3 years. New work in other occupations is counted in the book's economy model, not here.": "<b>Ruoli nuovi</b>: 0,15 ruoli nuovi dentro la professione per ogni compito perso, entro 3 anni. Il lavoro nuovo in altre professioni è contato nel modello dell’economia del libro, non qui.", "<b>Result</b>: jobs in the occupation compared with 2026 = demand index × (1 − work taken by AI and robots + new roles). Where demand grows, as for nurses, cooks and electricians, the work taken by machines turns largely into more service with the same people, not into fewer jobs.": "<b>Risultato</b>: posti nella professione rispetto al 2026 = indice della domanda × (1 − lavoro preso da AI e robot + ruoli nuovi). Dove la domanda cresce, come per infermieri, cuochi ed elettricisti, il lavoro preso dalle macchine diventa soprattutto più servizio con le stesse persone, non meno posti."};
+  i18nNav();
+  window.i18nMissing = i18nApply(IT, "h1, h2, h3, .byline, .sub, label, button, option, .stats span:not(.v), .legend b, .legend span, .keys span, p.note, section.appendix p, section.appendix li, footer");
+  const JOBS = DATA.occupations;
+  const jn = j => L(j.en, j.it.replace(/'/g, "’"));
+  const TYPE_NAME = { routine: L("Routine office and content", "Ufficio ripetitivo e contenuti"), architect: L("Design with AI tools", "Progettazione con strumenti AI"), care: L("Responsibility, human contact", "Responsabilità, contatto umano"), manual: L("Manual, mainly robots", "Manuale, soprattutto robot") };
+  const REGIONS = [
+    { group: "Book groups", id: "ADV", name: "Advanced economies (ADV)", g: "ADV" , it: "Economie avanzate (ADV)" },
+    { group: "Book groups", id: "EME", name: "Emerging economies (EME)", g: "EME" , it: "Economie emergenti (EME)" },
+    { group: "Book groups", id: "LIC", name: "Low-income countries (LIC)", g: "LIC" , it: "Paesi a basso reddito (LIC)" },
+    { group: "Countries", id: "usa",    name: "USA",    g: "ADV" , it: "Stati Uniti" },
+    { group: "Countries", id: "canada", name: "Canada", g: "ADV" , it: "Canada" },
+    { group: "Countries", id: "japan",  name: "Japan",  g: "ADV" , it: "Giappone" },
+    { group: "Countries", id: "china",  name: "China",  g: "EME" , it: "Cina" },
+    { group: "Countries", id: "india",  name: "India",  g: "EME" , it: "India" },
+    { group: "Countries", id: "russia", name: "Russia", g: "EME" , it: "Russia" },
+    { group: "Continents (excluding the countries above)", id: "europe",   name: "Europe (excl. Russia)",              g: "ADV" , it: "Europa (esclusa la Russia)" },
+    { group: "Continents (excluding the countries above)", id: "oceania",  name: "Oceania",                            g: "ADV" , it: "Oceania" },
+    { group: "Continents (excluding the countries above)", id: "asia",     name: "Asia (excl. China, India, Japan)",   g: "EME" , it: "Asia (escluse Cina, India, Giappone)" },
+    { group: "Continents (excluding the countries above)", id: "namerica", name: "North America (excl. USA, Canada)", g: "EME" , it: "Nord America (esclusi Stati Uniti e Canada)" },
+    { group: "Continents (excluding the countries above)", id: "samerica", name: "South America",                      g: "EME" , it: "Sud America" },
+    { group: "Continents (excluding the countries above)", id: "africa",   name: "Africa",                             g: "LIC" , it: "Africa" },
+  ];
+  const GROUP_IT = { "Book groups": "Gruppi del libro", "Countries": "Paesi", "Continents (excluding the countries above)": "Continenti (esclusi i paesi sopra)" };
+  const MONTHS = L(["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"]);
+  const N0 = 1400;          // starting jobs on the field
+  const MAX_AGENTS = 40;    // agents of each kind at full adoption with full exposure (display only)
+
+  const $ = id => document.getElementById(id);
+  const css = getComputedStyle(document.documentElement);
+  const C = {};
+  ["job", "new", "ai", "robot", "muted", "line"].forEach(k => C[k] = css.getPropertyValue("--" + k).trim());
+
+  const sel = $("job");
+  { const o = document.createElement("option"); o.value = "all"; o.textContent = L("Global view", "Visione globale"); sel.appendChild(o); }
+  JOBS.forEach(j => { const o = document.createElement("option"); o.value = j.id; o.textContent = jn(j); sel.appendChild(o); });
+  const regSel = $("region"), groups = {};
+  REGIONS.forEach(r => {
+    if (!groups[r.group]) { groups[r.group] = document.createElement("optgroup"); groups[r.group].label = L(r.group, GROUP_IT[r.group]); regSel.appendChild(groups[r.group]); }
+    const o = document.createElement("option"); o.value = r.id; o.textContent = L(r.name, r.it); groups[r.group].appendChild(o);
+  });
+  const region = () => REGIONS.find(r => r.id === regSel.value);
+  const job = () => JOBS.find(j => j.id === sel.value);
+  const GLOBAL = () => sel.value === "all";
+  const picked = () => GLOBAL() ? JOBS : [job()];
+  const WEIGHTS = DATA.aggregate.weights;                       // employment 2025 (BLS), as in the book's aggregate
+
+  const fill = (id, items, value) => { const s = $(id); items.forEach(([v, t]) => { const o = document.createElement("option"); o.value = v; o.textContent = t; s.appendChild(o); }); s.value = value; };
+  const monthItems = MONTHS.map((m, i) => [i, m]);
+  const yearItems = Array.from({ length: DATA.end - DATA.start + 1 }, (_, i) => [DATA.start + i, DATA.start + i]);
+  fill("fromM", monthItems, 0); fill("fromY", yearItems, DATA.start);
+  fill("toM", monthItems, 0); fill("toY", yearItems, DATA.end);  // January 2046: twenty years, as in the book table
+  const pickM = p => Number($(p + "Y").value) * 12 + Number($(p + "M").value);
+  const fmtM = t => MONTHS[((t % 12) + 12) % 12] + " " + Math.floor(t / 12);
+  const fmtY = y => { const yy = Math.floor(y), m = Math.round((y - yy) * 12); return (m ? MONTHS[m] + " " : "") + yy; };
+
+  // ---- same formulas as aimodel/analysis/occupations.py ------------------------------------
+  const logistic = (t, mid) => 1 / (1 + Math.exp(-DATA.slope * (t - mid)));
+  const adoption = (t, mid, theta) => {
+    if (t <= DATA.start) return 0;
+    const f0 = logistic(DATA.start, mid);
+    return theta * (logistic(t, mid) - f0) / (1 - f0);
+  };
+  const midAI = (j = job()) => j.mid_adv + DATA.region_lag[region().g];
+  const midRob = (j = job()) => midAI(j) + DATA.robot_lag;
+  function shares(t, j = job()) {
+    const lostAI = x => j.phi * j.exposure_ai * adoption(x, midAI(j), j.theta);
+    const lostRob = x => j.exposure_robots * adoption(x, midRob(j), j.theta);  // Frey-Osborne is already the automatable share
+    let ai = lostAI(t), rob = lostRob(t);
+    if (ai + rob > DATA.cap) { const s = DATA.cap / (ai + rob); ai *= s; rob *= s; }
+    const created = DATA.new_tasks * Math.min(DATA.cap, lostAI(t - DATA.new_tasks_lag) + lostRob(t - DATA.new_tasks_lag));
+    return { ai, rob, created };
+  }
+  // demand for the occupation (BLS 2025-35 pace, flat for office and administrative support)
+  const demandIdx = (t, j = job()) => Math.pow(1 + j.demand_growth, t - DATA.start);
+  const levelOf = (j, t) => { const s = shares(t, j); return demandIdx(t, j) * (1 - s.ai - s.rob + s.created); };
+  // share of the field for each occupation: one occupation, or the nineteen weighted by their jobs at the start month
+  function fieldShares() {
+    const js = picked(), f = S.from / 12;
+    if (js.length === 1) return [1];
+    const v = js.map(j => WEIGHTS[j.id] * levelOf(j, f)), tot = v.reduce((a, b) => a + b, 0);
+    return v.map(x => x / tot);
+  }
+  // jobs by cause since the start month, scaled so that the field starts with N0 jobs
+  function counts(t) {
+    const f = S.from / 12, w = fieldShares(), acc = { ai: 0, robot: 0, created: 0, demand: 0 };
+    picked().forEach((j, i) => {
+      const s0 = shares(f, j), s1 = shares(t, j), d0 = demandIdx(f, j), d1 = demandIdx(t, j);
+      const K = N0 * w[i] / (d0 * (1 - s0.ai - s0.rob + s0.created));
+      acc.ai += K * (d1 * s1.ai - d0 * s0.ai); acc.robot += K * (d1 * s1.rob - d0 * s0.rob);
+      acc.created += K * (d1 * s1.created - d0 * s0.created); acc.demand += K * (d1 - d0);
+    });
+    const ai = Math.round(acc.ai), robot = Math.round(acc.robot), created = Math.round(acc.created), demand = Math.round(acc.demand);
+    return { ai, robot, created, demand, jobs: N0 + demand - ai - robot + created };
+  }
+
+  // ---- simulation on the field -------------------------------------------------------------
+  let S;
+  function reset() {
+    let from = pickM("from"), to = pickM("to");
+    if (to <= from) to = Math.min(from + 12, DATA.end * 12 + 11);
+    const jobs = [];
+    for (let i = 0; i < N0; i++) jobs.push({ x: Math.random(), y: Math.random(), born: 0, isNew: false, alive: true });
+    S = { from, to, t: from, frac: 0, jobs, agents: { ai: [], robot: [] }, eaten: { ai: 0, robot: 0 }, created: 0, demand: 0, hist: [], running: false, done: false, flashes: [] };
+    $("end").hidden = true;
+    $("play").textContent = L("Start", "Avvia");
+    const regName = L(region().name, region().it);
+    if (GLOBAL()) {
+      const wsum = JOBS.reduce((a, j) => a + WEIGHTS[j.id], 0), avg = k => JOBS.reduce((a, j) => a + WEIGHTS[j.id] * j[k], 0) / wsum;
+      $("jobname").textContent = L("Global view", "Visione globale") + " · " + regName;
+      $("typ").textContent = L("19 occupations, weighted by jobs", "19 professioni, pesate per occupati");
+      $("eai").textContent = Math.round(avg("exposure_ai") * 100) + "%";
+      $("erob").textContent = Math.round(avg("exposure_robots") * 100) + "%";
+      $("hAi").textContent = L("by occupation", "per professione");
+      $("hRob").textContent = L("by occupation", "per professione");
+    } else {
+      const j = job();
+      $("jobname").textContent = jn(j) + " · " + regName;
+      $("typ").textContent = TYPE_NAME[j.type];
+      $("eai").textContent = Math.round(j.exposure_ai * 100) + "%";
+      $("erob").textContent = j.exposure_robots ? Math.round(j.exposure_robots * 100) + "%" : L("none", "nessuna");
+      $("hAi").textContent = fmtY(midAI());
+      $("hRob").textContent = j.exposure_robots ? fmtY(midRob()) : L("none", "nessuno");
+    }
+    monthTick();
+    draw(); stats(); drawChart();
+  }
+
+  const liveJobs = () => S.jobs.filter(j => j.alive);
+
+  // Every month the model says how many jobs should be lost and created by now;
+  // agents get the difference as "hunger", new roles appear directly
+  function monthTick() {
+    const t = S.t / 12, c = counts(t), w = fieldShares();
+    const target = { ai: c.ai, robot: c.robot }, level = { ai: 0, robot: 0 };
+    picked().forEach((j, i) => {
+      level.ai += w[i] * adoption(t, midAI(j), j.theta) / j.theta * j.exposure_ai;
+      level.robot += w[i] * adoption(t, midRob(j), j.theta) / j.theta * j.exposure_robots;
+    });
+    for (const kind of ["ai", "robot"]) {
+      const list = S.agents[kind];
+      const want = Math.round(MAX_AGENTS * level[kind]);
+      while (list.length < want) list.push({ kind, x: Math.random(), y: Math.random(), vx: 0, vy: 0, hunger: 0, tgt: null });
+      while (list.length > want) list.pop();
+      const owed = Math.max(0, target[kind] - S.eaten[kind] - list.reduce((s, a) => s + Math.floor(a.hunger), 0));
+      if (list.length && owed > 0) list.forEach(a => a.hunger += owed / list.length);
+    }
+    while (S.created < c.created) { S.jobs.push({ x: Math.random(), y: Math.random(), born: performance.now(), isNew: true, alive: true }); S.created++; }
+    // demand: jobs added when the occupation grows, removed when it shrinks
+    while (S.demand < c.demand) { S.jobs.push({ x: Math.random(), y: Math.random(), born: performance.now(), isNew: true, alive: true }); S.demand++; }
+    while (S.demand > c.demand) { const a = S.jobs.find(q => q.alive && !q.isNew) || S.jobs.find(q => q.alive); if (!a) break; a.alive = false; S.demand--; }
+    S.hist.push({ t: S.t, jobs: liveJobs().length, ai: S.eaten.ai, robot: S.eaten.robot, created: S.created });
+    if (S.jobs.length > N0 * 3) S.jobs = liveJobs();
+  }
+
+  function step(dt) {
+    const speed = Number($("spd").value);
+    S.frac += dt * speed;
+    while (S.frac >= 1 && !S.done) {
+      S.frac -= 1;
+      if (S.t >= S.to) { finish(); break; }
+      S.t++;
+      monthTick();
+    }
+    const alive = liveJobs();
+    const v = 0.06 * Math.min(speed, 8) / 2;
+    for (const kind of ["ai", "robot"]) {
+      const vk = v * (kind === "robot" ? 0.7 : 1);
+      S.agents[kind].forEach(a => {
+        if (a.hunger >= 1 && alive.length) {
+          if (!a.tgt || !a.tgt.alive) {
+            let best = null, bd = Infinity;
+            for (let k = 0; k < 40; k++) { const j = alive[(Math.random() * alive.length) | 0]; const d = (j.x - a.x) ** 2 + (j.y - a.y) ** 2; if (d < bd) { bd = d; best = j; } }
+            a.tgt = best;
+          }
+          const dx = a.tgt.x - a.x, dy = a.tgt.y - a.y, d = Math.hypot(dx, dy);
+          if (d < 0.01) {
+            a.tgt.alive = false; a.hunger -= 1; S.eaten[kind]++;
+            S.flashes.push({ x: a.tgt.x, y: a.tgt.y, t: 0, kind });
+            a.tgt = null;
+          } else { a.vx = dx / d * vk * 2; a.vy = dy / d * vk * 2; }
+        } else {
+          a.vx += (Math.random() - 0.5) * 0.02; a.vy += (Math.random() - 0.5) * 0.02;
+          const m = Math.hypot(a.vx, a.vy); if (m > vk * 0.4) { a.vx *= vk * 0.4 / m; a.vy *= vk * 0.4 / m; }
+        }
+        a.x += a.vx * dt; a.y += a.vy * dt;
+        if (a.x < 0 || a.x > 1) { a.vx *= -1; a.x = Math.max(0, Math.min(1, a.x)); }
+        if (a.y < 0 || a.y > 1) { a.vy *= -1; a.y = Math.max(0, Math.min(1, a.y)); }
+      });
+    }
+    S.flashes.forEach(f => f.t += dt); S.flashes = S.flashes.filter(f => f.t < 0.6);
+  }
+
+  // Results come from the model formulas, so they do not depend on how fast the dots move
+  function modelResult() {
+    return counts(S.t / 12);
+  }
+
+  function finish() {
+    S.done = true; S.running = false;
+    for (const kind of ["ai", "robot"]) {
+      const r = modelResult();
+      let owed = r[kind] - S.eaten[kind];
+      for (const j of S.jobs) { if (owed <= 0) break; if (j.alive) { j.alive = false; S.eaten[kind]++; owed--; } }
+      S.agents[kind].forEach(a => a.hunger = 0);
+    }
+    $("play").textContent = L("Start", "Avvia");
+    const r = modelResult(), diff = r.jobs - N0, j = GLOBAL() ? DATA.aggregate : job(), g = region().g;
+    $("endtitle").textContent = (GLOBAL() ? L("Global view", "Visione globale") : jn(j)) + " · " + L(region().name, region().it) + " · " + fmtM(S.from) + " → " + fmtM(S.to);
+    $("endpct").textContent = (diff >= 0 ? "+" : "−") + Math.abs(Math.round(diff / N0 * 100)) + "%";
+    $("endpct").style.color = diff >= 0 ? C.job : C.ai;
+    $("endtxt").textContent = L(r.ai + " jobs replaced by AI, " + r.robot + " by robots, " + r.created + " new roles, " + (r.demand >= 0 ? "+" : "−") + Math.abs(r.demand) + (GLOBAL() ? " from demand for the occupations. " : " from demand for the occupation. ") + r.jobs + " jobs compared with " + N0 + " at the start.",
+      r.ai + " posti sostituiti dall’AI, " + r.robot + " dai robot, " + r.created + " ruoli nuovi, " + (r.demand >= 0 ? "+" : "−") + Math.abs(r.demand) + (GLOBAL() ? " dalla domanda delle professioni. " : " dalla domanda della professione. ") + r.jobs + " posti contro " + N0 + " all’inizio.");
+    const b = y => { const v = Math.round(j.results[g + "_" + y]); return (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v); };
+    $("endbook").textContent = GLOBAL()
+      ? L("The nineteen occupations of Table 65 together, weighted by 2025 employment (" + g + ", from January 2026): " + b(2036) + "% in 2036, " + b(2046) + "% in 2046. Jobs compared with 2026, demand included; not unemployment: new work in other occupations is counted in the economy model.",
+          "Le diciannove professioni della Tabella 65 insieme, pesati per gli occupati 2025 (" + g + ", da gennaio 2026): " + b(2036) + "% nel 2036, " + b(2046) + "% nel 2046. Posti rispetto al 2026, domanda compresa; non è disoccupazione: il lavoro nuovo in altre professioni è contato nel modello economico.")
+      : L("Book, chapter 36, Table 65 (" + g + ", from January 2026): " + b(2036) + "% in 2036, " + b(2046) + "% in 2046. Jobs in this occupation compared with 2026, demand for it included; not unemployment: people can move to other jobs.",
+      "Libro, capitolo 36, Tabella 65 (" + g + ", da gennaio 2026): " + b(2036) + "% nel 2036, " + b(2046) + "% nel 2046. Posti nella professione rispetto al 2026, domanda compresa; non è disoccupazione: le persone possono spostarsi in altri lavori.");
+    $("end").hidden = false;
+    stats(); drawChart();
+  }
+
+  function fit(c) {
+    const r = c.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+    if (c.width !== Math.round(r.width * d) || c.height !== Math.round(r.height * d)) { c.width = Math.round(r.width * d); c.height = Math.round(r.height * d); }
+    return { w: c.width, h: c.height, d };
+  }
+
+  function draw() {
+    const { w, h, d } = fit(field);
+    fx.clearRect(0, 0, w, h);
+    const pad = 8 * d, W = w - 2 * pad, H = h - 2 * pad, now = performance.now();
+    fx.globalAlpha = 0.85;
+    S.jobs.forEach(j => {
+      if (!j.alive) return;
+      const age = j.born ? Math.min((now - j.born) / 600, 1) : 1;
+      const x = pad + j.x * W, y = pad + j.y * H, r = 1.9 * d * (j.born && age < 1 ? 1.6 - 0.6 * age : 1);
+      fx.fillStyle = j.isNew ? C.new : C.job;
+      fx.beginPath(); fx.arc(x, y, r, 0, 7); fx.fill();
+      if (j.isNew) { fx.strokeStyle = C.new; fx.lineWidth = 0.8 * d; fx.beginPath(); fx.arc(x, y, r + 1.6 * d, 0, 7); fx.stroke(); }
+    });
+    S.flashes.forEach(f => {
+      fx.strokeStyle = C[f.kind]; fx.globalAlpha = 1 - f.t / 0.6; fx.lineWidth = 1.2 * d;
+      fx.beginPath(); fx.arc(pad + f.x * W, pad + f.y * H, (3 + f.t * 18) * d, 0, 7); fx.stroke();
+    });
+    fx.globalAlpha = 1;
+    S.agents.robot.forEach(a => {
+      const s = 4.6 * d;
+      fx.fillStyle = C.robot; fx.shadowColor = C.robot; fx.shadowBlur = 10 * d;
+      fx.fillRect(pad + a.x * W - s, pad + a.y * H - s, 2 * s, 2 * s);
+    });
+    S.agents.ai.forEach(a => {
+      fx.fillStyle = C.ai; fx.shadowColor = C.ai; fx.shadowBlur = 10 * d;
+      fx.beginPath(); fx.arc(pad + a.x * W, pad + a.y * H, 4.2 * d, 0, 7); fx.fill();
+    });
+    fx.shadowBlur = 0;
+  }
+
+  function stats() {
+    const r = modelResult(), net = r.jobs - N0;
+    $("clock").textContent = fmtM(S.t);
+    $("s0").textContent = N0;
+    $("s1").textContent = r.jobs;
+    $("s2").textContent = r.ai;
+    $("s2r").textContent = r.robot;
+    $("s3").textContent = r.created + Math.max(r.demand, 0);
+    $("s4").textContent = (net >= 0 ? "+" : "−") + Math.abs(net) + " (" + (net >= 0 ? "+" : "−") + Math.abs(Math.round(net / N0 * 100)) + "%)";
+    $("s6").textContent = (S.t - S.from + 1) + " / " + (S.to - S.from + 1);
+  }
+
+  // Chart from the model formulas over the whole period: solid up to the current month, faint after
+  function drawChart() {
+    const { w, h, d } = fit(chart);
+    cx.clearRect(0, 0, w, h);
+    const L = 34 * d, R = 6 * d, T = 8 * d, B = 18 * d, W = w - L - R, H = h - T - B;
+    const span = Math.max(S.to - S.from, 1);
+    const pts = [];
+    for (let m = S.from; m <= S.to; m++) {
+      const c = counts(m / 12);
+      pts.push({ t: m, jobs: c.jobs, ai: c.ai, robot: c.robot, created: c.created + Math.max(c.demand, 0) });
+    }
+    const maxV = Math.max(N0 * 1.05, ...pts.map(q => q.jobs));
+    cx.font = (10 * d) + "px IBM Plex Mono, monospace"; cx.fillStyle = C.muted; cx.strokeStyle = C.line; cx.lineWidth = 1;
+    [0, 0.5, 1].forEach(f => {
+      const y = T + H - f * H; cx.beginPath(); cx.moveTo(L, y); cx.lineTo(L + W, y); cx.stroke();
+      cx.textAlign = "right"; cx.fillText(Math.round(maxV * f), L - 4 * d, y + 3 * d);
+    });
+    cx.textAlign = "left"; cx.fillText(Math.floor(S.from / 12), L, h - 4 * d);
+    cx.textAlign = "right"; cx.fillText(Math.floor(S.to / 12), L + W, h - 4 * d);
+    const X = t => L + (t - S.from) / span * W, Y = v => T + H - v / maxV * H;
+    const line = (key, color, fill) => {
+      const past = pts.filter(q => q.t <= S.t);
+      if (fill && past.length) {
+        cx.beginPath(); past.forEach((q, i) => i ? cx.lineTo(X(q.t), Y(q[key])) : cx.moveTo(X(q.t), Y(q[key])));
+        cx.lineTo(X(past[past.length - 1].t), T + H); cx.lineTo(X(S.from), T + H); cx.closePath();
+        cx.globalAlpha = 0.15; cx.fillStyle = color; cx.fill(); cx.globalAlpha = 1;
+      }
+      cx.strokeStyle = color; cx.lineWidth = 1 * d; cx.globalAlpha = 0.3;
+      cx.beginPath(); pts.forEach((q, i) => i ? cx.lineTo(X(q.t), Y(q[key])) : cx.moveTo(X(q.t), Y(q[key]))); cx.stroke();
+      cx.globalAlpha = 1; cx.lineWidth = 1.8 * d;
+      if (past.length) {
+        cx.beginPath(); past.forEach((q, i) => i ? cx.lineTo(X(q.t), Y(q[key])) : cx.moveTo(X(q.t), Y(q[key]))); cx.stroke();
+        const q = past[past.length - 1]; cx.fillStyle = color; cx.beginPath(); cx.arc(X(q.t), Y(q[key]), 2.6 * d, 0, 7); cx.fill();
+      }
+    };
+    line("jobs", C.job, true);
+    line("ai", C.ai, false);
+    line("robot", C.robot, false);
+    line("created", C.new, false);
+  }
+
+  const field = $("field"), fx = field.getContext("2d");
+  const chart = $("chart"), cx = chart.getContext("2d");
+
+  let last = performance.now(), lastStats = 0;
+  function loop(now) {
+    const dt = Math.min((now - last) / 1000, 0.1); last = now;
+    if (S.running) step(dt);
+    draw();
+    if (now - lastStats > 120) { stats(); drawChart(); lastStats = now; }
+    requestAnimationFrame(loop);
+  }
+
+  $("play").onclick = () => {
+    if (S.done) reset();
+    S.running = !S.running;
+    $("play").textContent = S.running ? L("Pause", "Pausa") : L("Resume", "Riprendi");
+  };
+  $("reset").onclick = reset;
+  sel.onchange = reset;
+  regSel.onchange = reset;
+  ["fromM", "fromY", "toM", "toY"].forEach(id => $(id).onchange = reset);
+  window.addEventListener("resize", () => { draw(); drawChart(); });
+
+  // Table of the appendix, built from the same data the simulation uses (same rows and order as Table 65 of the book)
+  const pct = v => v ? Math.round(v * 100) + "%" : "–";
+  const sgn = v => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(1).replace(".", L(".", ",")) + "%";
+  const res = (j, k) => { const v = Math.round(j.results[k]); return (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v) + "%"; };
+  $("srcTable").innerHTML = "<thead><tr><th>" + L("Occupation", "Professione") + "</th><th>O*NET-SOC</th><th>" + L("Type of work", "Tipo di lavoro") + "</th><th class=\"n\">" + L("AI exposure", "Esposizione AI") + "</th><th class=\"n\">" + L("Robots", "Robot") + "</th><th class=\"n\">" + L("Demand (BLS 2025–35)", "Domanda (BLS 2025–35)") + "</th><th class=\"n\">ADV 2036</th><th class=\"n\">ADV 2046</th></tr></thead><tbody>" +
+    [...JOBS].sort((x, y) => x.results.ADV_2046 - y.results.ADV_2046 || x.results.ADV_2036 - y.results.ADV_2036).map(j => "<tr><td>" + jn(j) + "</td><td>" + j.soc + "</td><td>" + TYPE_NAME[j.type] + "</td><td class=\"n\">" + pct(j.exposure_ai) + "</td><td class=\"n\">" + pct(j.exposure_robots) + "</td><td class=\"n\">" + (j.bls_soc.startsWith("43-") ? L("flat (BLS: ", "ferma (BLS: ") + sgn(j.bls_change) + ", AI)" : sgn(j.bls_change)) + "</td><td class=\"n\">" + res(j, "ADV_2036") + "</td><td class=\"n\">" + res(j, "ADV_2046") + "</td></tr>").join("") + "</tbody>";
+
+  sel.value = "all";
+  regSel.value = "ADV";
+  reset();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
