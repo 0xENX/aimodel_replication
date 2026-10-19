@@ -12,6 +12,8 @@ Sources (archived in data/observed/social, downloaded 18 October 2026, not modif
   the few suppressed cells take the national share of the occupation.
 - China, Russia, Canada, Australia, Brazil and India by large city: no comparable data on occupations by city, so every city carries the value of its
   country; the cities only show where people live (city centre coordinates).
+- Population and land area: World Bank, SP.POP.TOTL and AG.LND.TOTL.K2, latest value (wb_population.json,
+  wb_land_area.json): density decides which countries are too sparsely populated for a bubble on the map.
 - Codes: ISO 3166 alpha-3 and numeric (iso_codes.json, from the npm package i18n-iso-countries 7.11.0) and the
   World Bank country list with regions and capital coordinates (wb_countries.json).
 
@@ -131,6 +133,8 @@ def build():
     wgi = {r["countryiso3code"]: r["value"] for r in json.loads((RAW / "wgi_pv_2024.json").read_text(encoding="utf-8"))[1]
            if r["value"] is not None and r["countryiso3code"]}
     num = {a3: n for _, a3, n, _ in json.loads((RAW / "iso_codes.json").read_text(encoding="utf-8"))}
+    latest = lambda f: {r["countryiso3code"]: r["value"] for r in json.loads((RAW / f).read_text(encoding="utf-8"))[1] if r["value"]}
+    pop, land = latest("wb_population.json"), latest("wb_land_area.json")
     ai = {}
     with open(RAW / "owid_genai.csv", encoding="utf-8") as f:
         for row in csv.DictReader(f):
@@ -145,6 +149,8 @@ def build():
             iso3=iso3, iso2=c["iso2Code"], num=num.get(iso3), name=c["name"], region=book_region(iso3, c["region"]["value"], c["incomeLevel"]["value"]),
             wgi=round(v, 3), risk=round(max(0.0, min(100.0, (2.5 - v) / 5 * 100)), 1),
             lon=float(c["longitude"]) if c["longitude"] else None, lat=float(c["latitude"]) if c["latitude"] else None,
+            population=pop.get(iso3), land_km2=land.get(iso3),
+            density=round(pop[iso3] / land[iso3], 2) if iso3 in pop and iso3 in land else None,
             ai_use=ai.get(iso3, {})))
     return dict(
         sources=dict(us_states="BLS OEWS May 2024, state employment by occupation",
