@@ -1,0 +1,11 @@
+// Cloudflare Workers: the site is static, built by simulator/build_site.sh into _site and served as it is.
+// Build command: bash simulator/build_site.sh _site   ·   Deploy command: npx wrangler deploy
+{
+  "name": "aimodel-replication",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./_site",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
