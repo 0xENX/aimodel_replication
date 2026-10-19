@@ -25,7 +25,7 @@ def inject(html, marker, name, data):
     return new
 
 
-for page, blocks in (("index.html", [("OCCUPATIONS", "DATA", occupations)]),
+for page, blocks in (("simulator.html", [("OCCUPATIONS", "DATA", occupations)]),
                      ("social.html", [("OCCUPATIONS", "DATA", occupations), ("UNEMP", "UNEMP", unemployment), ("SOCIAL", "SOCIAL", social)])):
     p = ROOT / "simulator" / page
     html = p.read_text(encoding="utf-8")

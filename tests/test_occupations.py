@@ -14,9 +14,9 @@ class TestOccupations(unittest.TestCase):
         saved = json.loads((ROOT / "outputs" / "occupations.json").read_text(encoding="utf-8"))
         self.assertEqual(saved["occupations"], json.loads(json.dumps(occupations.forecast())))
 
-    @unittest.skipUnless((ROOT / "simulator" / "index.html").exists(), "no simulator in this copy")
+    @unittest.skipUnless((ROOT / "simulator" / "simulator.html").exists(), "no simulator in this copy")
     def test_simulator_uses_saved_file(self):
-        html = (ROOT / "simulator" / "index.html").read_text(encoding="utf-8")
+        html = (ROOT / "simulator" / "simulator.html").read_text(encoding="utf-8")
         block = re.search(r"const DATA = (\{.*?\});\n", html, re.S).group(1)
         saved = json.loads((ROOT / "outputs" / "occupations.json").read_text(encoding="utf-8"))
         self.assertEqual(json.loads(block), saved)
