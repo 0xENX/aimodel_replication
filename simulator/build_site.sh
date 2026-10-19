@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Assembles the GitHub Pages site from the repository root:
+# Assembles the site of thereplacemind.com (Cloudflare Workers) from the repository root:
 # the home page, the three tools, the language switch, the full book, the bridge for the browser, the aimodel package
 # and the book's stored results.
 # Usage: bash simulator/build_site.sh [output folder, default _site]
@@ -11,7 +11,7 @@ cp simulator/index.html simulator/libro.html simulator/privacy.html simulator/ho
 mkdir -p "$OUT/img" "$OUT/book" "$OUT/fonts"
 cp simulator/fonts/* "$OUT/fonts/"
 cp simulator/img/* "$OUT/img/"
-cp simulator/book/*.pdf "$OUT/book/"
+cp simulator/book/*.pdf simulator/book/*.epub "$OUT/book/"
 cp -r aimodel "$OUT/py/"
 find "$OUT/py" -name "__pycache__" -type d -prune -exec rm -rf {} +
 cp outputs/headline.json outputs/sobol.json "$OUT/data/"

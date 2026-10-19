@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The ReplaceMind · The book</title>
-<meta name="description" content="Download The ReplaceMind by E.L. De Vito for free, as a PDF.">
+<meta name="description" content="Download The ReplaceMind by E.L. De Vito for free, as PDF or EPUB.">
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="home.css">
 <link rel="icon" type="image/png" href="img/favicon.png">
@@ -40,7 +40,7 @@
     <div class="wrap">
       <p class="eyebrow">The book</p>
       <h1>Download the book</h1>
-      <p>Free, with no sign-up. The full book as a PDF: 37 chapters, the conclusions, the notes, the references and the appendix with all the relationships of the model.</p>
+      <p>Free, with no sign-up: 37 chapters, the conclusions, the notes, the references and the appendix with all the relationships of the model. PDF to read on a computer or print; EPUB for e-book readers and Kindle (with Send to Kindle).</p>
     </div>
   </section>
 
@@ -52,8 +52,11 @@
           <p class="eyebrow">English edition</p>
           <h2>The ReplaceMind</h2>
           <p class="sub">The Mind That Takes Your Job</p>
-          <p class="meta">396 pages · PDF · 9.8 MB</p>
-          <a class="btn dark" href="book/The_ReplaceMind_EN.pdf" download>Download <span aria-hidden="true">↓</span></a>
+          <p class="meta">396 pages · PDF 9.8 MB · EPUB 5.8 MB</p>
+          <div class="btns">
+            <a class="btn dark" href="book/The_ReplaceMind_EN.pdf" download>Download PDF <span aria-hidden="true">↓</span></a>
+            <a class="btn" href="book/The_ReplaceMind_EN.epub" download>Download EPUB <span aria-hidden="true">↓</span></a>
+          </div>
         </div>
       </article>
       <article class="edition" id="ed-it">
@@ -62,8 +65,11 @@
           <p class="eyebrow" lang="it">Edizione italiana</p>
           <h2>The ReplaceMind</h2>
           <p class="sub" lang="it">La mente che prende il tuo posto di lavoro</p>
-          <p class="meta" lang="it">395 pagine · PDF · 10,9 MB</p>
-          <a class="btn dark" href="book/The_ReplaceMind_IT.pdf" download lang="it">Scarica in italiano <span aria-hidden="true">↓</span></a>
+          <p class="meta" lang="it">395 pagine · PDF 10,9 MB · EPUB 6,1 MB</p>
+          <div class="btns" lang="it">
+            <a class="btn dark" href="book/The_ReplaceMind_IT.pdf" download>Scarica PDF <span aria-hidden="true">↓</span></a>
+            <a class="btn" href="book/The_ReplaceMind_IT.epub" download>Scarica EPUB <span aria-hidden="true">↓</span></a>
+          </div>
         </div>
       </article>
     </div>
@@ -110,11 +116,12 @@
     "__title": "The ReplaceMind · Il libro",
     "The book": "Il libro", "Themes": "Temi", "Simulators": "Simulatori", "The author": "L’autore", "Contact": "Contatti",
     "Download the book": "Scarica il libro",
-    "Free, with no sign-up. The full book as a PDF: 37 chapters, the conclusions, the notes, the references and the appendix with all the relationships of the model.":
-      "Gratis, senza registrazione. Il libro completo in PDF: 37 capitoli, le conclusioni, le note, la bibliografia e l’appendice con tutte le relazioni del modello.",
+    "Free, with no sign-up: 37 chapters, the conclusions, the notes, the references and the appendix with all the relationships of the model. PDF to read on a computer or print; EPUB for e-book readers and Kindle (with Send to Kindle).":
+      "Gratis, senza registrazione: 37 capitoli, le conclusioni, le note, la bibliografia e l’appendice con tutte le relazioni del modello. Il PDF per leggerlo al computer o stamparlo, l’EPUB per i lettori di ebook e il Kindle (con «Invia a Kindle»).",
     "English edition": "Edizione inglese",
-    "396 pages · PDF · 9.8 MB": "396 pagine · PDF · 9,8 MB",
-    "Download <span aria-hidden=\"true\">↓</span>": "Scarica in inglese <span aria-hidden=\"true\">↓</span>",
+    "396 pages · PDF 9.8 MB · EPUB 5.8 MB": "396 pagine · PDF 9,8 MB · EPUB 5,8 MB",
+    "Download PDF <span aria-hidden=\"true\">↓</span>": "Scarica PDF <span aria-hidden=\"true\">↓</span>",
+    "Download EPUB <span aria-hidden=\"true\">↓</span>": "Scarica EPUB <span aria-hidden=\"true\">↓</span>",
     "Donations": "Donazioni", "The book is free.": "Il libro è gratuito.",
     "If it was useful to you, you can support the project with a donation of any amount. It pays for the site and for the time to keep the model and the simulators up to date.":
       "Se ti è stato utile, puoi sostenere il progetto con una donazione libera. Serve a pagare il sito e il tempo per tenere aggiornati il modello e i simulatori.",
@@ -130,7 +137,7 @@
   };
   const lang = window.LANG;
   window.i18nMissing = i18nApply(IT, "nav.main a, h1, h2, .page-head p, #ed-en p, #ed-en .btn, .donate p, .inside li, footer a");
-  if (lang === "it") document.querySelector("meta[name=description]").content = "Scarica gratis The ReplaceMind di E.L. De Vito, in PDF.";
+  if (lang === "it") document.querySelector("meta[name=description]").content = "Scarica gratis The ReplaceMind di E.L. De Vito, in PDF o EPUB.";
   // on the English site only the English edition; on the Italian site both, Italian first
   if (lang === "en") document.getElementById("ed-it").hidden = true;
   else document.getElementById("ed-it").parentNode.prepend(document.getElementById("ed-it"));
