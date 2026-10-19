@@ -5,10 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The ReplaceMind</title>
 <meta name="description" content="The ReplaceMind, by E.L. De Vito: a book on how artificial intelligence and robots are changing work, with public simulators of jobs, the economy and social risk.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="home.css">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The ReplaceMind">
+<meta property="og:title" content="The ReplaceMind">
+<meta property="og:description" content="A free book on how artificial intelligence and robots change work, with public simulators of jobs, the economy and social risk.">
+<meta property="og:url" content="https://thereplacemind.com/">
+<meta property="og:image" content="https://thereplacemind.com/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 <header class="top">
@@ -19,7 +28,7 @@
       <a href="libro.html">The book</a>
       <a href="#themes">Themes</a>
       <a href="#tools">Simulators</a>
-      <a href="#author">The author</a>
+      <a href="#author" id="authorLink">The author</a>
       <a href="mailto:info@thereplacemind.com">Contact</a>
     </nav>
     <span class="flags" id="flags"></span>
@@ -88,6 +97,7 @@
           <p class="eyebrow">The simulators</p>
           <h2>Simulate the future<br>of your work</h2>
           <p>The same data, rules and numbers as the book, month by month, in your browser.</p>
+          <a href="social.html?anno=2040" class="shot"><img src="img/map-2040.jpg" alt="Social Risk map in January 2040: social tension country by country" width="1000" height="493" loading="lazy"></a>
         </div>
         <div>
           <a class="tool" href="simulator.html"><b>Job Simulator</b><span>Nineteen professions, AI and robots, region by region.</span><em aria-hidden="true">→</em></a>
@@ -98,20 +108,28 @@
     </div>
   </section>
 
-  <section class="author" id="author">
+  <section class="contacts" id="contacts">
     <div class="wrap">
-      <div><p class="eyebrow">The author</p><h2>E.L. DE VITO</h2></div>
-      <div>
-        <p>For contacts and comments: <a href="mailto:info@thereplacemind.com">info@thereplacemind.com</a></p>
-      </div>
+      <p>For contacts and comments: <a href="mailto:info@thereplacemind.com">info@thereplacemind.com</a></p>
     </div>
   </section>
+
+  <dialog class="author-card" id="author" aria-labelledby="authorName">
+    <button class="close" id="authorClose" aria-label="Close">×</button>
+    <img src="img/author.jpg" alt="Portrait of E.L. De Vito" width="640" height="800">
+    <div>
+      <p class="eyebrow">The author</p>
+      <h2 id="authorName">E.L. DE VITO</h2>
+      <p class="bio">Senior manager and business consultant for more than thirty years, between economics and information technology, with projects in industry, healthcare, government bodies, security and finance: different worlds, seen from the inside, in which technology changed the way organisations work. This book, with its model and its simulators, grows out of that experience.</p>
+      <p>For contacts and comments: <a href="mailto:info@thereplacemind.com">info@thereplacemind.com</a></p>
+    </div>
+  </dialog>
 </main>
 
 <footer>
   <div class="wrap">
     <span>© 2026 Enrico Lorenzo De Vito · The ReplaceMind</span>
-    <a href="https://github.com/0xENX/aimodel_replication">Code and data on GitHub</a>
+    <span><a href="privacy.html">Privacy</a> · <a href="https://github.com/0xENX/aimodel_replication">Code and data on GitHub</a></span>
   </div>
 </footer>
 
@@ -144,17 +162,27 @@
     "Job Simulator": "Simulatore", "Nineteen professions, AI and robots, region by region.": "Diciannove professioni, AI e robot, regione per regione.",
     "Economy Model": "Modello economico", "Wages, incomes, public finances and policies.": "Salari, redditi, conti pubblici e politiche.",
     "Social Risk": "Rischio sociale", "Social tension country by country, to 2046.": "La tensione sociale paese per paese, fino al 2046.",
+    "Senior manager and business consultant for more than thirty years, between economics and information technology, with projects in industry, healthcare, government bodies, security and finance: different worlds, seen from the inside, in which technology changed the way organisations work. This book, with its model and its simulators, grows out of that experience.":
+      "Dirigente e consulente aziendale da oltre trent’anni, a cavallo fra economia e informatica. Ha seguito progetti nell’industria, nella sanità, negli enti pubblici, nella sicurezza e nella finanza: mondi diversi, osservati da vicino, in cui la tecnologia ha cambiato il modo di lavorare delle organizzazioni. Questo libro, con il suo modello e i suoi simulatori, nasce da quell’esperienza.",
     "For contacts and comments: <a href=\"mailto:info@thereplacemind.com\">info@thereplacemind.com</a>": "Per contatti e commenti: <a href=\"mailto:info@thereplacemind.com\">info@thereplacemind.com</a>",
     "© 2026 Enrico Lorenzo De Vito · The ReplaceMind": "© 2026 Enrico Lorenzo De Vito · The ReplaceMind",
     "Code and data on GitHub": "Codice e dati su GitHub",
   };
   const lang = window.LANG;
   document.documentElement.lang = lang;
-  window.i18nMissing = i18nApply(IT, "nav.main a, h2, h3, p, li, .btn, .tool b, .tool span, .theme .ch, footer span, footer a");
+  window.i18nMissing = i18nApply(IT, "nav.main a, h2, h3, p, li, .btn, .tool b, .tool span, .theme .ch, footer > .wrap > span:first-child, footer a");
   if (lang === "it") document.querySelector("meta[name=description]").content =
     "The ReplaceMind, di E.L. De Vito: un libro su come l’intelligenza artificiale e i robot stanno cambiando il lavoro, con simulatori pubblici del lavoro, dell’economia e del rischio sociale.";
 
   document.getElementById("cover").src = "img/cover-" + lang + ".jpg";
+  // the author card opens over the page (from the menu, or from other pages via #author)
+  const card = document.getElementById("author");
+  const openCard = () => { if (!card.open) card.showModal(); };
+  document.getElementById("authorLink").addEventListener("click", e => { e.preventDefault(); openCard(); });
+  document.getElementById("authorClose").onclick = () => card.close();
+  card.addEventListener("click", e => { if (e.target === card) card.close(); });
+  if (lang === "it") { card.querySelector("img").alt = "Ritratto di E.L. De Vito"; document.getElementById("authorClose").setAttribute("aria-label", "Chiudi"); }
+  if (location.hash === "#author") openCard();
   siteChrome();
 })();
 </script>

@@ -1,0 +1,15 @@
+/* Top bar of the three tools, same look as the home page: ivory band, stacked logo, light buttons. */
+.topnav { background: #f5f0e4; border-bottom: 1px solid #d6ccb6; color: #1f1e1c; }
+.topnav .in { gap: 6px 8px; padding-block: 10px; }
+.topnav a.brand, .topnav .brand { color: #1f1e1c; font-family: "Jost", "Century Gothic", system-ui, sans-serif; font-weight: 400; line-height: .95;
+  text-decoration: none; background: none; border: 0; border-radius: 0; padding: 0 18px 0 0; margin-right: 6px; border-right: 1px solid #d6ccb6; cursor: pointer; }
+.topnav a.brand small { display: block; font-size: .7rem; }
+.topnav a.brand span { display: block; font-size: 1.12rem; letter-spacing: .01em; }
+.topnav a.brand:hover { background: none; color: #000; border-color: #d6ccb6; }
+.topnav a { font-family: "Jost", system-ui, sans-serif; color: #1f1e1c; background: transparent; border: 1px solid #b9ad94; font-weight: 400; font-size: .92rem; }
+.topnav a:hover { color: #1f1e1c; border-color: #1f1e1c; background: rgba(31, 30, 28, .06); }
+.topnav a[aria-current="page"] { color: #f5f0e4; background: #1f1e1c; border-color: #1f1e1c; }
+.topnav a.plain { border-color: transparent; }
+.topnav a.plain:hover { border-color: transparent; text-decoration: underline; background: none; }
+.topnav a:focus-visible { outline: 2px solid #1f1e1c; }
+.topnav .flag.on { border-color: #b9ad94; }

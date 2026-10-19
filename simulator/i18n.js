@@ -26,7 +26,7 @@
   window.i18nNav = function () {
     const bar = document.querySelector(".topnav .in");
     if (!bar) return;
-    const NAMES = { "simulator.html": L("Job Simulator", "Simulatore"), "model.html": L("Economy Model", "Modello economico"), "social.html": L("Social Risk", "Rischio sociale") };
+    const NAMES = { "libro.html": L("The book", "Il libro"), "simulator.html": L("Job Simulator", "Simulatore"), "model.html": L("Economy Model", "Modello economico"), "social.html": L("Social Risk", "Rischio sociale") };
     bar.querySelectorAll("a[href$='.html']").forEach(a => {
       const page = a.getAttribute("href");
       if (NAMES[page]) a.textContent = NAMES[page];

@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="author" content="Enrico Lorenzo De Vito">
 <title>Social Risk</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 /* Layout: teal world map with one bubble per country, region panel and country grid below */
 :root {
@@ -89,12 +88,25 @@ button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); o
 footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--line); padding-top: 12px; }
 </style>
 <script src="i18n.js"></script>
+<link rel="stylesheet" href="topnav.css">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The ReplaceMind">
+<meta property="og:title" content="The ReplaceMind · Social Risk">
+<meta property="og:description" content="A free book on how artificial intelligence and robots change work, with public simulators of jobs, the economy and social risk.">
+<meta property="og:url" content="https://thereplacemind.com/social.html">
+<meta property="og:image" content="https://thereplacemind.com/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 
 <nav class="topnav" aria-label="Main">
   <div class="in">
-    <a class="brand" href="index.html">The ReplaceMind</a>
+    <a class="brand" href="index.html" aria-label="The ReplaceMind, home"><small>THE</small><span>REPLACE MIND</span></a>
+    <a class="plain" href="libro.html">The book</a>
     <a href="simulator.html">Job Simulator</a>
     <a href="model.html">Economy Model</a>
     <a href="social.html" aria-current="page">Social Risk</a>
@@ -163,6 +175,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   <p class="note"><b>Where the numbers come from.</b> Weight of each country: World Bank, Worldwide Governance Indicators, Political Stability and Absence of Violence/Terrorism, 2024, brought to a 0–100 scale (higher means less stable). People using AI: Our World in Data from Microsoft’s AI Economy Institute, share of the working-age population, observed until March 2026; after that it grows along the book’s adoption curve up to the share of employment exposed to AI in the region (60% advanced, 40% emerging, 26% low-income, IMF, chapter 6). Work taken by AI and by robots: share of the work of the nineteen occupations of Table 65 taken over, weighted by employment. It counts the work taken, not net unemployment: in the economy model part of it comes back as new work, but the people who lose a job are still there. Social tension: work taken by AI and robots in the region (the nineteen occupations of Table 65, weighted by employment, in percentage points since the start month), shared among its countries by how much AI and robots they take up (people using AI plus robots, over the regional average), multiplied by 1 + 0.5 × starting risk / 100: up to half more in the least stable country, never enough to overturn much more replacement. Pace: until robots enter the work of the region tension grows at a quarter of that speed, at full speed once robots take 3 percentage points of the work (around 2033 in advanced economies, 2037 in emerging ones, 2041 in low-income countries). The nineteen occupations are scaled by the share of employment exposed in the region (60% advanced, 40% emerging, 26% low-income, chapter 6): fewer exposed jobs, fewer people replaced. United States by state: the nineteen occupations weighted by the employment of each state (BLS, Occupational Employment and Wage Statistics, May 2024). China, Russia, Canada, Australia, Brazil and India by large city: there are no comparable data on occupations by city, so every city carries the value of its country. Dots and numbers show the increase since the start month, in percentage points.</p>
   <p class="note"><b>What the page does not do.</b> It does not forecast unrest: the book has no estimated link between lost work and unrest (chapter 17), so the sounding-board factor is the author’s rule, not a measured coefficient. The economy model has three regions; AI use and starting risk are country by country, robots by region. Places with fewer than 6 inhabitants per km² (World Bank population and land area), New Caledonia, small islands (island states under a million people) and, among the US states, Alaska and Hawaii have no bubble; the large countries stay, by state or by large city: they are only in the country grid.</p>
   <footer>© 2026 Enrico Lorenzo De Vito · Social Risk · The ReplaceMind, chapters 6, 14, 17, 36 and 37 (aimodel v3.1) · Data: World Bank WGI, Our World in Data / Microsoft, BLS OEWS, Natural Earth via world-atlas and us-atlas</footer>
+  <p class="note" style="text-align:center"><a href="privacy.html" style="color: var(--muted)">Privacy</a></p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
@@ -466,6 +479,9 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     land = topojson.merge(topo, topo.objects.countries.geometries.filter(g => g.id !== "010"));
     mesh = topojson.mesh(topo, topo.objects.countries, (a, b) => a !== b);
     samplePoints();
+    // ?anno=2040 opens the map at January of that year, paused (links to a given year, images for the home page)
+    const anno = Number(new URLSearchParams(location.search).get("anno"));
+    if (anno >= DATA.start && anno <= DATA.end) { period(); started = true; t = Math.max(START, Math.min(END, anno * 12)); stats(); }
   }).catch(() => {});
   fetch("https://cdn.jsdelivr.net/npm/us-atlas@3.0.1/states-10m.json").then(r => r.json()).then(topo => {
     stateCentres = {};
