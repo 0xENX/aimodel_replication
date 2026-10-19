@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://thereplacemind.com/?lang=en</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://thereplacemind.com/?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thereplacemind.com/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thereplacemind.com/"/>
+  </url>
+  <url>
+    <loc>https://thereplacemind.com/?lang=it</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://thereplacemind.com/?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thereplacemind.com/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thereplacemind.com/"/>
+  </url>
+  <url>
+    <loc>https://thereplacemind.com/libro?lang=en</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://thereplacemind.com/libro?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thereplacemind.com/libro?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thereplacemind.com/libro"/>
+  </url>
+  <url>
+    <loc>https://thereplacemind.com/libro?lang=it</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://thereplacemind.com/libro?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thereplacemind.com/libro?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thereplacemind.com/libro"/>
+  </url>
+  <url>
+    <loc>https://thereplacemind.com/simulator?lang=en</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://thereplacemind.com/simulator?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thereplacemind.com/simulator?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thereplacemind.com/simulator"/>
+  </url>
+  <url>
+    <loc>https://thereplacemind.com/simulator?lang=it</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://thereplacemind.com/simulator?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thereplacemind.com/simulator?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thereplacemind.com/simulator"/>
+  </url>
+  <url>
+    <loc>https://thereplacemind.com/social?lang=en</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://thereplacemind.com/social?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thereplacemind.com/social?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thereplacemind.com/social"/>
+  </url>
+  <url>
+    <loc>https://thereplacemind.com/social?lang=it</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://thereplacemind.com/social?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thereplacemind.com/social?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thereplacemind.com/social"/>
+  </url>
+  <url>
+    <loc>https://thereplacemind.com/model?lang=en</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://thereplacemind.com/model?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thereplacemind.com/model?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thereplacemind.com/model"/>
+  </url>
+  <url>
+    <loc>https://thereplacemind.com/model?lang=it</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://thereplacemind.com/model?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thereplacemind.com/model?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thereplacemind.com/model"/>
+  </url>
+  <url>
+    <loc>https://thereplacemind.com/privacy?lang=en</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://thereplacemind.com/privacy?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thereplacemind.com/privacy?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thereplacemind.com/privacy"/>
+  </url>
+  <url>
+    <loc>https://thereplacemind.com/privacy?lang=it</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://thereplacemind.com/privacy?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://thereplacemind.com/privacy?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thereplacemind.com/privacy"/>
+  </url>
+</urlset>
