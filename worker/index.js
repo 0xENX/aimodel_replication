@@ -8,8 +8,9 @@ const FILES = new Set([
   "The_ReplaceMind_EN.pdf", "The_ReplaceMind_EN.epub",
 ]);
 
-// search engines, link previews and scripts download the files too: they are counted apart, not as readers
-const ROBOT = /bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|headless|curl|wget|python|java\/|go-http|okhttp|axios|node-fetch/i;
+// search engines, AI crawlers and assistants (ChatGPT-User, Claude-User, Perplexity-User…), link previews and scripts
+// download the files too: they are counted apart, not as readers
+const ROBOT = /bot|crawl|spider|slurp|preview|facebookexternalhit|embedly|headless|curl|wget|python|java\/|go-http|okhttp|axios|node-fetch|-user\b|chatgpt|openai|claude|anthropic|perplexity|cohere|mistral|bytespider|ccbot|diffbot|meta-external|amazonbot|applebot|youbot|ai2|gemini|google-extended/i;
 
 export class Downloads extends DurableObject {
   async hit(name) {
