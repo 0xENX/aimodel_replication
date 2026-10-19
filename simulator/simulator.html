@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="author" content="Enrico Lorenzo De Vito">
 <title>AI + Robot Job Impact</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 /* Layout: control bars on top, simulation field on the left with legend below, numbers and chart on the right (stacked on phones) */
 :root {
@@ -123,12 +122,25 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--line); padding-top: 12px; }
 </style>
 <script src="i18n.js"></script>
+<link rel="stylesheet" href="topnav.css">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The ReplaceMind">
+<meta property="og:title" content="The ReplaceMind · Job Simulator">
+<meta property="og:description" content="A free book on how artificial intelligence and robots change work, with public simulators of jobs, the economy and social risk.">
+<meta property="og:url" content="https://thereplacemind.com/simulator.html">
+<meta property="og:image" content="https://thereplacemind.com/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 
 <nav class="topnav" aria-label="Main">
   <div class="in">
-    <a class="brand" href="index.html">The ReplaceMind</a>
+    <a class="brand" href="index.html" aria-label="The ReplaceMind, home"><small>THE</small><span>REPLACE MIND</span></a>
+    <a class="plain" href="libro.html">The book</a>
     <a href="simulator.html" aria-current="page">Job Simulator</a>
     <a href="model.html">Economy Model</a>
     <a href="social.html">Social Risk</a>
@@ -250,6 +262,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   </section>
   <p class="note">The economy model of the book, with wages, incomes, public finance and policies, runs in the <a href="model.html" style="color: var(--accent)">Economy Model</a> page.</p>
   <footer>© 2026 Enrico Lorenzo De Vito · AI + Robot Job Impact · The ReplaceMind, chapter 36 (aimodel v3.1)</footer>
+  <p class="note" style="text-align:center"><a href="privacy.html" style="color: var(--muted)">Privacy</a></p>
 </div>
 
 <script>

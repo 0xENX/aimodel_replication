@@ -1,5 +1,6 @@
 // Settings and header shared by the home page and the book page (needs i18n.js first).
-// paypal: the donation button made in PayPal (public ids); empty = the donation box and buttons stay hidden.
+// paypal: the donation button made in PayPal (public ids); button can be one id, or { it: "...", en: "..." } for a
+// button written in each language; empty = the donation box and buttons stay hidden.
 window.SITE = {
   book: { it: "book/The_ReplaceMind_IT.pdf", en: "book/The_ReplaceMind_EN.pdf" },
   paypal: { clientId: "BAAkPVaCyuQ1CL-nZDnU34lPq1uQ-OXe5KyMP6_clgCzmX62UHhxlVOhMlWnipwJ_XdMeU-7SkNUsUhbpA", button: "9V4SVW6LCJYXQ" },
@@ -32,7 +33,8 @@ window.siteChrome = function () {
   menu.onclick = () => { const o = nav.classList.toggle("open"); menu.setAttribute("aria-expanded", o ? "true" : "false"); };
   nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => { nav.classList.remove("open"); menu.setAttribute("aria-expanded", "false"); }));
   // donations: buttons lead to the box on the book page, where PayPal opens on top of the site
-  if (SITE.paypal && SITE.paypal.button) {
+  const button = SITE.paypal && (typeof SITE.paypal.button === "string" ? SITE.paypal.button : (SITE.paypal.button[lang] || SITE.paypal.button.it));
+  if (button) {
     document.querySelectorAll(".js-donate").forEach(d => {
       const u = new URL("libro.html", location.href); u.searchParams.set("lang", lang); u.hash = "donate"; d.href = u.toString(); d.hidden = false;
     });
@@ -42,7 +44,7 @@ window.siteChrome = function () {
       const s = document.createElement("script");
       s.src = "https://www.paypal.com/sdk/js?client-id=" + encodeURIComponent(SITE.paypal.clientId) +
         "&components=hosted-buttons&disable-funding=venmo&currency=EUR&locale=" + (lang === "it" ? "it_IT" : "en_GB");
-      s.onload = () => paypal.HostedButtons({ hostedButtonId: SITE.paypal.button }).render("#paypal-donate");
+      s.onload = () => paypal.HostedButtons({ hostedButtonId: button }).render("#paypal-donate");
       s.onerror = () => { box.textContent = L("PayPal could not be loaded. Please try again later.", "Non è stato possibile caricare PayPal. Riprova più tardi."); };
       document.body.appendChild(s);
     }
