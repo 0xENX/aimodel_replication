@@ -9,6 +9,7 @@ rm -rf "$OUT"
 mkdir -p "$OUT/py" "$OUT/data"
 cp simulator/index.html simulator/libro.html simulator/privacy.html simulator/sitemap.xml simulator/robots.txt simulator/home.css simulator/site.js simulator/topnav.css simulator/simulator.html simulator/model.html simulator/social.html simulator/dashboard.py simulator/i18n.js "$OUT/"
 mkdir -p "$OUT/img" "$OUT/book" "$OUT/fonts"
+cp simulator/libro.html "$OUT/book.html"   # the same book page, English address
 cp simulator/fonts/* "$OUT/fonts/"
 cp simulator/img/* "$OUT/img/"
 cp simulator/book/*.pdf simulator/book/*.epub "$OUT/book/"
