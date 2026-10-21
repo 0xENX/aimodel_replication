@@ -21,6 +21,8 @@
 <link rel="alternate" hreflang="it" href="https://thereplacemind.com/libro?lang=it">
 <link rel="alternate" hreflang="en" href="https://thereplacemind.com/libro?lang=en">
 <link rel="alternate" hreflang="x-default" href="https://thereplacemind.com/libro">
+<!-- the language is known before the page is drawn, so the editions do not move after loading -->
+<script src="i18n.js"></script>
 </head>
 <body>
 <header class="top">
@@ -111,7 +113,6 @@
   </div>
 </footer>
 
-<script src="i18n.js"></script>
 <script src="site.js"></script>
 <script>
 (function () {
@@ -143,7 +144,6 @@
   if (lang === "it") document.querySelector("meta[name=description]").content = "Scarica gratis The ReplaceMind di E.L. De Vito, in PDF o EPUB.";
   // on the English site only the English edition; on the Italian site both, Italian first
   if (lang === "en") document.getElementById("ed-it").hidden = true;
-  else document.getElementById("ed-it").parentNode.prepend(document.getElementById("ed-it"));
   siteChrome();
   // after a download the page moves to the donation box
   document.querySelectorAll(".edition .btn").forEach(a => a.addEventListener("click", () => {
