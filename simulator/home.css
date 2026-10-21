@@ -32,6 +32,7 @@ nav.main a:hover { border-bottom-color: var(--ink); }
 .rule { display: block; width: 46px; border-top: 2px solid var(--ink); margin: 18px 0; }
 .hero h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 3vw, 2.35rem); line-height: 1.18; margin: 0 0 22px; }
 .hero p.lead { color: var(--muted); max-width: 32em; margin: 0 0 30px; }
+.hero p.free { font-family: var(--sans); font-size: .85rem; letter-spacing: .04em; color: var(--muted); margin: 16px 0 0; }
 .hero .art { align-self: stretch; background: url("img/hero.jpg") center bottom / cover no-repeat; min-height: 520px;
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 22%); mask-image: linear-gradient(to right, transparent 0, #000 22%); }
 .btns { display: flex; flex-wrap: wrap; gap: 14px; }
