@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The ReplaceMind</title>
-<meta name="description" content="The ReplaceMind, by E.L. De Vito: a book on how artificial intelligence and robots are changing work, with public simulators of jobs, the economy and social risk.">
+<meta name="description" content="The ReplaceMind, by Marc Molften: a book on how artificial intelligence and robots are changing work, with public simulators of jobs, the economy and social risk.">
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="home.css">
 <link rel="icon" type="image/png" href="img/favicon.png">
@@ -120,10 +120,9 @@
 
   <dialog class="author-card" id="author" aria-labelledby="authorName">
     <button class="close" id="authorClose" aria-label="Close">×</button>
-    <img src="img/author.jpg" alt="Portrait of E.L. De Vito" width="640" height="800">
     <div>
       <p class="eyebrow">The author</p>
-      <h2 id="authorName">E.L. DE VITO</h2>
+      <h2 id="authorName">MARC MOLFTEN</h2>
       <p class="bio">Senior manager and business consultant for more than thirty years, between economics and information technology, with projects in industry, healthcare, government bodies, security and finance: different worlds, seen from the inside, in which technology changed the way organisations work. This book, with its model and its simulators, grows out of that experience.</p>
       <p>For contacts and comments: <a href="mailto:info@thereplacemind.com">info@thereplacemind.com</a></p>
     </div>
@@ -132,7 +131,7 @@
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Enrico Lorenzo De Vito · The ReplaceMind</span>
+    <span>© 2026 Marc Molften · The ReplaceMind</span>
     <span><a href="privacy.html">Privacy</a> · <a href="https://github.com/0xENX/aimodel_replication">Code and data on GitHub</a></span>
   </div>
 </footer>
@@ -169,14 +168,14 @@
     "Senior manager and business consultant for more than thirty years, between economics and information technology, with projects in industry, healthcare, government bodies, security and finance: different worlds, seen from the inside, in which technology changed the way organisations work. This book, with its model and its simulators, grows out of that experience.":
       "Dirigente e consulente aziendale da oltre trent’anni, a cavallo fra economia e informatica. Ha seguito progetti nell’industria, nella sanità, negli enti pubblici, nella sicurezza e nella finanza: mondi diversi, osservati da vicino, in cui la tecnologia ha cambiato il modo di lavorare delle organizzazioni. Questo libro, con il suo modello e i suoi simulatori, nasce da quell’esperienza.",
     "For contacts and comments: <a href=\"mailto:info@thereplacemind.com\">info@thereplacemind.com</a>": "Per contatti e commenti: <a href=\"mailto:info@thereplacemind.com\">info@thereplacemind.com</a>",
-    "© 2026 Enrico Lorenzo De Vito · The ReplaceMind": "© 2026 Enrico Lorenzo De Vito · The ReplaceMind",
+    "© 2026 Marc Molften · The ReplaceMind": "© 2026 Marc Molften · The ReplaceMind",
     "Code and data on GitHub": "Codice e dati su GitHub",
   };
   const lang = window.LANG;
   document.documentElement.lang = lang;
   window.i18nMissing = i18nApply(IT, "nav.main a, h2, h3, p, li, .btn, .tool b, .tool span, .theme .ch, footer > .wrap > span:first-child, footer a");
   if (lang === "it") document.querySelector("meta[name=description]").content =
-    "The ReplaceMind, di E.L. De Vito: un libro su come l’intelligenza artificiale e i robot stanno cambiando il lavoro, con simulatori pubblici del lavoro, dell’economia e del rischio sociale.";
+    "The ReplaceMind, di Marc Molften: un libro su come l’intelligenza artificiale e i robot stanno cambiando il lavoro, con simulatori pubblici del lavoro, dell’economia e del rischio sociale.";
 
   document.getElementById("cover").src = "img/cover-" + lang + ".jpg";
   // the author card opens over the page (from the menu, or from other pages via #author)
@@ -185,7 +184,7 @@
   document.getElementById("authorLink").addEventListener("click", e => { e.preventDefault(); openCard(); });
   document.getElementById("authorClose").onclick = () => card.close();
   card.addEventListener("click", e => { if (e.target === card) card.close(); });
-  if (lang === "it") { card.querySelector("img").alt = "Ritratto di E.L. De Vito"; document.getElementById("authorClose").setAttribute("aria-label", "Chiudi"); }
+  if (lang === "it") { document.getElementById("authorClose").setAttribute("aria-label", "Chiudi"); }
   if (location.hash === "#author") openCard();
   siteChrome();
 })();
