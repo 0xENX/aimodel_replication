@@ -11,74 +11,74 @@ Every number in the book is produced by this code, and the same files run in the
 - **The book** (English and Italian, Kindle and paperback):
   [English edition on Amazon](https://www.amazon.com/dp/B0HPL8SMR4) ·
   [edizione italiana su Amazon](https://www.amazon.it/dp/B0HPL9WNB7)
-- **Reproduce the results:** see the sections below (Python 3.10+, NumPy). The rest of this README is in Italian.
+- **Reproduce the results:** see the sections below (Python 3.10+, NumPy).
 - **License:** code and data under the [MIT License](LICENSE). The book, its covers and the cover illustration are not
   covered by it and remain all rights reserved.
 
 ---
 
-# Pacchetto software del libro - versione 3.1
+# Software package of the book - version 3.1
 
-Modello macroeconomico del report (versione 2, con domanda di lavoro a elasticità ε),
-modulo occupazionale per età, dati osservati Eurostat e Stanford/ADP, esperimenti del libro.
+The macroeconomic model of the report (version 2, with labour demand at elasticity ε),
+the employment module by age, observed Eurostat and Stanford/ADP data, and the book's experiments.
 
-## Storia delle versioni
+## Version history
 
-Il nome "v2" è stato usato per due pacchetti diversi; questa tabella li distingue.
+The name "v2" was used for two different packages; this table tells them apart.
 
-| Versione | Che cosa contiene | Riproduce il libro? |
+| Version | What it contains | Does it reproduce the book? |
 | --- | --- | --- |
-| v1 | Prima edizione del working paper: domanda di lavoro = monte salari / salario | No |
-| v2 provvisoria (`aimodel_replication_v2`, ottobre 2026) | Trend salariale corretto e prior rivisti, 20 parametri, **senza ε** | No (es. disoccupazione ADV 2036 +2,7 invece di +4,3) |
-| v2 (modello macro di questo pacchetto) | + domanda di lavoro da tecnologia e prodotto con elasticità ε, 21 parametri | Sì: report e risultati macro del libro |
-| v3 | + modulo per età collegato in una sola direzione | Sì, per i capitoli 7-9 nella stesura di ottobre 2026 |
-| **v3.1** (attuale) | + taratura di coerenza del modulo per età, collegamento a due vie, politiche d'ingresso, esperimenti del libro | Base della revisione del libro |
+| v1 | First edition of the working paper: labour demand = wage bill / wage | No |
+| provisional v2 (`aimodel_replication_v2`, October 2026) | Corrected wage trend and revised priors, 20 parameters, **without ε** | No (e.g. ADV unemployment 2036 +2.7 instead of +4.3) |
+| v2 (macro model of this package) | + labour demand from technology and output with elasticity ε, 21 parameters | Yes: the report and the book's macro results |
+| v3 | + age module linked in one direction only | Yes, for chapters 7-9 in the October 2026 draft |
+| **v3.1** (current) | + consistency calibration of the age module, two-way link, entry policies, the book's experiments | Basis of the book's revision |
 
-Con la v3.1 i numeri del modulo per età cambiano rispetto alla v3, per la taratura di coerenza
-(vedi sotto). I risultati del modello macro non cambiano: con le opzioni predefinite
-`simulate()` produce esattamente gli stessi valori (verificato dai test).
+With v3.1 the numbers of the age module change compared with v3, because of the consistency calibration
+(see below). The results of the macro model do not change: with the default options
+`simulate()` produces exactly the same values (checked by the tests).
 
-## Novità della v3.1
+## What is new in v3.1
 
-- **Taratura di coerenza** (`calibrate_consistency.py`): senza taratura il mondo senza AI del
-  modulo per età saliva sopra la disoccupazione strutturale del modello macro (circa 7% invece
-  del 5% nelle economie avanzate). Un fattore per regione sulle probabilità di assunzione,
-  `hire_hazard_scale` nella configurazione, riporta il mondo senza AI al tasso strutturale.
-  È una condizione di coerenza fra i due modelli, non una stima dai dati.
-- **Collegamento a due vie** (`aimodel/core/coupled.py`): la non occupazione del modulo per età
-  sostituisce la disoccupazione macro nella curva dei salari e nel costo dei sussidi, nei due
-  mondi appaiati; il calcolo si ripete fino a convergenza. Opzione `ur_path` di `simulate()`.
-- **Politiche d'ingresso** (opzione `policy` di `simulate_employment()`): posti pubblici,
-  incentivo all'occupazione giovanile, riduzione dell'orario con integrazione salariale,
-  confrontati a parità di costo.
-- **Esperimenti del libro** (`run_book_experiments.py`): risultati in `outputs/experiments/`.
-- **Barriera d'ingresso**: il parametro `entry_barrier` agisce due volte, sulla distribuzione
-  dei posti per età e sulla probabilità di primo ingresso. È voluto e ora documentato nel codice;
-  l'analisi di sensibilità mostra che è una delle due ipotesi che pesano di più.
+- **Consistency calibration** (`calibrate_consistency.py`): without calibration, the no-AI world of the
+  age module rose above the structural unemployment of the macro model (about 7% instead
+  of 5% in advanced economies). One factor per region on the hiring probabilities,
+  `hire_hazard_scale` in the configuration, brings the no-AI world back to the structural rate.
+  It is a consistency condition between the two models, not an estimate from the data.
+- **Two-way link** (`aimodel/core/coupled.py`): non-employment from the age module
+  replaces macro unemployment in the wage curve and in the cost of benefits, in both
+  paired worlds; the calculation is repeated until it converges. Option `ur_path` of `simulate()`.
+- **Entry policies** (option `policy` of `simulate_employment()`): public jobs,
+  youth employment incentive, reduced working hours with wage top-up,
+  compared at equal cost.
+- **The book's experiments** (`run_book_experiments.py`): results in `outputs/experiments/`.
+- **Entry barrier**: the parameter `entry_barrier` acts twice, on the distribution
+  of jobs by age and on the probability of first entry. This is intended and now documented in the code;
+  the sensitivity analysis shows it is one of the two assumptions that weigh the most.
 
 ```text
-python calibrate_consistency.py          # una volta, scrive hire_hazard_scale nella configurazione
-python run_employment.py --draws 4000    # capitoli 7-9
-python run_book_experiments.py           # capitoli 9, 12, 24, 26
+python calibrate_consistency.py          # once, writes hire_hazard_scale into the configuration
+python run_employment.py --draws 4000    # chapters 7-9
+python run_book_experiments.py           # chapters 9, 12, 24, 26
 python -m unittest discover -s tests -v
 ```
 
-Il modello macro e i suoi output originali sono preservati sotto `outputs/`.
-I risultati del modulo per età sono in `outputs/employment/`, quelli degli esperimenti in
+The macro model and its original outputs are kept under `outputs/`.
+The results of the age module are in `outputs/employment/`, those of the experiments in
 `outputs/experiments/`.
 
-## Aprire i risultati
+## Opening the results
 
-- `outputs/employment/occupazione.html`: rapporto interattivo autonomo, funziona offline.
-- `outputs/employment/sezione_occupazione.pdf`: appendice stampabile con dati e grafici.
-- `outputs/employment/age_series.csv`: tutte le serie, scenari, versioni AI/no-AI e percentili.
-- `outputs/employment/results.json` e `config_used.json`: risultati e configurazione effettiva.
-- `FONTI_E_METODO.md`: fonti, limiti, formule e piano di calibrazione.
+- `outputs/employment/occupazione.html`: self-contained interactive report, works offline.
+- `outputs/employment/sezione_occupazione.pdf`: printable annex with data and charts.
+- `outputs/employment/age_series.csv`: all series, scenarios, AI/no-AI versions and percentiles.
+- `outputs/employment/results.json` and `config_used.json`: results and the configuration actually used.
+- `FONTI_E_METODO.md`: sources, limits, formulas and calibration plan (in Italian).
 
-## Eseguire l'estensione
+## Running the extension
 
-Python 3.10+, NumPy. ReportLab solo per generare il PDF. Nessuna SALib necessaria
-per l'estensione; SALib serve per il vecchio `run_all.py`.
+Python 3.10+, NumPy. ReportLab only to generate the PDF. No SALib needed
+for the extension; SALib is needed for the old `run_all.py`.
 
 ```text
 python -m pip install -r requirements-employment.txt
@@ -87,15 +87,15 @@ python make_employment_pdf.py
 python -m unittest discover -s tests -v
 ```
 
-La configurazione predefinita usa `config/employment_eu_proxy.json` se presente:
-profilo iniziale ADV parzialmente basato su UE-27 2025. Per confrontare ipotesi
-interamente illustrative usare:
+The default configuration uses `config/employment_eu_proxy.json` if present:
+an initial ADV profile partly based on EU-27 2025. To compare assumptions
+that are entirely illustrative, use:
 
 ```text
 python run_employment.py --config config/employment.json --draws 4000
 ```
 
-Per aggiornare osservazioni e proxy (solo la prima operazione richiede rete):
+To update the observations and the proxy (only the first step needs a network connection):
 
 ```text
 python fetch_employment_data.py --year 2025
@@ -104,24 +104,24 @@ python run_employment.py --draws 4000
 python make_employment_pdf.py
 ```
 
-**Limite essenziale:** `run_employment.py` usa il modulo come satellite collegato in una sola
-direzione al modello macro: domanda -> flussi per eta. In quella modalita la nuova occupazione
-NON modifica PIL, salari, redditi o debito. Il collegamento a due vie esiste solo nell'esperimento
-`feedback` di `run_book_experiments.py`, e agisce attraverso salari e sussidi di disoccupazione.
-Le simulazioni non sono previsioni ne effetti causali stimati.
-UE e solo un proxy delle economie avanzate; tutti i parametri di matching/AI e
-i profili EME/LIC restano ipotesi. I dati osservati sono mostrati separatamente.
+**Essential limit:** `run_employment.py` uses the module as a satellite linked in one
+direction only to the macro model: demand -> flows by age. In that mode the new employment
+does NOT change GDP, wages, incomes or debt. The two-way link exists only in the experiment
+`feedback` of `run_book_experiments.py`, and it works through wages and unemployment benefits.
+The simulations are neither forecasts nor estimated causal effects.
+The EU is only a proxy for the advanced economies; all matching/AI parameters and
+the EME/LIC profiles remain assumptions. The observed data are shown separately.
 
-## Moduli nuovi
+## New modules
 
-- `aimodel/core/employment.py`: coorti annuali, ingresso, separazioni, matching, scoraggiamento.
-- `config/`: assunzioni, scenari e proxy EU con fonti.
-- `fetch_employment_data.py`, `prepare_observed.py`: acquisizione con hash, trattamento e proxy.
-- `run_employment.py`: estrazioni appaiate, serie CSV e report.
-- `employment_report.py`, `report_template.html`, `make_employment_pdf.py`: visualizzazione.
-- `tests/test_employment.py`: identita, coorti, matching, neutralita e decoder dati.
+- `aimodel/core/employment.py`: annual cohorts, entry, separations, matching, discouragement.
+- `config/`: assumptions, scenarios and EU proxy with sources.
+- `fetch_employment_data.py`, `prepare_observed.py`: data acquisition with hashes, processing and proxy.
+- `run_employment.py`: paired draws, CSV series and report.
+- `employment_report.py`, `report_template.html`, `make_employment_pdf.py`: visualisation.
+- `tests/test_employment.py`: identities, cohorts, matching, neutrality and data decoder.
 
-## Documentazione originale v2
+## Original v2 documentation
 
 *Automation, Distribution and Public Finance in the Age of AI, 2026-2046* (working paper, October 2026)
 
