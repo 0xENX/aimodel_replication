@@ -1,3 +1,20 @@
+# The ReplaceMind: the model behind the book
+
+**How much work will artificial intelligence and robots take, and where?** This repository holds the code and data
+behind *The ReplaceMind* by Marc Molften: a model of the world economy in three regions, 4,000 paired simulations with
+and without the new wave of AI, a forecast for 19 professions to 2046 and a map of social tension country by country.
+Every number in the book is produced by this code, and the same files run in the browser on the website.
+
+- **Simulators (free, in your browser):** [thereplacemind.com](https://thereplacemind.com) —
+  [Job Simulator](https://thereplacemind.com/simulator), [Economy Model](https://thereplacemind.com/model),
+  [Social Risk](https://thereplacemind.com/social)
+- **The book** (English and Italian, Kindle and paperback):
+  [English edition on Amazon](https://www.amazon.com/dp/B0HPL8SMR4) ·
+  [edizione italiana su Amazon](https://www.amazon.it/dp/B0HPL9WNB7)
+- **Reproduce the results:** see the sections below (Python 3.10+, NumPy). The rest of this README is in Italian.
+
+---
+
 # Pacchetto software del libro - versione 3.1
 
 Modello macroeconomico del report (versione 2, con domanda di lavoro a elasticità ε),
