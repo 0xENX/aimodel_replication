@@ -12,6 +12,8 @@ Every number in the book is produced by this code, and the same files run in the
   [English edition on Amazon](https://www.amazon.com/dp/B0HPL8SMR4) ·
   [edizione italiana su Amazon](https://www.amazon.it/dp/B0HPL9WNB7)
 - **Reproduce the results:** see the sections below (Python 3.10+, NumPy). The rest of this README is in Italian.
+- **License:** code and data under the [MIT License](LICENSE). The book, its covers and the cover illustration are not
+  covered by it and remain all rights reserved.
 
 ---
 
