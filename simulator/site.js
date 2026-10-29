@@ -1,10 +1,13 @@
 // Settings and header shared by the home page and the book page (needs i18n.js first).
 // paypal: the donation button made in PayPal (public ids); button can be one id, or { it: "...", en: "..." } for a
 // button written in each language; empty = the donation box and buttons stay hidden.
-// amazon: the Amazon page of each edition; empty = "coming soon on Amazon" stays, a link = a buy button.
+// amazon: the ASIN of each edition; empty = "coming soon on Amazon" stays, an ASIN = a buy button.
+// amazonStore: the store each site language links to (Kindle books can only be bought in the store of one's own
+// country, so the Italian site sends both editions to Amazon.it and the English site to Amazon.com).
 window.SITE = {
   book: { it: "book/The_ReplaceMind_IT.pdf", en: "book/The_ReplaceMind_EN.pdf" },
-  amazon: { it: "https://www.amazon.it/dp/B0HPL9WNB7", en: "https://www.amazon.com/dp/B0HPL8SMR4" },
+  amazon: { it: "B0HPL9WNB7", en: "B0HPL8SMR4" },
+  amazonStore: { it: "https://www.amazon.it/dp/", en: "https://www.amazon.com/dp/" },
   paypal: { clientId: "BAAkPVaCyuQ1CL-nZDnU34lPq1uQ-OXe5KyMP6_clgCzmX62UHhxlVOhMlWnipwJ_XdMeU-7SkNUsUhbpA", button: { it: "9V4SVW6LCJYXQ", en: "AZA93J9H9625N" } },
 };
 
@@ -34,11 +37,14 @@ window.siteChrome = function () {
   const menu = document.getElementById("menu"), nav = document.getElementById("nav");
   menu.onclick = () => { const o = nav.classList.toggle("open"); menu.setAttribute("aria-expanded", o ? "true" : "false"); };
   nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => { nav.classList.remove("open"); menu.setAttribute("aria-expanded", "false"); }));
-  // Amazon: each edition with its link gets a buy button; the "coming soon" lines change once the page's own edition is on sale
+  // Amazon: each edition with its ASIN gets a buy button in the store of the site language; the "coming soon" lines
+  // change once the page's own edition is on sale
   const amazon = SITE.amazon || {};
+  const store = (SITE.amazonStore || {})[lang] || "https://www.amazon.com/dp/";
   document.querySelectorAll("[data-amazon]").forEach(el => {
-    const url = amazon[el.dataset.amazon];
-    if (!url) return;
+    const asin = amazon[el.dataset.amazon];
+    if (!asin) return;
+    const url = store + asin;
     const a = document.createElement("a");
     a.className = "btn dark"; a.href = url; a.target = "_blank"; a.rel = "noopener";
     a.innerHTML = L("Buy on Amazon", "Acquista su Amazon") + ' <span aria-hidden="true">→</span>';
@@ -51,7 +57,7 @@ window.siteChrome = function () {
         "37 capitoli, le conclusioni, le note, la bibliografia e l’appendice con tutte le relazioni del modello. Il libro è su Amazon, in italiano e in inglese. I simulatori di questo sito restano gratuiti.");
     });
     document.querySelectorAll(".js-amazon-line").forEach(el => {
-      el.innerHTML = '<a href="' + amazon[lang] + '" target="_blank" rel="noopener">' + L("Now on Amazon", "Ora su Amazon") + "</a> · " + L("Italian and English", "in italiano e in inglese");
+      el.innerHTML = '<a href="' + store + amazon[lang] + '" target="_blank" rel="noopener">' + L("Now on Amazon", "Ora su Amazon") + "</a> · " + L("Italian and English", "in italiano e in inglese");
     });
   }
   // donations: buttons lead to the box on the book page, where PayPal opens on top of the site
