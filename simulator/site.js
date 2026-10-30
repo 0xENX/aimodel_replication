@@ -8,6 +8,8 @@ window.SITE = {
   book: { it: "book/The_ReplaceMind_IT.pdf", en: "book/The_ReplaceMind_EN.pdf" },
   amazon: { it: "B0HPL9WNB7", en: "B0HPL8SMR4" },
   amazonStore: { it: "https://www.amazon.it/dp/", en: "https://www.amazon.com/dp/" },
+  // trailer: the YouTube id of the book trailer; empty = the trailer boxes stay hidden. The player loads only on click.
+  trailer: "gmr-jVeoI0Y",
   paypal: { clientId: "BAAkPVaCyuQ1CL-nZDnU34lPq1uQ-OXe5KyMP6_clgCzmX62UHhxlVOhMlWnipwJ_XdMeU-7SkNUsUhbpA", button: { it: "9V4SVW6LCJYXQ", en: "AZA93J9H9625N" } },
 };
 
@@ -37,6 +39,26 @@ window.siteChrome = function () {
   const menu = document.getElementById("menu"), nav = document.getElementById("nav");
   menu.onclick = () => { const o = nav.classList.toggle("open"); menu.setAttribute("aria-expanded", o ? "true" : "false"); };
   nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => { nav.classList.remove("open"); menu.setAttribute("aria-expanded", "false"); }));
+  // trailer: a still with a play button; YouTube (no-cookie domain) is contacted only when the reader presses play
+  if (SITE.trailer) {
+    document.querySelectorAll(".js-trailer-section").forEach(s => { s.hidden = false; });
+    document.querySelectorAll(".js-trailer").forEach(box => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "trailer-play";
+      b.setAttribute("aria-label", L("Play the book trailer (YouTube)", "Guarda il trailer del libro (YouTube)"));
+      b.innerHTML = '<img src="img/trailer.jpg" alt="" width="1280" height="720" loading="lazy"><span class="trailer-icon" aria-hidden="true"></span>' +
+        '<span class="trailer-note">' + L("Plays on YouTube", "Si apre con YouTube") + "</span>";
+      b.onclick = () => {
+        const f = document.createElement("iframe");
+        f.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(SITE.trailer) + "?autoplay=1&rel=0&hl=" + lang +
+          (lang === "it" ? "&cc_lang_pref=it&cc_load_policy=1" : "");
+        f.title = L("The ReplaceMind, book trailer", "The ReplaceMind, trailer del libro");
+        f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen = true;
+        b.replaceWith(f);
+      };
+      box.appendChild(b);
+    });
+  }
   // Amazon: each edition with its ASIN gets a buy button in the store of the site language; the "coming soon" lines
   // change once the page's own edition is on sale
   const amazon = SITE.amazon || {};

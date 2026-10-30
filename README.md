@@ -8,6 +8,7 @@ Every number in the book is produced by this code, and the same files run in the
 - **Simulators (free, in your browser):** [thereplacemind.com](https://thereplacemind.com) —
   [Job Simulator](https://thereplacemind.com/simulator), [Economy Model](https://thereplacemind.com/model),
   [Social Risk](https://thereplacemind.com/social)
+- **Book trailer:** [watch on YouTube](https://www.youtube.com/watch?v=gmr-jVeoI0Y)
 - **The book** (English and Italian, Kindle and paperback):
   [English edition on Amazon](https://www.amazon.com/dp/B0HPL8SMR4) ·
   [edizione italiana su Amazon](https://www.amazon.it/dp/B0HPL9WNB7)

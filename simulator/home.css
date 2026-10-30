@@ -160,3 +160,16 @@ html[lang="en"] #ed-it { display: none; }
   .author-card img { height: 260px; object-position: 50% 22%; border-radius: 8px 8px 0 0; }
   .author-card > div { padding: 24px; }
 }
+
+/* book trailer: a still with a play button, the YouTube player loads on click */
+.trailer-sec { padding: 34px 0 6px; }
+.trailer-sec .eyebrow { margin-bottom: 12px; }
+.trailer { position: relative; max-width: 960px; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; background: #0b0b0b; box-shadow: 0 10px 30px rgba(0, 0, 0, .18); }
+.trailer iframe, .trailer-play { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.trailer-play { padding: 0; cursor: pointer; background: none; display: block; }
+.trailer-play img { width: 100%; height: 100%; object-fit: cover; display: block; transition: filter .2s; }
+.trailer-play:hover img { filter: brightness(.88); }
+.trailer-icon { position: absolute; left: 68%; top: 55%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: rgba(15, 15, 15, .78); box-shadow: 0 4px 18px rgba(0, 0, 0, .35); }
+.trailer-icon::after { content: ""; position: absolute; left: 34px; top: 26px; border-style: solid; border-width: 16px 0 16px 26px; border-color: transparent transparent transparent #fff; }
+.trailer-note { position: absolute; right: 12px; bottom: 10px; font-family: var(--sans); font-size: .75rem; letter-spacing: .04em; color: #fff; background: rgba(0, 0, 0, .55); padding: 3px 8px; border-radius: 3px; }
+.trailer-play:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
