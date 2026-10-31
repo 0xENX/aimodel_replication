@@ -4,10 +4,12 @@
 // amazon: the ASIN of each edition; empty = "coming soon on Amazon" stays, an ASIN = a buy button.
 // amazonStore: the store each site language links to (Kindle books can only be bought in the store of one's own
 // country, so the Italian site sends both editions to Amazon.it and the English site to Amazon.com).
+// price: the Kindle price in the store of each site language, shown as launch price; empty = no price line.
 window.SITE = {
   book: { it: "book/The_ReplaceMind_IT.pdf", en: "book/The_ReplaceMind_EN.pdf" },
   amazon: { it: "B0HPL9WNB7", en: "B0HPL8SMR4" },
   amazonStore: { it: "https://www.amazon.it/dp/", en: "https://www.amazon.com/dp/" },
+  price: { it: "2,99 €", en: "$2.99" },
   // trailer: the YouTube id of the book trailer; empty = the trailer boxes stay hidden. The player loads only on click.
   trailer: "gmr-jVeoI0Y",
   paypal: { clientId: "BAAkPVaCyuQ1CL-nZDnU34lPq1uQ-OXe5KyMP6_clgCzmX62UHhxlVOhMlWnipwJ_XdMeU-7SkNUsUhbpA", button: { it: "9V4SVW6LCJYXQ", en: "AZA93J9H9625N" } },
@@ -63,6 +65,8 @@ window.siteChrome = function () {
   // change once the page's own edition is on sale
   const amazon = SITE.amazon || {};
   const store = (SITE.amazonStore || {})[lang] || "https://www.amazon.com/dp/";
+  const price = (SITE.price || {})[lang];
+  const priceText = price && L("Launch price: " + price + " on Kindle", "Prezzo di lancio: " + price + " su Kindle");
   document.querySelectorAll("[data-amazon]").forEach(el => {
     const asin = amazon[el.dataset.amazon];
     if (!asin) return;
@@ -71,6 +75,11 @@ window.siteChrome = function () {
     a.className = "btn dark"; a.href = url; a.target = "_blank"; a.rel = "noopener";
     a.innerHTML = L("Buy on Amazon", "Acquista su Amazon") + ' <span aria-hidden="true">→</span>';
     el.replaceWith(a);
+    if (priceText) {
+      const p = document.createElement("span");
+      p.className = "price"; p.textContent = priceText;
+      a.after(p);
+    }
   });
   if (amazon[lang]) {
     document.querySelectorAll(".js-amazon-title").forEach(el => { el.textContent = L("Now on Amazon", "Ora su Amazon"); });
@@ -79,7 +88,8 @@ window.siteChrome = function () {
         "37 capitoli, le conclusioni, le note, la bibliografia e l’appendice con tutte le relazioni del modello. Il libro è su Amazon, in italiano e in inglese. I simulatori di questo sito restano gratuiti.");
     });
     document.querySelectorAll(".js-amazon-line").forEach(el => {
-      el.innerHTML = '<a href="' + store + amazon[lang] + '" target="_blank" rel="noopener">' + L("Now on Amazon", "Ora su Amazon") + "</a> · " + L("Italian and English", "in italiano e in inglese");
+      el.innerHTML = '<a href="' + store + amazon[lang] + '" target="_blank" rel="noopener">' + L("Now on Amazon", "Ora su Amazon") + "</a> · " + L("Italian and English", "in italiano e in inglese") +
+        (priceText ? " · " + priceText : "");
     });
   }
   // donations: buttons lead to the box on the book page, where PayPal opens on top of the site
