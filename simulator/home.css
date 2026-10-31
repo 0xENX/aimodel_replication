@@ -41,7 +41,12 @@ nav.main a:hover { border-bottom-color: var(--ink); }
 .btn.dark { background: var(--ink); color: var(--paper); }
 .btn.soon { cursor: default; opacity: .7; }
 .btn.soon:hover { transform: none; box-shadow: none; }
-.btns .price { align-self: center; font-family: var(--sans); font-size: .85rem; letter-spacing: .04em; color: var(--muted); }
+.price-tag { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 8px 16px; border: 1.5px solid #9e2a1c;
+  border-radius: 2px; color: #9e2a1c; text-decoration: none; background: var(--card); }
+.price-tag small { font-family: var(--sans); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
+.price-tag b { font-family: var(--sans); font-size: 1.45rem; letter-spacing: .02em; line-height: 1.1; }
+.price-tag:hover { background: #9e2a1c; color: var(--paper); }
+.hero .price-tag { margin-top: 18px; }
 .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0, 0, 0, .12); }
 .btn:focus-visible, nav.main a:focus-visible, .flag:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 

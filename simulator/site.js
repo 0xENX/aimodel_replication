@@ -66,7 +66,13 @@ window.siteChrome = function () {
   const amazon = SITE.amazon || {};
   const store = (SITE.amazonStore || {})[lang] || "https://www.amazon.com/dp/";
   const price = (SITE.price || {})[lang];
-  const priceText = price && L("Launch price: " + price + " on Kindle", "Prezzo di lancio: " + price + " su Kindle");
+  // the launch price as a tag next to the buy buttons, linked to the edition on Amazon
+  const priceTag = href => {
+    const t = document.createElement("a");
+    t.className = "price-tag"; t.href = href; t.target = "_blank"; t.rel = "noopener";
+    t.innerHTML = "<small>" + L("Launch price · Kindle", "Prezzo di lancio · Kindle") + "</small><b>" + price + "</b>";
+    return t;
+  };
   document.querySelectorAll("[data-amazon]").forEach(el => {
     const asin = amazon[el.dataset.amazon];
     if (!asin) return;
@@ -75,11 +81,7 @@ window.siteChrome = function () {
     a.className = "btn dark"; a.href = url; a.target = "_blank"; a.rel = "noopener";
     a.innerHTML = L("Buy on Amazon", "Acquista su Amazon") + ' <span aria-hidden="true">→</span>';
     el.replaceWith(a);
-    if (priceText) {
-      const p = document.createElement("span");
-      p.className = "price"; p.textContent = priceText;
-      a.after(p);
-    }
+    if (price) a.after(priceTag(url));
   });
   if (amazon[lang]) {
     document.querySelectorAll(".js-amazon-title").forEach(el => { el.textContent = L("Now on Amazon", "Ora su Amazon"); });
@@ -88,8 +90,8 @@ window.siteChrome = function () {
         "37 capitoli, le conclusioni, le note, la bibliografia e l’appendice con tutte le relazioni del modello. Il libro è su Amazon, in italiano e in inglese. I simulatori di questo sito restano gratuiti.");
     });
     document.querySelectorAll(".js-amazon-line").forEach(el => {
-      el.innerHTML = '<a href="' + store + amazon[lang] + '" target="_blank" rel="noopener">' + L("Now on Amazon", "Ora su Amazon") + "</a> · " + L("Italian and English", "in italiano e in inglese") +
-        (priceText ? " · " + priceText : "");
+      el.innerHTML = '<a href="' + store + amazon[lang] + '" target="_blank" rel="noopener">' + L("Now on Amazon", "Ora su Amazon") + "</a> · " + L("Italian and English", "in italiano e in inglese");
+      if (price) el.before(priceTag(store + amazon[lang]));
     });
   }
   // donations: buttons lead to the box on the book page, where PayPal opens on top of the site
