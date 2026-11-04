@@ -2,14 +2,20 @@
 // paypal: the donation button made in PayPal (public ids); button can be one id, or { it: "...", en: "..." } for a
 // button written in each language; empty = the donation box and buttons stay hidden.
 // amazon: the ASIN of each edition; empty = "coming soon on Amazon" stays, an ASIN = a buy button.
-// amazonStore: the store each site language links to (Kindle books can only be bought in the store of one's own
-// country, so the Italian site sends both editions to Amazon.it and the English site to Amazon.com).
-// price: the Kindle price in the store of each site language, shown as launch price; empty = no price line.
+// amazonStore: Kindle books can only be bought in the store of one's own country, so the buy links go to the store
+// of the visitor's country (from /where, answered by the Worker); countries not listed, and the site run without the
+// Worker, use the store of the site language.
+// price: the Kindle price in each store, shown as launch price; a store not listed shows no price.
 window.SITE = {
   book: { it: "book/The_ReplaceMind_IT.pdf", en: "book/The_ReplaceMind_EN.pdf" },
   amazon: { it: "B0HPL9WNB7", en: "B0HPL8SMR4" },
-  amazonStore: { it: "https://www.amazon.it/dp/", en: "https://www.amazon.com/dp/" },
-  price: { it: "2,99 €", en: "$2.99" },
+  amazonStore: {
+    it: "amazon.it", en: "amazon.com",
+    country: { US: "amazon.com", IT: "amazon.it", SM: "amazon.it", VA: "amazon.it", DE: "amazon.de", AT: "amazon.de",
+      FR: "amazon.fr", ES: "amazon.es", NL: "amazon.nl", GB: "amazon.co.uk", IE: "amazon.co.uk", CA: "amazon.ca",
+      AU: "amazon.com.au", JP: "amazon.co.jp", IN: "amazon.in", BR: "amazon.com.br", MX: "amazon.com.mx" },
+  },
+  price: { "amazon.com": "$2.99", "amazon.it": "2,99 €" },
   // trailer: the YouTube id of the book trailer; empty = the trailer boxes stay hidden. The player loads only on click.
   trailer: "gmr-jVeoI0Y",
   paypal: { clientId: "BAAkPVaCyuQ1CL-nZDnU34lPq1uQ-OXe5KyMP6_clgCzmX62UHhxlVOhMlWnipwJ_XdMeU-7SkNUsUhbpA", button: { it: "9V4SVW6LCJYXQ", en: "AZA93J9H9625N" } },
@@ -61,27 +67,15 @@ window.siteChrome = function () {
       box.appendChild(b);
     });
   }
-  // Amazon: each edition with its ASIN gets a buy button in the store of the site language; the "coming soon" lines
-  // change once the page's own edition is on sale
+  // Amazon: each edition with its ASIN gets a buy button with the launch price; the "coming soon" lines change once
+  // the page's own edition is on sale
   const amazon = SITE.amazon || {};
-  const store = (SITE.amazonStore || {})[lang] || "https://www.amazon.com/dp/";
-  const price = (SITE.price || {})[lang];
-  // the launch price as a tag next to the buy buttons, linked to the edition on Amazon
-  const priceTag = href => {
-    const t = document.createElement("a");
-    t.className = "price-tag"; t.href = href; t.target = "_blank"; t.rel = "noopener";
-    t.innerHTML = "<small>" + L("Launch price · Kindle", "Prezzo di lancio · Kindle") + "</small><b>" + price + "</b>";
-    return t;
-  };
   document.querySelectorAll("[data-amazon]").forEach(el => {
-    const asin = amazon[el.dataset.amazon];
-    if (!asin) return;
-    const url = store + asin;
-    const a = document.createElement("a");
-    a.className = "btn dark"; a.href = url; a.target = "_blank"; a.rel = "noopener";
+    if (!amazon[el.dataset.amazon]) return;
+    const a = amazonLink(el.dataset.amazon, "btn dark");
     a.innerHTML = L("Buy on Amazon", "Acquista su Amazon") + ' <span aria-hidden="true">→</span>';
     el.replaceWith(a);
-    if (price) a.after(priceTag(url));
+    a.after(priceTag(el.dataset.amazon));
   });
   if (amazon[lang]) {
     document.querySelectorAll(".js-amazon-title").forEach(el => { el.textContent = L("Now on Amazon", "Ora su Amazon"); });
@@ -89,9 +83,10 @@ window.siteChrome = function () {
       el.textContent = L("37 chapters, the conclusions, the notes, the references and the appendix with all the relationships of the model. The book is on Amazon, in Italian and English. The simulators on this site stay free.",
         "37 capitoli, le conclusioni, le note, la bibliografia e l’appendice con tutte le relazioni del modello. Il libro è su Amazon, in italiano e in inglese. I simulatori di questo sito restano gratuiti.");
     });
+    // home: cover, price and buy button of the site-language edition, right under the title
     document.querySelectorAll(".js-amazon-line").forEach(el => {
-      el.innerHTML = '<a href="' + store + amazon[lang] + '" target="_blank" rel="noopener">' + L("Now on Amazon", "Ora su Amazon") + "</a> · " + L("Italian and English", "in italiano e in inglese");
-      if (price) el.before(priceTag(store + amazon[lang]));
+      el.before(bookBuy());
+      el.textContent = L("Kindle edition · Italian and English", "Edizione Kindle · in italiano e in inglese");
     });
   }
   // donations: buttons lead to the box on the book page, where PayPal opens on top of the site
@@ -112,3 +107,49 @@ window.siteChrome = function () {
     }
   }
 };
+
+// Buy links in the store of the visitor's country. Links are drawn at once with the store of the site language and
+// moved to the visitor's store when /where answers (kept for the session, so it is asked once).
+(function () {
+  let store = SITE.amazonStore[window.LANG] || "amazon.com";
+  const links = [], prices = [];
+  const url = ed => "https://www." + store + "/dp/" + SITE.amazon[ed];
+  const draw = () => {
+    links.forEach(([a, ed]) => { a.href = url(ed); });
+    const price = SITE.price[store];
+    prices.forEach(([b, hide]) => { b.textContent = price || ""; hide.hidden = !price; });
+  };
+  window.amazonLink = (ed, cls) => {
+    const a = document.createElement("a");
+    a.className = cls; a.target = "_blank"; a.rel = "noopener"; a.href = url(ed);
+    links.push([a, ed]);
+    return a;
+  };
+  // the launch price as a tag next to the buy buttons, linked to the edition on Amazon; hidden where the price is unknown
+  window.priceTag = ed => {
+    const t = amazonLink(ed, "price-tag");
+    t.innerHTML = "<small>" + L("Launch price · Kindle", "Prezzo di lancio · Kindle") + "</small><b></b>";
+    prices.push([t.querySelector("b"), t]); draw();
+    return t;
+  };
+  // cover, price and button of the edition in the site language, all one link: the home hero and the simulators
+  window.bookBuy = () => {
+    const ed = window.LANG === "it" ? "it" : "en";
+    const box = amazonLink(ed, "book-buy");
+    box.innerHTML = '<img src="img/cover-' + ed + '.jpg" alt="" width="64" height="102"><span class="txt"><small>' +
+      L("The book · Kindle edition", "Il libro · edizione Kindle") + "</small><b>The ReplaceMind</b><span class=\"pr\">" +
+      L("Launch price", "Prezzo di lancio") + " <b></b></span><span class=\"go\">" +
+      L("Buy on Amazon", "Acquista su Amazon") + ' <span aria-hidden="true">→</span></span></span>';
+    prices.push([box.querySelector(".pr b"), box.querySelector(".pr")]); draw();
+    return box;
+  };
+  const use = c => { const s = SITE.amazonStore.country[c]; if (s) { store = s; draw(); } };
+  let country = null;
+  try { country = sessionStorage.getItem("tlf-country"); } catch (e) { /* storage blocked: ask again */ }
+  if (country) use(country);
+  else fetch("/where").then(r => (r.ok ? r.json() : null)).then(j => {
+    if (!j || !j.country) return;
+    try { sessionStorage.setItem("tlf-country", j.country); } catch (e) { /* ignore */ }
+    use(j.country);
+  }).catch(() => { /* site without the Worker: the store of the site language stays */ });
+})();

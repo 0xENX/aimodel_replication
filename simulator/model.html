@@ -111,6 +111,19 @@ td.bad { color: var(--bad); } td.good { color: var(--good); }
 .topnav .flag.on { opacity: 1; border-color: var(--line); }
 .topnav .flag:hover { opacity: 1; }
 footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--line); padding-top: 12px; }
+/* the book, at the end of the page: cover, price and buy button, all one link to Amazon */
+.book { margin: 26px 0 18px; padding: 18px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.book p { margin: 0 0 12px; color: var(--fg); font-size: .92rem; }
+.book-buy { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 16px; color: var(--fg); text-decoration: none; max-width: 100%; }
+.book-buy img { width: 64px; height: auto; border-radius: 2px; box-shadow: 0 3px 12px rgba(0, 0, 0, .45); }
+.book-buy .txt { display: flex; flex-direction: column; gap: 2px; }
+.book-buy .txt small { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.book-buy .txt > b { font-size: 1.15rem; }
+.book-buy .pr { font-size: .85rem; color: #ffd166; }
+.book-buy .pr b { font-size: 1.25rem; }
+.book-buy [hidden] { display: none; }
+.book-buy .go { align-self: flex-start; margin-top: 8px; font-size: .85rem; font-weight: 600; padding: 10px 16px; border-radius: 999px; background: var(--teal, #5fe0d0); color: var(--bg); white-space: nowrap; }
+.book-buy:hover .go { filter: brightness(1.1); }
 </style>
 <script src="i18n.js"></script>
 <link rel="stylesheet" href="topnav.css">
@@ -232,6 +245,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
     <p class="note"><b>How to read it.</b> Unemployment and public debt are differences in percentage points from the world without AI. GDP and consumption are percentage differences. These are conditional results of the model, not forecasts. The Sobol analysis needs the SALib library, which does not run in the browser, so it shows the book's stored results.</p>
     <p class="note"><b>Job by job.</b> The Job Simulator applies the same logic to single occupations and countries, using published occupation data.</p>
   </section>
+  <div class="book js-book" hidden><p>The whole model, the data and the twenty years ahead are in the book.</p></div>
   <footer>© 2026 Marc Molften · The ReplaceMind Model · aimodel v3.1</footer>
   <p class="note" style="text-align:center"><a href="privacy.html" style="color: var(--muted)">Privacy</a></p>
 </div>
@@ -477,6 +491,15 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   fetch("data/sobol.json").then(r => r.json()).then(j => { sobol = j; renderSobol(); }).catch(() => {});
   boot();
 })();
+</script>
+<script src="site.js"></script>
+<script>
+// the book box: shown once the edition of the site language is on sale
+document.querySelectorAll(".js-book").forEach(el => {
+  if (!SITE.amazon[LANG]) return;
+  el.querySelector("p").textContent = L("The whole model, the data and the twenty years ahead are in the book.", "Il modello completo, i dati e i prossimi vent’anni sono nel libro.");
+  el.append(bookBuy()); el.hidden = false;
+});
 </script>
 </body>
 </html>

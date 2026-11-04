@@ -46,7 +46,19 @@ nav.main a:hover { border-bottom-color: var(--ink); }
 .price-tag small { font-family: var(--sans); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
 .price-tag b { font-family: var(--sans); font-size: 1.45rem; letter-spacing: .02em; line-height: 1.1; }
 .price-tag:hover { background: #9e2a1c; color: var(--paper); }
-.hero .price-tag { margin-top: 18px; }
+.price-tag[hidden], .book-buy [hidden] { display: none; }
+/* the book in the home hero: cover, price and buy button, all one link to Amazon */
+.book-buy { display: inline-flex; align-items: center; gap: 16px; margin-top: 26px; padding: 12px 16px 12px 12px; border: 1.5px solid var(--ink);
+  border-radius: 2px; background: var(--card); color: var(--ink); text-decoration: none; max-width: 100%; flex-wrap: wrap; }
+.book-buy img { width: 64px; height: auto; box-shadow: 0 3px 10px rgba(0, 0, 0, .2); }
+.book-buy .txt { display: flex; flex-direction: column; gap: 2px; font-family: var(--sans); }
+.book-buy .txt small { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.book-buy .txt > b { font-family: var(--serif); font-weight: 400; font-size: 1.25rem; }
+.book-buy .pr { font-size: .85rem; color: #9e2a1c; }
+.book-buy .pr b { font-size: 1.3rem; }
+.book-buy .go { align-self: flex-start; margin-top: 8px; font-family: var(--sans); font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; background: var(--ink);
+  color: var(--paper); padding: 12px 16px; white-space: nowrap; }
+.book-buy:hover { box-shadow: 0 4px 14px rgba(0, 0, 0, .12); transform: translateY(-1px); }
 .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0, 0, 0, .12); }
 .btn:focus-visible, nav.main a:focus-visible, .flag:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 

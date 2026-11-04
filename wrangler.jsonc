@@ -1,5 +1,5 @@
 // Cloudflare Workers: the site is static, built by simulator/build_site.sh into _site and served as it is.
-// The small Worker in worker/index.js runs only for /book/* (download counter) and /stats (counts, with a secret key).
+// The small Worker in worker/index.js runs only for /book/* (download counter), /stats (counts, with a secret key) and /where (visitor country).
 // Build command: bash simulator/build_site.sh _site   ·   Deploy command: npx wrangler deploy
 {
   "name": "aimodel-replication",
@@ -10,7 +10,7 @@
     "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/book/*", "/stats"]
+    "run_worker_first": ["/book/*", "/stats", "/where"]
   },
   "durable_objects": {
     "bindings": [{ "name": "DOWNLOADS", "class_name": "Downloads" }]

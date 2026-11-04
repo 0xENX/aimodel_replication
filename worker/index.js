@@ -1,4 +1,4 @@
-// thereplacemind.com: the site is static (assets in _site); this Worker runs only for /book/* and /stats.
+// thereplacemind.com: the site is static (assets in _site); this Worker runs only for /book/*, /stats and /where.
 // It counts the downloads of the book files, one number per file, with no data about the visitors
 // (no IP, no cookie). The numbers are visible only at /stats?k=<STATS_KEY>, a secret set in the Cloudflare dashboard.
 import { DurableObject } from "cloudflare:workers";
@@ -64,6 +64,10 @@ function statsPage(data) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    // the visitor's country, worked out by Cloudflare: the buy links go to the Amazon store of that country (site.js)
+    if (url.pathname === "/where") {
+      return Response.json({ country: (request.cf && request.cf.country) || null }, { headers: { "cache-control": "private, no-store" } });
+    }
     if (url.pathname === "/stats") {
       if (!env.STATS_KEY || url.searchParams.get("k") !== env.STATS_KEY) return new Response("Not found", { status: 404 });
       // no-transform: Cloudflare does not inject the Web Analytics script here, so checking the counter is not a visit

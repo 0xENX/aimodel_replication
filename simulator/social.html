@@ -86,6 +86,19 @@ button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); o
 .note { color: var(--muted); font-size: .8rem; line-height: 1.5; margin: 0; max-width: 95ch; }
 .note b { color: var(--fg); font-weight: 500; }
 footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--line); padding-top: 12px; }
+/* the book, at the end of the page: cover, price and buy button, all one link to Amazon */
+.book { margin: 26px 0 18px; padding: 18px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.book p { margin: 0 0 12px; color: var(--fg); font-size: .92rem; }
+.book-buy { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 16px; color: var(--fg); text-decoration: none; max-width: 100%; }
+.book-buy img { width: 64px; height: auto; border-radius: 2px; box-shadow: 0 3px 12px rgba(0, 0, 0, .45); }
+.book-buy .txt { display: flex; flex-direction: column; gap: 2px; }
+.book-buy .txt small { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.book-buy .txt > b { font-size: 1.15rem; }
+.book-buy .pr { font-size: .85rem; color: #ffd166; }
+.book-buy .pr b { font-size: 1.25rem; }
+.book-buy [hidden] { display: none; }
+.book-buy .go { align-self: flex-start; margin-top: 8px; font-size: .85rem; font-weight: 600; padding: 10px 16px; border-radius: 999px; background: var(--teal, #5fe0d0); color: var(--bg); white-space: nowrap; }
+.book-buy:hover .go { filter: brightness(1.1); }
 </style>
 <script src="i18n.js"></script>
 <link rel="stylesheet" href="topnav.css">
@@ -177,6 +190,7 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
 
   <p class="note"><b>Where the numbers come from.</b> Weight of each country: World Bank, Worldwide Governance Indicators, Political Stability and Absence of Violence/Terrorism, 2024, brought to a 0–100 scale (higher means less stable). People using AI: Our World in Data from Microsoft’s AI Economy Institute, share of the working-age population, observed until March 2026; after that it grows along the book’s adoption curve up to the share of employment exposed to AI in the region (60% advanced, 40% emerging, 26% low-income, IMF, chapter 6). Work taken by AI and by robots: share of the work of the nineteen occupations of Table 65 taken over, weighted by employment. It counts the work taken, not net unemployment: in the economy model part of it comes back as new work, but the people who lose a job are still there. Social tension: work taken by AI and robots in the region (the nineteen occupations of Table 65, weighted by employment, in percentage points since the start month), shared among its countries by how much AI and robots they take up (people using AI plus robots, over the regional average), multiplied by 1 + 0.5 × starting risk / 100: up to half more in the least stable country, never enough to overturn much more replacement. Pace: until robots enter the work of the region tension grows at a quarter of that speed, at full speed once robots take 3 percentage points of the work (around 2033 in advanced economies, 2037 in emerging ones, 2041 in low-income countries). The nineteen occupations are scaled by the share of employment exposed in the region (60% advanced, 40% emerging, 26% low-income, chapter 6): fewer exposed jobs, fewer people replaced. United States by state: the nineteen occupations weighted by the employment of each state (BLS, Occupational Employment and Wage Statistics, May 2024). China, Russia, Canada, Australia, Brazil and India by large city: there are no comparable data on occupations by city, so every city carries the value of its country. Dots and numbers show the increase since the start month, in percentage points.</p>
   <p class="note"><b>What the page does not do.</b> It does not forecast unrest: the book has no estimated link between lost work and unrest (chapter 17), so the sounding-board factor is the author’s rule, not a measured coefficient. The economy model has three regions; AI use and starting risk are country by country, robots by region. Places with fewer than 6 inhabitants per km² (World Bank population and land area), New Caledonia, small islands (island states under a million people) and, among the US states, Alaska and Hawaii have no bubble; the large countries stay, by state or by large city: they are only in the country grid.</p>
+  <div class="book js-book" hidden><p>The whole model, the data and the twenty years ahead are in the book.</p></div>
   <footer>© 2026 Marc Molften · Social Risk · The ReplaceMind, chapters 6, 14, 17, 36 and 37 (aimodel v3.1) · Data: World Bank WGI, Our World in Data / Microsoft, BLS OEWS, Natural Earth via world-atlas and us-atlas</footer>
   <p class="note" style="text-align:center"><a href="privacy.html" style="color: var(--muted)">Privacy</a></p>
 </div>
@@ -493,6 +507,15 @@ footer { color: var(--muted); font-size: .78rem; border-top: 1px solid var(--lin
   }).catch(() => {});
   requestAnimationFrame(loop);
 })();
+</script>
+<script src="site.js"></script>
+<script>
+// the book box: shown once the edition of the site language is on sale
+document.querySelectorAll(".js-book").forEach(el => {
+  if (!SITE.amazon[LANG]) return;
+  el.querySelector("p").textContent = L("The whole model, the data and the twenty years ahead are in the book.", "Il modello completo, i dati e i prossimi vent’anni sono nel libro.");
+  el.append(bookBuy()); el.hidden = false;
+});
 </script>
 </body>
 </html>
