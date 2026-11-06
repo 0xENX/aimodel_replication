@@ -6,6 +6,8 @@
 // of the visitor's country (from /where, answered by the Worker); countries not listed, and the site run without the
 // Worker, use the store of the site language.
 // price: the Kindle price in each store, shown as launch price; a store not listed shows no price.
+// free: the KDP free days (midnight Pacific Time to midnight); in between the book shows as free in every store, the
+// price comes back by itself when they end; only the editions listed in "editions". Empty = no free days.
 window.SITE = {
   book: { it: "book/The_ReplaceMind_IT.pdf", en: "book/The_ReplaceMind_EN.pdf" },
   amazon: { it: "B0HPL9WNB7", en: "B0HPL8SMR4" },
@@ -16,6 +18,7 @@ window.SITE = {
       AU: "amazon.com.au", JP: "amazon.co.jp", IN: "amazon.in", BR: "amazon.com.br", MX: "amazon.com.mx" },
   },
   price: { "amazon.com": "$2.99", "amazon.it": "2,99 €" },
+  free: { editions: ["en"], from: "2026-11-07T08:00:00Z", to: "2026-11-12T08:00:00Z", until: { en: "Nov 11", it: "11 novembre" } },
   // trailer: the YouTube id of the book trailer; empty = the trailer boxes stay hidden. The player loads only on click.
   trailer: "gmr-jVeoI0Y",
   paypal: { clientId: "BAAkPVaCyuQ1CL-nZDnU34lPq1uQ-OXe5KyMP6_clgCzmX62UHhxlVOhMlWnipwJ_XdMeU-7SkNUsUhbpA", button: { it: "9V4SVW6LCJYXQ", en: "AZA93J9H9625N" } },
@@ -72,8 +75,7 @@ window.siteChrome = function () {
   const amazon = SITE.amazon || {};
   document.querySelectorAll("[data-amazon]").forEach(el => {
     if (!amazon[el.dataset.amazon]) return;
-    const a = amazonLink(el.dataset.amazon, "btn dark");
-    a.innerHTML = L("Buy on Amazon", "Acquista su Amazon") + ' <span aria-hidden="true">→</span>';
+    const a = buyLabel(amazonLink(el.dataset.amazon, "btn dark"), el.dataset.amazon);
     el.replaceWith(a);
     a.after(priceTag(el.dataset.amazon));
   });
@@ -112,13 +114,21 @@ window.siteChrome = function () {
 // moved to the visitor's store when /where answers (kept for the session, so it is asked once).
 (function () {
   let store = SITE.amazonStore[window.LANG] || "amazon.com";
-  const links = [], prices = [];
+  const links = [], prices = [], words = [];
   const url = ed => "https://www." + store + "/dp/" + SITE.amazon[ed];
+  const fr = SITE.free, now = Date.now();
+  const days = !!fr && now >= Date.parse(fr.from) && now < Date.parse(fr.to);
+  const free = ed => days && fr.editions.includes(ed);
+  const until = days ? fr.until[window.LANG] || fr.until.en : "";
   const draw = () => {
     links.forEach(([a, ed]) => { a.href = url(ed); });
-    const price = SITE.price[store];
-    prices.forEach(([b, hide]) => { b.textContent = price || ""; hide.hidden = !price; });
+    prices.forEach(([b, hide, ed]) => { const p = free(ed) ? L("FREE", "GRATIS") : SITE.price[store]; b.textContent = p || ""; hide.hidden = !p; });
+    words.forEach(([el, normal, gratis, ed]) => { el.innerHTML = free(ed) ? gratis : normal; });
   };
+  // a text that changes during the free days
+  const word = (el, ed, normal, gratis) => { words.push([el, normal, gratis, ed]); return el; };
+  const arrow = ' <span aria-hidden="true">→</span>';
+  window.buyLabel = (el, ed) => word(el, ed, L("Buy on Amazon", "Acquista su Amazon") + arrow, L("Get it free on Amazon", "Scaricalo gratis su Amazon") + arrow);
   window.amazonLink = (ed, cls) => {
     const a = document.createElement("a");
     a.className = cls; a.target = "_blank"; a.rel = "noopener"; a.href = url(ed);
@@ -128,8 +138,9 @@ window.siteChrome = function () {
   // the launch price as a tag next to the buy buttons, linked to the edition on Amazon; hidden where the price is unknown
   window.priceTag = ed => {
     const t = amazonLink(ed, "price-tag");
-    t.innerHTML = "<small>" + L("Launch price · Kindle", "Prezzo di lancio · Kindle") + "</small><b></b>";
-    prices.push([t.querySelector("b"), t]); draw();
+    t.innerHTML = "<small></small><b></b>";
+    word(t.querySelector("small"), ed, L("Launch price · Kindle", "Prezzo di lancio · Kindle"), L("Kindle · until " + until, "Kindle · fino all’" + until));
+    prices.push([t.querySelector("b"), t, ed]); draw();
     return t;
   };
   // cover, price and button of the edition in the site language, all one link: the home hero and the simulators
@@ -138,9 +149,10 @@ window.siteChrome = function () {
     const box = amazonLink(ed, "book-buy");
     box.innerHTML = '<img src="img/cover-' + ed + '.jpg" alt="" width="64" height="102"><span class="txt"><small>' +
       L("The book · Kindle edition", "Il libro · edizione Kindle") + "</small><b>The ReplaceMind</b><span class=\"pr\">" +
-      L("Launch price", "Prezzo di lancio") + " <b></b></span><span class=\"go\">" +
-      L("Buy on Amazon", "Acquista su Amazon") + ' <span aria-hidden="true">→</span></span></span>';
-    prices.push([box.querySelector(".pr b"), box.querySelector(".pr")]); draw();
+      "<i></i> <b></b></span><span class=\"go\"></span></span>";
+    word(box.querySelector(".pr i"), ed, L("Launch price", "Prezzo di lancio"), L("Until " + until, "Fino all’" + until));
+    buyLabel(box.querySelector(".go"), ed);
+    prices.push([box.querySelector(".pr b"), box.querySelector(".pr"), ed]); draw();
     return box;
   };
   const use = c => { const s = SITE.amazonStore.country[c]; if (s) { store = s; draw(); } };
