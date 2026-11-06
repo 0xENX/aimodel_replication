@@ -39,6 +39,7 @@ nav.main a:hover { border-bottom-color: var(--ink); }
 .btn { display: inline-flex; align-items: center; gap: 10px; font-family: var(--sans); font-size: .9rem; letter-spacing: .08em; text-transform: uppercase;
   text-decoration: none; padding: 14px 22px; border: 1.5px solid var(--ink); border-radius: 2px; background: transparent; color: var(--ink); cursor: pointer; }
 .btn.dark { background: var(--ink); color: var(--paper); }
+.btn.red { background: #9e2a1c; border-color: #9e2a1c; color: #fff; }
 .btn.soon { cursor: default; opacity: .7; }
 .btn.soon:hover { transform: none; box-shadow: none; }
 .price-tag { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 8px 16px; border: 1.5px solid #9e2a1c;
@@ -57,8 +58,8 @@ nav.main a:hover { border-bottom-color: var(--ink); }
 .book-buy .pr { font-size: .85rem; color: #9e2a1c; }
 .book-buy .pr b { font-size: 1.3rem; }
 .book-buy .pr i { font-style: normal; }
-.book-buy .go { align-self: flex-start; margin-top: 8px; font-family: var(--sans); font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; background: #9e2a1c;
-  color: #fff; padding: 12px 16px; white-space: nowrap; }
+.book-buy .go { align-self: flex-start; margin-top: 8px; font-family: var(--sans); font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; background: var(--ink);
+  color: var(--paper); padding: 12px 16px; white-space: nowrap; }
 .book-buy:hover { box-shadow: 0 4px 14px rgba(0, 0, 0, .12); transform: translateY(-1px); }
 .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0, 0, 0, .12); }
 .btn:focus-visible, nav.main a:focus-visible, .flag:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
