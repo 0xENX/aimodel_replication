@@ -85,9 +85,11 @@ window.siteChrome = function () {
       el.textContent = L("37 chapters, the conclusions, the notes, the references and the appendix with all the relationships of the model. The book is on Amazon, in Italian and English. The simulators on this site stay free.",
         "37 capitoli, le conclusioni, le note, la bibliografia e l’appendice con tutte le relazioni del modello. Il libro è su Amazon, in italiano e in inglese. I simulatori di questo sito restano gratuiti.");
     });
-    // home: cover, price and buy button of the site-language edition, right under the title
+    // home: cover, price and buy button of the site-language edition, right under the title (before the
+    // description, so that it is seen without scrolling also on short screens)
     document.querySelectorAll(".js-amazon-line").forEach(el => {
-      el.before(bookBuy());
+      const lead = el.closest(".hero") && el.closest(".hero").querySelector("p.lead");
+      (lead || el).before(bookBuy());
       el.textContent = L("Kindle edition · Italian and English", "Edizione Kindle · in italiano e in inglese");
     });
   }
