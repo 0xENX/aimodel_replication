@@ -19,12 +19,12 @@ window.SITE = {
   },
   price: { "amazon.com": "$2.99", "amazon.it": "2,99 €" },
   free: { editions: ["en"], from: "2026-11-07T08:00:00Z", to: "2026-11-12T08:00:00Z", until: { en: "Nov 11", it: "11 novembre" } },
-  // more: the other books of Marc Molften, shown in the home under "Also by Marc Molften" (Kindle ASIN, cover, texts)
+  // more: the other books of Marc Molften, shown in the home next to The ReplaceMind (Kindle ASIN, cover, texts)
   more: [
-    { asin: "B0HRNQMWR1", title: "Lime and Tears", img: "img/cover-lime-and-tears.jpg",
-      kind: { en: "A Nora Brink Thriller · Book 1", it: "Un thriller di Nora Brink · Libro 1 · in inglese" },
-      text: { en: "Special Agent Nora Brink grew up a preacher’s daughter. Now she reads Scripture at crime scenes, in a fog-bound Michigan town that would rather pray than talk.",
-              it: "L’agente speciale Nora Brink è cresciuta figlia di un predicatore. Ora legge le Scritture sulle scene del crimine, in una cittadina del Michigan avvolta nella nebbia che preferisce pregare piuttosto che parlare." } },
+    { asin: "B0HRNQMWR1", title: "The Fake AI Boom That Is Breaking the World", img: "img/cover-fake-ai-boom.jpg",
+      kind: { en: "The new book · Essay", it: "Il nuovo libro · Saggio · in inglese" },
+      text: { en: "Every day you read that artificial intelligence is making the economy grow. This book looks at where that money really comes from, and what happens when the boom breaks. Not a book about your job: a book about what comes after.",
+              it: "Ogni giorno si legge che l’intelligenza artificiale fa crescere l’economia. Questo libro guarda da dove arrivano davvero quei soldi, e cosa succede quando il boom si rompe. Non è un libro sul tuo lavoro: è un libro su quello che viene dopo." } },
   ],
   // trailer: the YouTube id of the book trailer; empty = the trailer boxes stay hidden. The player loads only on click.
   trailer: "gmr-jVeoI0Y",
@@ -96,7 +96,10 @@ window.siteChrome = function () {
     // description, so that it is seen without scrolling also on short screens)
     document.querySelectorAll(".js-amazon-line").forEach(el => {
       const lead = el.closest(".hero") && el.closest(".hero").querySelector("p.lead");
-      (lead || el).before(bookBuy());
+      const row = document.createElement("div");
+      row.className = "hero-books";
+      row.append(bookBuy(), ...(SITE.more || []).map(moreBuy));   // The ReplaceMind, then the other books, side by side
+      (lead || el).before(row);
       el.textContent = L("Kindle edition · Italian and English", "Edizione Kindle · in italiano e in inglese");
     });
   }
@@ -164,21 +167,16 @@ window.siteChrome = function () {
     prices.push([box.querySelector(".pr b"), box.querySelector(".pr"), ed]); draw();
     return box;
   };
-  // the other books of the author: cover, title, a few words and a link to Amazon, in the store of the visitor
-  document.querySelectorAll(".js-more").forEach(sec => {
-    const list = sec.querySelector(".js-more-list");
-    (SITE.more || []).forEach(b => {
-      const a = amazonLink(b.asin, "more-book");
-      a.innerHTML = '<img src="' + b.img + '" alt="" width="120" height="180" loading="lazy"><span class="txt"><small></small><b></b><span class="p"></span>' +
-        '<span class="go">' + L("See it on Amazon", "Vedilo su Amazon") + ' <span aria-hidden="true">→</span></span></span>';
-      a.querySelector("small").textContent = b.kind[window.LANG] || b.kind.en;
-      a.querySelector("b").textContent = b.title;
-      a.querySelector(".p").textContent = b.text[window.LANG] || b.text.en;
-      a.setAttribute("aria-label", b.title + " – " + L("on Amazon", "su Amazon"));
-      list.append(a);
-    });
-    sec.hidden = !list.children.length;
-  });
+  // another book of the author, next to The ReplaceMind in the home: cover, title and a link to Amazon
+  window.moreBuy = b => {
+    const box = amazonLink(b.asin, "book-buy more");
+    box.innerHTML = '<img src="' + b.img + '" alt="" width="64" height="96"><span class="txt"><small></small><b></b>' +
+      '<span class="go">' + L("See it on Amazon", "Vedilo su Amazon") + ' <span aria-hidden="true">→</span></span></span>';
+    box.querySelector("small").textContent = b.kind[window.LANG] || b.kind.en;
+    box.querySelector("b").textContent = b.title;
+    box.title = b.text[window.LANG] || b.text.en;
+    return box;
+  };
   const use = c => { const s = SITE.amazonStore.country[c]; if (s) { store = s; draw(); } };
   let country = null;
   try { country = sessionStorage.getItem("tlf-country"); } catch (e) { /* storage blocked: ask again */ }
