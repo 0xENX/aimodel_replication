@@ -61,6 +61,7 @@ nav.main a:hover { border-bottom-color: var(--ink); }
   text-decoration: none; padding: 14px 22px; border: 1.5px solid var(--ink); border-radius: 2px; background: transparent; color: var(--ink); cursor: pointer; }
 .btn.dark { background: var(--ink); color: var(--paper); }
 .btn.red { background: #9e2a1c; border-color: #9e2a1c; color: #fff; }
+.btn.blue { background: #0070ba; border-color: #0070ba; color: #fff; }   /* PayPal blue, for the donation button */
 .btn.soon { cursor: default; opacity: .7; }
 .btn.soon:hover { transform: none; box-shadow: none; }
 .price-tag { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 8px 16px; border: 1.5px solid #9e2a1c;
