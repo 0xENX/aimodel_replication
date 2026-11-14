@@ -5,7 +5,7 @@
 // amazonStore: Kindle books can only be bought in the store of one's own country, so the buy links go to the store
 // of the visitor's country (from /where, answered by the Worker); countries not listed, and the site run without the
 // Worker, use the store of the site language.
-// price: the Kindle price in each store, shown as launch price; a store not listed shows no price.
+// price: the Kindle price in each store; a store not listed shows no price.
 // free: the KDP free days (midnight Pacific Time to midnight); in between the book shows as free in every store, the
 // price comes back by itself when they end; only the editions listed in "editions". Empty = no free days.
 window.SITE = {
@@ -17,11 +17,12 @@ window.SITE = {
       FR: "amazon.fr", ES: "amazon.es", NL: "amazon.nl", GB: "amazon.co.uk", IE: "amazon.co.uk", CA: "amazon.ca",
       AU: "amazon.com.au", JP: "amazon.co.jp", IN: "amazon.in", BR: "amazon.com.br", MX: "amazon.com.mx" },
   },
-  price: { "amazon.com": "$2.99", "amazon.it": "2,99 €" },
+  price: { "amazon.com": "$5.99" },
   free: { editions: ["en"], from: "2026-11-07T08:00:00Z", to: "2026-11-12T08:00:00Z", until: { en: "Nov 11", it: "11 novembre" } },
   // more: the other books of Marc Molften, shown in the home next to The ReplaceMind (Kindle ASIN, cover, texts)
   more: [
     { asin: "B0HRNQMWR1", title: "The Fake AI Boom That Is Breaking the World", img: "img/cover-fake-ai-boom.jpg",
+      price: { "amazon.com": "$3.99" },   // Kindle price per store, as SITE.price, e.g. { "amazon.com": "$4.99", "amazon.it": "4,99 €" }; empty = no price
       kind: { en: "The new book · Essay", it: "Il nuovo libro · Saggio · in inglese" },
       text: { en: "Every day you read that artificial intelligence is making the economy grow. This book looks at where that money really comes from, and what happens when the boom breaks. Not a book about your job: a book about what comes after.",
               it: "Ogni giorno si legge che l’intelligenza artificiale fa crescere l’economia. Questo libro guarda da dove arrivano davvero quei soldi, e cosa succede quando il boom si rompe. Non è un libro sul tuo lavoro: è un libro su quello che viene dopo." } },
@@ -126,7 +127,7 @@ window.siteChrome = function () {
 // moved to the visitor's store when /where answers (kept for the session, so it is asked once).
 (function () {
   let store = SITE.amazonStore[window.LANG] || "amazon.com";
-  const links = [], prices = [], words = [];
+  const links = [], prices = [], words = [], morePrices = [];
   const url = ed => "https://www." + store + "/dp/" + (SITE.amazon[ed] || ed);   // an edition of this book, or any ASIN
   const fr = SITE.free, now = Date.now();
   const days = !!fr && now >= Date.parse(fr.from) && now < Date.parse(fr.to);
@@ -136,6 +137,7 @@ window.siteChrome = function () {
     links.forEach(([a, ed]) => { a.href = url(ed); });
     prices.forEach(([b, hide, ed]) => { const p = free(ed) ? L("FREE", "GRATIS") : SITE.price[store]; b.textContent = p || ""; hide.hidden = !p; });
     words.forEach(([el, normal, gratis, ed]) => { el.innerHTML = free(ed) ? gratis : normal; });
+    morePrices.forEach(([b, hide, map]) => { const p = (map || {})[store]; b.textContent = p || ""; hide.hidden = !p; });
   };
   // a text that changes during the free days
   const word = (el, ed, normal, gratis) => { words.push([el, normal, gratis, ed]); return el; };
@@ -151,7 +153,7 @@ window.siteChrome = function () {
   window.priceTag = ed => {
     const t = amazonLink(ed, "price-tag");
     t.innerHTML = "<small></small><b></b>";
-    word(t.querySelector("small"), ed, L("Launch price · Kindle", "Prezzo di lancio · Kindle"), L("Kindle · until " + until, "Kindle · fino all’" + until));
+    word(t.querySelector("small"), ed, L("Kindle price", "Prezzo Kindle"), L("Kindle · until " + until, "Kindle · fino all’" + until));
     prices.push([t.querySelector("b"), t, ed]); draw();
     return t;
   };
@@ -162,7 +164,7 @@ window.siteChrome = function () {
     box.innerHTML = '<img src="img/cover-' + ed + '.jpg" alt="" width="64" height="102"><span class="txt"><small>' +
       L("The book · Kindle edition", "Il libro · edizione Kindle") + "</small><b>The ReplaceMind</b><span class=\"pr\">" +
       "<i></i> <b></b></span><span class=\"go\"></span></span>";
-    word(box.querySelector(".pr i"), ed, L("Launch price", "Prezzo di lancio"), L("Until " + until, "Fino all’" + until));
+    word(box.querySelector(".pr i"), ed, L("Kindle price", "Prezzo Kindle"), L("Until " + until, "Fino all’" + until));
     buyLabel(box.querySelector(".go"), ed);
     prices.push([box.querySelector(".pr b"), box.querySelector(".pr"), ed]); draw();
     return box;
@@ -171,10 +173,12 @@ window.siteChrome = function () {
   window.moreBuy = b => {
     const box = amazonLink(b.asin, "book-buy more");
     box.innerHTML = '<img src="' + b.img + '" alt="" width="64" height="96"><span class="txt"><small></small><b></b>' +
-      '<span class="go">' + L("See it on Amazon", "Vedilo su Amazon") + ' <span aria-hidden="true">→</span></span></span>';
+      '<span class="pr"><i>' + L("Kindle price", "Prezzo Kindle") + '</i> <b></b></span>' +
+      '<span class="go">' + L("Buy on Amazon", "Acquista su Amazon") + ' <span aria-hidden="true">→</span></span></span>';
     box.querySelector("small").textContent = b.kind[window.LANG] || b.kind.en;
     box.querySelector("b").textContent = b.title;
     box.title = b.text[window.LANG] || b.text.en;
+    morePrices.push([box.querySelector(".pr b"), box.querySelector(".pr"), b.price]); draw();
     return box;
   };
   const use = c => { const s = SITE.amazonStore.country[c]; if (s) { store = s; draw(); } };
