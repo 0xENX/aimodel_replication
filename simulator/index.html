@@ -71,7 +71,7 @@
           </ul>
           <p>Every number has a source and the code is public. A donation keeps them online and up to date.</p>
           <div class="btns">
-            <button type="button" class="btn blue js-donate-open">Donate with PayPal <span aria-hidden="true">→</span></button>
+            <button type="button" class="btn blue js-donate-open"><svg class="pp" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" opacity=".55" d="M8.2 2H14.5C18 2 19.8 4 19.2 7.2C18.6 10.6 16 12.5 12.4 12.5H10.6L9.6 18.5H5ZM11.6 5.5L11.2 9H12.6C14 9 14.9 8.2 15.1 7C15.3 5.9 14.6 5.5 13.5 5.5Z"/><path fill="currentColor" fill-rule="evenodd" transform="translate(1.8 3.2)" d="M8.2 2H14.5C18 2 19.8 4 19.2 7.2C18.6 10.6 16 12.5 12.4 12.5H10.6L9.6 18.5H5ZM11.6 5.5L11.2 9H12.6C14 9 14.9 8.2 15.1 7C15.3 5.9 14.6 5.5 13.5 5.5Z"/></svg><span class="lbl">Donate with PayPal</span> <span aria-hidden="true">→</span></button>
             <a class="btn dark" href="https://github.com/0xENX/aimodel_replication">GitHub <span aria-hidden="true">→</span></a>
           </div>
         </div>
@@ -168,7 +168,7 @@
 <script>
 (function () {
   const IT = {
-    "Support the project": "Sostieni il progetto", "Keep the simulators free and open": "Tieni i simulatori gratis e aperti", "Donate with PayPal <span aria-hidden=\"true\">→</span>": "Dona con PayPal <span aria-hidden=\"true\">→</span>", "GitHub <span aria-hidden=\"true\">→</span>": "GitHub <span aria-hidden=\"true\">→</span>",
+    "Support the project": "Sostieni il progetto", "Keep the simulators free and open": "Tieni i simulatori gratis e aperti", "Donate with PayPal": "Dona con PayPal", "GitHub <span aria-hidden=\"true\">→</span>": "GitHub <span aria-hidden=\"true\">→</span>",
     "<b>19</b> professions": "<b>19</b> professioni", "<b>3</b> regions": "<b>3</b> regioni", "<b>0</b> ads": "<b>0</b> pubblicità",
     "Every number has a source and the code is public. A donation keeps them online and up to date.":
       "Ogni numero ha una fonte e il codice è pubblico. Una donazione li tiene online e aggiornati.",
@@ -206,7 +206,7 @@
   };
   const lang = window.LANG;
   document.documentElement.lang = lang;
-  window.i18nMissing = i18nApply(IT, "nav.main a, h2, h3, p, li, .btn, .tool b, .tool span, .theme .ch, footer > .wrap > span:first-child, footer a");
+  window.i18nMissing = i18nApply(IT, "nav.main a, h2, h3, p, li, .btn, .btn .lbl, .tool b, .tool span, .theme .ch, footer > .wrap > span:first-child, footer a");
   if (lang === "it") document.querySelector("meta[name=description]").content =
     "The ReplaceMind, di Marc Molften: un libro su come l’intelligenza artificiale e i robot stanno cambiando il lavoro, con simulatori pubblici del lavoro, dell’economia e del rischio sociale.";
 
