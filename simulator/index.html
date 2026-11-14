@@ -57,9 +57,22 @@
   </section>
 
   <section class="trailer-sec js-trailer-section" hidden>
-    <div class="wrap">
-      <p class="eyebrow">The trailer</p>
+    <div class="wrap trailer-row">
+      <p class="eyebrow e-trailer">The trailer</p>
       <div class="trailer js-trailer"></div>
+      <p class="eyebrow e-support js-donate-section" hidden>Donations</p>
+      <div class="support js-donate-section" id="donate" hidden>
+        <h2>Support the project</h2>
+        <p>If the simulators and the model were useful to you, you can support the project with a donation of any amount. It pays for the site and for the time to keep the model and the simulators up to date.</p>
+        <div class="btns">
+          <button type="button" class="btn paper js-donate-open">Donate with PayPal <span aria-hidden="true">→</span></button>
+          <a class="btn" href="https://github.com/0xENX/aimodel_replication">The project on GitHub <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <dialog class="donate-dialog" id="donate-dialog">
+        <button type="button" class="close js-donate-close" aria-label="Close">×</button>
+        <div id="paypal-donate" class="paypal"></div>
+      </dialog>
     </div>
   </section>
 
@@ -148,6 +161,9 @@
 <script>
 (function () {
   const IT = {
+    "Donations": "Donazioni", "Support the project": "Sostieni il progetto", "Donate with PayPal <span aria-hidden=\"true\">→</span>": "Dona con PayPal <span aria-hidden=\"true\">→</span>", "The project on GitHub <span aria-hidden=\"true\">→</span>": "Il progetto su GitHub <span aria-hidden=\"true\">→</span>",
+    "If the simulators and the model were useful to you, you can support the project with a donation of any amount. It pays for the site and for the time to keep the model and the simulators up to date.":
+      "Se i simulatori e il modello ti sono stati utili, puoi sostenere il progetto con una donazione libera. Serve a pagare il sito e il tempo per tenere aggiornati il modello e i simulatori.",
     "__title": "The ReplaceMind",
     "The book": "Il libro", "Themes": "Temi", "Simulators": "Simulatori", "The author": "L’autore", "Contact": "Contatti",
     "The trailer": "Il trailer",

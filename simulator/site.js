@@ -104,22 +104,29 @@ window.siteChrome = function () {
       el.textContent = L("Kindle edition · Italian and English", "Edizione Kindle · in italiano e in inglese");
     });
   }
-  // donations: buttons lead to the box on the book page, where PayPal opens on top of the site
+  // donations (for the simulators, not the book): buttons lead to the box on the home page, where PayPal opens on top of the site
   const button = SITE.paypal && (typeof SITE.paypal.button === "string" ? SITE.paypal.button : (SITE.paypal.button[lang] || SITE.paypal.button.it));
   if (button) {
     document.querySelectorAll(".js-donate").forEach(d => {
-      const u = new URL("libro.html", location.href); u.searchParams.set("lang", lang); u.hash = "donate"; d.href = u.toString(); d.hidden = false;
+      const u = new URL("index.html", location.href); u.searchParams.set("lang", lang); u.hash = "donate"; d.href = u.toString(); d.hidden = false;
     });
     document.querySelectorAll(".js-donate-section").forEach(d => { d.hidden = false; });
-    const box = document.getElementById("paypal-donate");
-    if (box) {
+    // PayPal (its code and cookies) is loaded only when the reader presses "Donate", in a window over the page
+    const box = document.getElementById("paypal-donate"), dlg = document.getElementById("donate-dialog");
+    let loaded = false;
+    const load = () => {
+      if (loaded || !box) return; loaded = true;
       const s = document.createElement("script");
       s.src = "https://www.paypal.com/sdk/js?client-id=" + encodeURIComponent(SITE.paypal.clientId) +
         "&components=hosted-buttons&disable-funding=venmo&currency=EUR&locale=" + (lang === "it" ? "it_IT" : "en_GB");
       s.onload = () => paypal.HostedButtons({ hostedButtonId: button }).render("#paypal-donate");
-      s.onerror = () => { box.textContent = L("PayPal could not be loaded. Please try again later.", "Non è stato possibile caricare PayPal. Riprova più tardi."); };
+      s.onerror = () => { loaded = false; box.textContent = L("PayPal could not be loaded. Please try again later.", "Non è stato possibile caricare PayPal. Riprova più tardi."); };
       document.body.appendChild(s);
-    }
+    };
+    document.querySelectorAll(".js-donate-open").forEach(b => b.addEventListener("click", () => { load(); if (dlg && dlg.showModal) dlg.showModal(); }));
+    document.querySelectorAll(".js-donate-close").forEach(b => b.addEventListener("click", () => dlg.close()));
+    if (dlg) dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });   // click outside the window closes it
+    const c = document.querySelector(".js-donate-close"); if (c) c.setAttribute("aria-label", L("Close", "Chiudi"));
   }
 };
 
