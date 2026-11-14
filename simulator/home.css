@@ -105,6 +105,19 @@ nav.main a:hover { border-bottom-color: var(--ink); }
 .tool:hover b { text-decoration: underline; }
 
 /* author, footer */
+.more { padding: 40px 0 10px; }
+.more .wrap { border-top: 1px solid var(--line); padding-top: 32px; }
+.more-list { display: grid; gap: 20px; }
+.more-book { display: flex; gap: 22px; align-items: flex-start; max-width: 720px; color: var(--ink); text-decoration: none; }
+.more-book img { width: 120px; height: auto; flex: none; box-shadow: 0 4px 14px rgba(0, 0, 0, .22); }
+.more-book .txt { display: flex; flex-direction: column; gap: 6px; }
+.more-book small { font-family: var(--sans); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.more-book b { font-family: var(--serif); font-weight: 400; font-size: 1.6rem; }
+.more-book .p { color: var(--muted); line-height: 1.55; }
+.more-book .go { align-self: flex-start; margin-top: 6px; font-family: var(--sans); font-size: .82rem; letter-spacing: .08em; text-transform: uppercase;
+  border: 1.5px solid var(--ink); padding: 10px 14px; }
+.more-book:hover .go { background: var(--ink); color: var(--paper); }
+@media (max-width: 560px) { .more-book img { width: 90px; } .more-book b { font-size: 1.35rem; } }
 .author { padding: 46px 0 30px; }
 .author .wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; border-top: 1px solid var(--line); padding-top: 36px; }
 .author h2 { font-family: var(--sans); font-weight: 400; letter-spacing: .08em; margin: 0; font-size: 1.7rem; }

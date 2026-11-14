@@ -19,6 +19,13 @@ window.SITE = {
   },
   price: { "amazon.com": "$2.99", "amazon.it": "2,99 €" },
   free: { editions: ["en"], from: "2026-11-07T08:00:00Z", to: "2026-11-12T08:00:00Z", until: { en: "Nov 11", it: "11 novembre" } },
+  // more: the other books of Marc Molften, shown in the home under "Also by Marc Molften" (Kindle ASIN, cover, texts)
+  more: [
+    { asin: "B0HRNQMWR1", title: "Lime and Tears", img: "img/cover-lime-and-tears.jpg",
+      kind: { en: "A Nora Brink Thriller · Book 1", it: "Un thriller di Nora Brink · Libro 1 · in inglese" },
+      text: { en: "Special Agent Nora Brink grew up a preacher’s daughter. Now she reads Scripture at crime scenes, in a fog-bound Michigan town that would rather pray than talk.",
+              it: "L’agente speciale Nora Brink è cresciuta figlia di un predicatore. Ora legge le Scritture sulle scene del crimine, in una cittadina del Michigan avvolta nella nebbia che preferisce pregare piuttosto che parlare." } },
+  ],
   // trailer: the YouTube id of the book trailer; empty = the trailer boxes stay hidden. The player loads only on click.
   trailer: "gmr-jVeoI0Y",
   paypal: { clientId: "BAAkPVaCyuQ1CL-nZDnU34lPq1uQ-OXe5KyMP6_clgCzmX62UHhxlVOhMlWnipwJ_XdMeU-7SkNUsUhbpA", button: { it: "9V4SVW6LCJYXQ", en: "AZA93J9H9625N" } },
@@ -117,7 +124,7 @@ window.siteChrome = function () {
 (function () {
   let store = SITE.amazonStore[window.LANG] || "amazon.com";
   const links = [], prices = [], words = [];
-  const url = ed => "https://www." + store + "/dp/" + SITE.amazon[ed];
+  const url = ed => "https://www." + store + "/dp/" + (SITE.amazon[ed] || ed);   // an edition of this book, or any ASIN
   const fr = SITE.free, now = Date.now();
   const days = !!fr && now >= Date.parse(fr.from) && now < Date.parse(fr.to);
   const free = ed => days && fr.editions.includes(ed);
@@ -157,6 +164,21 @@ window.siteChrome = function () {
     prices.push([box.querySelector(".pr b"), box.querySelector(".pr"), ed]); draw();
     return box;
   };
+  // the other books of the author: cover, title, a few words and a link to Amazon, in the store of the visitor
+  document.querySelectorAll(".js-more").forEach(sec => {
+    const list = sec.querySelector(".js-more-list");
+    (SITE.more || []).forEach(b => {
+      const a = amazonLink(b.asin, "more-book");
+      a.innerHTML = '<img src="' + b.img + '" alt="" width="120" height="180" loading="lazy"><span class="txt"><small></small><b></b><span class="p"></span>' +
+        '<span class="go">' + L("See it on Amazon", "Vedilo su Amazon") + ' <span aria-hidden="true">→</span></span></span>';
+      a.querySelector("small").textContent = b.kind[window.LANG] || b.kind.en;
+      a.querySelector("b").textContent = b.title;
+      a.querySelector(".p").textContent = b.text[window.LANG] || b.text.en;
+      a.setAttribute("aria-label", b.title + " – " + L("on Amazon", "su Amazon"));
+      list.append(a);
+    });
+    sec.hidden = !list.children.length;
+  });
   const use = c => { const s = SITE.amazonStore.country[c]; if (s) { store = s; draw(); } };
   let country = null;
   try { country = sessionStorage.getItem("tlf-country"); } catch (e) { /* storage blocked: ask again */ }
